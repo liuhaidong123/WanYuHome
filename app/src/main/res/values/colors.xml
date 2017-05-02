@@ -7,4 +7,6 @@
     <color name="mainBottomBackground">#fafbfc</color>
     <color name="mainBottomTextSelectColor">#00bfff</color>
     <color name="mainBottomTextUnSelectColor">#b2b2b2</color>
+    <color name="homeFragChangeColor">#333333</color>
+    <color name="homeFragTopTextColor">#666666</color>
 </resources>

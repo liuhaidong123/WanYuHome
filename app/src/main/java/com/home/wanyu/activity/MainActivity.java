@@ -62,6 +62,8 @@ public class MainActivity extends FragmentActivity {
         listFragment.add(mHousekeeperFrgment);
         listFragment.add(mCommunicationFragment);
         listFragment.add(mMineFragment);
+        mHomeFragment=null;mHousekeeperFrgment=null;
+        mCommunicationFragment=null;mMineFragment=null;
         getSupportFragmentManager().beginTransaction().replace(R.id.main_top_frament,listFragment.get(0)).commit();
     }
 

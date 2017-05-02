@@ -14,7 +14,7 @@ import butterknife.ButterKnife;
 /**
  * Created by wanyu on 2017/5/2.
  */
-
+//个人
 public class MineFragment extends Fragment{
     public static MineFragment mFragment;
     public static MineFragment getInstance(){
@@ -25,7 +25,7 @@ public class MineFragment extends Fragment{
     }
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View vi=inflater.inflate(R.layout.fragment_home,null);
+        View vi=inflater.inflate(R.layout.fragment_mine,null);
         ButterKnife.bind(this,vi);
         return vi;
     }

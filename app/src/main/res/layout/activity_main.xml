@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/mainbottomimage_home"/>
             <TextView
-                android:textSize="@dimen/mainBottomTextSize"
+                android:textSize="@dimen/mainBottomTextSize11"
                 android:layout_centerHorizontal="true"
                 android:gravity="center"
                 android:layout_below="@+id/main_bottomlayout_home_image"
@@ -71,7 +71,7 @@
                 android:src="@drawable/mainbottomimage_property"/>
 
             <TextView
-                android:textSize="@dimen/mainBottomTextSize"
+                android:textSize="@dimen/mainBottomTextSize11"
                 android:gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -100,7 +100,7 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/mainbottomcommunication"/>
             <TextView
-                android:textSize="@dimen/mainBottomTextSize"
+                android:textSize="@dimen/mainBottomTextSize11"
                 android:layout_centerHorizontal="true"
                 android:gravity="center"
                 android:layout_below="@+id/main_bottomlayout_Communication_image"
@@ -129,7 +129,7 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/mainbottommine"/>
             <TextView
-                android:textSize="@dimen/mainBottomTextSize"
+                android:textSize="@dimen/mainBottomTextSize11"
                 android:layout_centerHorizontal="true"
                 android:gravity="center"
                 android:layout_below="@+id/main_bottomlayout_Mine_image"
