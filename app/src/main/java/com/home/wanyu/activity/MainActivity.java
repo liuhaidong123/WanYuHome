@@ -21,6 +21,10 @@ import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import fragment.CommunicationFragment;
+import fragment.HomeFragment;
+import fragment.HousekeeperFrgment;
+import fragment.MineFragment;
 
 public class MainActivity extends FragmentActivity {
     private int listControlSize;
@@ -32,6 +36,11 @@ public class MainActivity extends FragmentActivity {
 
     @BindView(R.id.main_top_frament) RelativeLayout main_top_frament;//fragment布局
     private ArrayList<MainBottomControl> listControl;
+    private HomeFragment mHomeFragment;//家
+    private HousekeeperFrgment mHousekeeperFrgment;//物业管家
+    private CommunicationFragment mCommunicationFragment;//圈子
+    private MineFragment mMineFragment;//个人
+    private ArrayList<Fragment>listFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +48,21 @@ public class MainActivity extends FragmentActivity {
         unbinder=ButterKnife.bind(MainActivity.this);
         initData();
         setSelection(0);
+        initFragment();
+    }
+
+    //初始化fragment
+    private void initFragment() {
+        mHomeFragment=HomeFragment.getInstance();
+        mHousekeeperFrgment=HousekeeperFrgment.getInstance();
+        mCommunicationFragment=CommunicationFragment.getInstance();
+        mMineFragment=MineFragment.getInstance();
+        listFragment=new ArrayList<>();
+        listFragment.add(mHomeFragment);
+        listFragment.add(mHousekeeperFrgment);
+        listFragment.add(mCommunicationFragment);
+        listFragment.add(mMineFragment);
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_top_frament,listFragment.get(0)).commit();
     }
 
     private void initData() {
@@ -51,25 +75,27 @@ public class MainActivity extends FragmentActivity {
         }
         control=null;
     }
-
     @OnClick({R.id.main_bottomlayout_Communication,R.id.main_bottomlayout_Home,R.id.main_bottomlayout_Mine,R.id.main_bottomlayout_Property})
     public void Click(View view){
         switch (view.getId()){
             case R.id.main_bottomlayout_Communication://圈子
                 setSelection(2);
+                getSupportFragmentManager().beginTransaction().replace(R.id.main_top_frament,listFragment.get(2)).commit();
             break;
             case R.id.main_bottomlayout_Home://家
                 setSelection(0);
+                getSupportFragmentManager().beginTransaction().replace(R.id.main_top_frament,listFragment.get(0)).commit();
             break;
             case R.id.main_bottomlayout_Mine://个人
                 setSelection(3);
+                getSupportFragmentManager().beginTransaction().replace(R.id.main_top_frament,listFragment.get(3)).commit();
             break;
             case R.id.main_bottomlayout_Property://物业管家
                 setSelection(1);
+                getSupportFragmentManager().beginTransaction().replace(R.id.main_top_frament,listFragment.get(1)).commit();
             break;
         }
     }
-
     //设置当前点中点项目
     public void setSelection(int pos){
         for (int i=0;i<listControlSize;i++){
@@ -77,8 +103,6 @@ public class MainActivity extends FragmentActivity {
         }
         listControl.get(pos).setSelect(true);
     }
-
-
     @Override
     protected void onDestroy() {
         super.onDestroy();

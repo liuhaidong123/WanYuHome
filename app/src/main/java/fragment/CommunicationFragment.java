@@ -9,24 +9,24 @@ import android.view.ViewGroup;
 
 import com.home.wanyu.R;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
  * Created by wanyu on 2017/5/2.
  */
 
-public class HomeFragment extends Fragment {
-    public static HomeFragment mFragment;
-    public static HomeFragment getInstance(){
+//圈子
+public class CommunicationFragment extends Fragment{
+    public static CommunicationFragment mFragment;
+    public static CommunicationFragment getInstance(){
         if (mFragment==null){
-            mFragment=new HomeFragment();
+            mFragment=new CommunicationFragment();
         }
         return mFragment;
     }
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View vi=inflater.inflate(R.layout.fragment_mine,null);
+        View vi=inflater.inflate(R.layout.fragment_communication,null);
         ButterKnife.bind(this,vi);
         return vi;
     }
