@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">WanYuHome</string>
+
+    <string name="home_manager">物业管家</string>
+    <string name="property_order">物业账单</string>
+    <string name="property_life_money">生活缴费</string>
+    <string name="property_repair">军事报修</string>
+    <string name="property_express">快递收发</string>
+    <string name="property_commercial">小区商户</string>
+    <string name="property_home_service">家政服务</string>
+    <string name="property_home_message">租房信息</string>
+    <string name="property_decoration">装修</string>
 </resources>

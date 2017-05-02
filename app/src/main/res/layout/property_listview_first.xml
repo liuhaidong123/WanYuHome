@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:background="@color/bg_color"
+        android:paddingLeft="10dp">
+
+        <ImageView
+            android:id="@+id/rect_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/rect" />
+
+        <TextView
+            android:id="@+id/title_every"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@id/rect_img"
+            android:text="需交费用"
+            android:textColor="@color/title_color"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+</RelativeLayout>
