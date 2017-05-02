@@ -25,7 +25,7 @@ public class HomeFragment extends Fragment {
     }
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View vi=inflater.inflate(R.layout.fragment_mine,null);
+        View vi=inflater.inflate(R.layout.fragment_home,null);
         ButterKnife.bind(this,vi);
         return vi;
     }

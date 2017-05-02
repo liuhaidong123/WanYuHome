@@ -1,4 +1,4 @@
-package fragment;
+package com.home.wanyu.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,18 +15,17 @@ import butterknife.ButterKnife;
  * Created by wanyu on 2017/5/2.
  */
 
-//圈子
-public class CommunicationFragment extends Fragment{
-    public static CommunicationFragment mFragment;
-    public static CommunicationFragment getInstance(){
+public class MineFragment extends Fragment{
+    public static MineFragment mFragment;
+    public static MineFragment getInstance(){
         if (mFragment==null){
-            mFragment=new CommunicationFragment();
+            mFragment=new MineFragment();
         }
         return mFragment;
     }
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View vi=inflater.inflate(R.layout.fragment_communication,null);
+        View vi=inflater.inflate(R.layout.fragment_mine,null);
         ButterKnife.bind(this,vi);
         return vi;
     }

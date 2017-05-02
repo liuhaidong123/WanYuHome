@@ -1,4 +1,4 @@
-package fragment;
+package com.home.wanyu.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,20 +14,19 @@ import butterknife.ButterKnife;
 /**
  * Created by wanyu on 2017/5/2.
  */
-//物业管家
-public class HousekeeperFrgment extends Fragment{
-    private static HousekeeperFrgment mFragment;
-    public static HousekeeperFrgment getInstance(){
+
+//圈子
+public class CommunicationFragment extends Fragment{
+    public static CommunicationFragment mFragment;
+    public static CommunicationFragment getInstance(){
         if (mFragment==null){
-            mFragment=new HousekeeperFrgment();
+            mFragment=new CommunicationFragment();
         }
         return mFragment;
     }
-
-    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View vi=inflater.inflate(R.layout.fragment_housekeeper,null);
+        View vi=inflater.inflate(R.layout.fragment_communication,null);
         ButterKnife.bind(this,vi);
         return vi;
     }
