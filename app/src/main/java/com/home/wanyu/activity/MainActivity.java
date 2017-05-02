@@ -2,7 +2,6 @@ package com.home.wanyu.activity;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -14,17 +13,20 @@ import com.home.wanyu.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import bean.MainBottomControl;
-import butterknife.BindArray;
+import com.home.wanyu.bean.MainBottomControl;
+import com.home.wanyu.fragment.CommunicationFragment;
+import com.home.wanyu.fragment.HomeFragment;
+import com.home.wanyu.fragment.HousekeeperFrgment;
+import com.home.wanyu.fragment.MineFragment;
+
 import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import fragment.CommunicationFragment;
-import fragment.HomeFragment;
-import fragment.HousekeeperFrgment;
-import fragment.MineFragment;
+
+
+import static android.R.attr.fragment;
 
 public class MainActivity extends FragmentActivity {
     private int listControlSize;

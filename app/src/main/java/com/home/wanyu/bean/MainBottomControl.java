@@ -1,4 +1,4 @@
-package bean;
+package com.home.wanyu.bean;
 
 import android.widget.ImageView;
 import android.widget.TextView;
