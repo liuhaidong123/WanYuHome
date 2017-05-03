@@ -23,14 +23,6 @@ import butterknife.ButterKnife;
 
 //圈子
 public class CommunicationFragment extends Fragment{
-    public static CommunicationFragment mFragment;
-    public static CommunicationFragment getInstance(){
-        if (mFragment==null){
-            mFragment=new CommunicationFragment();
-        }
-        return mFragment;
-    }
-
     private ListView mListview;
     private CircleAdapter mAdapter;
     private List<CircleBean> mList=new ArrayList<>();

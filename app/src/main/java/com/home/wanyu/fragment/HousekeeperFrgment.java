@@ -28,7 +28,6 @@ import butterknife.ButterKnife;
  */
 //物业管家
 public class HousekeeperFrgment extends Fragment implements ViewPager.OnPageChangeListener {
-    private static HousekeeperFrgment mFragment;
     private ViewPager mViewpager;
     private LinearLayout mViewgroup;
     private List<Integer> mAdList = new ArrayList<>();
@@ -41,12 +40,7 @@ public class HousekeeperFrgment extends Fragment implements ViewPager.OnPageChan
     private List<String> mTwoList=new ArrayList<>();
 
     private SwipeRefreshLayout mRefresh;
-    public static HousekeeperFrgment getInstance() {
-        if (mFragment == null) {
-            mFragment = new HousekeeperFrgment();
-        }
-        return mFragment;
-    }
+
 
     @Nullable
     @Override
