@@ -1,4 +1,4 @@
-package fragment;
+package com.home.wanyu.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,8 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.home.wanyu.R;
+import com.home.wanyu.lzhUtils.MyToast;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,11 +25,12 @@ import butterknife.Unbinder;
 //家
 public class HomeFragment extends Fragment {
     private Unbinder unbinder;
-    private final int QJSelect=0;//选中情景
-    private final int SBSelect=1;//选中设备
     @BindView(R.id.fragment_home_top_qj) TextView fragment_home_top_qj;
     @BindView(R.id.fragment_home_top_shebei) TextView fragment_home_top_shebei;
     public static HomeFragment mFragment;
+    private HomeFragmentDevice homeFragmentDevice;
+    private HomeFragmentScene homeFragmentScene;
+    private ArrayList<Fragment>listFragment;
     public static HomeFragment getInstance(){
         if (mFragment==null){
             mFragment=new HomeFragment();
@@ -41,29 +46,39 @@ public class HomeFragment extends Fragment {
     }
 
     private void initView() {
-        setSelect(QJSelect);
-    }
-    public void setSelect(int pos){
-        switch (pos){
-            case QJSelect:
+        fragment_home_top_qj.setSelected(true);
+        fragment_home_top_shebei.setSelected(false);
+        homeFragmentDevice=HomeFragmentDevice.getInstance();
+        homeFragmentScene=HomeFragmentScene.getInstance();
+        listFragment=new ArrayList<>();
+        listFragment.add(homeFragmentScene);
+        listFragment.add(homeFragmentDevice);
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_home_bottom_layout,listFragment.get(0)).commit();
 
-                break;
-            case SBSelect:
-                break;
-        }
     }
 
-    @OnClick({R.id.fragment_home_top_qj,R.id.fragment_home_top_shebei})
+
+
+    @OnClick({R.id.fragment_home_top_qj,R.id.fragment_home_top_shebei,R.id.fragment_home_change,R.id.fragment_home_top_add})
     public void click(View v){
         switch (v.getId()){
             case R.id.fragment_home_top_qj:
                 fragment_home_top_qj.setSelected(true);
                 fragment_home_top_shebei.setSelected(false);
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_home_bottom_layout,listFragment.get(0)).commit();
                 break;
             case R.id.fragment_home_top_shebei:
                 fragment_home_top_qj.setSelected(false);
                 fragment_home_top_shebei.setSelected(true);
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_home_bottom_layout,listFragment.get(1)).commit();
                 break;
+            case R.id.fragment_home_change:
+                MyToast.DebugToast(getActivity(),"切换实景");
+                break;
+            case R.id.fragment_home_top_add:
+                MyToast.DebugToast(getActivity(),"添加");
+                break;
+
         }
     }
 

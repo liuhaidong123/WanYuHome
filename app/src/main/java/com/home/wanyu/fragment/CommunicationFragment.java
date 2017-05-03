@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import com.home.wanyu.R;
 
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * Created by wanyu on 2017/5/2.
@@ -17,6 +18,7 @@ import butterknife.ButterKnife;
 
 //圈子
 public class CommunicationFragment extends Fragment{
+    private Unbinder unbinder;
     public static CommunicationFragment mFragment;
     public static CommunicationFragment getInstance(){
         if (mFragment==null){
@@ -27,7 +29,17 @@ public class CommunicationFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View vi=inflater.inflate(R.layout.fragment_communication,null);
-        ButterKnife.bind(this,vi);
+        unbinder= ButterKnife.bind(this,vi);
         return vi;
+    }
+
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (unbinder!=null){
+            unbinder.unbind();
+        }
     }
 }

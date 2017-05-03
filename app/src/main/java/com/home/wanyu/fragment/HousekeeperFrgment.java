@@ -36,6 +36,6 @@ public class HousekeeperFrgment extends Fragment {
     }
 
     public void initView(View view) {
-        mViewpager= (ViewPager) view.findViewById(R.id.viewpager_property);
+//        mViewpager= (ViewPager) view.findViewById(R.id.viewpager_property);
     }
 }

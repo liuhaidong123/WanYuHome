@@ -3,6 +3,8 @@ package com.home.wanyu.activity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -26,9 +28,11 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 
 
+
 import static android.R.attr.fragment;
 
 public class MainActivity extends FragmentActivity {
+    private Fragment mFragment;
     private int listControlSize;
     private Unbinder unbinder;
     //家，物业管家，个人，圈子的textview
@@ -37,6 +41,8 @@ public class MainActivity extends FragmentActivity {
     @BindViews({R.id.main_bottomlayout_home_image,R.id.main_bottomlayout_Property_image,R.id.main_bottomlayout_Communication_image,R.id.main_bottomlayout_Mine_image}) List<ImageView>listImage;
 
     @BindView(R.id.main_top_frament) RelativeLayout main_top_frament;//fragment布局
+
+    private FragmentManager manager;
     private ArrayList<MainBottomControl> listControl;
     private HomeFragment mHomeFragment;//家
     private HousekeeperFrgment mHousekeeperFrgment;//物业管家
@@ -55,6 +61,7 @@ public class MainActivity extends FragmentActivity {
 
     //初始化fragment
     private void initFragment() {
+        manager=getSupportFragmentManager();
         mHomeFragment=HomeFragment.getInstance();
         mHousekeeperFrgment=HousekeeperFrgment.getInstance();
         mCommunicationFragment=CommunicationFragment.getInstance();
@@ -64,9 +71,13 @@ public class MainActivity extends FragmentActivity {
         listFragment.add(mHousekeeperFrgment);
         listFragment.add(mCommunicationFragment);
         listFragment.add(mMineFragment);
-        mHomeFragment=null;mHousekeeperFrgment=null;
-        mCommunicationFragment=null;mMineFragment=null;
-        getSupportFragmentManager().beginTransaction().replace(R.id.main_top_frament,listFragment.get(0)).commit();
+        mFragment=listFragment.get(0);
+        FragmentTransaction transaction=manager.beginTransaction();
+        transaction.add(R.id.main_top_frament,listFragment.get(0));
+        transaction.add(R.id.main_top_frament,listFragment.get(1));
+        transaction.add(R.id.main_top_frament,listFragment.get(2));
+        transaction.add(R.id.main_top_frament,listFragment.get(3));
+        transaction.hide(listFragment.get(3)).hide(listFragment.get(1)).hide(listFragment.get(2)).hide(listFragment.get(0)).show(mFragment).commit();
     }
 
     private void initData() {
@@ -81,24 +92,29 @@ public class MainActivity extends FragmentActivity {
     }
     @OnClick({R.id.main_bottomlayout_Communication,R.id.main_bottomlayout_Home,R.id.main_bottomlayout_Mine,R.id.main_bottomlayout_Property})
     public void Click(View view){
+        manager.beginTransaction().hide(mFragment).commit();
         switch (view.getId()){
             case R.id.main_bottomlayout_Communication://圈子
                 setSelection(2);
-                getSupportFragmentManager().beginTransaction().replace(R.id.main_top_frament,listFragment.get(2)).commit();
+                mFragment=listFragment.get(2);
             break;
             case R.id.main_bottomlayout_Home://家
                 setSelection(0);
-                getSupportFragmentManager().beginTransaction().replace(R.id.main_top_frament,listFragment.get(0)).commit();
+                mFragment= listFragment.get(0);
+//                manager.beginTransaction().replace(R.id.main_top_frament,new HomeFragment()).commit();
             break;
             case R.id.main_bottomlayout_Mine://个人
                 setSelection(3);
-                getSupportFragmentManager().beginTransaction().replace(R.id.main_top_frament,listFragment.get(3)).commit();
+                mFragment=listFragment.get(3);
+//                manager.beginTransaction().replace(R.id.main_top_frament,new MineFragment()).commit();
             break;
             case R.id.main_bottomlayout_Property://物业管家
                 setSelection(1);
-                getSupportFragmentManager().beginTransaction().replace(R.id.main_top_frament,listFragment.get(1)).commit();
+                mFragment= listFragment.get(1);
+//                getSupportFragmentManager().beginTransaction().show(listFragment.get(2));
             break;
         }
+        manager.beginTransaction().show(mFragment).commit();
     }
     //设置当前点中点项目
     public void setSelection(int pos){
@@ -115,4 +131,5 @@ public class MainActivity extends FragmentActivity {
             listControl.clear();
         }
     }
+
 }
