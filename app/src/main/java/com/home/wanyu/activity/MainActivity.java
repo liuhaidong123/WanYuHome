@@ -32,7 +32,7 @@ import butterknife.Unbinder;
 import static android.R.attr.fragment;
 
 public class MainActivity extends FragmentActivity {
-
+    private Fragment mFragment;
     private int listControlSize;
     private Unbinder unbinder;
     //家，物业管家，个人，圈子的textview
@@ -48,7 +48,7 @@ public class MainActivity extends FragmentActivity {
     private HousekeeperFrgment mHousekeeperFrgment;//物业管家
     private CommunicationFragment mCommunicationFragment;//圈子
     private MineFragment mMineFragment;//个人
-    private Fragment mFragment;//当前显示的fragment
+    private ArrayList<Fragment>listFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,9 +66,19 @@ public class MainActivity extends FragmentActivity {
         mHousekeeperFrgment=new HousekeeperFrgment();
         mCommunicationFragment=new CommunicationFragment();
         mMineFragment=new MineFragment();
+        listFragment=new ArrayList<>();
+        listFragment.add(mHomeFragment);
+        listFragment.add(mHousekeeperFrgment);
+        listFragment.add(mCommunicationFragment);
+        listFragment.add(mMineFragment);
+
+        mFragment=listFragment.get(0);
         FragmentTransaction transaction=manager.beginTransaction();
-        transaction.add(R.id.main_top_frament,mHomeFragment);
-        transaction.hide(mHomeFragment).hide(mHousekeeperFrgment).hide(mCommunicationFragment).hide(mMineFragment).show(mFragment).commit();
+        transaction.add(R.id.main_top_frament,listFragment.get(0));
+        transaction.add(R.id.main_top_frament,listFragment.get(1));
+        transaction.add(R.id.main_top_frament,listFragment.get(2));
+        transaction.add(R.id.main_top_frament,listFragment.get(3));
+        transaction.hide(listFragment.get(3)).hide(listFragment.get(1)).hide(listFragment.get(2)).hide(listFragment.get(0)).show(mFragment).commit();
     }
 
     private void initData() {
@@ -83,30 +93,24 @@ public class MainActivity extends FragmentActivity {
     }
     @OnClick({R.id.main_bottomlayout_Communication,R.id.main_bottomlayout_Home,R.id.main_bottomlayout_Mine,R.id.main_bottomlayout_Property})
     public void Click(View view){
-        FragmentTransaction transaction=manager.beginTransaction();
         manager.beginTransaction().hide(mFragment).commit();
         switch (view.getId()){
             case R.id.main_bottomlayout_Communication://圈子
-                if (mCommunicationFragment==null){
-                    mCommunicationFragment=new CommunicationFragment();
-                    transaction.add(R.id.main_top_frament,mCommunicationFragment);
-                }
                 setSelection(2);
-                mFragment=mCommunicationFragment;
-            break;
+                mFragment=listFragment.get(2);
+                break;
             case R.id.main_bottomlayout_Home://家
-
                 setSelection(0);
-                mFragment=mHomeFragment;
-            break;
+                mFragment= listFragment.get(0);
+                break;
             case R.id.main_bottomlayout_Mine://个人
                 setSelection(3);
-                mFragment=mMineFragment;
-            break;
+                mFragment=listFragment.get(3);
+                break;
             case R.id.main_bottomlayout_Property://物业管家
                 setSelection(1);
-                mFragment=mHousekeeperFrgment;
-            break;
+                mFragment= listFragment.get(1);
+                break;
         }
         manager.beginTransaction().show(mFragment).commit();
     }
