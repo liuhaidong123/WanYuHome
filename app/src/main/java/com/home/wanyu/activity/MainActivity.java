@@ -32,7 +32,6 @@ import butterknife.Unbinder;
 import static android.R.attr.fragment;
 
 public class MainActivity extends FragmentActivity {
-
     private int listControlSize;
     private Unbinder unbinder;
     //家，物业管家，个人，圈子的textview
