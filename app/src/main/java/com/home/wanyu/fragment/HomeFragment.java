@@ -27,16 +27,9 @@ public class HomeFragment extends Fragment {
     private Unbinder unbinder;
     @BindView(R.id.fragment_home_top_qj) TextView fragment_home_top_qj;
     @BindView(R.id.fragment_home_top_shebei) TextView fragment_home_top_shebei;
-    public static HomeFragment mFragment;
     private HomeFragmentDevice homeFragmentDevice;
     private HomeFragmentScene homeFragmentScene;
     private ArrayList<Fragment>listFragment;
-    public static HomeFragment getInstance(){
-        if (mFragment==null){
-            mFragment=new HomeFragment();
-        }
-        return mFragment;
-    }
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View vi=inflater.inflate(R.layout.fragment_home,null);
