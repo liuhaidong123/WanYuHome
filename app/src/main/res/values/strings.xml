@@ -11,4 +11,15 @@
     <string name="property_home_message">租房信息</string>
     <string name="property_decoration">装修</string>
     <string name="circle_title">圈子</string>
+    <string-array name="homeSceneString">
+        <item>回家</item>
+        <item>离家</item>
+        <item>起床</item>
+        <item>睡觉</item>
+        <item>休闲</item>
+        <item>娱乐</item>
+        <item>静音</item>
+        <item>吃饭</item>
+        <item>上学</item>
+    </string-array>
 </resources>

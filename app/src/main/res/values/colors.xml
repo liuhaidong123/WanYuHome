@@ -11,4 +11,8 @@
     <color name="mainBottomBackground">#fafbfc</color>
     <color name="mainBottomTextSelectColor">#00bfff</color>
     <color name="mainBottomTextUnSelectColor">#b2b2b2</color>
+    <color name="homeFragChangeColor">#333333</color>
+    <color name="homeFragTopTextColor">#666666</color>
+    <color name="homefragmentFgColor">#e9e9e9</color>
+    <color name="homefragmentFgbac">#f1f1f1</color>
 </resources>

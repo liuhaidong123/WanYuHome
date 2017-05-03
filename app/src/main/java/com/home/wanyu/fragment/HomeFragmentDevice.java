@@ -15,23 +15,22 @@ import butterknife.Unbinder;
 /**
  * Created by wanyu on 2017/5/2.
  */
-//个人
-public class MineFragment extends Fragment{
+//home中的设备fragment
+public class HomeFragmentDevice extends Fragment{
     private Unbinder unbinder;
-    public static MineFragment mFragment;
-    public static MineFragment getInstance(){
+    public static HomeFragmentDevice mFragment;
+    public static HomeFragmentDevice getInstance(){
         if (mFragment==null){
-            mFragment=new MineFragment();
+            mFragment=new HomeFragmentDevice();
         }
         return mFragment;
     }
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View vi=inflater.inflate(R.layout.fragment_mine,null);
+        View vi=inflater.inflate(R.layout.fragment_home_device,null);
         unbinder= ButterKnife.bind(this,vi);
         return vi;
     }
-
 
     @Override
     public void onDestroy() {
