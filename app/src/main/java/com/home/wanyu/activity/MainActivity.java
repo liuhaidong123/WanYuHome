@@ -62,10 +62,10 @@ public class MainActivity extends FragmentActivity {
     //初始化fragment
     private void initFragment() {
         manager=getSupportFragmentManager();
-        mHomeFragment=HomeFragment.getInstance();
-        mHousekeeperFrgment=HousekeeperFrgment.getInstance();
-        mCommunicationFragment=CommunicationFragment.getInstance();
-        mMineFragment=MineFragment.getInstance();
+        mHomeFragment=new HomeFragment();
+        mHousekeeperFrgment=new HousekeeperFrgment();
+        mCommunicationFragment=new CommunicationFragment();
+        mMineFragment=new MineFragment();
         listFragment=new ArrayList<>();
         listFragment.add(mHomeFragment);
         listFragment.add(mHousekeeperFrgment);
@@ -101,17 +101,17 @@ public class MainActivity extends FragmentActivity {
             case R.id.main_bottomlayout_Home://家
                 setSelection(0);
                 mFragment= listFragment.get(0);
-//                manager.beginTransaction().replace(R.id.main_top_frament,new HomeFragment()).commit();
+//
             break;
             case R.id.main_bottomlayout_Mine://个人
                 setSelection(3);
                 mFragment=listFragment.get(3);
-//                manager.beginTransaction().replace(R.id.main_top_frament,new MineFragment()).commit();
+//
             break;
             case R.id.main_bottomlayout_Property://物业管家
                 setSelection(1);
                 mFragment= listFragment.get(1);
-//                getSupportFragmentManager().beginTransaction().show(listFragment.get(2));
+//
             break;
         }
         manager.beginTransaction().show(mFragment).commit();

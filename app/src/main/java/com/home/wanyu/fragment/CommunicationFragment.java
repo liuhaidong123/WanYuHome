@@ -19,13 +19,6 @@ import butterknife.Unbinder;
 //圈子
 public class CommunicationFragment extends Fragment{
     private Unbinder unbinder;
-    public static CommunicationFragment mFragment;
-    public static CommunicationFragment getInstance(){
-        if (mFragment==null){
-            mFragment=new CommunicationFragment();
-        }
-        return mFragment;
-    }
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View vi=inflater.inflate(R.layout.fragment_communication,null);

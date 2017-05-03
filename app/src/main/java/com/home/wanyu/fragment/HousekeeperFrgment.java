@@ -17,16 +17,7 @@ import butterknife.ButterKnife;
  */
 //物业管家
 public class HousekeeperFrgment extends Fragment {
-    private static HousekeeperFrgment mFragment;
     private ViewPager mViewpager;
-
-    public static HousekeeperFrgment getInstance() {
-        if (mFragment == null) {
-            mFragment = new HousekeeperFrgment();
-        }
-        return mFragment;
-    }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

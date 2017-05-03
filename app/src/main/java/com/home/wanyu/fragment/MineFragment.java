@@ -18,21 +18,12 @@ import butterknife.Unbinder;
 //个人
 public class MineFragment extends Fragment{
     private Unbinder unbinder;
-    public static MineFragment mFragment;
-    public static MineFragment getInstance(){
-        if (mFragment==null){
-            mFragment=new MineFragment();
-        }
-        return mFragment;
-    }
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View vi=inflater.inflate(R.layout.fragment_mine,null);
         unbinder= ButterKnife.bind(this,vi);
         return vi;
     }
-
-
     @Override
     public void onDestroy() {
         super.onDestroy();
