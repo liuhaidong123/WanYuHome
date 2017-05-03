@@ -32,6 +32,7 @@ import butterknife.Unbinder;
 import static android.R.attr.fragment;
 
 public class MainActivity extends FragmentActivity {
+
     private int listControlSize;
     private Unbinder unbinder;
     //家，物业管家，个人，圈子的textview
@@ -83,7 +84,7 @@ public class MainActivity extends FragmentActivity {
     @OnClick({R.id.main_bottomlayout_Communication,R.id.main_bottomlayout_Home,R.id.main_bottomlayout_Mine,R.id.main_bottomlayout_Property})
     public void Click(View view){
         FragmentTransaction transaction=manager.beginTransaction();
-        transaction.hide(mFragment);
+        manager.beginTransaction().hide(mFragment).commit();
         switch (view.getId()){
             case R.id.main_bottomlayout_Communication://圈子
                 if (mCommunicationFragment==null){
@@ -94,27 +95,20 @@ public class MainActivity extends FragmentActivity {
                 mFragment=mCommunicationFragment;
             break;
             case R.id.main_bottomlayout_Home://家
+
                 setSelection(0);
                 mFragment=mHomeFragment;
             break;
             case R.id.main_bottomlayout_Mine://个人
-                if (mMineFragment==null){
-                    mMineFragment=new MineFragment();
-                    transaction.add(R.id.main_top_frament,mMineFragment);
-                }
                 setSelection(3);
                 mFragment=mMineFragment;
             break;
             case R.id.main_bottomlayout_Property://物业管家
-                if (mHousekeeperFrgment==null){
-                    mHousekeeperFrgment=new HousekeeperFrgment();
-                    transaction.add(R.id.main_top_frament,mHousekeeperFrgment);
-                }
                 setSelection(1);
                 mFragment=mHousekeeperFrgment;
             break;
         }
-        transaction.show(mFragment).commit();
+        manager.beginTransaction().show(mFragment).commit();
     }
     //设置当前点中点项目
     public void setSelection(int pos){

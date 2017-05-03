@@ -48,8 +48,4 @@ public class HomeFragmentScenePager extends Fragment{
         adapter=new HomeScenePagerItemListApdater(list,getActivity());
         myListView.setAdapter(adapter);
     }
-
-    public void setTitle(String title){
-
-    }
 }

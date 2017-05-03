@@ -71,7 +71,7 @@ public class HomeFragmentScene extends Fragment{
         fragment_home_scene_tablayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                Log.i("left---",""+fragment_home_scene_tablayout.getPaddingLeft()+"=="+fragment_home_scene_tablayout.getPaddingRight());
+//                Log.i("left---",""+fragment_home_scene_tablayout.getPaddingLeft()+"=="+fragment_home_scene_tablayout.getPaddingRight());
                 int wid=fragment_home_scene_tablayout.getWidth();
                 int itemWidth=wid/fragment_home_scene_tablayout.getTabCount();//item的宽度
                 int pos=tab.getPosition();
