@@ -25,9 +25,6 @@ public class CommunicationFragment extends Fragment{
         unbinder= ButterKnife.bind(this,vi);
         return vi;
     }
-
-
-
     @Override
     public void onDestroy() {
         super.onDestroy();
