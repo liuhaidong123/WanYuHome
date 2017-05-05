@@ -6,15 +6,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
    >
-    <HorizontalScrollView
-        android:background="@color/white"
-        android:layout_marginTop="1dp"
-        android:scrollbars="none"
-        android:id="@+id/scroll"
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="1dp"
+        android:background="@color/homefragmentFgColor"/>
         <android.support.design.widget.TabLayout
             android:id="@+id/fragment_home_scene_tablayout"
+            app:tabMode="scrollable"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
@@ -22,16 +20,24 @@
             app:tabSelectedTextColor="#2ac0f3"
             app:tabTextColor="#333333"
             />
-    </HorizontalScrollView>
-
-    <!--app:tabIndicatorColor="@color/white"                 // 下方滚动的下划线颜色-->
-    <!--app:tabSelectedTextColor="@color/gray"               // tab被选中后，文字的颜色-->
-    <!--app:tabTextColor="@color/white"                      // tab默认的文字颜色-->
-    <android.support.v4.view.ViewPager
+    <FrameLayout
         android:background="@color/homefragmentFgbac"
         android:padding="10dp"
-        android:id="@+id/fragment_home_scene_viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    </android.support.v4.view.ViewPager>
+        <android.support.v4.view.ViewPager
+            android:id="@+id/fragment_home_scene_viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </android.support.v4.view.ViewPager>
+        <!--<com.home.wanyu.lzhView.MyFloatingView-->
+            <!--android:id="@+id/fragment_home_scene_floatingView"-->
+            <!--android:background="#00000000"-->
+            <!--android:layout_width="80dp"-->
+            <!--android:layout_marginBottom="15dp"-->
+            <!--android:layout_marginRight="15dp"-->
+            <!--android:layout_gravity="bottom|right"-->
+            <!--android:layout_height="80dp" />-->
+    </FrameLayout>
+
 </LinearLayout>

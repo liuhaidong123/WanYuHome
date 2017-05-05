@@ -42,4 +42,48 @@
         <item>吃饭</item>
         <item>上学</item>
     </string-array>
+
+
+    <string-array name="homeDeviceString">
+        <item>客厅</item>
+        <item>lim的卧室</item>
+        <item>小红的卧室</item>
+        <item>卫生间</item>
+        <item>厨房</item>
+        <item>小花的卧室</item>
+        <item>阳台</item>
+        <item>刘文的卧室</item>
+        <item>主卧室</item>
+    </string-array>
+    <string name="title_activity_home_device_add_wifi">HomeDeviceAddWifiActivity</string>
+    <string name="homedeviceAddWifiErrorStr">可能出现的问题：\nwifi密码是否正确?\n您的网络是否可用?\n设备是否已经打开?\n联系我们：\n邮箱：wangyukeji</string>
+
+
+    <string name="button_ok">OK</string>
+    <string name="msg_camera_framework_bug">Sorry, the Android camera encountered a problem. You may need to restart the
+        device.
+    </string>
+    <string name="msg_bulk_mode_scanned">Bulk mode: barcode scanned and saved</string>
+    <string name="scan_text">扫描设备二维码</string>
+    <string name="contents_contact">Contact info</string>
+    <string name="contents_email">Email address</string>
+    <string name="contents_location">Geographic coordinates</string>
+    <string name="contents_phone">Phone number</string>
+    <string name="contents_sms">SMS address</string>
+    <string name="contents_text">Plain text</string>
+    <string name="preferences_vibrate">preferences_vibrate</string>
+    <string name="preferences_play_beep">preferences_play_beep</string>
+    <string name="preferences_actions_title">When a barcode is found\u2026</string>
+    <string name="preferences_copy_to_clipboard_title">Copy to clipboard</string>
+    <string name="preferences_decode_1D_title">1D barcodes</string>
+    <string name="preferences_decode_Data_Matrix_title">Data Matrix</string>
+    <string name="preferences_decode_QR_title">QR Codes</string>
+    <string name="preferences_play_beep_title">Beep</string>
+    <string name="preferences_remember_duplicates_summary">Store multiple scans of the same barcode in History</string>
+    <string name="preferences_remember_duplicates_title">Remember duplicates</string>
+    <string name="preferences_scanning_title">When scanning for barcodes, decode\u2026</string>
+    <string name="preferences_supplemental_summary">Try to retrieve more information about the barcode contents</string>
+    <string name="preferences_supplemental_title">Retrieve more info</string>
+    <string name="preferences_vibrate_title">Vibrate</string>
+    <string name="preview_msg">&#160;preview pages available,click Download for more.</string>
 </resources>

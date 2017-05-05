@@ -7,4 +7,57 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/bg_rect</item>
     </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
+    <style name="WhiteTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimaryWhite</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryWhiteDark</item>
+        <item name="colorAccent">@color/colorAccentWhite</item>
+        <item name="android:background">@color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@color/transparent</item>
+        <item name="textHighLight">@color/black</item>
+        <item name="textNormal">@color/dark_gray</item>
+        <item name="textWeak">@color/gray</item>
+        <item name="appBackGround">@color/appBlue</item>
+    </style>
+
+    <style name="GrayTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimaryGray</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryGrayDark</item>
+        <item name="colorAccent">@color/colorAccentGray</item>
+        <item name="android:background">@color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@color/transparent</item>
+        <item name="textHighLight">@color/white</item>
+        <item name="textNormal">@color/white_gray</item>
+        <item name="textWeak">@color/gray</item>
+        <item name="appBackGround">@color/appBlue</item>
+    </style>
+
+
+    <style name="text_center">
+        <item name="android:layout_centerInParent">true</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="text_big_center" parent="text_center">
+        <item name="android:textColor">?attr/textHighLight</item>
+        <item name="android:textSize">@dimen/sp_big_i</item>
+    </style>
+
+    <style name="text_middle_center" parent="text_center">
+        <item name="android:textColor">?attr/textHighLight</item>
+        <item name="android:textSize">@dimen/sp_middle_i</item>
+    </style>
+
+    <!--弹窗样式-->
+    <style name="popup2_anim" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/pop3_in</item>
+        <item name="android:windowExitAnimation">@anim/pop3_out</item>
+    </style>
 </resources>

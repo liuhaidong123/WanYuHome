@@ -7,6 +7,11 @@
     <!-- 往SDCard读取数据权限 -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -23,8 +28,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!-- //主页面actvityty -->
         <activity
             android:name=".activity.MainActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <!-- 情景设置 -->
+        <activity
+            android:name=".activity.HomeSenceSettingActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
@@ -32,6 +44,22 @@
         <activity android:name=".activity.SelectImgActivity" />
         <activity android:name=".activity.OrderActivity" />
         <activity android:name=".activity.AddAddressActivity"></activity>
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.HomeDeviceAddActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.HomeDeviceAddWifiActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <!-- 二维码扫描 -->
+        <activity android:name=".zxing.app.PreferencesActivity" />
+        <activity android:name=".zxing.app.CaptureActivity" />
+        <!-- 二维码扫描 -->
+        <activity android:name=".activity.HomeDeviceSettingActivity" />
+        <activity android:name=".activity.HomeDeviceAddWifiSettingActivity" />
+        <activity android:name=".activity.HomeSenceAddSenceActivity"></activity>
     </application>
 
 </manifest>

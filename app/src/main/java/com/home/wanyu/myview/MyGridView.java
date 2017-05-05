@@ -5,21 +5,18 @@ import android.util.AttributeSet;
 import android.widget.GridView;
 
 /**
- * Created by liuhaidong on 2017/5/4.
+ * Created by wanyu on 2017/5/5.
  */
 
-public class MyGridView extends GridView {
-    public MyGridView(Context context) {
-        super(context);
-    }
-
+public class MyGridView extends GridView{
     public MyGridView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public MyGridView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+    public MyGridView(Context context) {
+        super(context);
     }
+
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {

@@ -31,4 +31,5 @@ dependencies {
     compile 'com.android.support:design:25.0.0'
     compile files('libs/picasso-2.5.2.jar')
     compile 'it.sephiroth.android.library.picasso:picasso:2.5.2.4b'
+    compile files('libs/zxing.jar')
 }
