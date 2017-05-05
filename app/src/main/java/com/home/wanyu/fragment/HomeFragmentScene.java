@@ -19,11 +19,12 @@ import com.home.wanyu.lzhView.MyFloatingView;
 import java.util.ArrayList;
 
 import butterknife.BindArray;
-import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+
+
 
 /**
  * Created by wanyu on 2017/5/2.
@@ -33,7 +34,8 @@ public class HomeFragmentScene extends Fragment{
     private Unbinder unbinder;
     private MyAdapter adapter;
     @BindView(R.id.fragment_home_scene_viewpager)  ViewPager fragment_home_scene_viewpager;
-    @BindView(R.id.fragment_home_scene_tablayout) TabLayout fragment_home_scene_tablayout;
+    @BindView(R.id.fragment_home_scene_tablayout)
+    TabLayout fragment_home_scene_tablayout;
     @BindArray(R.array.homeSceneString) String[]Sence;
     private ArrayList<HomeFragmentScenePager>listFragment;
 

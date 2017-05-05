@@ -28,7 +28,7 @@ public class CircleAdapter extends BaseAdapter {
         this.mList = mList;
         this.mContext = mContext;
         this.mInflater = LayoutInflater.from(this.mContext);
-    }
+}
 
     @Override
     public int getCount() {

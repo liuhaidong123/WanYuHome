@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_add_address"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/homefragmentFgbac"
+    tools:context="com.home.wanyu.activity.AddAddressActivity">
+
+    <RelativeLayout
+        android:id="@+id/add_address_title"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/add_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:src="@mipmap/property_back" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:gravity="center"
+            android:text="@string/add_address"
+            android:textColor="@color/title_color"
+            android:textSize="17sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/city_rl"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_below="@+id/add_address_title"
+        android:layout_marginTop="5dp"
+        android:background="@color/white"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <TextView
+            android:id="@+id/city_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="@string/add_city"
+            android:textColor="@color/homeFragTopTextColor"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/city_tv_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/city_tv"
+            android:textColor="@color/homeFragChangeColor"
+            android:textSize="13sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/circle_small_back" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/area_rl"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_below="@+id/city_rl"
+        android:layout_marginTop="1dp"
+        android:background="@color/white"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <TextView
+            android:id="@+id/area_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="@string/add_area"
+            android:textColor="@color/homeFragTopTextColor"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/area_tv_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/area_tv"
+            android:textColor="@color/homeFragChangeColor"
+            android:textSize="13sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/circle_small_back" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/name_rl"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_below="@+id/area_rl"
+        android:layout_marginTop="1dp"
+        android:background="@color/white"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <TextView
+            android:id="@+id/name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="@string/add_name"
+            android:textColor="@color/homeFragTopTextColor"
+            android:textSize="13sp" />
+
+        <EditText
+            android:id="@+id/name_tv_msg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/name_tv"
+            android:background="@null"
+            android:maxLength="10"
+            android:inputType="text"
+            android:textColor="@color/homeFragChangeColor"
+            android:textSize="13sp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/phone_rl"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_below="@+id/name_rl"
+        android:layout_marginTop="1dp"
+        android:background="@color/white"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <TextView
+            android:id="@+id/phone_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="@string/add_phone"
+            android:textColor="@color/homeFragTopTextColor"
+            android:textSize="13sp" />
+
+        <EditText
+            android:id="@+id/phone_tv_msg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/phone_tv"
+            android:background="@null"
+            android:inputType="number"
+            android:maxLength="11"
+            android:textColor="@color/homeFragChangeColor"
+            android:textSize="13sp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/lou_rl"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_below="@+id/phone_rl"
+        android:layout_marginTop="1dp"
+        android:background="@color/white"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <TextView
+            android:id="@+id/lou_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="@string/add_lou"
+            android:textColor="@color/homeFragTopTextColor"
+            android:textSize="13sp" />
+
+        <EditText
+            android:id="@+id/lou_tv_msg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/lou_tv"
+            android:background="@null"
+            android:maxLines="1"
+            android:inputType="text"
+            android:textColor="@color/homeFragChangeColor"
+            android:textSize="13sp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/ceng_rl"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_below="@+id/lou_rl"
+        android:layout_marginTop="1dp"
+        android:background="@color/white"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <TextView
+            android:id="@+id/ceng_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="@string/add_ceng"
+            android:textColor="@color/homeFragTopTextColor"
+            android:textSize="13sp" />
+
+        <EditText
+            android:id="@+id/ceng_tv_msg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/ceng_tv"
+            android:background="@null"
+            android:maxLines="1"
+            android:inputType="text"
+            android:textColor="@color/homeFragChangeColor"
+            android:textSize="13sp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/unit_rl"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_below="@+id/ceng_rl"
+        android:layout_marginTop="1dp"
+        android:background="@color/white"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <TextView
+            android:id="@+id/unit_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="@string/add_unit"
+            android:textColor="@color/homeFragTopTextColor"
+            android:textSize="13sp" />
+
+        <EditText
+            android:id="@+id/unit_tv_msg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/unit_tv"
+            android:background="@null"
+            android:maxLines="1"
+            android:inputType="text"
+            android:textColor="@color/homeFragChangeColor"
+            android:textSize="13sp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/hourse_rl"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_below="@+id/unit_rl"
+        android:layout_marginTop="1dp"
+        android:background="@color/white"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <TextView
+            android:id="@+id/hourse_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="@string/add_hourse"
+            android:textColor="@color/homeFragTopTextColor"
+            android:textSize="13sp" />
+
+        <EditText
+            android:id="@+id/hourse_tv_msg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/hourse_tv"
+            android:background="@null"
+            android:maxLines="1"
+            android:inputType="text"
+            android:textColor="@color/homeFragChangeColor"
+            android:textSize="13sp" />
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/add_submit"
+        android:layout_width="325dp"
+        android:layout_height="45dp"
+        android:layout_below="@+id/hourse_rl"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/repair_submit_bg"
+        android:text="@string/repair_submit"
+        android:textColor="@color/white"
+        android:textSize="15sp" />
+</RelativeLayout>

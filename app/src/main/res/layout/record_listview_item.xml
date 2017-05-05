@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <RelativeLayout
+            android:id="@+id/head_rl"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:background="@color/white">
+
+            <ImageView
+                android:id="@+id/record_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:src="@mipmap/repair_water" />
+
+            <TextView
+                android:id="@+id/record_categoty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/record_img"
+                android:text="水电维修"
+                android:textColor="@color/homeFragChangeColor"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/record_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/record_categoty"
+                android:text="期望处理时间:2017—5—2 13:00"
+                android:textColor="@color/name_color"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/record_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:text="待维修"
+                android:textColor="@color/repair_color"
+                android:textSize="12sp" />
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/head_rl"
+            android:background="@color/repair_line" />
+
+        <TextView
+            android:id="@+id/record_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/line"
+            android:background="@color/white"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:padding="10dp"
+            android:text="百度文库是百度发布的供网友在线分享文档的平台。百度文库的文档由百度用户上传，需要经过百度的审核才能发布，百度自身不编辑或修改用户上传的文档内容。网友可以在线阅读和下载这些文档。百度文库的文档包括教学资料、考试题库、专业资料、公文写作、法律文件等多个领域的资料。百度用户上传文档可以得到一定的积分，"
+            android:textColor="@color/name_color"
+            android:textSize="13sp" />
+
+        <com.home.wanyu.myview.MyGridView
+            android:id="@+id/record_gridview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/record_message"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:numColumns="5"
+            android:verticalSpacing="5dp"
+            android:scrollbars="none">
+
+        </com.home.wanyu.myview.MyGridView>
+
+        <View
+            android:id="@+id/line2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/record_gridview"
+            android:background="@color/repair_line" />
+
+        <RelativeLayout
+            android:id="@+id/foot_rl"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_below="@+id/line2">
+
+            <TextView
+                android:id="@+id/finish_btn"
+                android:layout_width="70dp"
+                android:layout_height="25dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/repair_griview_item_bg"
+                android:gravity="center"
+                android:text="完成维修"
+                android:textColor="@color/homeFragTopTextColor"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/cancle_btn"
+                android:layout_width="70dp"
+                android:layout_height="25dp"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:layout_toLeftOf="@+id/finish_btn"
+                android:background="@drawable/repair_griview_item_bg"
+                android:gravity="center"
+                android:text="取消维修"
+                android:textColor="@color/homeFragTopTextColor"
+                android:textSize="15sp" />
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>
