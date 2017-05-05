@@ -40,8 +40,6 @@ public class HousekeeperFrgment extends Fragment implements ViewPager.OnPageChan
     private List<String> mTwoList=new ArrayList<>();
 
     private SwipeRefreshLayout mRefresh;
-
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

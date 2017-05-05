@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
     <RelativeLayout
         android:id="@+id/fragment_home_top_layout"
         android:layout_width="match_parent"
@@ -17,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="切换实景"
-            android:textSize="@dimen/activity_horizontal_margin"
+            android:textSize="@dimen/textSize12"
             android:textColor="@color/homeFragChangeColor"
             android:layout_centerVertical="true"
             android:paddingLeft="10dp"
@@ -59,11 +57,12 @@
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"/>
     </RelativeLayout>
-    <RelativeLayout
-        android:id="@+id/fragment_home_bottom_layout"
-        android:background="@color/homefragmentFgColor"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/fragment_home_top_layout">
-    </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/fragment_home_bottom_layout"
+            android:background="@color/homefragmentFgColor"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/fragment_home_top_layout">
+        </RelativeLayout>
 </RelativeLayout>
