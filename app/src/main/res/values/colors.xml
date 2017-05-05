@@ -15,4 +15,7 @@
     <color name="homeFragTopTextColor">#666666</color>
     <color name="homefragmentFgColor">#e9e9e9</color>
     <color name="homefragmentFgbac">#f1f1f1</color>
+    <color name="repair_color">#01c0ff</color>
+    <color name="repair_line">#cccccc</color>
+    <color name="name_color">#999999</color>
 </resources>

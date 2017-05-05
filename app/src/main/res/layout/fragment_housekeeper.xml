@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/bg_color">
 
     <RelativeLayout
         android:id="@+id/property_manager_title"
@@ -9,14 +10,13 @@
         android:layout_height="45dp"
         android:background="@color/white">
 
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:gravity="center"
             android:text="@string/home_manager"
             android:textColor="@color/title_color"
-            android:textSize="15sp" />
+            android:textSize="17sp" />
     </RelativeLayout>
 
     <android.support.v4.widget.SwipeRefreshLayout
@@ -266,6 +266,7 @@
 
 
                     </LinearLayout>
+
                 </RelativeLayout>
 
                 <com.home.wanyu.myview.MyExpandableListview

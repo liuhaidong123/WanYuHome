@@ -4,13 +4,33 @@
     <string name="home_manager">物业管家</string>
     <string name="property_order">物业账单</string>
     <string name="property_life_money">生活缴费</string>
-    <string name="property_repair">军事报修</string>
+    <string name="property_repair">报事报修</string>
     <string name="property_express">快递收发</string>
     <string name="property_commercial">小区商户</string>
     <string name="property_home_service">家政服务</string>
     <string name="property_home_message">租房信息</string>
     <string name="property_decoration">装修</string>
     <string name="circle_title">圈子</string>
+    <string name="i_will">我要报修</string>
+    <string name="i_record">报修记录</string>
+    <string name="repair_all">全部类型</string>
+    <string name="repair_time">选择期望处理时间</string>
+    <string name="repair_submit">提交</string>
+
+    <string name="order_message">您还没有小区信息</string>
+    <string name="add_address">添加地址</string>
+
+    <string name="add_city">城&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;市</string>
+    <string name="add_area">小&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;区</string>
+    <string name="add_name">业主姓名</string>
+    <string name="add_phone">手&#160;&#160;机&#160;&#160;号</string>
+    <string name="add_lou">小区楼号</string>
+    <string name="add_ceng">楼&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;层</string>
+    <string name="add_unit">单&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;元</string>
+    <string name="add_hourse">房&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;号</string>
+
+
+
     <string-array name="homeSceneString">
         <item>回家</item>
         <item>离家</item>

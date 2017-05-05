@@ -1,5 +1,6 @@
 package com.home.wanyu.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,13 +13,17 @@ import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.home.wanyu.R;
+import com.home.wanyu.activity.OrderActivity;
+import com.home.wanyu.activity.RepairActivity;
 import com.home.wanyu.apater.MyExpandableAda;
 import com.home.wanyu.apater.PropertyViewPagerAda;
 import com.home.wanyu.myview.MyExpandableListview;
 
 import java.util.ArrayList;
+import java.util.IdentityHashMap;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -27,7 +32,7 @@ import butterknife.ButterKnife;
  * Created by wanyu on 2017/5/2.
  */
 //物业管家
-public class HousekeeperFrgment extends Fragment implements ViewPager.OnPageChangeListener {
+public class HousekeeperFrgment extends Fragment implements ViewPager.OnPageChangeListener,View.OnClickListener {
     private ViewPager mViewpager;
     private LinearLayout mViewgroup;
     private List<Integer> mAdList = new ArrayList<>();
@@ -40,8 +45,10 @@ public class HousekeeperFrgment extends Fragment implements ViewPager.OnPageChan
     private List<String> mTwoList=new ArrayList<>();
 
     private SwipeRefreshLayout mRefresh;
+    private RelativeLayout mScrollRelative;
 
-
+    private LinearLayout mRepair_ll;
+    private LinearLayout mOrder_ll;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -61,6 +68,12 @@ public class HousekeeperFrgment extends Fragment implements ViewPager.OnPageChan
         mAdAdapter = new PropertyViewPagerAda(getActivity(), mAdList);
         mViewpager.setAdapter(mAdAdapter);
         mViewpager.setCurrentItem(0);
+
+        //将scrollview定位到顶部
+        mScrollRelative= (RelativeLayout) view.findViewById(R.id.scroll_rl);
+        mScrollRelative.setFocusable(true);
+        mScrollRelative.setFocusableInTouchMode(true);
+        mScrollRelative.requestFocus();
         //刷新
         mRefresh= (SwipeRefreshLayout) view.findViewById(R.id.property_refresh);
         mRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -95,6 +108,13 @@ public class HousekeeperFrgment extends Fragment implements ViewPager.OnPageChan
         });
         //去掉箭头
         mMyListview.setGroupIndicator(null);
+
+        //报事报修
+        mRepair_ll= (LinearLayout) view.findViewById(R.id.property_repair);
+        mRepair_ll.setOnClickListener(this);
+        //物业账单
+        mOrder_ll= (LinearLayout) view.findViewById(R.id.property_order);
+        mOrder_ll.setOnClickListener(this);
     }
 
     /**
@@ -166,6 +186,7 @@ public class HousekeeperFrgment extends Fragment implements ViewPager.OnPageChan
      * 停在某一页时，变换小圆点
      *
      * @param selectItems
+     *
      */
     private void setImageBackground(int selectItems) {
         for (int i = 0; i < mImgArr.length; i++) {
@@ -178,7 +199,14 @@ public class HousekeeperFrgment extends Fragment implements ViewPager.OnPageChan
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onClick(View v) {
+        int id=v.getId();
+
+        if (id==mRepair_ll.getId()){//报事报修
+            startActivity(new Intent(getActivity(),RepairActivity.class));
+        }else if (id==mOrder_ll.getId()){
+            startActivity(new Intent(getActivity(),OrderActivity.class));
+        }
+
     }
 }
