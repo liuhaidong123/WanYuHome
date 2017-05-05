@@ -60,4 +60,14 @@
         <item name="android:windowEnterAnimation">@anim/pop3_in</item>
         <item name="android:windowExitAnimation">@anim/pop3_out</item>
     </style>
+    <!--弹窗样式-->
+    <style name="popup3_anim" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/pop2_in</item>
+        <item name="android:windowExitAnimation">@anim/pop2_out</item>
+    </style>
+    <!--弹窗样式-->
+    <style name="popup1_anim" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/pop1_in</item>
+        <item name="android:windowExitAnimation">@anim/pop1_out</item>
+    </style>
 </resources>
