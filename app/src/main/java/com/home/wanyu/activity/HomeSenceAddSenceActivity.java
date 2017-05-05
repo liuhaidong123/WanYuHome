@@ -76,7 +76,7 @@ public class HomeSenceAddSenceActivity extends MyActivity {
         RelativeLayout parent = (RelativeLayout) findViewById(R.id.home_sence_Add_rela_condition_relaLayout);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
         WindowManager.LayoutParams params = getWindow().getAttributes();
-        params.alpha = 0.8f;
+        params.alpha = 0.9f;
         getWindow().setAttributes(params);
 
         pop.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -91,7 +91,7 @@ public class HomeSenceAddSenceActivity extends MyActivity {
 
 
         pop.setAnimationStyle(R.style.popup2_anim);
-        pop.showAsDropDown(parent, 0, 20);
+        pop.showAsDropDown(parent, 0, 5);
         pop.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
