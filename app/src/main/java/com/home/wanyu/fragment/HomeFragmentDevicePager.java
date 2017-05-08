@@ -50,6 +50,7 @@ public class HomeFragmentDevicePager extends Fragment{
             case R.id.fragment_home_device_viewpager_item_MyFloating:
                 boolean state=floatingView.getState();
                 floatingView.setOnAndOff(!state);
+
                 for (int i=0;i<list.size();i++){
                     if (state){
                         list.get(i).put("state","0");

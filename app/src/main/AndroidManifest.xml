@@ -65,6 +65,8 @@
         <activity android:name=".activity.LifeMoneyActivity2" />
         <activity android:name=".activity.MoneyNumActivity" />
         <activity android:name=".activity.MoneyInputSureActivity"></activity>
+        <activity android:name=".activity.HomeSenceAddSenceActivity" />
+        <activity android:name=".activity.TestActivity"></activity>
     </application>
 
 </manifest>

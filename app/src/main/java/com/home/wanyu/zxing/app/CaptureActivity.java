@@ -151,6 +151,15 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
         CameraManager.init(getApplication());
         viewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);
         surfaceView = (SurfaceView) findViewById(R.id.preview_view);
+        surfaceHolder = surfaceView.getHolder();
+        surfaceHolder.addCallback(this);
+        surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+        inactivityTimer = new InactivityTimer(this);
+        handler = null;
+        hasSurface = false;
+        inactivityTimer = new InactivityTimer(this);
+        beepManager = new BeepManager(this);
+
         // showHelpOnFirstLaunch();
         if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.M) {
             if (checkSelfPermission(Manifest.permission.CAMERA)
@@ -185,20 +194,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     }
 
     protected void init(){
-        surfaceHolder = surfaceView.getHolder();
-        surfaceHolder.addCallback(this);
-        surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-        hasSurface = false;
-        inactivityTimer = new InactivityTimer(this);
-        handler = null;
-        hasSurface = false;
-        inactivityTimer = new InactivityTimer(this);
-        beepManager = new BeepManager(this);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
         resetStatusView();
         if (hasSurface) {
             // The activity was paused but not stopped, so the surface still
@@ -208,15 +203,18 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
         } else {
             // Install the callback and wait for surfaceCreated() to init the
             // camera.
+            CameraManager.get().startPreview();
             Log.e("CaptureActivity", "onResume----");
 //            Toast.makeText(CaptureActivity.this,"相机权限被第三方软件禁用，请手动打开权限",Toast.LENGTH_SHORT).show();
         }
         if (beepManager!=null){
             beepManager.updatePrefs();
         }
-
     }
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
     @Override
     protected void onPause() {
         super.onPause();
@@ -329,10 +327,11 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     }
 
     private void displayFrameworkBugMessageAndExit() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(getString(R.string.app_name)).setMessage("相机权限被禁用，请手动打开权限");
-        builder.setOnCancelListener(new FinishListener(this));
-        builder.show();
+        Toast.makeText(CaptureActivity.this,"请打开相机权限",Toast.LENGTH_SHORT).show();
+//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//        builder.setTitle(getString(R.string.app_name)).setMessage("相机权限被禁用，请手动打开权限");
+//        builder.setOnCancelListener(new FinishListener(this));
+//        builder.show();
     }
 
     private void resetStatusView() {

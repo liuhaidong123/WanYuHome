@@ -16,6 +16,7 @@ import com.home.wanyu.R;
 import com.home.wanyu.activity.HomeDeviceAddActivity;
 import com.home.wanyu.activity.HomeDeviceAddWifiActivity;
 import com.home.wanyu.activity.HomeSenceAddSenceActivity;
+import com.home.wanyu.activity.TestActivity;
 import com.home.wanyu.lzhUtils.MyToast;
 import com.home.wanyu.lzhView.MyFloatingView;
 import com.home.wanyu.zxing.app.CaptureActivity;
@@ -84,6 +85,7 @@ public class HomeFragment extends Fragment {
 
             case R.id.fragment_home_change:
                 MyToast.DebugToast(getActivity(),"切换实景");
+                startActivity(new Intent(getActivity(), TestActivity.class));
                 break;
 
             case R.id.fragment_home_top_add:

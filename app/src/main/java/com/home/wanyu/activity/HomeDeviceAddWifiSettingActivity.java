@@ -33,9 +33,11 @@ public class HomeDeviceAddWifiSettingActivity extends MyActivity {
 //    camera door light3 light2 line music socket1 sound square sun tv1 more3
     int[]ResId={R.mipmap.camera,R.mipmap.door,R.mipmap.light2,R.mipmap.light3,R.mipmap.line,R.mipmap.music,
                 R.mipmap.socket1,R.mipmap.sound,R.mipmap.square,R.mipmap.sun,R.mipmap.tv1,R.mipmap.more3};
-
     private ArrayList<HashMap<String,String>>list;
     private HomeDeviceAddWifiSettingGridViewAdapter adapter;
+    //所属房间的添加按钮（在没有添加过房间时不显示下拉菜单：后台获取到的房间为空时）
+    private boolean isRoomEmpty=true;//用户还没有添加过房间
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,8 +46,23 @@ public class HomeDeviceAddWifiSettingActivity extends MyActivity {
         ShowChildView(DEFAULTRESID);
         unbinder= ButterKnife.bind(this,ChildView);
         initData();
+        setRoomState();
     }
 
+
+    public void setRoomState(){
+        if (isRoomEmpty){//用户没有添加过房间时
+            home_deviceWifi_setting_rela_condition_imageselect.setVisibility(View.GONE);
+            home_deviceWifi_setting_rela_condition_guishu.setSelected(true);
+            home_deviceWifi_setting_rela_condition_guishu.setText("添加房间");
+        }
+        else
+        {
+            home_deviceWifi_setting_rela_condition_imageselect.setVisibility(View.VISIBLE);
+            home_deviceWifi_setting_rela_condition_guishu.setSelected(false);
+            home_deviceWifi_setting_rela_condition_guishu.setText("客厅");
+        }
+    }
     private void initData() {
         list=new ArrayList<>();
         int size=ResId.length;
@@ -58,25 +75,27 @@ public class HomeDeviceAddWifiSettingActivity extends MyActivity {
         list.get(0).put("select","1");
         adapter=new HomeDeviceAddWifiSettingGridViewAdapter(list,con);
         home_deviceWifi_setting_gridview.setAdapter(adapter);
-//        home_deviceWifi_setting_gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                if (position!=adapter.getCount()-1){
-//                    setSelct(position);
-//                }
-//                else {
-//                    Toast.makeText(con,"更多图标，请期待",Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        });
     }
 
 
 
-    @OnClick({R.id.activity_homescene_deviceWifi_setting_submit})
+    @OnClick({R.id.activity_homescene_deviceWifi_setting_submit,R.id.home_deviceWifi_setting_rela_condition_relaLayout})
     public void click(View vi){
         switch (vi.getId()){
             case R.id.activity_homescene_deviceWifi_setting_submit://提交按钮点击事件
+                Toast.makeText(con,"确定",Toast.LENGTH_SHORT).show();
+
+                break;
+            case R.id.home_deviceWifi_setting_rela_condition_relaLayout:
+                if (!isRoomEmpty){
+                    Toast.makeText(con,"选择房间",Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(con,"添加房间",Toast.LENGTH_SHORT).show();
+                    isRoomEmpty=false;
+                    setRoomState();
+
+                }
                 break;
         }
     }

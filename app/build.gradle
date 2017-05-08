@@ -32,4 +32,7 @@ dependencies {
     compile files('libs/picasso-2.5.2.jar')
     compile 'it.sephiroth.android.library.picasso:picasso:2.5.2.4b'
     compile files('libs/zxing.jar')
+    compile 'com.squareup.okhttp:okhttp:2.4.0'
+    compile 'com.squareup.okio:okio:1.5.0'
+    compile 'com.google.code.gson:gson:2.8.0'
 }

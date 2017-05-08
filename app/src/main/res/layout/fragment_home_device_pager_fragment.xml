@@ -54,7 +54,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
             </com.home.wanyu.myview.MyListView>
-            <com.home.wanyu.lzhView.MyFloatingView
+            <com.home.wanyu.lzhView.MyView
                 android:layout_marginRight="15dp"
                 android:layout_marginBottom="10dp"
                 android:id="@+id/fragment_home_device_viewpager_item_MyFloating"

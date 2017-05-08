@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<TextView
+    android:background="@drawable/poptextback"
+    android:text="周一"
+    android:gravity="center"
+    android:textSize="@dimen/textSize14"
+    android:layout_centerInParent="true"
+    android:textColor="@drawable/textcolor"
+    android:id="@+id/pop_data_gridview_item_text"
+    android:layout_width="76dp"
+    android:layout_height="30dp"/>
+</RelativeLayout>
