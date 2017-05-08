@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_order_address"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/homefragmentFgbac"
+    tools:context="com.home.wanyu.activity.OrderAddressActivity">
+
+    <RelativeLayout
+        android:id="@+id/order_msg_title"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/order_msg_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:src="@mipmap/property_back" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:gravity="center"
+            android:text="@string/property_order"
+            android:textColor="@color/title_color"
+            android:textSize="17sp" />
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/order_address_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/add_address_submit"
+        android:layout_below="@+id/order_msg_title"
+        android:layout_marginTop="1dp"
+        android:divider="@color/homefragmentFgbac"
+        android:dividerHeight="1dp"
+        android:scrollbars="none">
+
+    </ListView>
+
+    <Button
+        android:id="@id/add_address_submit"
+        android:layout_width="325dp"
+        android:layout_height="45dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="40dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/repair_submit_bg"
+        android:text="@string/add_address"
+        android:textColor="@color/white"
+        android:textSize="15sp" />
+</RelativeLayout>

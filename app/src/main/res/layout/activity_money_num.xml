@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_money_num"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    tools:context="com.home.wanyu.activity.MoneyNumActivity">
+
+    <RelativeLayout
+        android:id="@+id/money2_title"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/money2_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:src="@mipmap/property_back" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:gravity="center"
+            android:text="电费"
+            android:textColor="@color/title_color"
+            android:textSize="17sp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/money2_msg_address_rl"
+        android:layout_width="match_parent"
+        android:layout_height="68dp"
+        android:layout_below="@+id/money2_title"
+        android:layout_marginTop="1dp"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/hourse_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:src="@mipmap/order_address" />
+
+        <RelativeLayout
+            android:id="@+id/money2_address_rl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="30dp"
+            android:layout_toRightOf="@id/hourse_img">
+
+            <TextView
+                android:id="@+id/money2_msg_city"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="河北"
+                android:textColor="@color/titlecolor3"
+                android:textSize="17sp" />
+
+            <TextView
+                android:id="@+id/money2_address_msg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/money2_msg_city"
+                android:layout_marginTop="5dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="名流一品3号楼3单元3061221222222222222222222"
+                android:textColor="@color/titlecolor3" />
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/money2_unit_rl"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_below="@+id/money2_msg_address_rl"
+        android:layout_marginTop="1dp"
+        android:background="@color/white"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="@string/money2_unit"
+            android:textColor="@color/title_color"
+            android:textSize="13sp" />
+
+
+        <TextView
+            android:id="@+id/money2_unit_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:ellipsize="end"
+            android:maxLength="15"
+            android:text="名流一品物业"
+            android:textColor="@color/name_color"
+            android:textSize="11sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/money2_num_rl"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_below="@+id/money2_unit_rl"
+        android:layout_marginTop="1dp"
+        android:background="@color/white"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+
+        <TextView
+            android:id="@+id/money2_num_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="@string/money2_num"
+            android:textColor="@color/title_color"
+            android:textSize="13sp" />
+
+
+        <EditText
+            android:id="@+id/money2_num_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/money2_num_tv"
+            android:background="@null"
+            android:hint="输入缴费编号"
+            android:textColor="@color/name_color"
+            android:textSize="11sp" />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/money2_submit"
+        android:layout_width="325dp"
+        android:layout_height="45dp"
+        android:layout_below="@+id/money2_num_rl"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50.5dp"
+        android:background="@drawable/repair_submit_bg"
+        android:text="下一步"
+        android:textColor="@color/white"
+        android:textSize="15sp" />
+
+</RelativeLayout>

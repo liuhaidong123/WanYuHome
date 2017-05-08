@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_centerInParent="true"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/update"
+            android:layout_width="74dp"
+            android:layout_height="45dp"
+            android:background="#ecebeb"
+            android:gravity="center"
+            android:text="修改"
+            android:layout_centerVertical="true"
+            android:textColor="@color/title_color"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_centerVertical="true"
+            android:id="@+id/delete"
+            android:layout_width="74dp"
+            android:layout_height="45dp"
+            android:background="#fc4a4a"
+            android:gravity="center"
+            android:text="删除"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@+id/update"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+    </RelativeLayout>
+</RelativeLayout>

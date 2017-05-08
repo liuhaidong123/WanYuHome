@@ -4,38 +4,38 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.home.wanyu.R;
 
-public class OrderActivity extends AppCompatActivity implements View.OnClickListener{
+public class LifeMoneyActivity extends AppCompatActivity implements View.OnClickListener{
+    private Button mMoneyAdd_Address;
     private ImageView mBack;
-    private TextView mAddAddress_btn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_order);
+        setContentView(R.layout.activity_life_money);
         initView();
     }
 
-    public void initView(){
-        mBack= (ImageView) findViewById(R.id.order_back);
+    private void initView() {
+        mBack= (ImageView) findViewById(R.id.money_back);
         mBack.setOnClickListener(this);
-
-        mAddAddress_btn= (TextView) findViewById(R.id.add_address_btn);
-        mAddAddress_btn.setOnClickListener(this);
+        //添加地址
+        mMoneyAdd_Address= (Button) findViewById(R.id.money_add_area_submit);
+        mMoneyAdd_Address.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         int id=v.getId();
-        if (id==mBack.getId()){
-            finish();
-        }else if (id==mAddAddress_btn.getId()){
+        if (id==mMoneyAdd_Address.getId()){
             Intent intent=new Intent(this,AddAddressActivity.class);
-            intent.putExtra("order",22);
+            intent.putExtra("money",11);
             startActivity(intent);
+        }else if (mBack.getId()==id){
+            finish();
         }
     }
 }

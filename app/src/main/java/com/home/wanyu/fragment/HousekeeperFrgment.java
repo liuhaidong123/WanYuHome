@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.home.wanyu.R;
+import com.home.wanyu.activity.LifeMoneyActivity;
 import com.home.wanyu.activity.OrderActivity;
 import com.home.wanyu.activity.RepairActivity;
 import com.home.wanyu.apater.MyExpandableAda;
@@ -49,6 +50,7 @@ public class HousekeeperFrgment extends Fragment implements ViewPager.OnPageChan
 
     private LinearLayout mRepair_ll;
     private LinearLayout mOrder_ll;
+    private LinearLayout mLife_money_ll;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -115,6 +117,9 @@ public class HousekeeperFrgment extends Fragment implements ViewPager.OnPageChan
         //物业账单
         mOrder_ll= (LinearLayout) view.findViewById(R.id.property_order);
         mOrder_ll.setOnClickListener(this);
+        //生活缴费
+        mLife_money_ll= (LinearLayout) view.findViewById(R.id.property_life_money);
+        mLife_money_ll.setOnClickListener(this);
     }
 
     /**
@@ -204,8 +209,10 @@ public class HousekeeperFrgment extends Fragment implements ViewPager.OnPageChan
 
         if (id==mRepair_ll.getId()){//报事报修
             startActivity(new Intent(getActivity(),RepairActivity.class));
-        }else if (id==mOrder_ll.getId()){
+        }else if (id==mOrder_ll.getId()){//物业账单
             startActivity(new Intent(getActivity(),OrderActivity.class));
+        }else if (id==mLife_money_ll.getId()){//生活缴费
+            startActivity(new Intent(getActivity(),LifeMoneyActivity.class));
         }
 
     }

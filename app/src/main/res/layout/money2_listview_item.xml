@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/money2_ele_rl"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_below="@+id/money_address_rl"
+        android:background="@color/white"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <ImageView
+            android:id="@+id/money2_ele_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/money_ele_no" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/money2_ele_img">
+
+            <TextView
+                android:id="@+id/money2_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/money_ele_tv"
+                android:textColor="@color/title_color"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/money2_num_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/money2_tv"
+                android:layout_marginTop="5dp"
+                android:text="111111111"
+                android:textColor="@color/name_color"
+                android:textSize="10sp" />
+
+        </RelativeLayout>
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/circle_small_back"
+
+            />
+    </RelativeLayout>
+
+</RelativeLayout>

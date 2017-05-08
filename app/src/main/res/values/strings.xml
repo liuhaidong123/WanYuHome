@@ -16,6 +16,7 @@
     <string name="repair_all">全部类型</string>
     <string name="repair_time">选择期望处理时间</string>
     <string name="repair_submit">提交</string>
+    <string name="order_lookup">查询</string>
 
     <string name="order_message">您还没有小区信息</string>
     <string name="add_address">添加地址</string>
@@ -29,6 +30,25 @@
     <string name="add_unit">单&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;元</string>
     <string name="add_hourse">房&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;号</string>
 
+    <string name="money_msg">无信息</string>
+    <string name="money_ele_tv">电费</string>
+    <string name="money_water_tv">水费</string>
+    <string name="money_ran_tv">燃气费</string>
+    <string name="money_property_tv">物业费</string>
+    <string name="money_add_area_tv">添加小区</string>
+    <string name="money_record">缴费记录</string>
+
+    <string name="money2_unit">缴费单位</string>
+    <string name="money2_num">用户编号</string>
+    <string name="input_money">请输入缴费金额</string>
+
+    <string name="input_money_unit">缴费单位</string>
+    <string name="input_money_num">客户编号</string>
+    <string name="input_money_name">户名</string>
+    <string name="input_money_address">用户地址</string>
+    <string name="input_money_type">缴费类型</string>
+    <string name="input_money_many">入表金额</string>
+    <string name="input_money_submit">立即缴费</string>
 
 
     <string-array name="homeSceneString">

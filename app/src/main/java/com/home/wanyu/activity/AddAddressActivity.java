@@ -150,8 +150,23 @@ public class AddAddressActivity extends AppCompatActivity implements View.OnClic
         }else if (id==mSubmit.getId()){
             if (getCity().equals("")||getArea().equals("")||getName().equals("")||getPhone().equals("")||getLou().equals("")||getCeng().equals("")||getUnit().equals("")||getHourse().equals("")){
               Toast.makeText(this,"亲,请补全地址信息哦",Toast.LENGTH_SHORT).show();
+                //跳转到生活缴费
+                if (getIntent().getIntExtra("money",-1)==11){
+                    startActivity(new Intent(this,LifeMoneyActivity2.class));
+                    //跳转到物业账单
+                }else if(getIntent().getIntExtra("order",-1)==22){
+                    startActivity(new Intent(this,OrderMessageActivity.class));
+                }
+
             }else {
                 Toast.makeText(this,"亲,地址正确",Toast.LENGTH_SHORT).show();
+                //跳转到生活缴费
+                if (getIntent().getIntExtra("money",-1)==11){
+                    startActivity(new Intent(this,LifeMoneyActivity2.class));
+                    //跳转到物业账单
+                }else if(getIntent().getIntExtra("order",-1)==22){
+                    startActivity(new Intent(this,OrderMessageActivity.class));
+                }
             }
         }
     }

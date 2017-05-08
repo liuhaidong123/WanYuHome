@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/homefragmentFgbac">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/date_rl"
+            android:layout_width="match_parent"
+            android:layout_height="37dp"
+            android:background="@color/white">
+
+            <TextView
+                android:id="@+id/order_msg_date_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:text="2017-5"
+                android:textColor="@color/titlecolor3"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/all_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:text="合计缴费:180.00元"
+                android:textColor="@color/titlecolor3"
+                android:textSize="13sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/water_rl"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_below="@+id/date_rl"
+            android:layout_marginTop="1dp"
+            android:background="@color/white">
+
+            <TextView
+                android:id="@+id/order_msg_water_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:text="水费"
+                android:textColor="@color/titlecolor3"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/water_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:text="60.00元"
+                android:textColor="@color/titlecolor3"
+                android:textSize="13sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/ele_rl"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_below="@+id/water_rl"
+            android:layout_marginTop="1dp"
+            android:background="@color/white">
+
+            <TextView
+                android:id="@+id/order_msg_ele_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:text="电费"
+                android:textColor="@color/titlecolor3"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/ele_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:text="60.00元"
+                android:textColor="@color/titlecolor3"
+                android:textSize="13sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/shao_rl"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_below="@+id/ele_rl"
+            android:layout_marginTop="1dp"
+            android:background="@color/white">
+
+            <TextView
+                android:id="@+id/order_msg_shao_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:text="燃气费"
+                android:textColor="@color/titlecolor3"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/shao_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:text="60.00元"
+                android:textColor="@color/titlecolor3"
+                android:textSize="13sp" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+</RelativeLayout>
