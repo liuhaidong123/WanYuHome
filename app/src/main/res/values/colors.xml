@@ -59,4 +59,13 @@
     <color name="transparent_background">#ffffff</color>
     <color name="trans2">#d9afea</color>
     <color name="wheel_textColorDikn">#ec0c22</color>
+
+
+    <color name="test1">#fbf20306</color>
+    <color name="test2">#fbe6640e</color>
+    <color name="test3">#fbf2d603</color>
+    <color name="test4">#fb03f227</color>
+    <color name="test5">#fb03eef2</color>
+    <color name="test6">#fb0b03f2</color>
+    <color name="test7">#fb8204f1</color>
 </resources>

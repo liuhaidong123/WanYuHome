@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:background="#f1f1f1"
+    android:id="@+id/home_sence_setting_layout"
     android:layout_height="match_parent">
     <ScrollView
         android:layout_width="match_parent"
@@ -33,6 +34,7 @@
                         android:textColor="@color/titlecolor3"
                         android:text="情 景 名 称"/>
                     <EditText
+                        android:maxLength="6"
                         android:id="@+id/home_sence_scene_rela_eidtext"
                         android:layout_marginLeft="15dp"
                         android:paddingLeft="10dp"
@@ -72,6 +74,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                         <TextView
+                            android:id="@+id/home_sence_scene_rela_condition_textv_name"
                             android:text="一键启动"
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp"

@@ -6,7 +6,6 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <!-- 往SDCard读取数据权限 -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -43,8 +42,8 @@
         <activity android:name=".activity.RepairActivity" />
         <activity android:name=".activity.SelectImgActivity" />
         <activity android:name=".activity.OrderActivity" />
-        <activity android:name=".activity.AddAddressActivity"></activity>
-            android:screenOrientation="portrait" />
+        <activity android:name=".activity.AddAddressActivity" />
+        android:screenOrientation="portrait" />
         <activity
             android:name=".activity.HomeDeviceAddActivity"
             android:launchMode="singleTop"
@@ -59,7 +58,8 @@
         <!-- 二维码扫描 -->
         <activity android:name=".activity.HomeDeviceSettingActivity" />
         <activity android:name=".activity.HomeDeviceAddWifiSettingActivity" />
-        <activity android:name=".activity.HomeSenceAddSenceActivity"></activity>
+        <activity android:name=".activity.HomeSenceAddSenceActivity" />
+        <activity android:name=".activity.TestActivity"></activity>
     </application>
 
 </manifest>

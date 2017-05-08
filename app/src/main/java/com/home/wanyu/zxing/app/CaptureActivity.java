@@ -327,10 +327,11 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     }
 
     private void displayFrameworkBugMessageAndExit() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(getString(R.string.app_name)).setMessage("相机权限被禁用，请手动打开权限");
-        builder.setOnCancelListener(new FinishListener(this));
-        builder.show();
+        Toast.makeText(CaptureActivity.this,"请打开相机权限",Toast.LENGTH_SHORT).show();
+//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//        builder.setTitle(getString(R.string.app_name)).setMessage("相机权限被禁用，请手动打开权限");
+//        builder.setOnCancelListener(new FinishListener(this));
+//        builder.show();
     }
 
     private void resetStatusView() {

@@ -91,7 +91,7 @@
                             android:layout_alignParentLeft="true"
                             android:layout_toLeftOf="@+id/home_deviceWifi_setting_rela_condition_imageselect"
                             android:layout_centerVertical="true"
-                            android:textColor="@color/titlecolor3"
+                            android:textColor="@drawable/textc_3_bule"
                             android:textSize="@dimen/textSize14"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -145,18 +145,19 @@
                     android:layout_height="wrap_content"
                     android:paddingTop="30dp"
                     android:paddingBottom="30dp">
+
                     <TextView
                         android:id="@+id/activity_homescene_deviceWifi_setting_submit"
                         android:clickable="true"
                         android:textSize="17sp"
                         android:text="确定"
-                        android:layout_centerInParent="true"
                         android:background="@drawable/activity_homescene_setting_submit"
                         android:textColor="@color/white"
                         android:layout_width="190dp"
                         android:gravity="center"
                         android:layout_height="44dp"
-                        />
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true" />
                 </RelativeLayout>
             </LinearLayout>
         </LinearLayout>

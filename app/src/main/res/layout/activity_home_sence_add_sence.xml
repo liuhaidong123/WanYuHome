@@ -38,6 +38,7 @@
                         android:textColor="@color/titlecolor3"
                         android:text="情 景 名 称"/>
                     <EditText
+                        android:maxLength="6"
                         android:id="@+id/home_sence_Add_rela_eidtext"
                         android:layout_marginLeft="15dp"
                         android:paddingLeft="10dp"

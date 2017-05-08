@@ -30,7 +30,6 @@
     <string name="add_hourse">房&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;号</string>
 
 
-
     <string-array name="homeSceneString">
         <item>回家</item>
         <item>离家</item>
@@ -39,21 +38,52 @@
         <item>休闲</item>
         <item>娱乐</item>
         <item>静音</item>
-        <item>吃饭</item>
-        <item>上学</item>
+        <item>工作</item>
     </string-array>
+    <string-array name="mode">
+        <item>一键启动</item>
+        <item>定时启动</item>
+        <item>定位启动</item>
+    </string-array>
+        <string-array name="KM">
+            <item>0km</item>
+            <item>1km</item>
+            <item>2km</item>
+            <item>3km</item>
+            <item>4km</item>
+            <item>5km</item>
+            <item>6km</item>
+            <item>7km</item>
+            <item>8km</item>
+            <item>9km</item>
+        </string-array>
 
+    <string-array name="M">
+        <item>0m</item>
+        <item>100m</item>
+        <item>200m</item>
+        <item>300m</item>
+        <item>400m</item>
+        <item>500m</item>
+        <item>600m</item>
+        <item>700m</item>
+        <item>800m</item>
+        <item>900m</item>
+    </string-array>
+        <string-array name="week">
+            <item>周一</item>
+        <item>周二</item>
+        <item>周三</item>
+        <item>周四</item>
+        <item>周五</item>
+        <item>周六</item>
+        <item>周日</item>
+            <item>全部</item>
+        </string-array>
 
     <string-array name="homeDeviceString">
         <item>客厅</item>
         <item>lim的卧室</item>
-        <item>小红的卧室</item>
-        <item>卫生间</item>
-        <item>厨房</item>
-        <item>小花的卧室</item>
-        <item>阳台</item>
-        <item>刘文的卧室</item>
-        <item>主卧室</item>
     </string-array>
     <string name="title_activity_home_device_add_wifi">HomeDeviceAddWifiActivity</string>
     <string name="homedeviceAddWifiErrorStr">可能出现的问题：\nwifi密码是否正确?\n您的网络是否可用?\n设备是否已经打开?\n联系我们：\n邮箱：wangyukeji</string>

@@ -26,6 +26,7 @@ import com.home.wanyu.adapter.PopDataGridViewAdapter;
 import com.home.wanyu.lzhUtils.MyActivity;
 import com.home.wanyu.lzhUtils.MyToast;
 import com.home.wanyu.lzhView.wheelView.MyWheelAdapter;
+import com.home.wanyu.lzhView.wheelView.MyWheelViewAdapterArray;
 import com.home.wanyu.lzhView.wheelView.OnWheelChangedListener;
 import com.home.wanyu.lzhView.wheelView.WheelView;
 import com.home.wanyu.myview.MyListView;
@@ -35,6 +36,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import butterknife.BindArray;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -52,14 +54,16 @@ public class HomeSenceAddSenceActivity extends MyActivity {
     private String[]title={"客厅灯","电视","客厅插座"};
     private int[]url={R.mipmap.light,R.mipmap.tv,R.mipmap.socket};
     private HomeSceneAddListAdapter adapter;
-    private String[]mode={"一键启动","定时启动","定位启动"};
+    @BindArray(R.array.mode)String[]mode;
     private int SelectPositon=0;//当前选中的启动方式对应mode中的下标
 
     private List<Map<String,String>> listGridview;//定时启动弹出窗口中的gridview的数据源
-    private String[]str={"周一","周二","周三","周四","周五","周六","周日","全部",};
+    @BindArray(R.array.week)String[]str;
     PopDataGridViewAdapter adapterGridView;
     private List<String>listHours;//轮滚的小时数据源
     private List<String>listTime;//轮滚的分钟数据源
+    @BindArray(R.array.KM)String[]listKm;//距离定位中的千米
+    @BindArray(R.array.M)String[]listM;//距离定位中
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,7 +86,7 @@ public class HomeSenceAddSenceActivity extends MyActivity {
                 home_sence_Add_rela_condition_imageselect.setSelected(true);
                 showWindowMode();//显示选择启动方式的view
                 break;
-        }
+            }
         }
 
     private void showWindowMode() {
@@ -156,6 +160,25 @@ public class HomeSenceAddSenceActivity extends MyActivity {
         PopupWindow popW=new PopupWindow();
         popW = new PopupWindow();
         View v = LayoutInflater.from(con).inflate(R.layout.pop_homesenceasetting_address, null);
+        WheelView pop_wheelview_address_M= (WheelView) v.findViewById(R.id.pop_wheelview_address_M);
+
+        WheelView pop_wheelview_address_KM= (WheelView) v.findViewById(R.id.pop_wheelview_address_KM);
+
+        pop_wheelview_address_KM.setViewAdapter(new MyWheelViewAdapterArray(con,listKm));
+        pop_wheelview_address_M.setViewAdapter(new MyWheelViewAdapterArray(con,listM));
+        pop_wheelview_address_KM.addChangingListener(new OnWheelChangedListener() {
+            @Override
+            public void onChanged(WheelView wheel, int oldValue, int newValue) {
+                Toast.makeText(con,listKm[newValue],Toast.LENGTH_SHORT).show();
+            }
+        });
+        pop_wheelview_address_M.addChangingListener(new OnWheelChangedListener() {
+            @Override
+            public void onChanged(WheelView wheel, int oldValue, int newValue) {
+                Toast.makeText(con,listM[newValue],Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
         RelativeLayout parent = (RelativeLayout) findViewById(R.id.home_sence_Add_parentLayout);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
@@ -267,8 +290,6 @@ public class HomeSenceAddSenceActivity extends MyActivity {
         }
         adapter = new HomeSceneAddListAdapter(list,con);
         home_senceAdd_listview.setAdapter(adapter);
-
-
         //定时启动弹窗中gridview的数据源以及适配器
         listGridview=new ArrayList<>();
         int length=str.length;
@@ -279,12 +300,9 @@ public class HomeSenceAddSenceActivity extends MyActivity {
             listGridview.add(mp);
         }
         adapterGridView=new PopDataGridViewAdapter(listGridview,con);
-
-
-
         listHours=new ArrayList<>();
         for (int i=0;i<24;i++){
-            listHours.add(i+"时");
+            listHours.add(i+"点");
         }
         listTime=new ArrayList<>();
         for (int i=0;i<60;i++){

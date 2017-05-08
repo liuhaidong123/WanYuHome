@@ -21,29 +21,16 @@
         android:layout_marginTop="25dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <EditText
-            android:gravity="center"
-            android:textSize="@dimen/textSize14"
-            android:textColor="@color/titlecolor3"
-            android:text="距家500米"
-            android:layout_weight="1"
+        <com.home.wanyu.lzhView.wheelView.WheelView
             android:layout_width="0dp"
-            android:layout_height="30dp"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:background="@drawable/editext"/>
-        <EditText
-            android:gravity="center"
-            android:textSize="@dimen/textSize14"
-            android:textColor="@color/titlecolor3"
-            android:text="距家1000米"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:layout_marginLeft="10dp"
             android:layout_weight="1"
+            android:id="@+id/pop_wheelview_address_KM"
+            android:layout_height="wrap_content"/>
+        <com.home.wanyu.lzhView.wheelView.WheelView
             android:layout_width="0dp"
-            android:layout_height="30dp"
-            android:background="@drawable/editext"/>
+            android:layout_weight="1"
+            android:id="@+id/pop_wheelview_address_M"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
     <TextView
         android:text="确定"
