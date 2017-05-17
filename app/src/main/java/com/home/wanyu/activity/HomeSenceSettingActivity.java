@@ -1,9 +1,15 @@
 package com.home.wanyu.activity;
 
+import android.content.Intent;
+import android.database.sqlite.SQLiteException;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.os.PersistableBundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,18 +24,30 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.home.wanyu.Icons.SceneMode;
+import com.home.wanyu.Ip.Ip;
+import com.home.wanyu.Ip.ServerCode;
+import com.home.wanyu.Ip.ToastType;
+import com.home.wanyu.Ip.mGson;
+import com.home.wanyu.Ip.mToast;
+import com.home.wanyu.Ip.okhttpTools;
 import com.home.wanyu.R;
-import com.home.wanyu.adapter.HomeDevicePagerItemListApdater;
-import com.home.wanyu.adapter.HomeSceneAddListAdapter;
+import com.home.wanyu.User.UserInfo;
 import com.home.wanyu.adapter.HomeSceneSettingListAdapter;
 import com.home.wanyu.adapter.PopDataGridViewAdapter;
+import com.home.wanyu.bean.Bean_getRoomData;
+import com.home.wanyu.bean.Bean_getSceneData;
+import com.home.wanyu.bean.Bean_sceneSetting;
 import com.home.wanyu.lzhUtils.MyActivity;
-import com.home.wanyu.lzhUtils.MyToast;
 import com.home.wanyu.lzhView.wheelView.MyWheelAdapter;
 import com.home.wanyu.lzhView.wheelView.MyWheelViewAdapterArray;
 import com.home.wanyu.lzhView.wheelView.OnWheelChangedListener;
 import com.home.wanyu.lzhView.wheelView.WheelView;
 import com.home.wanyu.myview.MyListView;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,13 +65,19 @@ import butterknife.Unbinder;
  */
 //情景设置的activity
 //    intent.putExtra("name",SceneName);
+//intent.putExtra("id",listBean.getId()+"");
 public class HomeSenceSettingActivity extends MyActivity{
+    private int deleteId;
+    private PopupWindow popX;
+    private    PopupWindow popW;
+    private PopupWindow popWx;
+    private String SenceId;//情景的id
     @BindView(R.id.home_sence_scene_rela_eidtext) EditText home_sence_scene_rela_eidtext;//
     @BindView(R.id.home_sence_scene_rela_condition_imageselect)ImageView home_sence_scene_rela_condition_imageselect;
     @BindView(R.id.home_sence_listview)MyListView home_sence_listview;
-    @BindView(R.id.home_sence_scene_rela_condition_textv_name)TextView home_sence_scene_rela_condition_textv_name;//显示启动方式的imge
+    @BindView(R.id.home_sence_scene_rela_condition_textv_name)TextView home_sence_scene_rela_condition_textv_name;//显示启动方式
     private PopupWindow pop;
-    private ArrayList<Map<String,String>> list;
+    private List<Bean_getSceneData.EquipmentListBean> list;
     private String[]title={"客厅灯","电视","客厅插座"};
     private int[]url={R.mipmap.light,R.mipmap.tv,R.mipmap.socket};
     private HomeSceneSettingListAdapter adapter;
@@ -64,32 +88,113 @@ public class HomeSenceSettingActivity extends MyActivity{
     PopDataGridViewAdapter adapterGridView;
     private List<String>listHours;//轮滚的小时数据源
     private List<String>listTime;//轮滚的分钟数据源
+    private int currentTimeHour;//当前选中的启动时间的小时
+    private int currentTimeMinus;//当前选中的启动时间的分钟
+    private String sceneTime;//定时开启设置的时间
+    private String repeatMode;//重复方式
+
     @BindArray(R.array.KM)String[]listKm;//距离定位中的千米
+    private int currentKm;//当前定位选中的千米数
     @BindArray(R.array.M)String[]listM;//距离定位中
+    private int currentM;//当前定位选中的米数
+    private int sceneDistance;//定位启动的距离
+    Bean_getSceneData sceneData;
+    //sceneMode:1一键，2定时，3定位
+    private Handler handler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+                case 0:
+                    mToast.ToastFaild(con,ToastType.FAILD);
+                    break;
+                case 1://  请求情景详细信息
+                    try{
+                        sceneData= mGson.gson.fromJson(mTools.mResponStr,Bean_getSceneData.class);
+                        if (sceneData!=null){
+                            String code=sceneData.getCode();
+                            if (!"".equals(code)&&!TextUtils.isEmpty(code)){
+                                ServerCode.showResponseMsg(con,code);
+                            }
+                            else {
+                                setTitle(sceneData.getSceneName());
+                                if (sceneData.getSceneModel()!=0){
+                                    int mode=sceneData.getSceneModel();
+                                    String name=  SceneMode.getModeName(SceneMode.intToMode(mode));
+                                    home_sence_scene_rela_condition_textv_name.setText(name);
+                                    }
+                                else {
+                                    home_sence_scene_rela_condition_textv_name.setText("不支持的模式");
+                                    }
+
+                                SelectPositon=sceneData.getSceneModel()-1;
+                                switch (SelectPositon){
+                                    case 0:
+                                        break;
+                                    case 1://定时
+                                        sceneTime=sceneData.getSceneTime()+"";
+                                        repeatMode=sceneData.getRepeatMode();
+                                        break;
+                                    case 2:
+                                        sceneDistance=sceneData.getSceneDistance();
+                                        break;
+                                }
+                                list.addAll(sceneData.getEquipmentList());
+                                adapter.notifyDataSetChanged();
+                            }
+                        }
+                        else {
+                            mToast.ToastFaild(con,ToastType.GSONEMPTY);
+                        }
+                    }
+                    catch (Exception e){
+                        e.printStackTrace();
+                        mToast.ToastFaild(con, ToastType.GSONFAILD);
+                    }
+                    break;
+                case 2://情景修改
+                    try{
+                        Bean_sceneSetting setting=mGson.gson.fromJson(mTools.mResponStr,Bean_sceneSetting.class);
+                        if (setting!=null){
+                            if ("0".equals(setting.getCode())){
+                                mToast.Toast(con,"修改成功");
+                                finish();
+                            }
+                            else {
+                               mToast.Toast(con,setting.getResult());
+                            }
+                        }
+                        else {
+                            mToast.ToastFaild(con,ToastType.GSONEMPTY);
+                        }
+                    }
+                    catch (Exception e){
+                        e.printStackTrace();
+                        mToast.ToastFaild(con,ToastType.FAILD);
+                    }
+                    break;
+
+            }
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initChildView(R.layout.activity_home_sence_setting);
         unbinder=ButterKnife.bind(this,ChildView);
-        setTitle("情景设置");
+
+        setTitle(getIntent().getStringExtra("name"));
+        SenceId=getIntent().getStringExtra("id");
+
         ShowChildView(DEFAULTRESID);
         initView();
         initData();
+        mTools=new okhttpTools();
+        getSerVerData();//获取情景及情景内的设备等
     }
 
     private void initData() {
         list=new ArrayList<>();
-        int size=title.length;
-        for (int i=0;i<size;i++){
-            Map<String,String>m=new HashMap<>();
-            m.put("title",title[i]);
-            m.put("url",url[i]+"");
-            m.put("state","0");
-            list.add(m);
-        }
-        adapter = new HomeSceneSettingListAdapter(list,HomeSenceSettingActivity.this);
-        home_sence_listview.setAdapter(adapter);
-
         //弹窗中的view（定时启动）
         //定时启动弹窗中gridview的数据源以及适配器
         listGridview=new ArrayList<>();
@@ -103,19 +208,28 @@ public class HomeSenceSettingActivity extends MyActivity{
         adapterGridView=new PopDataGridViewAdapter(listGridview,con);
         listHours=new ArrayList<>();
         for (int i=0;i<24;i++){
-            listHours.add(i+"点");
+            listHours.add(i+"");
         }
         listTime=new ArrayList<>();
         for (int i=0;i<60;i++){
-            listTime.add(i+"分");
+            listTime.add(i+"");
         }
+        adapter=new HomeSceneSettingListAdapter(list,con);
+        home_sence_listview.setAdapter(adapter);
+        home_sence_listview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                showWindow(position);
+                return false;
+            }
+        });
     }
 
     private void initView() {
         String name=getIntent().getStringExtra("name");
         home_sence_scene_rela_eidtext.setText(name);
     }
-    @OnClick({R.id.home_sence_scene_rela_condition_relaLayout,R.id.activity_homeSceneSetting_rela_add})
+    @OnClick({R.id.home_sence_scene_rela_condition_relaLayout,R.id.activity_homeSceneSetting_rela_add,R.id.home_sence_bottomSubmit})
     public void click(View vi){
         switch (vi.getId()){
             case R.id.home_sence_scene_rela_condition_relaLayout://弹出设置选项框
@@ -123,15 +237,118 @@ public class HomeSenceSettingActivity extends MyActivity{
                 showWindowMode();
                 break;
             case R.id.activity_homeSceneSetting_rela_add:
-                MyToast.DebugToast(con,"添加设备");
+                Intent intent=new Intent();
+                intent.putExtra("type","sceneAdd");
+                Bundle bundle=new Bundle();
+                ArrayList<String>listName=new ArrayList<>();
+                if (list!=null&&list.size()>0){
+                    for (int i=0;i<list.size();i++){
+                        listName.add(list.get(i).getName());
+                    }
+                }
+                bundle.putSerializable("data",listName);
+                intent.putExtra("data",bundle);
+                intent.setClass(con,MyHouseDeviceManagerActivity.class);
+                startActivityForResult(intent,100);
+                break;
+            case R.id.home_sence_bottomSubmit://提交修改的情景
+                if (sceneData==null){
+                    return;
+                }
+                sendSceneSetting();
                 break;
             }
         }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==100){
+            if (resultCode==200){
+                Bundle bundle=data.getBundleExtra("data");
+                Bean_getSceneData.EquipmentListBean bean= (Bean_getSceneData.EquipmentListBean) bundle.getSerializable("data");
+                list.add(bean);
+                sceneData.setEquipmentList(list);
+                adapter.notifyDataSetChanged();
+            }
+        }
+    }
+
     //初始化网络请求
     @Override
     public void getSerVerData() {
+        if (!"".equals(SenceId)&&!TextUtils.isEmpty(SenceId)){
+            HashMap<String,String>map=new HashMap<>();
+            map.put("id",SenceId);map.put("token", UserInfo.userToken);
+            mTools.getServerData(handler,1, Ip.serverPath+Ip.interface_HomeScene_getScene,map,"请求单个情景--");
+        }
+        else {
+            Log.e("HomeSenceSettingAct-","请求情景失败，情景Id为空");
+        }
+    }
+    //提交情景设置http://192.168.1.55:8080/smarthome/mobileapi/scene/save.do?id=123&token=9DB2FD6FDD2F116CD47CE6C48B3047EE
+    public void sendSceneSetting(){
+        if (sceneData==null){//没有请求到当前情景的信息
+            return;
+        }
+        if(CheckInput()){//检查信息是否完整
+            HashMap<String,String>mp=new HashMap<>();
+            mp.put("token",UserInfo.userToken);
+            mp.put("id",sceneData.getId()+"");
+            mp.put("sceneName",home_sence_scene_rela_eidtext.getText().toString());
+            if(sceneData.getEquipmentList()!=null&&sceneData.getEquipmentList().size()>0){
+               String gson=mGson.gson.toJson(sceneData.getEquipmentList());
+                Log.i("gson----",gson);
+                mp.put("equipmentList",gson);
+            }
+            else {
+                mp.put("equipmentList","");
+            }
+            mp.put("sceneModel",(SelectPositon+1)+"");
+//            定时开启关闭，3=根据位置开启关闭
+//                    |sceneTime             |String   |n    |定时开启关闭时间
+//                    |repeatMode             |String   |n    |重复方式，空或0代表全部，1=周一，2=周二，等等，多个选项使用逗号分隔，如：1,2,3,4,5,6,7
+//                    |sceneDistance             |String   |n    |根据位置开启关闭的距离
+            switch (SelectPositon){
+                case 0://手动启动
 
+                    break;
+                case 1://定时启动
+                    if (!"".equals(sceneTime)&&!TextUtils.isEmpty(sceneTime)){
+                        mp.put("sceneTime",sceneTime);
+                        mp.put("repeatMode",repeatMode);
+                    }
+                    else {
+                        mToast.Toast(con,"您还没有设置启动时间");
+                        return;
+                    }
+                    break;
+                case 2://定位启动
+                    if (sceneDistance!=0L){
+                            mp.put("sceneDistance",sceneDistance+"");
+                    }
+                    else {
+                    mToast.Toast(con,"您还没有设置启动距离");
+                    return;
+                }
+                    break;
+                default:
+                    mToast.Toast(con,"信息错误");
+                    Log.e("无法识别提交的启动模式","===HomeSenceSettingActivity======");
+                   return;
+            }
+            mTools.getServerDataPost(handler,2,Ip.serverPath+Ip.interface_HomeScene_setScene,mp,"情景修改---");
+        }
+        else {
+        mToast.Toast(con,"情景名称不能为空");
+        }
+    }
+    private boolean CheckInput() {
+        String name=home_sence_scene_rela_eidtext.getText().toString();
+        if (!"".equals(name)&&!TextUtils.isEmpty(name)&&!TextUtils.isEmpty(name)){//情景名称不为空
+            return true;
+        }
+        return false;
     }
     //选择开启方式
     private void showWindowMode() {
@@ -199,29 +416,45 @@ public class HomeSenceSettingActivity extends MyActivity{
             }
         });
     }
-
     //定位启动的view
     private void showWindowAddress() {
-        PopupWindow popW=new PopupWindow();
-        popW = new PopupWindow();
+        sceneDistance=0;
+        currentKm=0;
+        currentM=0;
+        popWx = new PopupWindow();
         View v = LayoutInflater.from(con).inflate(R.layout.pop_homesenceasetting_address, null);
 
+        TextView pop_wheelview_address_Submit= (TextView) v.findViewById(R.id.pop_wheelview_address_Submit);
+        pop_wheelview_address_Submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (currentKm==0&&currentM==0){
+                    sceneDistance=100;//计算当前的数值
+                }
+                else {
+                    sceneDistance=currentKm*1000+currentM;
+                }
+                popWx.dismiss();
+            }
+        });
         WheelView pop_wheelview_address_M= (WheelView) v.findViewById(R.id.pop_wheelview_address_M);
-
+        pop_wheelview_address_M.setTitle("m");
         WheelView pop_wheelview_address_KM= (WheelView) v.findViewById(R.id.pop_wheelview_address_KM);
-
+        pop_wheelview_address_KM.setTitle("km");
         pop_wheelview_address_KM.setViewAdapter(new MyWheelViewAdapterArray(con,listKm));
         pop_wheelview_address_M.setViewAdapter(new MyWheelViewAdapterArray(con,listM));
         pop_wheelview_address_KM.addChangingListener(new OnWheelChangedListener() {
             @Override
             public void onChanged(WheelView wheel, int oldValue, int newValue) {
                 Toast.makeText(con,listKm[newValue],Toast.LENGTH_SHORT).show();
+                currentKm=Integer.parseInt(listKm[newValue]);
             }
         });
         pop_wheelview_address_M.addChangingListener(new OnWheelChangedListener() {
             @Override
             public void onChanged(WheelView wheel, int oldValue, int newValue) {
                 Toast.makeText(con,listM[newValue],Toast.LENGTH_SHORT).show();
+                currentM=Integer.parseInt(listM[newValue]);
             }
         });
 
@@ -231,19 +464,19 @@ public class HomeSenceSettingActivity extends MyActivity{
         params.alpha = 0.6f;
         getWindow().setAttributes(params);
 
-        popW.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
-        popW.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
+        popWx.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+        popWx.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
 
-        popW.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-        popW.setContentView(v);
-        popW.setBackgroundDrawable(new ColorDrawable(Color.argb(000, 255, 255, 255)));
-        popW.setTouchable(true);
-        popW.setFocusable(true);
-        popW.setOutsideTouchable(true);
+        popWx.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        popWx.setContentView(v);
+        popWx.setBackgroundDrawable(new ColorDrawable(Color.argb(000, 255, 255, 255)));
+        popWx.setTouchable(true);
+        popWx.setFocusable(true);
+        popWx.setOutsideTouchable(true);
 
-        popW.setAnimationStyle(R.style.popup3_anim);
-        popW.showAtLocation(parent, Gravity.BOTTOM,0,0);
-        popW.setOnDismissListener(new PopupWindow.OnDismissListener() {
+        popWx.setAnimationStyle(R.style.popup3_anim);
+        popWx.showAtLocation(parent, Gravity.BOTTOM,0,0);
+        popWx.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
                 getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
@@ -257,16 +490,55 @@ public class HomeSenceSettingActivity extends MyActivity{
     }
     //定时启动的view
     private void showWindowData(){
-        PopupWindow popW=new PopupWindow();
+        repeatMode="";
+        sceneTime="";
+        currentTimeHour=0;
+        currentTimeMinus=0;
+        popW=new PopupWindow();
         popW = new PopupWindow();
         View v = LayoutInflater.from(con).inflate(R.layout.pop_homesencesetting_data, null);
+        final TextView pop_data_submit= (TextView) v.findViewById(R.id.pop_data_submit);
+        //提交设置
+        pop_data_submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sceneTime=listHours.get(currentTimeHour)+":"+listTime.get(currentTimeMinus);
+                if ("1".equals(listGridview.get(listGridview.size()-1).get("select"))){
+                    repeatMode=0+"";
+                }
+                else {
+                    for (int i=0;i<listGridview.size()-1;i++){
+                        if ("1".equals(listGridview.get(i).get("select"))){
+                            repeatMode+=((i+1)+",");
+                        }
+                    }
+                    if (!"".equals(repeatMode)&&!TextUtils.isEmpty(repeatMode)){
+                        repeatMode=repeatMode.substring(0,repeatMode.length()-1);
+                    }
+                    else {
+                        repeatMode="";
+                    }
+
+                }
+                popW.dismiss();
+            }
+        });
         WheelView pop_wheelview_data= (WheelView) v.findViewById(R.id.pop_wheelview_data);//小时
+        pop_wheelview_data.setTitle("点");
         WheelView pop_wheelview_time= (WheelView) v.findViewById(R.id.pop_wheelview_time);//分钟
+        pop_wheelview_time.setTitle("分");
         pop_wheelview_data.setViewAdapter(new MyWheelAdapter(con,listHours));
         pop_wheelview_time.setViewAdapter(new MyWheelAdapter(con,listTime));
+        pop_wheelview_data.addChangingListener(new OnWheelChangedListener() {
+            @Override
+            public void onChanged(WheelView wheel, int oldValue, int newValue) {
+                currentTimeHour=newValue;
+            }
+        });
         pop_wheelview_time.addChangingListener(new OnWheelChangedListener() {
             @Override
             public void onChanged(WheelView wheel, int oldValue, int newValue) {
+                currentTimeMinus=newValue;
                 Toast.makeText(con,listTime.get(newValue),Toast.LENGTH_SHORT).show();
             }
         });
@@ -283,17 +555,30 @@ public class HomeSenceSettingActivity extends MyActivity{
                     else {
                         listGridview.get(position).put("select","1");
                     }
+                    if (isAll()){
+                        listGridview.get(listGridview.size()-1).put("select","1");
+                    }
+                    else {
+                        listGridview.get(listGridview.size()-1).put("select","0");
+                        }
                 }
                 else {
-                    for (int i=0;i<listGridview.size()-1;i++){
-                        listGridview.get(i).put("select","1");
+                    if ("1".equals(listGridview.get(listGridview.size()-1))){
+                        for (int i=0;i<listGridview.size();i++){
+                            listGridview.get(i).put("select","0");
+                        }
                     }
+                    else {
+                        for (int i=0;i<listGridview.size();i++){
+                            listGridview.get(i).put("select","1");
+                        }
+                    }
+
 //                    Toast.makeText(con,"全部重复",Toast.LENGTH_SHORT).show();
                 }
                 adapterGridView.notifyDataSetChanged();
             }
         });
-
 
         RelativeLayout parent = (RelativeLayout) findViewById(R.id.home_sence_setting_layout);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
@@ -322,5 +607,65 @@ public class HomeSenceSettingActivity extends MyActivity{
                 getWindow().setAttributes(params);
             }
         });
+    }
+
+    public boolean isAll(){
+        for (int i=0;i<listGridview.size()-1;i++){
+            if ("0".equals(listGridview.get(i))){
+                return false;
+            }
+        }
+        return true;
+    }
+    //删除设备的按钮
+    private void showWindow(int pos) {
+        deleteId=pos;
+        popX = new PopupWindow();
+        View v = LayoutInflater.from(con).inflate(R.layout.pop_device_delete, null);
+        TextView pop_delete= (TextView) v.findViewById(R.id.pop_delete);
+        TextView pop_cancle= (TextView) v.findViewById(R.id.pop_cancle);
+        pop_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                list.remove(deleteId);
+                sceneData.setEquipmentList(list);
+                adapter.notifyDataSetChanged();
+                popX.dismiss();
+            }
+        });
+        pop_cancle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popX.dismiss();
+            }
+        });
+        RelativeLayout parent = (RelativeLayout) findViewById(R.id.home_sence_setting_layout);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        WindowManager.LayoutParams params = getWindow().getAttributes();
+        params.alpha = 0.6f;
+        getWindow().setAttributes(params);
+
+        popX.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+        popX.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        popX.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        popX.setContentView(v);
+        popX.setBackgroundDrawable(new ColorDrawable(Color.argb(000, 255, 255, 255)));
+        popX.setTouchable(true);
+        popX.setFocusable(true);
+        popX.setOutsideTouchable(true);
+
+        popX.setAnimationStyle(R.style.popup2_anim);
+        popX.showAtLocation(parent, Gravity.CENTER,0,0);
+        popX.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+                WindowManager.LayoutParams params = getWindow().getAttributes();
+                params.alpha = 1f;
+                getWindow().setAttributes(params);
+            }
+        });
+
     }
 }

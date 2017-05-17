@@ -1,5 +1,6 @@
 package com.home.wanyu.activity;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -32,6 +33,8 @@ import butterknife.Unbinder;
 import static android.R.attr.fragment;
 
 public class MainActivity extends FragmentActivity {
+    private final int ResultCode=100;
+    public static int state;//是否刷新的标志
     private Fragment mFragment;
     private int listControlSize;
     private Unbinder unbinder;
@@ -123,4 +126,21 @@ public class MainActivity extends FragmentActivity {
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode==ResultCode){
+            switch (requestCode){
+                case 200:
+                    state=1;
+                    break;
+            }
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        state=0;
+    }
 }

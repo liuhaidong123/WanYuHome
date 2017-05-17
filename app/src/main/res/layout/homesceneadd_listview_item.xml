@@ -2,17 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <RelativeLayout
         android:id="@+id/activity_homeSceneAdd_listitem_rela"
         android:layout_width="match_parent"
         android:layout_height="50dp">
         <ImageView
             android:id="@+id/activity_homeSceneAdd_listitem_rela_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_centerVertical="true"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
+            android:layout_marginRight="15dp"
             android:src="@mipmap/setting"/>
         <TextView
             android:id="@+id/activity_homeSceneAdd_listitem_rela_textSetting"
@@ -30,7 +30,6 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="15dp"
             android:backgroundTint="#000000"
             />
     </RelativeLayout>

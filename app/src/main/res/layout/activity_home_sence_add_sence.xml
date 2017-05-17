@@ -153,11 +153,10 @@
                         android:layout_height="50dp">
                         <ImageView
                             android:id="@+id/activity_homeSceneAdd_listitem_relaAdd_image"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
                             android:layout_centerVertical="true"
-                            android:paddingLeft="15dp"
-                            android:paddingRight="15dp"
+                            android:layout_marginRight="15dp"
                             android:src="@mipmap/add2"/>
 
                         <TextView

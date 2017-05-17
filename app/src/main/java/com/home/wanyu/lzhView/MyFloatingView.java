@@ -18,6 +18,11 @@ import com.home.wanyu.R;
 public class MyFloatingView extends View {
     private boolean mState;//当前状态
     private Paint paint;
+    private int startX;
+    private int startY;
+    float stx=0f;
+    float sty=0f;
+    private ClickListener listener;
     public MyFloatingView(Context context) {
         super(context);
     }
@@ -65,6 +70,46 @@ public class MyFloatingView extends View {
         mState=state;
     }
 
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        int scrX = (int) event.getX();
+        int scrY = (int) event.getY();
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                stx=event.getRawX();
+                sty=event.getRawY();
+                startX = (int) event.getX();
+                startY = (int) event.getY();
+                return super.onTouchEvent(event);
+            case MotionEvent.ACTION_MOVE:
+                int x = scrX - startX;
+                int y = scrY - startY;
+                layout(getLeft() + x, getTop() + y, getRight() + x, getBottom() + y);
+                return super.onTouchEvent(event);
+            case MotionEvent.ACTION_UP:
+                Log.e("----"+(event.getRawY() - sty),(event.getRawX() - stx)+"--");
+                if (Math.abs(event.getRawX() - stx) > 50 | Math.abs(event.getRawY() - sty) > 50) {
+                    if (listener != null) {
+                        listener.click(false);
+                        Log.e("Float-onclck---","false");
+                    }
+                } else {
+                    if (listener != null) {
+                        Log.e("Float-onclck---","true");
+                        listener.click(true);
+                        }
+                }
+                    return super.onTouchEvent(event);
+                    default:
+                        return super.onTouchEvent(event);
+                }
+        }
 
+    public interface ClickListener{
+        void click(boolean flag);
+    }
 
+    public void setClick(ClickListener listener){
+        this.listener=listener;
+    }
 }

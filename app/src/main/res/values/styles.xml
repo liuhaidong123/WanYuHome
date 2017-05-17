@@ -66,10 +66,50 @@
         <item name="android:windowExitAnimation">@anim/pop2_out</item>
     </style>
     <!--弹窗样式-->
+    <style name="popup4_anim" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/pop4_in</item>
+        <item name="android:windowExitAnimation">@anim/pop4_out</item>
+    </style>
+    <!--弹窗样式-->
     <style name="popup1_anim" parent="android:Animation">
         <item name="android:windowEnterAnimation">@anim/pop1_in</item>
         <item name="android:windowExitAnimation">@anim/pop1_out</item>
     </style>
+    <declare-styleable name="CircleView">
+        <attr name="strokeWidth" format="dimension"></attr>
+        <attr name="title" format="string"></attr>
+    </declare-styleable>
+
+    <declare-styleable name="switchButton">
+        //开关的宽度（长度是宽度的3倍）
+        <attr name="buttonHeight" format="float"></attr>
+        //开关的默认状态
+        <attr name="state" format="boolean"></attr>
+        //关闭时底部的颜色
+        <attr name="bottomColor_false" format="color"></attr>
+        //开启时底部的颜色
+        <attr name="bottomColor_true" format="color"></attr>
+        //
+        <attr name="text_false" format="color"></attr>
+        <attr name="text_true" format="color"></attr>
+        <attr name="ballColor" format="color"></attr>
+        <attr name="textSize" format="dimension"></attr>
+    </declare-styleable>
+
+
+    <declare-styleable name="switchBtn">
+        //高度
+        <attr name="switchHeight" format="dimension"></attr>
+        //圆球颜色
+        <attr name="ballCo" format="color"></attr>
+        <attr name="sta" format="boolean"></attr>
+        //字体的颜色和大小
+        <attr name="switch_textSize" format="dimension"></attr>
+        <attr name="switch_textColor" format="color"></attr>
+        //开启闭合的颜色
+        <attr name="switch_false" format="color"></attr>
+        <attr name="switch_true" format="color"></attr>
+    </declare-styleable>
 
 
     <!--数据请求动画-->

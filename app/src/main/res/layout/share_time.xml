@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<RelativeLayout
+    android:paddingLeft="20dp"
+    android:paddingRight="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="50dp">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/titlecolor3"
+        android:textSize="@dimen/textSize15"
+        android:text="选择钥匙时限"
+        android:layout_centerVertical="true"
+        android:id="@+id/textView2" />
+
+    <TextView
+        android:clickable="true"
+        android:id="@+id/pop_submit"
+        android:text="确定"
+        android:padding="10dp"
+        android:textColor="@drawable/textb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView2"
+        android:layout_alignBottom="@+id/textView2"
+        android:layout_alignParentEnd="true" />
+</RelativeLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/background"/>
+    <com.home.wanyu.lzhView.wheelView.WheelView
+        android:id="@+id/pop_wheelView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+</LinearLayout>

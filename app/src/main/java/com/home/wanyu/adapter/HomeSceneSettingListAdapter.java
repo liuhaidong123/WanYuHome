@@ -10,7 +10,9 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.home.wanyu.Icons.icon;
 import com.home.wanyu.R;
+import com.home.wanyu.bean.Bean_getSceneData;
 import com.home.wanyu.lzhView.MyFloatingView;
 
 import java.util.List;
@@ -21,9 +23,9 @@ import java.util.Map;
  */
 
 public class HomeSceneSettingListAdapter extends BaseAdapter{
-    private List<Map<String,String>> list;
+    private List<Bean_getSceneData.EquipmentListBean>list;
     private Context context;
-    public HomeSceneSettingListAdapter(List<Map<String,String>> list,Context context) {
+    public HomeSceneSettingListAdapter(List<Bean_getSceneData.EquipmentListBean>list,Context context) {
         this.list = list;
         this.context = context;
     }
@@ -56,13 +58,19 @@ public class HomeSceneSettingListAdapter extends BaseAdapter{
         else {
             viewHodler= (ViewHodler) convertView.getTag();
         }
-        viewHodler.activity_homeSceneSetting_listitem_rela_image.setImageResource(Integer.parseInt(list.get(position).get("url")));
-        viewHodler.activity_homeSceneSetting_listitem_rela_textSetting.setText(list.get(position).get("title"));
-        String state=list.get(position).get("state");
-        if ("0".equals(state)){
+        if (list.get(position).getIconId()>=0&&list.get(position).getIconId()<=6){
+            viewHodler.activity_homeSceneSetting_listitem_rela_image.setImageResource(icon.mIconRes[list.get(position).getIconId()]);
+        }
+       else {
+            viewHodler.activity_homeSceneSetting_listitem_rela_image.setImageResource(R.mipmap.error_big);
+        }
+        viewHodler.activity_homeSceneSetting_listitem_rela_textSetting.setText(list.get(position).getName());
+      int state=list.get(position).getToState();
+        //0开启状态，1关闭状态
+        if (state==1){
             viewHodler.activity_homeSceneSetting_listitem_rela_switch.setChecked(false);
         }
-        else if ("1".equals(state)){
+        else if (state==0){
             viewHodler.activity_homeSceneSetting_listitem_rela_switch.setChecked(true);
         }
         viewHodler.activity_homeSceneSetting_listitem_rela_switch.setTag(position);
@@ -72,10 +80,10 @@ public class HomeSceneSettingListAdapter extends BaseAdapter{
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 int pos= (int) buttonView.getTag();
                 if (isChecked){
-                    list.get(pos).put("state","1");
+                    list.get(pos).setToState(0);
                 }
                 else {
-                    list.get(pos).put("state","0");
+                    list.get(pos).setToState(1);
                 }
             }
         });

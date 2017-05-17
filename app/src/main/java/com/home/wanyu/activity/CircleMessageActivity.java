@@ -1,6 +1,8 @@
 package com.home.wanyu.activity;
 
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -16,10 +18,14 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.home.wanyu.HttpUtils.HttpTools;
 import com.home.wanyu.R;
 import com.home.wanyu.apater.CircleFriendListviewAda;
 import com.home.wanyu.apater.CircleGridViewAda;
+import com.home.wanyu.apater.CircleSelectAreaAlertAda;
 import com.home.wanyu.bean.CircleFriend;
+import com.home.wanyu.bean.getCircleArea.Result;
+import com.home.wanyu.bean.getCircleArea.Root;
 import com.home.wanyu.myview.MyListView;
 
 import java.util.ArrayList;
@@ -42,8 +48,25 @@ public class CircleMessageActivity extends AppCompatActivity implements View.OnC
 
     private AlertDialog.Builder mYearBuilder;
     private AlertDialog mYearAlert;
-    private View mYearView;
-    private ListView mYearListview;
+    private View mAreaView;
+    private ListView mAreaListview;
+    private CircleSelectAreaAlertAda mAreaAdapter;
+    private List<Result> mCircleAreaList;
+    private HttpTools mHttptools;
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {//获取小区地址
+            super.handleMessage(msg);
+            if (msg.what == 110) {
+                Object o = msg.obj;
+                if (o != null && o instanceof Root) {
+                    Root root = (Root) o;
+                    mCircleAreaList = root.getResult();
+
+                }
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,10 +140,10 @@ public class CircleMessageActivity extends AppCompatActivity implements View.OnC
         //年份弹框
         mYearBuilder = new AlertDialog.Builder(this);
         mYearAlert = mYearBuilder.create();
-        mYearView = LayoutInflater.from(this).inflate(R.layout.order_year_item, null);
-        mYearListview = (ListView) mYearView.findViewById(R.id.city_alert_listview);
+        mAreaView = LayoutInflater.from(this).inflate(R.layout.order_year_item, null);
+        mAreaListview = (ListView) mAreaView.findViewById(R.id.city_alert_listview);
         //选择城市
-        mYearListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mAreaListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                // mYear_tv.setText(mYearAda.getItem(position).toString());

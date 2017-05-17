@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="#00aaeeaa"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:background="@drawable/layoutl"
+        android:layout_width="match_parent"
+        android:layout_marginRight="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="删除设备"
+            android:background="@drawable/bac_top"
+            android:id="@+id/pop_delete"
+            android:gravity="center"
+            android:textSize="@dimen/textSize15"
+            android:textColor="@drawable/text_black_red"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#f1f1f1"/>
+        <TextView
+            android:background="@drawable/bac_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="取消"
+            android:id="@+id/pop_cancle"
+            android:gravity="center"
+            android:textSize="@dimen/textSize15"
+            android:textColor="@drawable/text_black_red"/>
+    </LinearLayout>
+</RelativeLayout>

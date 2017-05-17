@@ -7,6 +7,10 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.home.wanyu.R;
+import com.home.wanyu.bean.getCircleArea.Result;
+import com.home.wanyu.zxing.view.ViewfinderView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,15 +18,15 @@ import java.util.List;
  * Created by liuhaidong on 2017/5/17.
  */
 
-class CircleSelectAreaAlertAda extends BaseAdapter{
+public class CircleSelectAreaAlertAda extends BaseAdapter {
     private Context mContext;
     private LayoutInflater mInfalter;
-    private List<String> list=new ArrayList();
+    private List<Result> list = new ArrayList();
 
     public CircleSelectAreaAlertAda(Context mContext, List list) {
         this.mContext = mContext;
         this.list = list;
-        this.mInfalter=LayoutInflater.from(this.mContext);
+        this.mInfalter = LayoutInflater.from(this.mContext);
     }
 
     @Override
@@ -42,12 +46,21 @@ class CircleSelectAreaAlertAda extends BaseAdapter{
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        CircleSelectHolder holder = null;
+        if (convertView == null) {
+            holder = new CircleSelectHolder();
+            convertView = mInfalter.inflate(R.layout.circle_select_area_item, null);
+            holder.textView = (TextView) convertView.findViewById(R.id.alert_area_tv);
+            convertView.setTag(holder);
+        } else {
+            holder = (CircleSelectHolder) convertView.getTag();
+        }
 
-
+        holder.textView.setText(list.get(position).getRname());
         return convertView;
     }
 
-    class CircleSelectHolder{
+    class CircleSelectHolder {
         TextView textView;
     }
 }

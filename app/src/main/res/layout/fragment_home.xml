@@ -5,6 +5,15 @@
     android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <RelativeLayout
+            android:id="@+id/fragment_home_bottom_layout"
+            android:background="@color/homefragmentFgColor"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/fragment_home_top_layout">
+        </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/fragment_home_top_layout"
         android:layout_width="match_parent"
@@ -57,12 +66,4 @@
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"/>
     </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/fragment_home_bottom_layout"
-            android:background="@color/homefragmentFgColor"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/fragment_home_top_layout">
-        </RelativeLayout>
 </RelativeLayout>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="#00f4f0f0"
+    android:gravity="right"
+    android:paddingRight="10dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <com.home.wanyu.lzhView.Mytri
+        android:layout_gravity="right"
+        android:layout_marginRight="10dp"
+        android:layout_width="17dp"
+        android:layout_height="8dp" />
+    <LinearLayout
+        android:layout_width="110dp"
+        android:orientation="vertical"
+        android:background="@drawable/homeadd"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/textv_add_device"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:text="添加设备"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#ecaba7a7"/>
+        <TextView
+            android:id="@+id/textv_add_scene"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:text="添加情景"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#ecaba7a7"/>
+        <TextView
+            android:id="@+id/textv_add_room"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:text="添加房间"/>
+
+    </LinearLayout>
+</LinearLayout>

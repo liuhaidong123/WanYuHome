@@ -1,5 +1,6 @@
 package com.home.wanyu.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,11 +12,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.home.wanyu.R;
+import com.home.wanyu.activity.MyCircleContactActivity;
+import com.home.wanyu.activity.MyHouseActivity;
+import com.home.wanyu.activity.MyUserMsgEditorActivity;
 import com.home.wanyu.myview.RoundImageView;
 
 import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
@@ -46,7 +51,20 @@ public class MineFragment extends Fragment{
         unbinder= ButterKnife.bind(this,vi);
         return vi;
     }
-
+    @OnClick({R.id.fragment_mine_image_userEditor,R.id.fragment_mine_layout_myhome,R.id.fragment_mine_layout_mycircle})
+    public void click(View vi){
+        switch (vi.getId()){
+            case R.id.fragment_mine_image_userEditor://用户信息编辑
+                startActivity(new Intent(getActivity(), MyUserMsgEditorActivity.class));
+                break;
+            case R.id.fragment_mine_layout_myhome://我的家
+                startActivity(new Intent(getActivity(), MyHouseActivity.class));
+                break;
+            case R.id.fragment_mine_layout_mycircle://我的圈子
+                startActivity(new Intent(getActivity(), MyCircleContactActivity.class));
+                break;
+        }
+    }
     @Override
     public void onDestroy() {
         super.onDestroy();

@@ -9,6 +9,7 @@
     <color name="title_color">#333333</color>
     <color name="bg_color">#f1f1f1</color>
     <color name="bg_rect">#00bfff</color>
+    <color name="bg_rect_dink">#02afe9</color>
     <color name="mainBottomBackground">#fafbfc</color>
     <color name="mainBottomTextSelectColor">#00bfff</color>
     <color name="mainBottomTextUnSelectColor">#b2b2b2</color>
@@ -27,7 +28,10 @@
     <color name="pop_list_bg">#cccaca</color>
     <color name="bar_bg">#99cccaca</color>
 
+    <color name="dinkc">#dfdede</color>
+    <color name="tri">#f5414341</color>
 <color name="dinkwhite">#e1f5fc</color>
+    <color name="wi">#f2f0f0</color>
     <color name="colorPrimaryWhite">#ffffff</color>
     <color name="colorPrimaryWhiteDark">#dddddd</color>
     <color name="colorAccentWhite">#6A68FF</color>
@@ -65,11 +69,36 @@
     <color name="wheel_textColorDikn">#ec0c22</color>
 
 
-    <color name="test1">#fbf20306</color>
-    <color name="test2">#fbe6640e</color>
+    <color name="test1">#e00610</color>
+    <color name="test2">#ca050e</color>
     <color name="test3">#fbf2d603</color>
     <color name="test4">#fb03f227</color>
     <color name="test5">#fb03eef2</color>
     <color name="test6">#fb0b03f2</color>
-    <color name="test7">#fb8204f1</color>
+    <color name="test7">#15e6ae</color>
+
+
+    <color name="select">#00bfff</color>
+    <color name="middleColor">#1ddff0</color>
+    <color name="unselect">#36fbe2</color>
+
+    <color name="sele">#38d5cf</color>
+    <color name="unsele">#1ab4dc</color>
+    <color name="background">#e9e9e9</color>
+
+
+    //开关的默认颜色
+    <color name="bottomFalse">#b1b7b1</color>
+    <color name="bottomTrue">#f544d244</color>
+    //文字的颜色
+    <color name="textFalse">#fefffe</color>
+    <color name="textTrue">#fafafa</color>
+    //滚动球的颜色
+    <color name="ballColor">#fefffe</color>
+
+    //用到的颜色值属性
+    <color name="switchballColor">#fefffe</color>
+    <color name="switchTextColor">#fefffe</color>
+    <color name="switchFalseColor">#b1b7b1</color>
+    <color name="switchTrueColor">#00bfff</color>
 </resources>

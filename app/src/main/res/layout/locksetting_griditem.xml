@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="#00aaeeaa"
+    android:paddingBottom="10dp"
+    android:paddingTop="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:textColor="@drawable/colorwhite_red"
+        android:textSize="@dimen/textSize14"
+        android:gravity="center"
+        android:id="@+id/lockSetting_gridItem_text"
+        android:layout_centerInParent="true"
+        android:background="@drawable/tvtext"
+        android:layout_width="75dp"
+        android:layout_height="33dp"/>
+</RelativeLayout>

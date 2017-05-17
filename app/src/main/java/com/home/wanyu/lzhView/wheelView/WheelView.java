@@ -26,6 +26,7 @@ import android.content.Context;
 import android.database.DataSetObserver;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.GradientDrawable.Orientation;
@@ -45,7 +46,7 @@ import com.home.wanyu.R;
  * @author Yuri Kanivets
  */
 public class WheelView extends View {
-
+	String title;
 	/** Top and bottom shadows colors */
 	/*/ Modified by wulianghuan 2014-11-25
 	private int[] SHADOWS_COLORS = new int[] { 0xFF111111,
@@ -58,7 +59,7 @@ public class WheelView extends View {
 	private static final int ITEM_OFFSET_PERCENT = 0;
 
 	/** Left and right padding value */
-	private static final int PADDING = 13;
+	private static final int PADDING = 5;
 
 	/** Default count of visible items */
 	private static final int DEF_VISIBLE_ITEMS = 3;
@@ -615,12 +616,26 @@ public class WheelView extends View {
 		super.onDraw(canvas);
 		if (viewAdapter != null && viewAdapter.getItemsCount() > 0) {
 			updateView();
-
 			drawItems(canvas);
 			drawCenterRect(canvas);
+			if (drawShadows) drawShadows(canvas);
+			if (title!=null&&!"".equals(title)){
+				Paint paint=new Paint();
+				paint.setAntiAlias(true);
+				paint.setTextSize(getResources().getDimension(R.dimen.textSize15));
+				paint.setColor(getResources().getColor(R.color.titlecolor3));
+				Rect bon=new Rect();
+				paint.getTextBounds("100",0,"100".length(),bon);
+				paint.setTextAlign(Paint.Align.LEFT);
+				Rect bounds = new Rect();
+				paint.getTextBounds(title, 0, title.length(), bounds);
+				canvas.drawText(title, getMeasuredWidth()/2 - bounds.width()/2+bon.width(), getMeasuredHeight()/2 + bounds.height()/2, paint);
+
+//				canvas.drawText(title, 0,title.length(),canvas.getWidth()/2+15,canvas.getHeight()/2, paint);
+			}
 		}
 
-		if (drawShadows) drawShadows(canvas);
+
 	}
 
 	/**
@@ -957,5 +972,10 @@ public class WheelView extends View {
 
 	interface WheelCurrent{
 		void sendCurrent(int id);
+	}
+
+	public void setTitle(String title){
+		this.title=title;
+		invalidate();
 	}
 }

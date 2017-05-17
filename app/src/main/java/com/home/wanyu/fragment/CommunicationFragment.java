@@ -42,7 +42,7 @@ public class CommunicationFragment extends Fragment {
     private HttpTools mHttptools;
     private Handler mHandler = new Handler() {
         @Override
-        public void handleMessage(Message msg) {
+        public void handleMessage(Message msg) {//获取小区地址
             super.handleMessage(msg);
             if (msg.what == 110) {
                 Object o = msg.obj;

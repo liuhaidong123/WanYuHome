@@ -1,0 +1,124 @@
+package com.home.wanyu.adapter;
+
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.home.wanyu.R;
+import com.home.wanyu.myview.RoundImageView;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+/**
+ * Created by wanyu on 2017/5/11.
+ */
+
+public class LockShareListAdapter extends BaseAdapter{
+    private int current;
+    private Context context;
+    private List<Map<String,String>> list;
+    private String[]pro={"租户","游客","弟弟","妹妹","哥哥","姐姐"};
+    private String[] name={"LIM","ZY","刘文","刘一"};
+    private int[] ResId={R.mipmap.it1,R.mipmap.it2,R.mipmap.it3};
+    public LockShareListAdapter(Context context){
+        this.context=context;
+            init();
+    }
+    @Override
+    public int getCount() {
+        return list==null?0:list.size();
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return list.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        ViewHodler hodler;
+        if (convertView==null){
+            convertView= LayoutInflater.from(context).inflate(R.layout.lockshare_list_item,null);
+            hodler=new ViewHodler(convertView);
+            convertView.setTag(hodler);
+        }
+        else {
+            hodler= (ViewHodler) convertView.getTag();
+        }
+        hodler.lockshare_list_item_text.setText(list.get(position).get("name"));
+        hodler.lockshare_list_item_text_pro.setText(list.get(position).get("pro"));
+        hodler.lockshare_list_item_image.setImageResource(Integer.parseInt(list.get(position).get("url")));
+        if ("1".equals(list.get(position).get("select"))){
+            hodler.locklayout.setSelected(true);
+        }
+        else if ("0".equals(list.get(position).get("select"))){
+            hodler.locklayout.setSelected(false);
+        }
+//        current=position;
+        hodler.locklayout.setTag(position);
+        hodler.locklayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int pos= (int) v.getTag();
+                Toast.makeText(context,"--"+pos,Toast.LENGTH_SHORT).show();
+                setSelect(pos);
+                notifyDataSetChanged();
+            }
+        });
+        return convertView;
+    }
+    class ViewHodler{
+        public ViewHodler(View vi){
+            ButterKnife.bind(this,vi);
+        }
+        @BindView(R.id.lockshare_list_item_text)TextView lockshare_list_item_text;
+        @BindView(R.id.lockshare_list_item_text_pro)TextView lockshare_list_item_text_pro;
+        @BindView(R.id.lockshare_list_item_image)RoundImageView lockshare_list_item_image;
+        @BindView(R.id.locklayout)RelativeLayout locklayout;
+    }
+
+    public void init(){
+        list=new ArrayList<>();
+        for (int i=0;i<7;i++){
+            Map<String,String>mp=new HashMap<>();
+            mp.put("url",ResId[i%ResId.length]+"");
+            mp.put("pro",pro[i%pro.length]);
+            mp.put("name",name[i%name.length]);
+            mp.put("select","0");
+            list.add(mp);
+        }
+    }
+    public void setSelect(int pos){
+        for (int i=0;i<list.size();i++){
+            if (i==pos){
+              if (list.get(i).get("select")=="0"){
+                  list.get(i).put("select","1");
+              }
+                else {
+                  list.get(i).put("select","0");
+              }
+            }
+            else {
+                list.get(i).put("select","0");
+            }
+
+        }
+
+    }
+}

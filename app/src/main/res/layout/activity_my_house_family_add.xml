@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_my_house_family_add"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/homefragmentFgColor"
+    tools:context="com.home.wanyu.activity.MyHouseFamilyAddActivity">
+    <RelativeLayout
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="1dp">
+        <com.home.wanyu.myview.RoundImageView
+            android:id="@+id/activity_my_house_family_add_image"
+            android:layout_width="30dp"
+            android:scaleType="fitCenter"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:src="@mipmap/addfamily"
+            android:layout_height="30dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="家人手机号"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:id="@+id/activity_my_house_family_add_user"
+            android:textColor="@color/titlecolor3"
+            android:textSize="@dimen/textSize14"
+            android:layout_below="@+id/activity_my_house_family_add_image"/>
+
+        <RelativeLayout
+            android:layout_marginTop="30dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/activity_my_house_family_add_edit"
+            android:layout_width="270dp"
+            android:layout_height="30dp"
+            android:id="@+id/relativeLayout">
+            <EditText
+                android:inputType="number"
+                android:maxLength="6"
+                android:hint="输入验证码"
+                android:textColor="@color/titlecolor3"
+                android:gravity="center"
+                android:textSize="@dimen/textSize14"
+                android:id="@+id/activity_my_house_family_add_msmCode"
+                android:background="@drawable/edileft"
+                android:layout_alignParentLeft="true"
+                android:layout_width="170dp"
+                android:layout_height="match_parent" />
+            <TextView
+                android:text="发送验证码"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:textSize="@dimen/textSize14"
+                android:background="@drawable/editrighe"
+                android:id="@+id/activity_my_house_family_add_getSmSCode"
+                android:layout_toRightOf="@+id/activity_my_house_family_add_msmCode"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </RelativeLayout>
+
+        <EditText
+            android:maxLength="11"
+            android:textColor="@color/titlecolor3"
+            android:textSize="@dimen/textSize14"
+            android:hint="手机号"
+            android:gravity="center"
+            android:inputType="phone"
+            android:layout_marginTop="15dp"
+            android:id="@+id/activity_my_house_family_add_edit"
+            android:background="@drawable/edit_white_dinkwhite"
+            android:layout_width="270dp"
+            android:layout_height="30dp"
+            android:layout_below="@+id/activity_my_house_family_add_user"
+            android:layout_alignStart="@+id/relativeLayout" />
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/locklayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/lockback">
+        <RelativeLayout
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+            <com.home.wanyu.myview.RoundImageView
+                android:id="@+id/lockshare_list_item_image"
+                android:layout_width="30dp"
+                android:src="@mipmap/it1"
+                android:layout_centerVertical="true"
+                android:layout_height="30dp" />
+            <TextView
+                android:textColor="@color/titlecolor3"
+                android:textSize="@dimen/textSize13"
+                android:layout_centerVertical="true"
+                android:text="LIM"
+                android:layout_marginLeft="15dp"
+                android:id="@+id/lockshare_list_item_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/lockshare_list_item_image"/>
+            <TextView
+                android:textColor="@color/titlecolor3"
+                android:textSize="@dimen/textSize13"
+                android:layout_centerVertical="true"
+                android:text="LIM"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="15dp"
+                android:id="@+id/lockshare_list_item_text_pro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+        </RelativeLayout>
+        <TextView
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/background"/>
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_device_manager"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/homefragmentFgColor"
+    android:padding="10dp"
+    tools:context="com.home.wanyu.activity.MyHouseDeviceManagerActivity">
+
+    <ListView
+        android:background="@drawable/listba"
+        android:divider="#f1f1f1"
+        android:dividerHeight="1dp"
+        android:id="@+id/activity_device_manager_listview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </ListView>
+</RelativeLayout>

@@ -49,6 +49,7 @@
 
     </GridView>
     <TextView
+        android:id="@+id/pop_data_submit"
         android:text="确定"
         android:gravity="center"
         android:layout_gravity="center_horizontal"

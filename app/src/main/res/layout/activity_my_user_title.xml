@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/titleHeight"
+        android:background="#ffffff">
+        <ImageView
+            android:id="@+id/titleImage"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:paddingLeft="15dp"
+            android:clickable="true"
+            android:onClick="TitleReturn"
+            android:paddingRight="15dp"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/property_back"/>
+        <TextView
+            android:id="@+id/myActivity_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="个人信息"
+            android:textColor="@color/titlecolor3"
+            android:textSize="17sp"/>
+        <TextView
+            android:clickable="true"
+            android:textColor="@color/select"
+            android:textSize="16sp"
+            android:layout_centerVertical="true"
+            android:paddingTop="10dp"
+            android:padding="10dp"
+            android:onClick="Submit"
+            android:text="保存"
+            android:layout_alignParentRight="true"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:id="@+id/my_user_info_submmit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
+</LinearLayout>
