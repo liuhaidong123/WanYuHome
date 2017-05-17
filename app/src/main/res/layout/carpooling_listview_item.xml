@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/car_title_rl"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/white">
+
+            <com.home.wanyu.myview.RoundImageView
+                android:id="@+id/car_head"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:src="@mipmap/main_background4" />
+
+            <TextView
+                android:id="@+id/car_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/car_head"
+                android:text="刘海东"
+                android:textColor="@color/title_color"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/car_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:text="2015-5-5 6:00"
+                android:textColor="@color/color9"
+                android:textSize="14sp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+
+            android:id="@+id/car_content_rl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/car_title_rl"
+            android:background="@color/bg_color">
+
+            <RelativeLayout
+                android:id="@+id/car_shen_rl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="25dp">
+
+                <TextView
+
+                    android:id="@+id/car_shen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/car_shen"
+                    android:textColor="@color/homeFragTopTextColor"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/car_shen_msg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/car_shen"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="老司机"
+                    android:textColor="@color/titlecolor3"
+                    android:textSize="14sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/car_time_rl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/car_shen_rl"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp">
+
+                <TextView
+
+                    android:id="@+id/car_time_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/car_time"
+                    android:textColor="@color/homeFragTopTextColor"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/car_time_msg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/car_time_tv"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="2015-5-5 6:00"
+                    android:textColor="@color/titlecolor3"
+                    android:textSize="14sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/car_start_address_rl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/car_time_rl"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp">
+
+                <TextView
+
+                    android:id="@+id/car_start_address_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/car_start_address"
+                    android:textColor="@color/homeFragTopTextColor"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/car_start_address_msg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/car_start_address_tv"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="名流一品"
+                    android:textColor="@color/titlecolor3"
+                    android:textSize="14sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/car_end_address_rl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/car_start_address_rl"
+                android:layout_marginBottom="25dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp">
+
+                <TextView
+
+                    android:id="@+id/car_end_address_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/car_end_address"
+                    android:textColor="@color/homeFragTopTextColor"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/car_end_address_msg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/car_end_address_tv"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="风景区公园"
+                    android:textColor="@color/titlecolor3"
+                    android:textSize="14sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+
+                android:id="@+id/car_end_rl"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:layout_below="@id/car_end_address_rl"
+                android:background="@color/white">
+
+                <TextView
+
+                    android:id="@+id/car_state_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:text="正在进行"
+                    android:textColor="@color/bg_rect"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/car_join_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:text="1人参加"
+                    android:textColor="@color/name_color"
+                    android:textSize="14sp" />
+
+
+                <ImageView
+                    android:id="@+id/car_join_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_toLeftOf="@id/car_join_num"
+                    android:src="@mipmap/community_add_no"
+
+                    />
+
+
+                <TextView
+                    android:id="@+id/car_comment_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="27dp"
+                    android:layout_toLeftOf="@+id/car_join_img"
+                    android:text="25"
+                    android:textColor="@color/name_color"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:id="@+id/car_comment_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp"
+                    android:layout_toLeftOf="@id/car_comment_num"
+                    android:src="@mipmap/circle_white_msg"
+
+                    />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/car_end_chen_rl"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:layout_below="@id/car_end_address_rl"
+                android:background="@color/white"
+                android:visibility="gone"
+               >
+
+                <TextView
+
+                    android:id="@+id/car_chen_state_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:text="正在进行"
+                    android:textColor="@color/bg_rect"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/car_chen_jie_btn"
+                    android:layout_width="79dp"
+                    android:layout_height="25dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/repair_submit_bg"
+                    android:gravity="center"
+                    android:text="@string/car_jie"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+
+                <TextView
+                    android:id="@+id/car_jie_comment_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="14dp"
+                    android:layout_toLeftOf="@+id/car_chen_jie_btn"
+                    android:text="25"
+                    android:textColor="@color/name_color"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:id="@+id/car_jie_comment_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp"
+                    android:layout_toLeftOf="@id/car_jie_comment_num"
+                    android:src="@mipmap/circle_white_msg"
+
+                    />
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+</RelativeLayout>

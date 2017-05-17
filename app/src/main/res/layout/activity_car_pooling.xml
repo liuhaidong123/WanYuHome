@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_car_pooling"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    tools:context="com.home.wanyu.activity.CarPoolingActivity">
+
+    <RelativeLayout
+    android:id="@+id/order_msg_title"
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
+    android:background="@color/white">
+
+    <ImageView
+        android:id="@+id/car_msg_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:paddingLeft="10dp"
+        android:paddingRight="20dp"
+        android:src="@mipmap/property_back" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:gravity="center"
+        android:text="@string/car_pin"
+        android:textColor="@color/title_color"
+        android:textSize="17sp" />
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp">
+
+        <ImageView
+            android:id="@+id/car_news_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:paddingLeft="10dp"
+            android:src="@mipmap/circle_news" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:src="@mipmap/circle_small_red" />
+    </FrameLayout>
+</RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/two_ll"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_below="@+id/order_msg_title"
+        android:layout_marginTop="1dp"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:id="@+id/car_now_ll"
+            android:layout_width="0dp"
+            android:layout_height="44dp"
+            android:layout_weight="1"
+            android:background="@color/bg_rect"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/car_jin_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/car_jin"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/car_end_ll"
+            android:layout_width="0dp"
+            android:layout_height="44dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/car_end_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/car_end"
+                android:textColor="@color/title_color"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/car_refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/two_ll"
+        android:layout_marginTop="1dp">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <com.home.wanyu.myview.MyListView
+                    android:id="@+id/car_listview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:divider="@color/bg_color"
+                    android:dividerHeight="10dp"
+                    android:scrollbars="none">
+
+                </com.home.wanyu.myview.MyListView>
+
+
+                <RelativeLayout
+                    android:id="@+id/many_relative"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/car_listview"
+                    android:layout_marginTop="1dp"
+                    android:background="@color/white">
+
+                    <TextView
+                        android:id="@+id/footer_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:paddingBottom="15dp"
+                        android:paddingEnd="20dp"
+                        android:paddingStart="20dp"
+                        android:paddingTop="15dp"
+                        android:text="加载更多"
+                        android:textColor="@color/titlecolor3"
+                        android:textSize="13sp" />
+
+                    <ProgressBar
+                        android:id="@+id/pbLocate"
+                        style="?android:attr/progressBarStyleSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@+id/footer_tv" />
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+        </ScrollView>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <ImageView
+        android:id="@+id/car_post_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="67dp"
+        android:layout_marginRight="11dp"
+        android:src="@mipmap/circle_post" />
+</RelativeLayout>

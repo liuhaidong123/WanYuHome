@@ -50,6 +50,48 @@
     <string name="input_money_many">入表金额</string>
     <string name="input_money_submit">立即缴费</string>
 
+    <string name="submit_sure_tv">确认付款</string>
+    <string name="submit_select_tv">选择付款方式</string>
+    <string name="submit_select_zhifubao">支付宝</string>
+    <string name="submit_select_weixin">微信</string>
+
+
+    <string name="circle_msg_title">友邻圈</string>
+    <string name="circle_post_send">发送</string>
+    <string name="circle_post_type">选择分类</string>
+    <string name="circle_post_hint">内容...</string>
+    <string name="circle_post_other_area">其他小区可看</string>
+    <string name="comment_hint">说点什么...</string>
+
+    <string name="community_post_tv">发布</string>
+    <string name="start_time">开始时间</string>
+    <string name="end_time">结束时间</string>
+    <string name="acti">创建活动</string>
+    <string name="prompt">活动发布后暂不支持修改,请认真填写哦</string>
+    <string name="community_title">活动标题</string>
+    <string name="community_address">活动地址</string>
+    <string name="community_person_num">人&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;数</string>
+    <string name="community_phone">电&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;话</string>
+    <string name="community_content">活动内容...</string>
+
+    <string name="car_jin">正在进行</string>
+    <string name="car_end">已完成</string>
+
+    <string name="car_shen">身份</string>
+    <string name="car_time">出发时间</string>
+    <string name="car_start_address">出发地</string>
+    <string name="car_end_address">目的地</string>
+    <string name="car_jie">接单</string>
+    <string name="car_pin">社区拼车</string>
+    <string name="car_post_prompt">活动发布后暂不支持修改,请认真填写哦</string>
+    <string name="car_post_shen">身&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;份</string>
+    <string name="car_post_end_address">目&#160;&#160;的&#160;&#160;地</string>
+    <string name="car_post_start_address">出&#160;&#160;发&#160;&#160;地</string>
+    <string name="car_post_siji">司机</string>
+    <string name="car_post_chen">乘客</string>
+    <string name="car_msg_comment">评论</string>
+    <string name="car_comment_send">发表</string>
+
     <string-array name="homeSceneString">
         <item>回家</item>
         <item>离家</item>
@@ -65,18 +107,18 @@
         <item>定时启动</item>
         <item>定位启动</item>
     </string-array>
-        <string-array name="KM">
-            <item>0km</item>
-            <item>1km</item>
-            <item>2km</item>
-            <item>3km</item>
-            <item>4km</item>
-            <item>5km</item>
-            <item>6km</item>
-            <item>7km</item>
-            <item>8km</item>
-            <item>9km</item>
-        </string-array>
+    <string-array name="KM">
+        <item>0km</item>
+        <item>1km</item>
+        <item>2km</item>
+        <item>3km</item>
+        <item>4km</item>
+        <item>5km</item>
+        <item>6km</item>
+        <item>7km</item>
+        <item>8km</item>
+        <item>9km</item>
+    </string-array>
 
     <string-array name="M">
         <item>0m</item>
@@ -90,16 +132,16 @@
         <item>800m</item>
         <item>900m</item>
     </string-array>
-        <string-array name="week">
-            <item>周一</item>
+    <string-array name="week">
+        <item>周一</item>
         <item>周二</item>
         <item>周三</item>
         <item>周四</item>
         <item>周五</item>
         <item>周六</item>
         <item>周日</item>
-            <item>全部</item>
-        </string-array>
+        <item>全部</item>
+    </string-array>
 
     <string-array name="homeDeviceString">
         <item>客厅</item>

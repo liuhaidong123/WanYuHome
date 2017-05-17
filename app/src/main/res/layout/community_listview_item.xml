@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/white">
+
+            <com.home.wanyu.myview.RoundImageView
+                android:id="@+id/community_head_img"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:src="@mipmap/main_background4" />
+
+            <TextView
+                android:id="@+id/community_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/community_head_img"
+                android:text="刘海东"
+                android:textColor="@color/titlecolor3"
+                android:textSize="14sp" />
+
+
+            <TextView
+                android:id="@+id/community_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:text="2017年05月05 06:30"
+                android:textColor="@color/color9"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/title"
+            android:background="@color/bg_color"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/community_ming"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="烧烤聚会"
+                android:textColor="@color/titlecolor3"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/community_activity_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/community_ming"
+                android:layout_marginTop="10dp"
+                android:text="时间  2015年5月5日 16:30-2015年5月5日 22:30"
+                android:textColor="@color/titlecolor3"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/community_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/community_activity_time"
+                android:layout_marginTop="10dp"
+                android:text="地点  风景区公园"
+                android:textColor="@color/titlecolor3"
+                android:textSize="14sp" />
+
+
+            <TextView
+                android:id="@+id/community_person_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/community_address"
+                android:layout_marginTop="10dp"
+                android:text="人数  3人"
+                android:textColor="@color/titlecolor3"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="37dp"
+            android:layout_below="@id/content"
+            android:background="@color/white">
+
+            <TextView
+                android:id="@+id/community_jin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:text="正在进行"
+                android:textColor="@color/bg_rect"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/community_like_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="68dp"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@id/community_jin"
+                android:src="@mipmap/circle_like_no" />
+
+            <TextView
+                android:id="@+id/community_like_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/community_like_img"
+                android:text="1人感兴趣"
+                android:textColor="@color/color9"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/community_join_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:text="1人参加"
+                android:textColor="@color/color9"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/community_add_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:layout_toLeftOf="@id/community_join_num"
+                android:src="@mipmap/community_add_no" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+</RelativeLayout>

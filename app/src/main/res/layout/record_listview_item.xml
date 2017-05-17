@@ -98,12 +98,14 @@
             android:background="@color/repair_line" />
 
         <RelativeLayout
+            android:visibility="gone"
             android:id="@+id/foot_rl"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_below="@+id/line2">
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/finish_btn"
                 android:layout_width="70dp"
                 android:layout_height="25dp"
@@ -117,6 +119,7 @@
                 android:textSize="15sp" />
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/cancle_btn"
                 android:layout_width="70dp"
                 android:layout_height="25dp"

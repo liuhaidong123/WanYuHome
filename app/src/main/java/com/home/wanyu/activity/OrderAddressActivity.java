@@ -1,6 +1,8 @@
 package com.home.wanyu.activity;
 
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,8 +16,12 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.home.wanyu.HttpUtils.HttpTools;
 import com.home.wanyu.R;
+import com.home.wanyu.User.UserInfo;
 import com.home.wanyu.apater.OrderAddressAda;
+import com.home.wanyu.bean.haveAddress.Result;
+import com.home.wanyu.bean.haveAddress.Root;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,17 +31,37 @@ public class OrderAddressActivity extends AppCompatActivity implements View.OnCl
     private Button mAddAddress_btn;
     private ListView mListView;
     private OrderAddressAda mAdapter;
-    private List<String> mList = new ArrayList<>();
+    private List<Result> mList = new ArrayList<>();
 
     private AlertDialog.Builder mBuilder;
     private AlertDialog mAlert;
     private View mView;
     private TextView mDelete;
     private TextView mUpdate;
+
+    private HttpTools mHttptools;
+    private Handler mHandler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if(msg.what==100){
+                Object o=msg.obj;
+                if (o!=null&&o instanceof Root){
+                    Root root= (Root) o;
+                    mList=root.getResult();
+                    mAdapter.setList(mList);
+                    mAdapter.notifyDataSetChanged();
+                }
+            }
+
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_address);
+        mHttptools=HttpTools.getHttpToolsInstance();
+        mHttptools.haveUserAddress(mHandler, UserInfo.userToken);//获取地址列表
         initView();
     }
 
@@ -47,10 +73,6 @@ public class OrderAddressActivity extends AppCompatActivity implements View.OnCl
         mAddAddress_btn.setOnClickListener(this);
 
         mListView = (ListView) findViewById(R.id.order_address_listview);
-        mList.add("河北名流一品小区3号楼3单元3层306");
-        mList.add("河北名流一品小区3号楼3单元3层307");
-        mList.add("河北名流一品小区3号楼3单元3层308");
-        mList.add("河北名流一品小区3号楼3单元3层309");
         mAdapter = new OrderAddressAda(this, mList);
         mListView.setAdapter(mAdapter);
 
@@ -67,10 +89,13 @@ public class OrderAddressActivity extends AppCompatActivity implements View.OnCl
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = getIntent();
-                intent.putExtra("", "");
-                setResult(RESULT_OK, intent);
-                finish();
+                if (mList.size()!=0){
+                    Intent intent = getIntent();
+                    intent.putExtra("result",mList.get(position));
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }
+
             }
         });
 

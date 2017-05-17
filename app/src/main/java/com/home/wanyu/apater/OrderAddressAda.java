@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.home.wanyu.R;
+import com.home.wanyu.bean.haveAddress.Result;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,13 +19,17 @@ import java.util.List;
 
 public class OrderAddressAda extends BaseAdapter {
     private Context mContext;
-    private List<String> list=new ArrayList<>();
+    private List<Result> list=new ArrayList<>();
     private LayoutInflater mInflater;
 
-    public OrderAddressAda(Context mContext, List<String> list) {
+    public OrderAddressAda(Context mContext, List<Result> list) {
         this.mContext = mContext;
         this.list = list;
         this.mInflater=LayoutInflater.from(mContext);
+    }
+
+    public void setList(List<Result> list) {
+        this.list = list;
     }
 
     @Override
@@ -53,7 +58,7 @@ public class OrderAddressAda extends BaseAdapter {
         }else {
             holder= (AddressHolder) convertView.getTag();
         }
-        holder.textView.setText(list.get(position));
+        holder.textView.setText(list.get(position).getDetailAddress());
 
         return convertView;
     }

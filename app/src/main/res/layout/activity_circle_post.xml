@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_circle_post"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    tools:context="com.home.wanyu.activity.CirclePostActivity">
+
+    <RelativeLayout
+        android:id="@+id/circle_post_title"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/circle_post_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingLeft="10dp"
+            android:paddingRight="20dp"
+            android:src="@mipmap/property_back" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:gravity="center"
+            android:text="@string/circle_msg_title"
+            android:textColor="@color/title_color"
+            android:textSize="17sp" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingRight="10dp"
+            android:text="@string/circle_post_send"
+            android:textColor="@color/title_color"
+            android:textSize="15sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/circle_post_title2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/circle_post_title"
+        android:layout_marginTop="1dp"
+        android:background="@color/white">
+
+        <RelativeLayout
+            android:id="@+id/circle_type_rl"
+            android:layout_width="130dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="10dp"
+            android:background="@color/bg_color">
+
+            <TextView
+                android:id="@+id/circle_type_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="25dp"
+                android:text="@string/circle_post_type"
+                android:textColor="@color/color9" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="25dp"
+                android:layout_toRightOf="@id/circle_type_tv"
+                android:src="@mipmap/circle_post_more" />
+
+
+        </RelativeLayout>
+
+        <EditText
+            android:id="@+id/circle_post_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/circle_type_rl"
+            android:background="@null"
+            android:hint="@string/circle_post_hint"
+            android:maxLength="500"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/color9"
+            android:textSize="15sp" />
+
+        <GridView
+            android:id="@+id/circle_post_gridview"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/circle_post_edit"
+            android:horizontalSpacing="20dp"
+            android:numColumns="4">
+
+        </GridView>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:layout_below="@id/circle_post_title2"
+        android:layout_marginTop="1dp"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/circle_look_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingRight="10dp"
+            android:src="@mipmap/circle_button_off" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@id/circle_look_btn"
+            android:text="@string/circle_post_other_area"
+            android:textColor="@color/title_color"
+            android:textSize="12sp" />
+    </RelativeLayout>
+
+</RelativeLayout>

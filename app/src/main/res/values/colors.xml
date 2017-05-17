@@ -3,6 +3,7 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="dialog">#00ffffff</color>
 
     <color name="white">#ffffff</color>
     <color name="title_color">#333333</color>
@@ -22,6 +23,9 @@
     <color name="titlecolor3">#333333</color>
     <color name="color9">#999999</color>
     <color name="colorc">#cccccc</color>
+    <color name="pop_bg">#50cccccc</color>
+    <color name="pop_list_bg">#cccaca</color>
+    <color name="bar_bg">#99cccaca</color>
 
 <color name="dinkwhite">#e1f5fc</color>
     <color name="colorPrimaryWhite">#ffffff</color>

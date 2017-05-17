@@ -59,15 +59,15 @@ public class SelectImgActivity extends AppCompatActivity implements View.OnClick
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ImageView imageView = (ImageView) view.findViewById(R.id.select_small_img);
                 Log.e("文件", mAdapter.getItem(position).toString());
-                if (num != 8) {
+                if (num != getIntent().getIntExtra("num",-1)) {
                     if (mImgList.contains( mAdapter.getItem(position))) {
                         mImgList.remove( mAdapter.getItem(position));
                         num--;
-                        mText.setText("完成" + num + "/" + 8);
+                        mText.setText("完成" + num + "/" + getIntent().getIntExtra("num",-1));
                         imageView.setImageResource(R.mipmap.selectfa);
                     } else {
                         num++;
-                        mText.setText("完成" + num + "/" + 8);
+                        mText.setText("完成" + num + "/" + getIntent().getIntExtra("num",-1));
                         imageView.setImageResource(R.mipmap.selecttr);
                         mImgList.add(mAdapter.getItem(position).toString());
                     }
@@ -75,10 +75,10 @@ public class SelectImgActivity extends AppCompatActivity implements View.OnClick
                     if (mImgList.contains( mAdapter.getItem(position))) {
                         mImgList.remove( mAdapter.getItem(position));
                         num--;
-                        mText.setText("完成" + num + "/" + 8);
+                        mText.setText("完成" + num + "/" + getIntent().getIntExtra("num",-1));
                         imageView.setImageResource(R.mipmap.selectfa);
                     } else {
-                        Toast.makeText(SelectImgActivity.this, "亲,最多选择8张图片哦", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SelectImgActivity.this, "亲,最多选择"+getIntent().getIntExtra("num",-1)+"张图片哦", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -93,8 +93,6 @@ public class SelectImgActivity extends AppCompatActivity implements View.OnClick
                 while (cursor.moveToNext()) {
                     int index = cursor.getColumnIndex(MediaStore.Images.Media.DATA);
                     String imgMsg = cursor.getString(index);
-                   // File file = new File(imgMsg);
-                   // mList.add(file);
                     mList.add(imgMsg);
                     Log.e("路径", imgMsg);
 

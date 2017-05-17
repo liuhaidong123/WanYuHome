@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:paddingLeft="10dp"
-            android:paddingRight="10dp"
+            android:paddingRight="20dp"
             android:src="@mipmap/property_back" />
 
         <TextView
@@ -52,7 +52,15 @@
                 android:id="@+id/order_year_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2017年"
+                android:text=""
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/order_nian_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="年"
                 android:textColor="@color/white"
                 android:textSize="14sp" />
 
@@ -76,7 +84,15 @@
                 android:id="@+id/order_month_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="5月"
+                android:text=""
+                android:textColor="@color/title_color"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/order_yue_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="月份"
                 android:textColor="@color/title_color"
                 android:textSize="14sp" />
 
@@ -120,7 +136,7 @@
                 android:id="@+id/order_msg_pro"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="河北"
+                android:text=""
                 android:textColor="@color/titlecolor3"
                 android:textSize="17sp" />
 
@@ -132,7 +148,7 @@
                 android:layout_marginTop="5dp"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="名流一品3号楼3单元3061221222222222222222222"
+                android:text=""
                 android:textColor="@color/titlecolor3" />
         </RelativeLayout>
 
@@ -146,9 +162,9 @@
     </RelativeLayout>
 
     <ScrollView
-        android:layout_above="@+id/add_submit"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/add_submit"
         android:layout_below="@id/order_msg_address_rl"
         android:layout_marginTop="5dp"
         android:scrollbars="none">
@@ -184,5 +200,23 @@
         android:text="@string/order_lookup"
         android:textColor="@color/white"
         android:textSize="15sp" />
+
+
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/bar_rl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bar_bg">
+
+        <ProgressBar
+            android:id="@+id/httptoosl_bar"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerInParent="true"
+            android:paddingTop="15dp"
+
+            />
+    </RelativeLayout>
 
 </RelativeLayout>

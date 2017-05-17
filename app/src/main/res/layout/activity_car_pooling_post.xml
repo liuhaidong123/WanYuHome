@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_car_pooling_post"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    tools:context="com.home.wanyu.activity.CarPoolingPostActivity">
+
+    <RelativeLayout
+        android:id="@+id/order_msg_title"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/car_post_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingLeft="10dp"
+            android:paddingRight="20dp"
+            android:src="@mipmap/property_back" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:gravity="center"
+            android:text="@string/car_pin"
+            android:textColor="@color/title_color"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/car_post_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="@string/community_post_tv"
+            android:textColor="@color/homeFragTopTextColor"
+            android:textSize="15sp" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/car_post_prompt"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:layout_below="@id/order_msg_title"
+        android:layout_marginTop="5dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:text="@string/car_post_prompt" />
+
+    <RelativeLayout
+        android:id="@+id/car_post_msg_rl"
+        android:layout_width="match_parent"
+        android:layout_height="50.5dp"
+        android:layout_below="@id/car_post_prompt"
+        android:layout_marginTop="1dp"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/post_shen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:text="@string/car_post_shen"
+            android:textColor="@color/name_color" />
+
+
+        <ImageView
+            android:id="@+id/post_siji_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="25dp"
+            android:layout_toRightOf="@id/post_shen"
+            android:src="@mipmap/car_post_chen_no" />
+
+        <TextView
+            android:id="@+id/post_siji_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@id/post_siji_img"
+            android:text="@string/car_post_siji"
+            android:textColor="@color/titlecolor3"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/post_chen_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8dp"
+            android:layout_toRightOf="@id/post_siji_tv"
+            android:src="@mipmap/car_post_chen_no" />
+
+        <TextView
+            android:id="@+id/post_chen_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@id/post_chen_img"
+            android:text="@string/car_post_chen"
+            android:textColor="@color/titlecolor3"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/car_post_time_rl"
+        android:layout_width="match_parent"
+        android:layout_height="50.5dp"
+        android:layout_below="@id/car_post_msg_rl"
+        android:layout_marginTop="1dp"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/car_post_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:text="@string/car_time"
+            android:textColor="@color/name_color" />
+
+
+        <TextView
+            android:id="@+id/car_post_time_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/car_post_time"
+            android:background="@drawable/car_post_time_bg"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="选择时间"
+            android:textColor="@color/titlecolor3"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/car_post_start_address_rl"
+        android:layout_width="match_parent"
+        android:layout_height="50.5dp"
+        android:layout_below="@id/car_post_time_rl"
+        android:layout_marginTop="1dp"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/car_post_start_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:text="@string/car_post_start_address"
+            android:textColor="@color/name_color" />
+
+
+        <EditText
+            android:id="@+id/car_post_start_address_msg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_toRightOf="@id/car_post_start_address"
+            android:background="@null"
+            android:hint="请输入出发地点"
+            android:inputType="text"
+            android:textColor="@color/titlecolor3"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/car_post_end_address_rl"
+        android:layout_width="match_parent"
+        android:layout_height="50.5dp"
+        android:layout_below="@id/car_post_start_address_rl"
+        android:layout_marginTop="1dp"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/car_post_end_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:text="@string/car_post_end_address"
+            android:textColor="@color/name_color" />
+
+
+        <EditText
+            android:id="@+id/car_post_end_address_msg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_toRightOf="@id/car_post_end_address"
+            android:background="@null"
+            android:hint="请输入目的地"
+            android:inputType="text"
+            android:textColor="@color/titlecolor3"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/car_post_phone_rl"
+        android:layout_width="match_parent"
+        android:layout_height="50.5dp"
+        android:layout_below="@id/car_post_end_address_rl"
+        android:layout_marginTop="1dp"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/car_post_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:text="@string/add_phone"
+            android:textColor="@color/name_color" />
+
+
+        <EditText
+            android:id="@+id/car_post_phone_msg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_toRightOf="@id/car_post_phone"
+            android:background="@null"
+            android:hint="输入手机号"
+            android:inputType="number"
+            android:maxLength="11"
+            android:textColor="@color/titlecolor3"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/car_post_other_area_rl"
+        android:layout_width="match_parent"
+        android:layout_height="37dp"
+        android:layout_below="@id/car_post_phone_rl"
+        android:layout_marginTop="1dp"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/car_post_select_img_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:src="@mipmap/circle_button_off" />
+
+        <TextView
+            android:id="@+id/car_post_other_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/car_post_select_img_btn"
+            android:text="@string/circle_post_other_area"
+            android:textColor="@color/titlecolor3" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/car_post_other_area_rl"
+        android:layout_marginTop="1dp"
+        android:background="@color/white">
+
+    </RelativeLayout>
+</RelativeLayout>

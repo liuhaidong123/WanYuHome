@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_car_pooling_msg"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    tools:context="com.home.wanyu.activity.CarPoolingMsgActivity">
+
+    <RelativeLayout
+        android:id="@+id/order_msg_title"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/car_msg_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingLeft="10dp"
+            android:paddingRight="20dp"
+            android:src="@mipmap/property_back" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:gravity="center"
+            android:text="@string/car_pin"
+            android:textColor="@color/title_color"
+            android:textSize="17sp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/car_msg_title_rl"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_below="@id/order_msg_title"
+        android:layout_marginTop="1dp"
+        android:background="@color/white">
+
+        <com.home.wanyu.myview.RoundImageView
+            android:id="@+id/car_msg_head_img"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:src="@mipmap/main_background4" />
+
+        <TextView
+            android:id="@+id/car_msg_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/car_msg_head_img"
+            android:text="刘海东"
+            android:textColor="@color/title_color"
+            android:textSize="14sp" />
+
+
+        <TextView
+            android:id="@+id/car_msg_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:text="已结束"
+            android:textColor="@color/bg_rect"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/car_msg_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@id/car_msg_state"
+            android:text="2015-5-6 09:09"
+            android:textColor="@color/name_color"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/car_mag_content_rl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/car_msg_btn"
+        android:layout_below="@id/car_msg_title_rl"
+        android:layout_marginBottom="1dp"
+        android:background="@color/white">
+
+        <RelativeLayout
+            android:id="@+id/car_msg_shen_rl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="29dp">
+
+            <TextView
+
+                android:id="@+id/car_shen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/car_shen"
+                android:textColor="@color/homeFragTopTextColor"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/car_shen_msg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/car_shen"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="老司机/乘客"
+                android:textColor="@color/titlecolor3"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/car_msg_time_rl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/car_msg_shen_rl"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp">
+
+            <TextView
+
+                android:id="@+id/car_time_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/car_time"
+                android:textColor="@color/homeFragTopTextColor"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/car_time_msg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/car_time_tv"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="2015-5-5 6:00"
+                android:textColor="@color/titlecolor3"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/car_msg_start_address_rl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/car_msg_time_rl"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp">
+
+            <TextView
+
+                android:id="@+id/car_start_address_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/car_start_address"
+                android:textColor="@color/homeFragTopTextColor"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/car_start_address_msg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/car_start_address_tv"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="名流一品"
+                android:textColor="@color/titlecolor3"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/car_end_address_rl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/car_msg_start_address_rl"
+            android:layout_marginBottom="29dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp">
+
+            <TextView
+
+                android:id="@+id/car_end_address_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/car_end_address"
+                android:textColor="@color/homeFragTopTextColor"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/car_end_address_msg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/car_end_address_tv"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="风景区公园"
+                android:textColor="@color/titlecolor3"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/car_end_address_rl"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/bg_color">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:id="@+id/comment_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                  >
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_alignParentTop="true"
+                        android:background="@color/repair_line" />
+
+                    <ImageView
+                        android:id="@+id/blue_comment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="26dp"
+                        android:layout_marginTop="5dp"
+                        android:src="@mipmap/circle_blue_msg"
+
+                        />
+
+                    <com.home.wanyu.myview.MyExpandableListview
+                        android:id="@+id/car_msg_commend_listview"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@id/blue_comment"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_toRightOf="@id/blue_comment"
+                        android:scrollbars="none">
+
+                    </com.home.wanyu.myview.MyExpandableListview>
+
+                    <RelativeLayout
+                        android:id="@+id/community_many_relative"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/car_msg_commend_listview"
+                        android:layout_marginTop="5dp">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_alignParentTop="true"
+                            android:background="@color/repair_line" />
+
+                        <TextView
+                            android:id="@+id/car_msg_footer_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:paddingBottom="15dp"
+                            android:paddingEnd="10dp"
+                            android:paddingStart="20dp"
+                            android:paddingTop="14dp"
+                            android:text="加载更多"
+                            android:textColor="@color/title_color"
+                            android:textSize="13sp" />
+
+                        <ProgressBar
+                            android:id="@+id/car_msg_pbLocate"
+                            style="?android:attr/progressBarStyleSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_toEndOf="@+id/car_msg_footer_tv" />
+
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_alignParentBottom="true"
+                        android:background="@color/repair_line" />
+                </RelativeLayout>
+
+            </RelativeLayout>
+        </ScrollView>
+
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:id="@id/car_msg_btn"
+        android:layout_width="match_parent"
+        android:layout_height="37dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/car_msg_comment_ll"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/circle_white_msg" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="@string/car_msg_comment"
+                android:textColor="@color/title_color"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/car_msg_jiedan"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/repair_line"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="@string/car_jie"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/car_msg_join_ll"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/community_add_no" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="1人参加"
+                android:textColor="@color/title_color"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

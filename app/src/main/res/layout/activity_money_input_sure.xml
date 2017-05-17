@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:paddingLeft="10dp"
-            android:paddingRight="10dp"
+            android:paddingRight="20dp"
             android:src="@mipmap/property_back" />
 
         <TextView

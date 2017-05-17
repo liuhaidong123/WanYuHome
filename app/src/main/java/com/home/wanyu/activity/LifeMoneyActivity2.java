@@ -101,8 +101,8 @@ public class LifeMoneyActivity2 extends AppCompatActivity implements View.OnClic
         if (id == mBack.getId()) {
             finish();
         } else if (id == mIntentAddress.getId()) {
-            startActivity(new Intent(this, OrderAddressActivity.class));
-            finish();
+            startActivityForResult(new Intent(this, OrderAddressActivity.class), 66);
+
         } else if (id == mCancle.getId()) {
             mAlert.dismiss();
         } else if (id == mUpdate.getId()) {//修改编号
@@ -121,5 +121,10 @@ public class LifeMoneyActivity2 extends AppCompatActivity implements View.OnClic
         android.view.WindowManager.LayoutParams p = alert.getWindow().getAttributes();  //获取对话框当前的参数值
         p.width = (int) ((int) dm.widthPixels / a);
         alert.getWindow().setAttributes(p);//设置生效
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

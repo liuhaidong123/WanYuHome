@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/bg_color"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/out_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLength="8"
+        android:text="张三"
+        android:textColor="@color/bg_rect"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/out_name_mao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLength="8"
+        android:text=":"
+        android:layout_toRightOf="@+id/out_name_tv"
+        android:textColor="@color/title_color"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/out_name_commend_msg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/out_name_mao"
+        android:text="你真的很好"
+        android:textColor="@color/title_color"
+        android:textSize="12sp" />
+</RelativeLayout>

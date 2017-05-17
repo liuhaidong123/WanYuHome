@@ -3,43 +3,79 @@ package com.home.wanyu.activity;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.os.Build;
+import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.home.wanyu.HttpUtils.HttpTools;
 import com.home.wanyu.R;
+import com.home.wanyu.User.UserInfo;
 import com.home.wanyu.apater.MyExpandableAda;
 import com.home.wanyu.apater.RecordAda;
 import com.home.wanyu.apater.RecordListviewAda;
 import com.home.wanyu.apater.RepairAda;
 import com.home.wanyu.apater.RepairAddImgAda;
+import com.home.wanyu.bean.Record.RecordBean;
+import com.home.wanyu.bean.repairType.Result;
+import com.home.wanyu.bean.repairType.Root;
+import com.home.wanyu.myUtils.ImgUitls;
+import com.home.wanyu.myUtils.MyDialog;
 import com.home.wanyu.myview.MyListView;
 
+import net.tsz.afinal.http.AjaxParams;
+
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class RepairActivity extends AppCompatActivity implements View.OnClickListener {
     private ImageView mback;
     private GridView mGridview;
+    private List<Result> mRepairList = new ArrayList<>();
     private RepairAda mAdapter;
+    private TextView mRepair_Type_tv;
+
 
     private LinearLayout mRepair_ll, mRecord_ll;//我要报修，报修记录
     private TextView mRepair_tv, mRecord_tv;
@@ -59,27 +95,124 @@ public class RepairActivity extends AppCompatActivity implements View.OnClickLis
 
     private GridView mRecordGridView;
     private RecordAda mRecordAda;
+    private List<RecordBean> mRecordList = new ArrayList<>();
     private RelativeLayout mRecord_category_rl, mRecord_message_rl;//报修记录中的全部类型，报修记录中的详细信息
 
-    private ScrollView mScroll;
+    private SwipeRefreshLayout mRecord_refresh;
     private MyListView mRecord_Listview;
+    private List<com.home.wanyu.bean.RecordMsg.Result> mRecordMsgList = new ArrayList<>();
     private RecordListviewAda mRecordListviewAda;
 
+
+    private TextView mSure_time, mCancle_time;
     private RelativeLayout mTime_rl;
-    private View mTimeAlertView;
+    private TextView mTime_tv;
     private DatePicker mDatePicker;
     private TimePicker mTimePicker;
-    private TextView mTimeSure, mTimeCancle;
-    private AlertDialog.Builder mTimeBuilder;
-    private AlertDialog mTimeAlert;
-    private Calendar mClaendar;
-    private int year, month,twoMonth, day,hour,minute;
-    private int mYear,mMonth,mDay,mHour,mMinute;
-    private TextView mTime_tv;
+    private Calendar mCalendar;
+    private PopupWindow mPopupwindow;
+    private View mView;
+
+    private EditText mName, mPhone, mAddress, mDetails;
+    private Button mSubmit_btn;
+    private int mID = -1;
+    private int mRecord_id = -1;
+    private AjaxParams ajaxParams;
+    private int start = 0;
+    private int limit = 10;
+    private int  moreFlag = -1;
+    private RelativeLayout mMore_rl;
+    private ProgressBar mBar;
+    private HttpTools mhttptools;
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (msg.what == 105) {//获取报修类型
+                Object o = msg.obj;
+                if (o != null && o instanceof Root) {
+                    Root root = (Root) o;
+                    mRepairList = root.getResult();
+                    mAdapter.setList(mRepairList);
+                    mAdapter.notifyDataSetChanged();
+                }
+            } else if (msg.what == 107) {//获取报修记录详情列表
+                Object o = msg.obj;
+                if (o != null && o instanceof com.home.wanyu.bean.RecordMsg.Root) {
+                    com.home.wanyu.bean.RecordMsg.Root root = (com.home.wanyu.bean.RecordMsg.Root) o;
+                    if (moreFlag==2) {//加载跟多
+                        List<com.home.wanyu.bean.RecordMsg.Result> list = new ArrayList<>();
+                        list = root.getResult();
+                        mRecordMsgList.addAll(list);
+                        mRecordListviewAda.setList(mRecordMsgList);
+                        mRecordListviewAda.notifyDataSetChanged();
+                    } else if (moreFlag==1){//下拉刷新
+                        mRecord_refresh.setRefreshing(false);
+                        mRecordMsgList = root.getResult();
+                        mRecordListviewAda.setList(mRecordMsgList);
+                        mRecordListviewAda.notifyDataSetChanged();
+                    }else if (moreFlag==3){//点击报修记录类型
+                        mRecord_refresh.setRefreshing(false);
+                        mRecordMsgList = root.getResult();
+                        mRecordListviewAda.setList(mRecordMsgList);
+                        mRecordListviewAda.notifyDataSetChanged();
+                    }
+
+                    if (root.getResult().size() == 0) {
+                        Toast.makeText(RepairActivity.this, "您还没有记录数据", Toast.LENGTH_SHORT).show();
+                    }
+
+                    if (root.getResult().size() < 10) {
+                        mMore_rl.setVisibility(View.GONE);
+                        mBar.setVisibility(View.INVISIBLE);
+                    } else {
+                        mMore_rl.setVisibility(View.VISIBLE);
+                        mBar.setVisibility(View.INVISIBLE);
+                    }
+
+
+                }
+            }else if (msg.what==201){
+                mRecordMsgList.clear();
+                mRecordListviewAda.setList(mRecordMsgList);
+                mRecordListviewAda.notifyDataSetChanged();
+                mRecord_refresh.setRefreshing(false);
+                Toast.makeText(RepairActivity.this, "数据错误", Toast.LENGTH_SHORT).show();
+            }
+
+            else if (msg.what == 106) {//提交报修信息
+                Object o = msg.obj;
+
+                if (o != null && o instanceof com.home.wanyu.bean.repairSubmitType.Root) {
+                    com.home.wanyu.bean.repairSubmitType.Root root = (com.home.wanyu.bean.repairSubmitType.Root) o;
+                    if (((com.home.wanyu.bean.repairSubmitType.Root) o).getCode().equals("0")) {
+                        MyDialog.stopDia();
+                        Toast.makeText(RepairActivity.this, "提交信息成功", Toast.LENGTH_SHORT).show();
+                        mName.setText("");
+                        mPhone.setText("");
+                        mAddress.setText("");
+                        mDetails.setText("");
+                        mImgList.clear();
+                        mImgAdapter.setmList(mImgList);
+                        mImgAdapter.notifyDataSetChanged();
+                        mTime_tv.setText("请选择期望处理时间");
+                    } else {
+                        MyDialog.stopDia();
+                        Toast.makeText(RepairActivity.this, "提交信息失败:" + root.getResult(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        }
+    };
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_repair);
+        mhttptools = HttpTools.getHttpToolsInstance();
+        mhttptools.getRepairType(mHandler);//获取报修类型
+        ajaxParams = new AjaxParams();
         initView();
     }
 
@@ -87,15 +220,21 @@ public class RepairActivity extends AppCompatActivity implements View.OnClickLis
 
         mback = (ImageView) findViewById(R.id.repair_back);
         mback.setOnClickListener(this);
+
         //报修类型的gridview
         mGridview = (GridView) findViewById(R.id.repair_gridview);
-        mAdapter = new RepairAda(this);
+        mAdapter = new RepairAda(this, mRepairList);
         mGridview.setAdapter(mAdapter);
+        mRepair_Type_tv = (TextView) findViewById(R.id.tv_message);
+
         mGridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 mRepair_category_rl.setVisibility(View.GONE);
                 mRepair_message_rl.setVisibility(View.VISIBLE);
+                mRepair_Type_tv.setText(mRepairList.get(position).getTypeName());
+                mID = mRepairList.get(position).getId();
+                Log.e("mID==", mID + "");
             }
         });
 
@@ -153,67 +292,95 @@ public class RepairActivity extends AppCompatActivity implements View.OnClickLis
         });
 
         //报修记录中全部类型GridView
+        mRecordList.add(new RecordBean("待处理", 1));
+        mRecordList.add(new RecordBean("处理中", 2));
+        mRecordList.add(new RecordBean("已完成", 3));
+        mRecordList.add(new RecordBean("已取消", 4));
         mRecordGridView = (GridView) findViewById(R.id.record_gridview);
-        mRecordAda = new RecordAda(this);
+        mRecordAda = new RecordAda(this, mRecordList);
         mRecordGridView.setAdapter(mRecordAda);
         //点击显示报修记录详情
         mRecordGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                moreFlag =3;
+                mRecord_refresh.setRefreshing(true);
                 mRecord_category_rl.setVisibility(View.GONE);
-                mScroll.setVisibility(View.VISIBLE);
+                mRecord_refresh.setVisibility(View.VISIBLE);
+                mRecord_id = mRecordList.get(position).getId();
+                //获取报修记录详情
+                mhttptools.getRecordMsg(mHandler, UserInfo.userToken, mRecordList.get(position).getId(), start, limit);
             }
         });
         //报修记录中的全部类型
         mRecord_category_rl = (RelativeLayout) findViewById(R.id.all_record_category);
-        mScroll = (ScrollView) findViewById(R.id.srcoll_view);
+        mRecord_refresh = (SwipeRefreshLayout) findViewById(R.id.record_swipe_refresh);
+        mRecord_refresh.setColorSchemeResources(R.color.bg_rect, R.color.colorAccent, R.color.result_points);
+       //刷新记录列表
+        mRecord_refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                moreFlag =1;
+                start = 0;
+                mhttptools.getRecordMsg(mHandler, UserInfo.userToken, mRecord_id, start, limit);
+
+            }
+        });
         //报修记录详情中的listview
         mRecord_Listview = (MyListView) findViewById(R.id.record_listview);
-        mRecordListviewAda = new RecordListviewAda(this);
+        mRecordListviewAda = new RecordListviewAda(this, mRecordMsgList);
         mRecord_Listview.setAdapter(mRecordListviewAda);
 
-        //选择期望处理时间
-        mClaendar=Calendar.getInstance();
-        //获取年月日时分秒的信息
-        year = mClaendar.get(Calendar.YEAR);
-        //month从0开始计算(一月month = 0)
-        month = mClaendar.get(Calendar.MONTH);
-        twoMonth=month+1;
-        day = mClaendar.get(Calendar.DAY_OF_MONTH);
-        hour=mClaendar.get(Calendar.HOUR_OF_DAY);
-        minute=mClaendar.get(Calendar.MINUTE);
+        //报修记录加载更多
+        mMore_rl = (RelativeLayout) findViewById(R.id.more_relative);
+        mMore_rl.setOnClickListener(this);
+        mBar = (ProgressBar) findViewById(R.id.pbLocate);
 
+        //选择时间
+        mName = (EditText) findViewById(R.id.repair_name);
+        mPhone = (EditText) findViewById(R.id.repair_phone);
+        mAddress = (EditText) findViewById(R.id.repair_address);
+        mDetails = (EditText) findViewById(R.id.repair_message_edit);
+
+        mSubmit_btn = (Button) findViewById(R.id.repair_submit);
+        mSubmit_btn.setOnClickListener(this);//提交报修详情
         mTime_rl = (RelativeLayout) findViewById(R.id.time_rl);
         mTime_rl.setOnClickListener(this);
-        mTime_tv= (TextView) findViewById(R.id.repair_time_tv);
-        mTimeBuilder=new AlertDialog.Builder(this);
-        mTimeAlert=mTimeBuilder.create();
-        mTimeAlertView = LayoutInflater.from(this).inflate(R.layout.repair_time_box, null);
-        mTimeAlert.setView(mTimeAlertView);
-        mDatePicker= (DatePicker) mTimeAlertView.findViewById(R.id.datepicker);
+        mTime_tv = (TextView) findViewById(R.id.repair_time_tv);
+
+        mView = LayoutInflater.from(this).inflate(R.layout.community_select_time_item, null);
+        mCalendar = Calendar.getInstance();
+        int year = mCalendar.get(Calendar.YEAR);
+        int month = mCalendar.get(Calendar.MONTH);
+        int day = mCalendar.get(Calendar.DAY_OF_MONTH);
+        int hour = mCalendar.get(Calendar.HOUR_OF_DAY);
+        int minute = mCalendar.get(Calendar.MINUTE);
+
+        mDatePicker = (DatePicker) mView.findViewById(R.id.community_date_picker);
+        mDatePicker.setMinDate(System.currentTimeMillis());
         mDatePicker.init(year, month, day, new DatePicker.OnDateChangedListener() {
             @Override
             public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                mYear=year;
-                mMonth=monthOfYear+1;
-                mDay=dayOfMonth;
-                Toast.makeText(RepairActivity.this,year+"/"+mMonth+"/"+dayOfMonth,Toast.LENGTH_SHORT).show();
+
             }
         });
-        mTimePicker= (TimePicker) mTimeAlertView.findViewById(R.id.timepicker);
+        mTimePicker = (TimePicker) mView.findViewById(R.id.community_time_picker);
+        mTimePicker.setCurrentHour(hour);
+        mTimePicker.setCurrentMinute(minute);
         mTimePicker.setIs24HourView(true);
         mTimePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
             @Override
             public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
-                mHour=hourOfDay;
-                mMinute=minute;
-                Toast.makeText(RepairActivity.this,hourOfDay+"/"+minute,Toast.LENGTH_SHORT).show();
+
             }
         });
-        mTimeSure= (TextView) mTimeAlertView.findViewById(R.id.time_sure);
-        mTimeCancle= (TextView) mTimeAlertView.findViewById(R.id.time_cancle);
-        mTimeSure.setOnClickListener(this);
-        mTimeCancle.setOnClickListener(this);
+        //确定时间，取消时间
+        mSure_time = (TextView) mView.findViewById(R.id.community_time_sure);
+        mSure_time.setOnClickListener(this);
+        mCancle_time = (TextView) mView.findViewById(R.id.community_time_cancle);
+        mCancle_time.setOnClickListener(this);
+
+
     }
 
     @Override
@@ -233,7 +400,7 @@ public class RepairActivity extends AppCompatActivity implements View.OnClickLis
             mRepair_category_rl.setVisibility(View.VISIBLE);
             mRepair_message_rl.setVisibility(View.GONE);
             mRecord_category_rl.setVisibility(View.GONE);
-            mScroll.setVisibility(View.GONE);
+            mRecord_refresh.setVisibility(View.GONE);
         } else if (id == mRecord_ll.getId()) {//报修记录
             mRepair_ll.setBackgroundResource(R.color.white);
             mRepair_tv.setTextColor(ContextCompat.getColor(this, R.color.homeFragChangeColor));
@@ -245,7 +412,7 @@ public class RepairActivity extends AppCompatActivity implements View.OnClickLis
 
             mRepair_category_rl.setVisibility(View.GONE);
             mRepair_message_rl.setVisibility(View.GONE);
-            mScroll.setVisibility(View.GONE);
+            mRecord_refresh.setVisibility(View.GONE);
             mRecord_category_rl.setVisibility(View.VISIBLE);
 
         } else if (id == mSure.getId()) {//确定删除图片
@@ -253,28 +420,104 @@ public class RepairActivity extends AppCompatActivity implements View.OnClickLis
             mImgAdapter.setmList(mImgList);
             mImgAdapter.notifyDataSetChanged();
             mAlert.dismiss();
-        } else if (id == mCancle.getId()) {//取消
+        } else if (id == mCancle.getId()) {//取消删除图片
             mAlert.dismiss();
         } else if (id == mTime_rl.getId()) {//选择日期
-            mTimeAlert.show();
-        }else if (id == mTimeSure.getId()) {//确定选择日期
-            if (mYear==0){
-                if (mHour==0){
-                    mTime_tv.setText(year+"-"+twoMonth+"-"+day+" "+hour+":"+minute+":"+"00");
-                }else {
-                    mTime_tv.setText(year+"-"+twoMonth+"-"+day+" "+mHour+":"+mMinute+":"+"00");
+            showPopuWindow();
+        } else if (id == mSure_time.getId()) {//确定选择日期
+            mTime_tv.setText(mDatePicker.getYear() + "-" + (mDatePicker.getMonth() + 1) + "-" + mDatePicker.getDayOfMonth() + " " + mTimePicker.getCurrentHour() + ":" + mTimePicker.getCurrentMinute() + ":" + "00");
+            mPopupwindow.dismiss();
+        } else if (id == mCancle_time.getId()) {//取消选择日期
+            mPopupwindow.dismiss();
+        } else if (id == mSubmit_btn.getId()) {//提交报修详情
+            if (checkStartEndTime(mTime_tv.getText().toString())) {
+                if (!getName().equals("") && !getPhone().equals("") && !getAddresss().equals("") && !getDetails().equals("")) {
+                    // ajaxParams.put("token", UserInfo.userToken);
+                    MyDialog.showDialog(this);
+                    ajaxParams.put("cname", getName());
+                    ajaxParams.put("telephone", getPhone());
+                    ajaxParams.put("address", getAddresss());
+                    ajaxParams.put("type", String.valueOf(mID));
+                    ajaxParams.put("processingTime", mTime_tv.getText().toString());
+                    ajaxParams.put("details", getDetails());
+                    for (int i = 0; i < mImgList.size(); i++) {
+                        try {
+                            ajaxParams.put("图片" + i, transImage(mImgList.get(i), ImgUitls.getWith(this), ImgUitls.getHeight(this), 90, "图片" + i));
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    //提交数据
+                    mhttptools.submitRepairTypr(mHandler, ajaxParams);
+                } else {
+                    Toast.makeText(this, "请补全报修信息", Toast.LENGTH_SHORT).show();
                 }
-            }else {
-                if (mHour==0){
-                    mTime_tv.setText(mYear+"-"+mMonth+"-"+mDay+" "+hour+":"+minute+":"+"00");
-                }else {
-                    mTime_tv.setText(mYear+"-"+mMonth+"-"+mDay+" "+mHour+":"+mMinute+":"+"00");
-                }
-            }
-            mTimeAlert.dismiss();
+            } else {
 
-        }else if (id == mTimeCancle.getId()) {//取消选择日期
-            mTimeAlert.dismiss();
+            }
+        } else if (id == mMore_rl.getId()) {//报修记录详情中加载更多
+            start += 10;
+            moreFlag = 2;//代表加载更多
+            mBar.setVisibility(View.VISIBLE);
+            mhttptools.getRecordMsg(mHandler, UserInfo.userToken, mRecord_id, start, limit);
+        }
+    }
+
+    /**
+     * @param pathName 图片路径
+     * @param width    屏幕宽度
+     * @param height   屏幕 高度
+     * @param quality  图片质量
+     * @param fileName 图片名称
+     * @return
+     */
+    public File transImage(String pathName, int width, int height, int quality, String fileName) {
+        try {
+            Bitmap bitmap = BitmapFactory.decodeFile(pathName);
+            int bitmapWidth = bitmap.getWidth();
+            int bitmapHeight = bitmap.getHeight();
+
+            // 缩放图片的尺寸
+            float scaleWidth = (float) width / bitmapWidth - 0.1f;
+            float scaleHeight = (float) height / bitmapHeight - 0.1f;
+            Log.e("bitmapWidth", bitmapWidth + "");
+            Log.e("bitmapHeight", bitmapHeight + "");
+            Log.e("scaleWidth", scaleWidth + "");
+            Log.e("scaleHeight", scaleHeight + "");
+            Matrix matrix = new Matrix();
+            matrix.postScale(scaleWidth, scaleHeight);
+            // 产生缩放后的Bitmap对象
+            Bitmap resizeBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmapWidth, bitmapHeight, matrix, false);
+            File file = null;
+            //存储媒体已经挂载，并且挂载点可读/写
+            if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {//可写
+                //保存
+                file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), fileName + ".jpg");
+                Log.e("图片名称：", fileName + ".jpg");
+                Log.e("图片文件夹名称：", Environment.DIRECTORY_PICTURES);
+
+            } else {
+                file = new File(getFilesDir(), fileName + ".jpg");
+            }
+            BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
+            if (resizeBitmap.compress(Bitmap.CompressFormat.JPEG, quality, bos)) {
+                bos.flush();
+                bos.close();
+            }
+            if (!bitmap.isRecycled()) {
+                bitmap.recycle();//记得释放资源，否则会内存溢出
+            }
+            if (!resizeBitmap.isRecycled()) {
+                resizeBitmap.recycle();
+            }
+            Log.i("--file-大小----", file.length() / 1024 + "");
+            return file;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return null;
         }
     }
 
@@ -331,6 +574,7 @@ public class RepairActivity extends AppCompatActivity implements View.OnClickLis
     //跳转到选择图片的页面
     public void startSelectImgActivity() {
         Intent intent = new Intent(this, SelectImgActivity.class);
+        intent.putExtra("num", 8);
         startActivityForResult(intent, 100);
     }
 
@@ -340,6 +584,7 @@ public class RepairActivity extends AppCompatActivity implements View.OnClickLis
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 100 && resultCode == RESULT_OK) {
             ArrayList<String> list = data.getStringArrayListExtra("imgList");
+            Log.e("大小", list.size() + "");
             if (mImgList.size() != 8) {
                 for (int i = 0; i < list.size(); i++) {
                     mImgList.add(list.get(i));
@@ -347,9 +592,110 @@ public class RepairActivity extends AppCompatActivity implements View.OnClickLis
                         break;
                     }
                 }
-                mImgAdapter.setmList(mImgList);
-                mImgAdapter.notifyDataSetChanged();
+                mImgAdapter = new RepairAddImgAda(this, mImgList);
+                mImg_gridview.setAdapter(mImgAdapter);
+
             }
         }
+    }
+
+
+    private void showPopuWindow() {
+        //设置透明度
+        WindowManager.LayoutParams params = getWindow().getAttributes();
+        params.alpha = 0.7f;
+        getWindow().setAttributes(params);
+        //存放popupWindow的容器
+        ViewGroup container = (ViewGroup) findViewById(R.id.activity_repair);
+        mPopupwindow = new PopupWindow(mView);
+        //设置弹框的款，高
+        mPopupwindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+        mPopupwindow.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
+        mPopupwindow.setFocusable(true);//如果有交互需要设置焦点为true
+        mPopupwindow.setOutsideTouchable(true);//设置内容外可以点击
+
+        // 设置背景，否则点击内容外，关闭弹窗失效
+        mPopupwindow.setBackgroundDrawable(getResources().getDrawable(R.color.pop_bg));
+        mPopupwindow.setAnimationStyle(R.style.popup3_anim);
+        //相对于父控件的位置
+        mPopupwindow.showAtLocation(container, Gravity.BOTTOM, 0, 0);
+        //当弹框销毁时，将透明度初始化，否则弹框销毁后，所依附的activity页面背景将会改变
+        mPopupwindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                WindowManager.LayoutParams params = getWindow().getAttributes();
+                params.alpha = 1f;
+                getWindow().setAttributes(params);
+            }
+        });
+    }
+
+    public String getName() {
+        if (mName.getText().toString().equals("")) {
+            return "";
+        }
+        return mName.getText().toString();
+    }
+
+    public String getAddresss() {
+        if (mAddress.getText().toString().equals("")) {
+            return "";
+        }
+        return mAddress.getText().toString();
+
+    }
+
+    public String getPhone() {
+        if (!checkPhone(mPhone.getText().toString())) {
+            return "";
+        }
+        return mPhone.getText().toString();
+
+    }
+
+    public String getDetails() {
+        if (mDetails.getText().toString().equals("")) {
+            return "";
+        }
+        return mDetails.getText().toString();
+
+    }
+
+    public boolean checkStartEndTime(String endtime) {
+        SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        try {
+
+            Date endDate = dateformat.parse(endtime);
+
+            if (endDate.getTime() - System.currentTimeMillis() > 0) {
+                Toast.makeText(this, "时间正确", Toast.LENGTH_SHORT).show();
+                return true;
+            }
+            Toast.makeText(this, "时间错误", Toast.LENGTH_SHORT).show();
+            return false;
+
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Toast.makeText(this, "请选择时间", Toast.LENGTH_SHORT).show();
+        return false;
+    }
+
+    /**
+     * 检查手机号
+     *
+     * @param phonenum
+     * @return true 代表手机号正确
+     */
+    public boolean checkPhone(String phonenum) {
+        Pattern p = null;
+        Matcher m = null;
+        boolean b = false;
+        p = Pattern.compile("^[1][3,4,5,8][0-9]{9}$"); // 验证手机号
+        m = p.matcher(phonenum);
+        b = m.matches();
+        return b;
     }
 }

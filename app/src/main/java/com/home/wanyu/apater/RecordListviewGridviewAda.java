@@ -7,7 +7,10 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
+import com.home.wanyu.HttpUtils.UrlTools;
 import com.home.wanyu.R;
+import com.home.wanyu.myUtils.ImgUitls;
+import com.squareup.picasso.Picasso;
 
 /**
  * Created by liuhaidong on 2017/5/4.
@@ -17,14 +20,20 @@ public class RecordListviewGridviewAda extends BaseAdapter {
     private Context mContext;
     private LayoutInflater mInflater;
 
-    public RecordListviewGridviewAda(Context mContext) {
+    private String [] strimg;
+    public RecordListviewGridviewAda(Context mContext,String [] strimg) {
         this.mContext = mContext;
+        this.strimg=strimg;
         this.mInflater=LayoutInflater.from(mContext);
+    }
+
+    public void setStrimg(String[] strimg) {
+        this.strimg = strimg;
     }
 
     @Override
     public int getCount() {
-        return 6;
+        return strimg.length;
     }
 
     @Override
@@ -49,6 +58,7 @@ public class RecordListviewGridviewAda extends BaseAdapter {
             holder= (LGHolder) convertView.getTag();
         }
 
+        Picasso.with(mContext).load(UrlTools.BASE+strimg[position]).error(R.mipmap.error_small).resize(ImgUitls.getWith(mContext)/3,ImgUitls.getWith(mContext)/3).into(holder.imageView);
         return convertView;
     }
 

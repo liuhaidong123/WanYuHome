@@ -12,7 +12,7 @@
         android:ellipsize="end"
         android:maxLength="7"
         android:padding="10dp"
-        android:text="涿州市"
+        android:text=""
         android:textColor="@color/white"
         android:textSize="17sp" />
 </LinearLayout>

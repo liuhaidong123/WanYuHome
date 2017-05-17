@@ -1,6 +1,9 @@
 package com.home.wanyu.apater;
 
 import android.content.Context;
+import android.net.Uri;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,10 +71,12 @@ public class RepairAddImgAda extends BaseAdapter {
                 if (position == mList.size()) {
                     Picasso.with(mContext).load(R.mipmap.add_img).into(holder.imageView);
                 } else {
-                    it.sephiroth.android.library.picasso.Picasso.with(mContext).load(mList.get(position)).centerCrop().resize(ImgUitls.getWith(mContext) / 7,
-                            ImgUitls.getWith(mContext) / 7).error(R.mipmap.error_small).into(holder.imageView);
-                }
 
+                  //  Log.e("12345","12344");
+               it.sephiroth.android.library.picasso.Picasso.with(mContext).load(mList.get(position)).centerCrop().resize(ImgUitls.getWith(mContext) / 7,
+                            ImgUitls.getWith(mContext) / 7).error(R.mipmap.error_small).into(holder.imageView);
+
+                }
 
         }
         return convertView;
@@ -79,5 +84,15 @@ public class RepairAddImgAda extends BaseAdapter {
 
     class ImgHolder {
         ImageView imageView;
+    }
+    //获取真实的url
+    public  Uri getRealUri(Context context, String uri){
+        String pth="";
+        String[] proj = { MediaStore.Images.Media.DATA};
+        Uri u=Uri.parse(uri);
+        if (u.getScheme()==null) {
+            u = Uri.fromFile(new File(u.getPath()));
+        }
+        return u;
     }
 }

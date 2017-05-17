@@ -32,7 +32,7 @@ public class LifeMoneyActivity extends AppCompatActivity implements View.OnClick
         int id=v.getId();
         if (id==mMoneyAdd_Address.getId()){
             Intent intent=new Intent(this,AddAddressActivity.class);
-            intent.putExtra("money",11);
+            intent.putExtra("order",11);
             startActivity(intent);
         }else if (mBack.getId()==id){
             finish();

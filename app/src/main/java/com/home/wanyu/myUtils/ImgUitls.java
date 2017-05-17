@@ -3,6 +3,7 @@ package com.home.wanyu.myUtils;
 import android.content.Context;
 import android.content.res.Resources;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.WindowManager;
 
 /**
@@ -16,9 +17,17 @@ public class ImgUitls {
         Resources resources = context.getResources();
         DisplayMetrics dm = resources.getDisplayMetrics();
         int width3 = dm.widthPixels;
+       // Log.e("宽度",width3+"");
         return width3;
 
     }
 
+    public static int getHeight(Context context) {
+        Resources resources = context.getResources();
+        DisplayMetrics dm = resources.getDisplayMetrics();
+        int height3 = dm.heightPixels;
+       // Log.e("宽度",height3+"");
+        return height3;
 
+    }
 }

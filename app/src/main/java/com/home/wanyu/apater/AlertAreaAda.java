@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.home.wanyu.R;
+import com.home.wanyu.bean.areaList.Result;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,13 +19,17 @@ import java.util.List;
 
 public class AlertAreaAda extends BaseAdapter {
     private Context mContext;
-    private List<String> list=new ArrayList<>();
+    private List<Result> list=new ArrayList<>();
     private LayoutInflater mInflater;
 
-    public AlertAreaAda(Context mContext, List<String> list) {
+    public AlertAreaAda(Context mContext, List<Result> list) {
         this.mContext = mContext;
         this.list = list;
         this.mInflater=LayoutInflater.from(mContext);
+    }
+
+    public void setList(List<Result> list) {
+        this.list = list;
     }
 
     @Override
@@ -53,7 +58,7 @@ public class AlertAreaAda extends BaseAdapter {
         }else {
             holder= (AreaHolder) convertView.getTag();
         }
-        holder.textView.setText(list.get(position));
+        holder.textView.setText(list.get(position).getRname());
 
         return convertView;
     }
