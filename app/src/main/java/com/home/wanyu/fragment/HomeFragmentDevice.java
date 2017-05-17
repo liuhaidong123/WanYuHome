@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
 
 import com.home.wanyu.R;
+import com.home.wanyu.bean.Bean_SceneAndRoom;
 import com.home.wanyu.lzhUtils.WindowUtils;
 
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ import butterknife.Unbinder;
  * Created by wanyu on 2017/5/2.
  */
 //home中的设备fragment
-public class HomeFragmentDevice extends Fragment{
+public class HomeFragmentDevice extends Fragment implements HomeFragment.HomeData {
 //
 private Unbinder unbinder;
     private MyAdapter adapter;
@@ -34,36 +35,42 @@ private Unbinder unbinder;
     ViewPager fragment_home_device_viewpager;
     @BindView(R.id.fragment_home_device_tablayout)
     TabLayout fragment_home_device_tablayout;
-    @BindArray(R.array.homeDeviceString) String[]Sence;
+//    @BindArray(R.array.homeDeviceString) String[]Sence;
+    private ArrayList<String>listTable;//获取到的标题个数
     private ArrayList<HomeFragmentDevicePager> listFragment;
+
+    private ArrayList<Bean_SceneAndRoom.RoomListBean>listRoom;//设备数据源
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View vi=inflater.inflate(R.layout.fragment_home_device,null);
         unbinder= ButterKnife.bind(this,vi);
-        initData();
         return vi;
     }
 
     private void initData() {
-        listFragment=new ArrayList<>();
-        int length=Sence.length;
-        for (int i=0;i<length;i++){
-            HomeFragmentDevicePager mFrag=new HomeFragmentDevicePager();
-            listFragment.add(mFrag);
-            fragment_home_device_tablayout.addTab(fragment_home_device_tablayout.newTab().setText(Sence[i]));
+        if (listRoom!=null&&listRoom.size()>0){
+            int size=listRoom.size();
+            listTable=new ArrayList<>();
+            listFragment=new ArrayList<>();
+            for (int i=0;i<size;i++){
+                listTable.add(listRoom.get(i).getRoomName()==null|"".equals(listRoom.get(i).getRoomName())?"未命名":listRoom.get(i).getRoomName());
+                HomeFragmentDevicePager mFrag=new HomeFragmentDevicePager();
+                mFrag.sendMsg(listRoom.get(i));
+                listFragment.add(mFrag);
+                fragment_home_device_tablayout.addTab(fragment_home_device_tablayout.newTab().setText(listTable.get(i)));
+            }
         }
-        adapter=new MyAdapter(getChildFragmentManager());
-        fragment_home_device_viewpager.setAdapter(adapter);
-        fragment_home_device_tablayout.setupWithViewPager(fragment_home_device_viewpager,true);
 
-        listFragment.get(0).setSceneName(Sence[0],0);
-        fragment_home_device_tablayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            adapter=new MyAdapter(getChildFragmentManager());
+            fragment_home_device_viewpager.setAdapter(adapter);
+            fragment_home_device_tablayout.setupWithViewPager(fragment_home_device_viewpager,true);
+            listFragment.get(0).setSceneName(listTable.get(0),0);
+            fragment_home_device_tablayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                String title=Sence[tab.getPosition()];
+                String title=listTable.get(tab.getPosition());
                 listFragment.get(tab.getPosition()).setSceneName(title,tab.getPosition());
             }
-
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
 
@@ -86,7 +93,6 @@ private Unbinder unbinder;
 
 
 
-
     class MyAdapter extends FragmentPagerAdapter {
 
         public MyAdapter(FragmentManager fm) {
@@ -100,14 +106,26 @@ private Unbinder unbinder;
 
         @Override
         public int getCount() {
-            return listFragment.size();
+            return listFragment==null?0:listFragment.size();
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return Sence[position];
+            return listTable.get(position);
         }
     }
-
-
+    //刷新数据用
+    @Override
+    public void sendMsg(Object msg) {
+        if (msg!=null){
+            listRoom= (ArrayList<Bean_SceneAndRoom.RoomListBean>) msg;
+            if (listRoom!=null&&listRoom.size()>0){
+                initData();
+            }
+        }
+    }
+    //homeFragmentDevicePager的数据传递
+    public interface DeviceData{
+        void sendMsg(Object msg);
+    }
 }

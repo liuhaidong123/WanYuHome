@@ -39,6 +39,7 @@
                     android:src="@mipmap/news"/>
             </RelativeLayout>
             <RelativeLayout
+                android:id="@+id/fragment_mine_image_userEditor"
                 android:background="#c0eefd"
                 android:layout_width="match_parent"
                 android:layout_height="120dp">

@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.home.wanyu">
 
+    <uses-permission android:name="android.permission.INTERNET" />
     <!-- 往SDCard写入数据权限 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <!-- 往SDCard读取数据权限 -->
@@ -64,9 +65,26 @@
         <activity android:name=".activity.LifeMoneyActivity" />
         <activity android:name=".activity.LifeMoneyActivity2" />
         <activity android:name=".activity.MoneyNumActivity" />
-        <activity android:name=".activity.MoneyInputSureActivity"></activity>
-        <activity android:name=".activity.HomeSenceAddSenceActivity" />
-        <activity android:name=".activity.TestActivity"></activity>
+        <activity android:name=".activity.MoneyInputSureActivity" />
+        <!-- <activity android:name=".activity.HomeSenceAddSenceActivity" /> -->
+        <activity android:name=".activity.TestActivity" />
+        <activity android:name=".activity.DeviceSettingLightActivity" />
+        <activity android:name=".activity.DeviceSettingSwitchActivity" />
+        <activity android:name=".activity.DeviceSettingCurtainActivity" />
+        <activity android:name=".activity.DeviceSettingAirConActivity" />
+        <activity android:name=".activity.DeviceSettingTvActivity" />
+        <activity android:name=".activity.DeviceSettingLockActivity" />
+        <activity android:name=".activity.HomeDeviceAddRoomActivity" />
+        <activity android:name=".activity.MyUserMsgEditorActivity" />
+        <activity android:name=".activity.HomeDeviceAdRoomActivity" />
+        <activity android:name=".activity.MyHouseActivity" />
+        <activity android:name=".activity.MyHouseInfoActivity" />
+        <activity android:name=".activity.MyHouseFamilyManagerActivity" />
+        <activity android:name=".activity.MyHouseFamilyInfoActivity" />
+        <activity android:name=".activity.MyHouseDeviceManagerActivity" />
+        <activity android:name=".activity.MyHouseFamilyAddActivity" />
+        <activity android:name=".activity.MyHouseFamilyEditor" />
+        <activity android:name=".activity.MyCircleContactActivity"></activity>
     </application>
 
 </manifest>

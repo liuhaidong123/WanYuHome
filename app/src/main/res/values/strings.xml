@@ -61,49 +61,81 @@
         <item>工作</item>
     </string-array>
     <string-array name="mode">
-        <item>一键启动</item>
+        <item>一键开启</item>
         <item>定时启动</item>
         <item>定位启动</item>
     </string-array>
-        <string-array name="KM">
-            <item>0km</item>
-            <item>1km</item>
-            <item>2km</item>
-            <item>3km</item>
-            <item>4km</item>
-            <item>5km</item>
-            <item>6km</item>
-            <item>7km</item>
-            <item>8km</item>
-            <item>9km</item>
-        </string-array>
+    <string-array name="KM">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+    </string-array>
 
     <string-array name="M">
-        <item>0m</item>
-        <item>100m</item>
-        <item>200m</item>
-        <item>300m</item>
-        <item>400m</item>
-        <item>500m</item>
-        <item>600m</item>
-        <item>700m</item>
-        <item>800m</item>
-        <item>900m</item>
+        <item>0</item>
+        <item>100</item>
+        <item>200</item>
+        <item>300</item>
+        <item>400</item>
+        <item>500</item>
+        <item>600</item>
+        <item>700</item>
+        <item>800</item>
+        <item>900</item>
     </string-array>
-        <string-array name="week">
-            <item>周一</item>
+    <string-array name="week">
+        <item>周一</item>
         <item>周二</item>
         <item>周三</item>
         <item>周四</item>
         <item>周五</item>
         <item>周六</item>
         <item>周日</item>
-            <item>全部</item>
-        </string-array>
-
+        <item>全部</item>
+    </string-array>
+    <string-array name="tvString">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>切换</item>
+        <item>0</item>
+        <item>返回</item>
+    </string-array>
+    <string-array name="lockStr">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>メ</item>
+        <item>0</item>
+        <item>清除</item>
+    </string-array>
     <string-array name="homeDeviceString">
         <item>客厅</item>
         <item>lim的卧室</item>
+    </string-array>
+    <string-array name="addressStr">
+        <item>访客</item>
+        <item>业主</item>
+        <item>租户</item>
     </string-array>
     <string name="title_activity_home_device_add_wifi">HomeDeviceAddWifiActivity</string>
     <string name="homedeviceAddWifiErrorStr">可能出现的问题：\nwifi密码是否正确?\n您的网络是否可用?\n设备是否已经打开?\n联系我们：\n邮箱：wangyukeji</string>
@@ -136,4 +168,11 @@
     <string name="preferences_supplemental_title">Retrieve more info</string>
     <string name="preferences_vibrate_title">Vibrate</string>
     <string name="preview_msg">&#160;preview pages available,click Download for more.</string>
+    <string-array name="family">
+        <item>家人</item>
+        <item>游客</item>
+        <item>租户</item>
+        <item>朋友</item>
+        <item>自定义</item>
+    </string-array>
 </resources>

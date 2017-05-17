@@ -10,9 +10,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.home.wanyu.Ip.mToast;
 import com.home.wanyu.R;
 import com.home.wanyu.lzhUtils.MyActivity;
-import com.home.wanyu.lzhUtils.MyToast;
 import com.home.wanyu.lzhUtils.NetWorkUtils;
 
 import butterknife.BindView;
@@ -59,7 +59,7 @@ public class HomeDeviceAddWifiActivity extends MyActivity {
                }
                 break;
             case R.id.activity_homedeviceaddwifi_rela_contactWifi_success_submit://连接成功时的设置按钮
-                MyToast.DebugToast(con,"去设置");
+                mToast.DebugToast(con,"去设置");
                 //测试用，点击后进入连接失败页面
                 Intent intent=new Intent(con,HomeDeviceAddWifiSettingActivity.class);
                 startActivity(intent);

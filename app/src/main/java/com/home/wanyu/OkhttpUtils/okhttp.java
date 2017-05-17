@@ -128,6 +128,7 @@ public class okhttp {
                 builder.addFormDataPart(s,mp.get(s)); //参数
                 str+=s+"="+mp.get(s)+"&";
             }
+            str=str.substring(0,str.length()-1);
         }
         if (li!=null&&li.size()>0){//文件
             for (int i=0;i<li.size();i++){
@@ -142,6 +143,34 @@ public class okhttp {
         Log.i("url---",uri+str);
         RequestBody requestBody=builder.build();
         final Request request = new Request.Builder().url(uri).post(requestBody).build();
+        return new OkHttpClient().newCall(request);
+    }
+
+    //文件上传
+    public static Call getOkhttpFileCallCooki(Map<String,String>mp,List<File> li,String uri,String cooki){
+        MultipartBuilder builder=  new MultipartBuilder();
+        builder.type(MultipartBuilder.FORM);
+        String str="";
+        if (mp!=null&&mp.size()>0){
+            for (String s:mp.keySet()){
+                builder.addFormDataPart(s,mp.get(s)); //参数
+                str+=s+"="+mp.get(s)+"&";
+            }
+            str=str.substring(0,str.length()-1);
+        }
+        if (li!=null&&li.size()>0){//文件
+            for (int i=0;i<li.size();i++){
+                File f=li.get(i);
+                Log.i("文件名---"+i,f.getName());
+                builder.addFormDataPart("file"+i, f.getName(), RequestBody.create(null, f));
+            }
+        }
+        else {
+            Log.i("1111111","没有上传文件");
+        }
+        Log.i("url---",uri+str);
+        RequestBody requestBody=builder.build();
+        final Request request = new Request.Builder().url(uri).header("cookie","token="+cooki).post(requestBody).build();
         return new OkHttpClient().newCall(request);
     }
 }

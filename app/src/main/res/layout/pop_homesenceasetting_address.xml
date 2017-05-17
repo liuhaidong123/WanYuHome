@@ -33,6 +33,7 @@
             android:layout_height="wrap_content"/>
     </LinearLayout>
     <TextView
+        android:id="@+id/pop_wheelview_address_Submit"
         android:text="确定"
         android:gravity="center"
         android:layout_gravity="center_horizontal"

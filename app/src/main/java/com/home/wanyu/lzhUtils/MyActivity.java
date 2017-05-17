@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 
 import android.widget.TextView;
 
+import com.home.wanyu.Ip.okhttpTools;
 import com.home.wanyu.R;
 
 import butterknife.Unbinder;
@@ -25,6 +26,8 @@ import butterknife.Unbinder;
  */
 
 public  abstract  class MyActivity extends Activity {
+    protected String TAG=getClass().getSimpleName();
+    protected okhttpTools mTools;
     protected Context con=this;
     public Unbinder unbinder;
     protected TextView titleTextView;

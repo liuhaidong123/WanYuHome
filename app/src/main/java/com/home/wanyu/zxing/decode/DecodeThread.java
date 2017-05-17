@@ -76,7 +76,6 @@ final class DecodeThread extends Thread
 			}
 		}
 		hints.put(DecodeHintType.POSSIBLE_FORMATS, decodeFormats);
-
 		if (characterSet != null)
 		{
 			hints.put(DecodeHintType.CHARACTER_SET, characterSet);

@@ -4,9 +4,22 @@
     android:id="@+id/activity_test"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
     tools:context="com.home.wanyu.activity.TestActivity">
-    <com.home.wanyu.lzhView.MyView
+    <!--<com.home.wanyu.lzhView.MyView-->
+        <!--android:layout_centerInParent="true"-->
+        <!--android:layout_width="100dp"-->
+        <!--android:layout_height="100dp"/>-->
+    <!--<android.support.v7.widget.AppCompatSeekBar-->
+        <!--android:progressDrawable="@drawable/seekbar"-->
+        <!--android:thumb="@drawable/seek"-->
+        <!--android:layout_margin="20dp"-->
+        <!--android:layout_centerInParent="true"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="30dp" />-->
+    <com.home.wanyu.lzhView.MySeekBar
         android:layout_centerInParent="true"
-        android:layout_width="100dp"
-        android:layout_height="100dp"/>
+        android:layout_width="match_parent"
+        android:layout_height="20dp" />
 </RelativeLayout>

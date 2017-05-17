@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@color/homefragmentFgColor"
+    android:layout_width="match_parent"
+    android:paddingTop="10dp"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <!--头部删除的layout-->
+        <RelativeLayout
+            android:id="@+id/activity_my_circle_contact_list_layout"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+           >
+            <TextView
+                android:id="@+id/activity_my_circle_contact_list_layout_text"
+                android:layout_marginLeft="10dp"
+                android:text="选择"
+                android:textColor="@color/colorc"
+                android:textSize="@dimen/textSize12"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+            <ImageView
+                android:id="@+id/activity_my_circle_contact_list_select"
+                android:layout_centerVertical="true"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:layout_toRightOf="@+id/activity_my_circle_contact_list_layout_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/circle_contace_image"/>
+            <TextView
+                android:layout_alignParentBottom="true"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/homefragmentFgColor"/>
+        </RelativeLayout>
+        <!--底部的view-->
+        <RelativeLayout
+            android:layout_below="@+id/activity_my_circle_contact_list_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/white">
+            <RelativeLayout
+                android:id="@+id/circle_title1_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.home.wanyu.myview.RoundImageView
+                    android:id="@+id/circle_head_img_1"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@mipmap/main_background4" />
+
+                <TextView
+                    android:id="@+id/circle_name_tv_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/circle_head_img_1"
+                    android:ellipsize="end"
+                    android:maxLength="10"
+                    android:text="刘海东"
+                    android:textColor="@color/title_color"
+                    android:textSize="15sp" />
+                <TextView
+                    android:id="@+id/circle_area_tv_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="25dp"
+                    android:ellipsize="end"
+                    android:maxLength="20"
+                    android:maxLines="1"
+                    android:text="名流一品"
+                    android:textColor="@color/name_color"
+                    android:textSize="10sp" />
+            </RelativeLayout>
+            <LinearLayout
+                android:layout_below="@+id/circle_title1_1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/circle_type_tv_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/circle_title1_1"
+                    android:layout_marginLeft="50dp"
+                    android:text="居家"
+                    android:textColor="@color/title_color"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/circle_commend_msg_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/circle_type_tv_1"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginTop="7dp"
+                    android:ellipsize="end"
+                    android:maxLines="20"
+                    android:text="你的生活你的生活你的生活你的生活你的生活你的生活你的生活你的生活你的生活你的生活" />
+                <com.home.wanyu.myview.MyGridView
+                    android:stretchMode="columnWidth"
+                    android:verticalSpacing="5dp"
+                    android:horizontalSpacing="5dp"
+                    android:id="@+id/circle_gridview_friend_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/circle_commend_msg_1"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginTop="10dp"
+                    android:numColumns="4"
+                    android:scrollbars="none">
+                </com.home.wanyu.myview.MyGridView>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/circle_gridview_friend_1"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginTop="19dp">
+                    <TextView
+                        android:id="@+id/circle_time_tv_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="1小时前"
+                        android:textColor="@color/color9"
+                        android:textSize="10sp" />
+                    <LinearLayout
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:gravity="center_vertical"
+                        android:id="@+id/list_pinglun_layout_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/circle_commend_img_1"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginRight="5dp"
+                            android:layout_toLeftOf="@+id/circle_commend_num_1"
+                            android:src="@mipmap/msg1" />
+                        <TextView
+                            android:id="@+id/circle_commend_num_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="2"
+                            android:layout_gravity="center_vertical"
+                            android:textColor="@color/color9"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:gravity="center_vertical"
+                        android:layout_centerVertical="true"
+                        android:id="@+id/list_like_layout_1"
+                        android:layout_toLeftOf="@+id/list_pinglun_layout_1"
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            android:id="@+id/circle_like_img_1"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginRight="5dp"
+                            android:layout_toLeftOf="@+id/circle_like_num_1"
+                            android:src="@drawable/imagelike" />
+                        <TextView
+                            android:id="@+id/circle_like_num_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="15dp"
+                            android:text="5"
+                            android:textColor="@color/color9"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+            </LinearLayout>
+
+
+
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+
+</LinearLayout>
