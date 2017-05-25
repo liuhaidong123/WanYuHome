@@ -28,8 +28,11 @@ import com.home.wanyu.R;
 
 import com.home.wanyu.activity.DeviceSettingLockActivity;
 import com.home.wanyu.activity.HomeDeviceAdRoomActivity;
+import com.home.wanyu.activity.HomeDeviceAddRoomActivity;
 import com.home.wanyu.activity.HomeSenceAddSenceActivity;
 
+import com.home.wanyu.activity.LoginAndRegisterActivity;
+import com.home.wanyu.activity.OtherPersonInfoActivity;
 import com.home.wanyu.bean.Bean_SceneAndRoom;
 import com.home.wanyu.Ip.ToastType;
 import com.home.wanyu.Ip.mGson;
@@ -143,15 +146,19 @@ public class HomeFragment extends Fragment  {
 
             case R.id.fragment_home_change:
                 mToast.DebugToast(getActivity(),"切换实景");
-//                startActivity(new Intent(getActivity(), TestActivity.class));
-                startActivity(new Intent(getActivity(), DeviceSettingLockActivity.class));
+//              startActivity(new Intent(getActivity(), TestActivity.class));
+                //他人的信息页面
+                Intent intent=new Intent(getActivity(),OtherPersonInfoActivity.class);
+                intent.putExtra("id","1");
+                startActivity(intent);
+                //注册登录页面
+//                startActivity(new Intent(getActivity(),LoginAndRegisterActivity.class));
                 break;
             case R.id.fragment_home_top_add:
                 showWindow();
                 break;
         }
     }
-
     //添加设备，添加情景，添加房间
     private void showWindow() {
         pop = new PopupWindow();
@@ -170,8 +177,8 @@ public class HomeFragment extends Fragment  {
             @Override
             public void onClick(View v) {
                 pop.dismiss();
-                startActivity(new Intent(getActivity(), HomeDeviceAdRoomActivity.class));
-                Toast.makeText(getActivity(),"添加房间",Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getActivity(), HomeDeviceAddRoomActivity.class));
+//                Toast.makeText(getActivity(),"添加房间",Toast.LENGTH_SHORT).show();
             }
         });
         textv_add_device.setOnClickListener(new View.OnClickListener() {
@@ -229,5 +236,16 @@ public class HomeFragment extends Fragment  {
     }
     public interface HomeData{
         void sendMsg(Object msg);
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (hidden){//隐藏的时候
+
+        }
+        else {
+//            getSerVerData();
+        }
     }
 }

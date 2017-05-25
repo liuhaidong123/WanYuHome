@@ -35,4 +35,9 @@ public class MyRelayout extends View {
         paint.setShader(mShader);
         canvas.drawRect(0,0,width,heigth,paint);
     }
+    public void setColor(int se,int unse){
+            this.SelectColor=se;
+            this.UnSelectColor=unse;
+            invalidate();
+    }
 }

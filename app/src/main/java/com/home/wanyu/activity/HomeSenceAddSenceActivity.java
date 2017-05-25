@@ -1,5 +1,6 @@
 package com.home.wanyu.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
@@ -58,6 +59,8 @@ import butterknife.OnClick;
 public class HomeSenceAddSenceActivity extends MyActivity {
     private PopupWindow popWx;
     private PopupWindow popW;
+    private PopupWindow popX;
+    private int deleteId;
     @BindView(R.id.home_sence_Add_rela_eidtext)EditText home_sence_Add_rela_eidtext;//情景名称
 
     @BindView(R.id.home_sence_Add_rela_condition_textVname)TextView home_sence_Add_rela_condition_textVname;//显示启动条件的textview
@@ -66,8 +69,8 @@ public class HomeSenceAddSenceActivity extends MyActivity {
 
     @BindView(R.id.home_senceAdd_listview)MyListView home_senceAdd_listview;//显示设备的listview
     private PopupWindow pop;
-    private ArrayList<Map<String,String>> list;
-    private String[]title={"客厅灯","电视","客厅插座"};
+//    private ArrayList<Map<String,String>> list;
+//    private String[]title={"客厅灯","电视","客厅插座"};
     private int[]url={R.mipmap.light,R.mipmap.tv,R.mipmap.socket};
     private HomeSceneAddListAdapter adapter;
     @BindArray(R.array.mode)String[]mode;
@@ -83,7 +86,7 @@ public class HomeSenceAddSenceActivity extends MyActivity {
     private int currentTimeMinus;//当前选中的启动时间的分钟
     private String sceneTime;//定时开启设置的时间
     private String repeatMode;//重复方式
-    List<Bean_getSceneData.EquipmentListBean>listDevice;//添加的设备
+    List<Bean_getSceneData.EquipmentListBean>list;//添加的设备
     @BindArray(R.array.KM)String[]listKm;//距离定位中的千米
     private int currentKm;//当前定位选中的千米数
     @BindArray(R.array.M)String[]listM;//距离定位中
@@ -131,13 +134,25 @@ public class HomeSenceAddSenceActivity extends MyActivity {
         ShowChildView(DEFAULTRESID);
         initData();
         mTools=new okhttpTools();
-        listDevice=new ArrayList<>();
+
     }
     @OnClick({R.id.activity_homeSceneSetting_rela_sence_add,R.id.activity_homeSceneAdd_listitem_relaAdd_submit,R.id.home_sence_Add_rela_condition_relaLayout})
     public void click(View vi){
         switch (vi.getId()){
             case R.id.activity_homeSceneSetting_rela_sence_add://添加设备的按钮
-                mToast.DebugToast(con,"添加设备");
+                Intent intent=new Intent();
+                intent.putExtra("type","sceneAdd");
+                Bundle bundle=new Bundle();
+                ArrayList<String>listName=new ArrayList<>();
+                if (list!=null&&list.size()>0){
+                    for (int i=0;i<list.size();i++){
+                        listName.add(list.get(i).getName());
+                    }
+                }
+                bundle.putSerializable("data",listName);
+                intent.putExtra("data",bundle);
+                intent.setClass(con,MyHouseDeviceManagerActivity.class);
+                startActivityForResult(intent,100);
                 break;
             case R.id.activity_homeSceneAdd_listitem_relaAdd_submit://提交按钮
 //                mToast.DebugToast(con,"确定");
@@ -149,6 +164,19 @@ public class HomeSenceAddSenceActivity extends MyActivity {
                 break;
             }
         }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==100){
+            if (resultCode==200){
+                Bundle bundle=data.getBundleExtra("data");
+                Bean_getSceneData.EquipmentListBean bean= (Bean_getSceneData.EquipmentListBean) bundle.getSerializable("data");
+                list.add(bean);
+                adapter.notifyDataSetChanged();
+            }
+        }
+    }
 
     private void showWindowMode() {
         pop = new PopupWindow();
@@ -411,16 +439,15 @@ public class HomeSenceAddSenceActivity extends MyActivity {
     }
     private void initData() {
         list=new ArrayList<>();
-        int size=title.length;
-        for (int i=0;i<size;i++){
-            Map<String,String>m=new HashMap<>();
-            m.put("title",title[i]);
-            m.put("url",url[i]+"");
-            m.put("state","0");
-            list.add(m);
-        }
         adapter = new HomeSceneAddListAdapter(list,con);
         home_senceAdd_listview.setAdapter(adapter);
+        home_senceAdd_listview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                showWindow(position);
+                return false;
+            }
+        });
         //定时启动弹窗中gridview的数据源以及适配器
         listGridview=new ArrayList<>();
         int length=str.length;
@@ -440,6 +467,59 @@ public class HomeSenceAddSenceActivity extends MyActivity {
             listTime.add(i+"");
         }
     }
+
+    //删除设备的按钮
+    private void showWindow(int pos) {
+        deleteId=pos;
+        popX = new PopupWindow();
+        View v = LayoutInflater.from(con).inflate(R.layout.pop_device_delete, null);
+        TextView pop_delete= (TextView) v.findViewById(R.id.pop_delete);
+        TextView pop_cancle= (TextView) v.findViewById(R.id.pop_cancle);
+        pop_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                list.remove(deleteId);
+                adapter.notifyDataSetChanged();
+                popX.dismiss();
+            }
+        });
+        pop_cancle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popX.dismiss();
+            }
+        });
+        RelativeLayout parent = (RelativeLayout) findViewById(R.id.home_sence_setting_layout);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        WindowManager.LayoutParams params = getWindow().getAttributes();
+        params.alpha = 0.6f;
+        getWindow().setAttributes(params);
+
+        popX.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+        popX.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        popX.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        popX.setContentView(v);
+        popX.setBackgroundDrawable(new ColorDrawable(Color.argb(000, 255, 255, 255)));
+        popX.setTouchable(true);
+        popX.setFocusable(true);
+        popX.setOutsideTouchable(true);
+
+        popX.setAnimationStyle(R.style.popup2_anim);
+        popX.showAtLocation(parent, Gravity.CENTER,0,0);
+        popX.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+                WindowManager.LayoutParams params = getWindow().getAttributes();
+                params.alpha = 1f;
+                getWindow().setAttributes(params);
+            }
+        });
+
+    }
+
+
     @Override
     public void getSerVerData() {
 
@@ -453,8 +533,8 @@ public class HomeSenceAddSenceActivity extends MyActivity {
             mp.put("token", UserInfo.userToken);
 //            mp.put("id",sceneData.getId()+"");
             mp.put("sceneName",home_sence_Add_rela_eidtext.getText().toString());
-            if(listDevice!=null&&listDevice.size()>0){
-                String gson=mGson.gson.toJson(listDevice);
+            if(list!=null&&list.size()>0){
+                String gson=mGson.gson.toJson(list);
                 Log.i("gson----",gson);
                 mp.put("equipmentList",gson);
             }

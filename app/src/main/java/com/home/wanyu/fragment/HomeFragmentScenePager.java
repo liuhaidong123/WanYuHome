@@ -26,6 +26,7 @@ import com.home.wanyu.Ip.ToastType;
 import com.home.wanyu.Ip.mGson;
 import com.home.wanyu.Ip.mToast;
 import com.home.wanyu.Ip.okhttpTools;
+import com.home.wanyu.OkhttpUtils.okhttp;
 import com.home.wanyu.R;
 import com.home.wanyu.User.UserInfo;
 import com.home.wanyu.activity.HomeSenceSettingActivity;
@@ -35,7 +36,11 @@ import com.home.wanyu.bean.Bean_HomeSceneOnOff;
 import com.home.wanyu.bean.Bean_SceneAndRoom;
 import com.home.wanyu.lzhView.MyFloatingView;
 import com.home.wanyu.myview.MyListView;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -59,6 +64,7 @@ public class HomeFragmentScenePager extends Fragment implements HomeFragmentScen
     private int pos;//当前的情景的position
     @BindView(R.id.fragment_home_scene_viewpager_item_MylistView)ListView myListView;
     @BindView(R.id.fragment_home_scene_viewpager_item_MyFloating) MyFloatingView floatingView;
+    @BindView(R.id.deviceSetting_emptyView_scene)RelativeLayout deviceSetting_emptyView_scene;
     private HomeScenePagerItemListApdater adapter;
 //    private ArrayList<Map<String,String>>list;
     private String[]title={"客厅灯","电视","卫生间插座"};
@@ -67,8 +73,9 @@ public class HomeFragmentScenePager extends Fragment implements HomeFragmentScen
     private Bean_SceneAndRoom.SceneListBean listBean;
     private List<Bean_SceneAndRoom.SceneListBean.EquipmentListBean>listEqui;
     private Boolean isOnORoff=false;//当前是否正在进行一键开启／关闭操作
-
+    View vi;
     private okhttpTools tools;
+    private String resStr;
     private Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -91,7 +98,16 @@ public class HomeFragmentScenePager extends Fragment implements HomeFragmentScen
                                 else if (onOff.getScene().getSceneState()==0L){
                                         floatingView.setOnAndOff(true);
                                         mToast.Toast(getActivity(),"情景开启成功");
-                                    }
+                                        }
+                                List<Bean_HomeSceneOnOff.SceneBean.EquipmentListBean>li=onOff.getScene().getEquipmentList();
+                                if (li!=null&&li.size()>0){
+                                   for (int i=0;i<li.size();i++){
+                                      if (listEqui.get(i).getId()==li.get(i).getId()){
+                                          listEqui.get(i).setState(li.get(i).getState());
+                                      }
+                                   }
+                                    adapter.notifyDataSetChanged();
+                                }
                                 }
                             else {
                                 ServerCode.showResponseMsg(getActivity(),onOff.getCode());
@@ -100,7 +116,6 @@ public class HomeFragmentScenePager extends Fragment implements HomeFragmentScen
                         else {
                            mToast.ToastFaild(getActivity(),ToastType.GSONEMPTY);
                         }
-
                     }
                     catch (Exception e){
                         e.printStackTrace();
@@ -108,6 +123,14 @@ public class HomeFragmentScenePager extends Fragment implements HomeFragmentScen
                     }
 
                     break;
+//                case 2:
+//                    try{
+//
+//                    }
+//                    catch (Exception e){
+//                        e.printStackTrace();
+//                    }
+//                    break;
             }
         }
     };
@@ -118,7 +141,7 @@ public class HomeFragmentScenePager extends Fragment implements HomeFragmentScen
     }
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View vi=inflater.inflate(R.layout.fragment_home_scene_pager_fragment,null);
+        vi=inflater.inflate(R.layout.fragment_home_scene_pager_fragment,null);
         unbinder=ButterKnife.bind(this,vi);
         initData();
         tools=new okhttpTools();
@@ -126,7 +149,7 @@ public class HomeFragmentScenePager extends Fragment implements HomeFragmentScen
             @Override
             public void click(boolean flag) {
                 if (flag){
-                    //                    http://192.168.1.55:8080/smarthome/mobileapi/scene/scenectrl.do?id=1&token=9DB2FD6FDD2F116CD47CE6C48B3047EE
+                    //http://192.168.1.55:8080/smarthome/mobileapi/scene/scenectrl.do?id=1&token=9DB2FD6FDD2F116CD47CE6C48B3047EE
                     if (listBean==null){
                         return;
                     }
@@ -145,7 +168,7 @@ public class HomeFragmentScenePager extends Fragment implements HomeFragmentScen
         return vi;
     }
 
-        @OnClick({R.id.fragment_home_scene_viewpager_item_MyFloating,R.id.fragment_home_scene_viewpager_item_toplayout})
+        @OnClick({R.id.fragment_home_scene_viewpager_item_MyFloating,R.id.fragment_home_scene_viewpager_item_toplayout,R.id.deviceSetting_emptyView_scene})
         public void click(View vi){
             switch (vi.getId()){
 //                case R.id.fragment_home_scene_viewpager_item_MyFloating:
@@ -157,10 +180,15 @@ public class HomeFragmentScenePager extends Fragment implements HomeFragmentScen
                     intent.putExtra("name",SceneName);
                     startActivity(intent);
                     break;
+                case R.id.deviceSetting_emptyView_scene:
+                    break;
             }
         }
 
     private void initData() {
+        if (floatingView==null|myListView==null|deviceSetting_emptyView_scene==null){
+            return;
+        }
         if (listBean!=null){
             listEqui=listBean.getEquipmentList();
             SceneName=listBean.getSceneName();
@@ -177,9 +205,11 @@ public class HomeFragmentScenePager extends Fragment implements HomeFragmentScen
                 else if (state==1L){
                     floatingView.setOnAndOff(false);
                 }
-            }
+                deviceSetting_emptyView_scene.setVisibility(View.GONE);
+                }
         }
         else {
+            myListView.setEmptyView(deviceSetting_emptyView_scene);
             floatingView.setVisibility(View.GONE);
             }
     }
@@ -188,15 +218,11 @@ public class HomeFragmentScenePager extends Fragment implements HomeFragmentScen
         SceneName=title;
         pos=position;
     }
-
     @Override
     public void sendMsg(Object msg) {
         if (msg!=null){
             listBean= (Bean_SceneAndRoom.SceneListBean) msg;
-//            initData();
-            if (adapter!=null){
-                adapter.notifyDataSetChanged();
-            }
+            initData();
         }
     }
 
@@ -224,4 +250,34 @@ public class HomeFragmentScenePager extends Fragment implements HomeFragmentScen
             unbinder.unbind();
         }
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+//        getSceneData();
+    }
+
+//    public void getSceneData() {
+//        if (listBean==null){
+//            return;
+//        }
+//        else {
+//            Log.e("请求单个情景信息--","失败，listBean为空,无法取得情景的id");
+//            }
+//        Map<String,String>mp=new HashMap<>();
+//        mp.put("token",UserInfo.userToken);
+//        mp.put("id",listBean.getId()+"");
+//        okhttp.getCall("http://192.168.1.55:8080/smarthome/mobileapi/scene/get.do?",mp,okhttp.OK_GET).enqueue(new Callback() {
+//            @Override
+//            public void onFailure(Request request, IOException e) {
+//                handler.sendEmptyMessage(0);
+//            }
+//            @Override
+//            public void onResponse(Response response) throws IOException {
+//                resStr=response.body().string();
+//                Log.i("获取单个情景--",resStr);
+//                handler.sendEmptyMessage(2);
+//            }
+//        });
+//    }
 }

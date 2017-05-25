@@ -1,5 +1,6 @@
 package com.home.wanyu.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
@@ -28,12 +29,16 @@ import com.home.wanyu.Ip.Ip;
 import com.home.wanyu.Ip.ToastType;
 import com.home.wanyu.Ip.mGson;
 import com.home.wanyu.Ip.mToast;
+import com.home.wanyu.Ip.okhttpTools;
 import com.home.wanyu.OkhttpUtils.okhttp;
 import com.home.wanyu.R;
 import com.home.wanyu.User.UserInfo;
 import com.home.wanyu.adapter.DeviceSettingTvGridAdapter;
 import com.home.wanyu.adapter.LockSettingGridViewAdapter;
 import com.home.wanyu.adapter.LockShareListAdapter;
+import com.home.wanyu.adapter.MyHouseFamilyManagerAdapter;
+import com.home.wanyu.bean.Bean_FamilyUserS;
+import com.home.wanyu.bean.Bean_M;
 import com.home.wanyu.bean.Bean_SceneAndRoom;
 import com.home.wanyu.bean.Bean_setDeviceData;
 import com.home.wanyu.lzhUtils.MyActivity;
@@ -52,6 +57,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindArray;
 import butterknife.BindView;
@@ -64,7 +70,7 @@ import butterknife.OnClick;
 //        bundle.putString("type",type+"");
 //        intent.putExtra("data",bundle);
 //门锁设置
-public class DeviceSettingLockActivity extends MyActivity {
+public class DeviceSettingLockActivity extends MyActivity implements LockShareListAdapter.SelectCurrent{
     @BindView(R.id.deviceSetting_air_LockState)TextView deviceSetting_air_LockState;//显示门锁状态点view
 
     @BindView(R.id.deviceSetting_lock_mima_par_layout)RelativeLayout deviceSetting_lock_mima_par_layout;//密码解锁
@@ -77,7 +83,7 @@ public class DeviceSettingLockActivity extends MyActivity {
     private View LockPsd,LockFinger,LockShare,LockSetting;
 
     LockSettingGridViewAdapter adapter;
-    private String psd;//当前输入的密码
+
     @BindArray(R.array.lockStr)String[]lockStr;
     private int MAX=6;//密码位数
     MyTextView deviceSetting_lock_textV_psd;
@@ -89,8 +95,19 @@ public class DeviceSettingLockActivity extends MyActivity {
     private String type;
     private String fimilyId;
 
+    private String psd;//当前输入的密码
+    private Boolean isLock=false;//是否正在进行密码解锁操作;
+
+    PopupWindow popW;
+    private int lockTime=0;//分享钥匙的时限
+    private int lockCurrentpos=0;//时限选择的下表
+    private int SelectPos=-1;//选择的下表
+    LockShareListAdapter adapter2;
+    private List<Bean_FamilyUserS.PersonalListBean> list;
     private boolean isChange=false;//当前是否正在调节
     private String resStr;
+
+    private Long DeviceId=-1L;//设备的id
     private Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -117,6 +134,76 @@ public class DeviceSettingLockActivity extends MyActivity {
                         mToast.ToastFaild(con,ToastType.GSONFAILD);
                     }
                     break;
+                case 2://获取家人列表
+                    try{
+                        Bean_FamilyUserS userS= mGson.gson.fromJson(mTools.mResponStr,Bean_FamilyUserS.class);
+                        if (userS!=null){
+                            if ("0".equals(userS.getCode())){
+                                userS.getPersonalList();
+                                if (userS.getPersonalList()!=null&&userS.getPersonalList().size()>0){
+                                    list.clear();
+                                    list.addAll(userS.getPersonalList());
+                                    adapter2.notifyDataSetChanged();
+                                }
+                            }
+                            else {
+                                mToast.Toast(con,userS.getMessage());
+                            }
+                        }
+                        else {
+                            mToast.ToastFaild(con,ToastType.GSONEMPTY);
+                        }
+                    }
+                    catch (Exception e){
+                        e.printStackTrace();
+                        mToast.ToastFaild(con,ToastType.GSONFAILD);
+                    }
+                    break;
+                case 3://分享钥匙
+                    try{
+                            Bean_M bean_m=mGson.gson.fromJson(resStr,Bean_M.class);
+                        if (bean_m!=null){
+                            if ("0".equals(bean_m.getCode())){
+                                mToast.Toast(con,"分享成功");
+                            }
+                            else {
+                                mToast.Toast(con,bean_m.getMessage());
+                            }
+                        }
+                        else {
+                            mToast.Toast(con,"分享失败");
+                        }
+                    }
+                    catch (Exception e){
+                        e.printStackTrace();
+                        mToast.ToastFaild(con,ToastType.GSONFAILD);
+                    }
+                    break;
+                case 4://密码解锁联网失败
+                    isLock=false;
+                    mToast.ToastFaild(con,ToastType.FAILD);
+                    break;
+                case 5://密码解锁成功
+                    isLock=false;
+                    try{
+                        Bean_M bean_m=mGson.gson.fromJson(resStr,Bean_M.class);
+                        if (bean_m!=null){
+                            if ("0".equals(bean_m.getCode())){
+                                mToast.Toast(con,"解锁成功");
+                            }
+                            else {
+                                mToast.Toast(con,bean_m.getMessage());
+                            }
+                        }
+                        else {
+                            mToast.ToastFaild(con,ToastType.GSONEMPTY);
+                        }
+                    }
+                    catch (Exception e){
+                        e.printStackTrace();
+                        mToast.ToastFaild(con,ToastType.GSONFAILD);
+                    }
+                    break;
             }
         }
     };
@@ -128,8 +215,13 @@ public class DeviceSettingLockActivity extends MyActivity {
         unbinder= ButterKnife.bind(this,ChildView);
         ShowChildView(DEFAULTRESID);
         initData();
+        list=new ArrayList<>();
         initSettingView();
+        setSelectSetting(0);
+        ShowbottomView(0);
         getIntentData();
+        mTools=new okhttpTools();
+        getFamilyUser();//获取家人列表
     }
     public void getIntentData() {
         Bundle b=getIntent().getBundleExtra("data");
@@ -138,9 +230,15 @@ public class DeviceSettingLockActivity extends MyActivity {
             if (!"".equals(type)&&!TextUtils.isEmpty(type)){
                 if ("1".equals(type)){
                     room= (Bean_SceneAndRoom.RoomListBean.EquipmentListBeanX) b.getSerializable("room1");
+                    if (room!=null){
+                        DeviceId=room.getId();
+                    }
                 }
                 else if ("0".equals(type)){
                     scene= (Bean_SceneAndRoom.SceneListBean.EquipmentListBean) b.getSerializable("scene0");
+                    if (scene!=null){
+                        DeviceId=scene.getId();
+                    }
                 }
                 fimilyId=b.getString("familyId");
             }
@@ -167,6 +265,10 @@ public class DeviceSettingLockActivity extends MyActivity {
         deviceSetting_lock_gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (isLock){//正在解锁的时候不允许输入
+                    mToast.Toast(con,"正在解锁，请稍后操作");
+                    return;
+                }
                 switch (position){
                     case 9://删除1位操作
                         if (psd!=null&&!"".equals(psd)&&psd.length()>0){
@@ -218,9 +320,9 @@ public class DeviceSettingLockActivity extends MyActivity {
                 if (s!=null){
                     String str=s.toString();
                     if (!"".equals(str)&&!TextUtils.isEmpty(str)&&str.length()==MAX){
-                        Toast.makeText(con,"输入完成:"+psd,Toast.LENGTH_SHORT).show();
-                        setDevice();
-
+//                        Toast.makeText(con,"输入完成:"+psd,Toast.LENGTH_SHORT).show();
+//                        setDevice();
+                        openLockPsd();//密码解锁从左
                     }
                 }
             }
@@ -237,8 +339,23 @@ public class DeviceSettingLockActivity extends MyActivity {
         for (int i=1;i<60;i++){
             listTime.add(""+i);
         }
-        LockShareListAdapter adapter=new LockShareListAdapter(con);
-        devicesetting_lock_share_listview.setAdapter(adapter);
+        adapter2=new LockShareListAdapter(con,list,this);
+        devicesetting_lock_share_listview.setAdapter(adapter2);
+        TextView lockshare_btn_submit= (TextView) LockShare.findViewById(R.id.lockshare_btn_submit);//确定按钮
+        lockshare_btn_submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (SelectPos==-1){
+                    mToast.Toast(con,"您还没有选择要分享的人");
+                    return;
+                }
+                if (lockTime==0){
+                    mToast.Toast(con,"您还没有选择钥匙的时限");
+                    return;
+                }
+                ShareLock(list.get(SelectPos).getId(),lockTime);
+            }
+        });
         TextView lockshare_btn_select= (TextView) LockShare.findViewById(R.id.lockshare_btn_select);//选择时限的按钮
         lockshare_btn_select.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -252,6 +369,27 @@ public class DeviceSettingLockActivity extends MyActivity {
         RelativeLayout share_setting_psd= (RelativeLayout) LockSetting.findViewById(R.id.share_setting_psd);//密码管理
         RelativeLayout share_setting_finger= (RelativeLayout) LockSetting.findViewById(R.id.share_setting_finger);//指纹管理
         RelativeLayout share_setting_record= (RelativeLayout) LockSetting.findViewById(R.id.share_setting_record);//开锁记录
+        share_setting_record.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (DeviceId!=-1L){
+                    Intent intent=new Intent(con,DeviceSettingLockRecordActivity.class);
+                    intent.putExtra("id",DeviceId+"");
+                    startActivity(intent);
+                }
+               else {
+                    Log.e("设备id错误--","无法查询开锁记录");
+                }
+            }
+        });
+        share_setting_psd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(con,DeviceSettingLockChangePSDActivity.class);
+                intent.putExtra("id",DeviceId+"");
+                startActivity(intent);
+            }
+        });
         //--------------设置------以上--------
         listSettingView.add(LockPsd);
         listSettingView.add(LockFinger);
@@ -316,20 +454,29 @@ public class DeviceSettingLockActivity extends MyActivity {
 
 
     private void showWindowTime() {
-            PopupWindow popW=new PopupWindow();
+            lockCurrentpos=0;
+            popW=new PopupWindow();
             popW = new PopupWindow();
             View air_timesetting = LayoutInflater.from(con).inflate(R.layout.share_time, null);
             TextView pop_submit= (TextView) air_timesetting.findViewById(R.id.pop_submit);//提交选择的时限
             WheelView pop_wheelView= (WheelView) air_timesetting.findViewById(R.id.pop_wheelView);
             pop_wheelView.setTitle("分钟");
             pop_wheelView.setViewAdapter(new MyWheelAdapter50(con,listTime,"af"));
+            pop_submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                lockTime=Integer.parseInt(listTime.get(lockCurrentpos));
+                popW.dismiss();
+                }
+            });
+            lockTime=0;//每次弹出重置时限为0
             pop_wheelView.addChangingListener(new OnWheelChangedListener() {
             @Override
             public void onChanged(WheelView wheel, int oldValue, int newValue) {
-                mToast.DebugToast(con,listTime.get(newValue)+"分钟");
+//                mToast.DebugToast(con,listTime.get(newValue)+"分钟");
+                lockCurrentpos=newValue;
             }
             });
-
             RelativeLayout parent = (RelativeLayout) findViewById(R.id.activity_device_setting_lock);
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
             WindowManager.LayoutParams params = getWindow().getAttributes();
@@ -360,19 +507,13 @@ public class DeviceSettingLockActivity extends MyActivity {
     }
 
 
-
+    //设备设置操作
     private void setDevice() {
         if (isChange){
             mToast.Toast(con,"正在操作，请稍后");
             return;
         }
         isChange=true;
-        //bundle.putSerializable("scene0",beanX);
-//        bundle.putSerializable("room1",bean);
-//bundle.putSerializable("familyId",fmiId);
-//type=0:情景中的设备，type=1房间中的设备,,beanX情景中获取的设备数据，bean：房间中国年获取的设备信息
-//        bundle.putString("type",type+"");
-//        intent.putExtra("data",bundle);
         if ("0".equals(type)){
             if (scene==null){
                 return;
@@ -443,5 +584,89 @@ public class DeviceSettingLockActivity extends MyActivity {
                 }
             });
         }
+    }
+
+    //获取我的家人
+    public void getFamilyUser() {
+        HashMap<String,String>mp=new HashMap<>();
+        mp.put("token", UserInfo.userToken);
+        mTools.getServerData(handler,2, Ip.serverPath+Ip.interface_getFamilyUsers,mp,"获取家人列表--");
+    }
+
+    @Override
+    public void sele(int pos) {
+        lockTime=0;//每次选中的时候重置
+        SelectPos=pos;
+    }
+    //分享钥匙
+//    ttp://192.168.1.55:8080/smarthome/mobileapi/equipment/doorShareKey.do?id=1&token=9DB2FD6FDD2F116CD47CE6C48B3047EE
+//    Method:POST
+//    参数列表:
+//            |参数名        |类型      |必需  |描述
+//    |-----        |----     |---- |----
+//            |token        |String   |Y    |令牌
+//    |equipmentId  |Long     |Y    |设备编号
+//    |targetId     |Long     |Y    |分享给谁？用户编号
+//    |expires      |int      |Y    |有效时间（分钟）
+    public void ShareLock(int ids,int time){
+        Map<String,String> mp=new HashMap<>();
+        mp.put("token",UserInfo.userToken);
+        mp.put("equipmentId",DeviceId+"");
+        mp.put("targetId",ids+"");
+        mp.put("expires",time+"");
+        Log.i("用户下表--"+SelectPos,"时间--"+time);
+        okhttp.getCall(Ip.serverPath+Ip.interface_shareLock,mp,okhttp.OK_POST).enqueue(new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+                handler.sendEmptyMessage(0);
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+                resStr=response.body().string();
+                Log.i("分享钥匙--",resStr);
+                handler.sendEmptyMessage(3);
+            }
+        });
+    }
+
+
+//    http://192.168.1.55:8080/smarthome/mobileapi/equipment/doorOpenPasswd.do?token=9DB2FD6FDD2F116CD47CE6C48B3047EE&equipmentId=6&pwd=123
+//    Method:POST
+//    参数列表:
+//            |参数名          |类型      |必需  |描述
+//    |-----          |----     |---- |----
+//            |equipmentId     |String   |Y    |设备编号
+//    |pwd           |String   |Y    |密码
+    //密码解锁操作
+    public void openLockPsd(){
+        if (isLock){
+            mToast.Toast(con,"正在操作，请稍后");
+            return;
+            }
+        if (DeviceId!=null&&DeviceId!=-1L){
+            isLock=true;
+            Map<String,String>mp=new HashMap<>();
+            mp.put("token",UserInfo.userToken);
+            mp.put("equipmentId",DeviceId+"");
+            mp.put("pwd",psd);
+            okhttp.getCall(Ip.serverPath+Ip.interface_openDoorPsd,mp,okhttp.OK_POST).enqueue(new Callback() {
+                @Override
+                public void onFailure(Request request, IOException e) {
+                    handler.sendEmptyMessage(4);
+                }
+                @Override
+                public void onResponse(Response response) throws IOException {
+                    resStr=response.body().string();
+                    Log.i("密码解锁操作--",resStr);
+                    handler.sendEmptyMessage(5);
+                }
+            });
+        }
+        else {
+            isLock=false;
+            mToast.Toast(con,"无法获取设备信息，解锁失败");
+        }
+
     }
 }

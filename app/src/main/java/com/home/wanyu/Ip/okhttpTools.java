@@ -67,7 +67,6 @@ public class okhttpTools {
 
 
 
-
     public void getServerData(Handler handler, int RequestCode, String url,HashMap<String,String>mp, String logSt){
         this.hand=handler;
         this.code=RequestCode;

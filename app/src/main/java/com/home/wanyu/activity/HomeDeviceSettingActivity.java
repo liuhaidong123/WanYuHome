@@ -44,6 +44,7 @@ import com.home.wanyu.User.UserInfo;
 import com.home.wanyu.adapter.HomeDeviceSettingListAdapter;
 import com.home.wanyu.adapter.HomeSceneSettingListAdapter;
 import com.home.wanyu.bean.Bean_RoomSetting;
+import com.home.wanyu.bean.Bean_deleteScene;
 import com.home.wanyu.bean.Bean_getRoomData;
 import com.home.wanyu.lzhUtils.MyActivity;
 
@@ -68,13 +69,15 @@ import butterknife.OnClick;
 //intent.putExtra("id",listBean.getId()+"");
 //        intent.putExtra("name",SceneName);
 public class HomeDeviceSettingActivity extends MyActivity {
+    private TextView my_user_info_submmit;
+    private TextView myActivity_title;
     private int deleteId;//删除的下表
     private PopupWindow pop;//删除设备的弹窗
     private String RoomId;//房间id
     @BindView(R.id.home_device_roomsetting_rela_eidtext) EditText home_sence_scene_rela_eidtext;
     @BindView(R.id.home_device_roomsetting_listview)MyListView home_sence_listview;
     @BindView(R.id.home_device_roomsetting_rela_condition_imageView)ImageView home_device_roomsetting_rela_condition_imageView;//添加按钮的image
-    private List<Bean_getRoomData.EquipmentListBean> list;
+    private List<Bean_getRoomData.RoomBean.EquipmentListBean> list;
     private String[]title={"客厅灯","电视","客厅插座"};
     private int[]url={R.mipmap.light,R.mipmap.tv,R.mipmap.socket};
     private HomeDeviceSettingListAdapter adapter;
@@ -98,20 +101,26 @@ public class HomeDeviceSettingActivity extends MyActivity {
                         roomData= mGson.gson.fromJson(mTools.mResponStr,Bean_getRoomData.class);
                         if (roomData!=null){
                             String code=roomData.getCode();
-                            if (code!=null&&!TextUtils.isEmpty(code)){
-                                ServerCode.showResponseMsg(con,code);
-                            }
-                            else {
-                                mToast.Toast(con,"获取成功");
-                                if (roomData.getEquipmentList()!=null&&roomData.getEquipmentList().size()>0){
-                                    list.addAll(roomData.getEquipmentList());
-                                    adapter.notifyDataSetChanged();
+                                if ("0".equals(code)){
+                                    if (roomData.getRoom()!=null){
+                                        if (roomData.getRoom().getEquipmentList()!=null&&roomData.getRoom().getEquipmentList().size()>0){
+                                            list.addAll(roomData.getRoom().getEquipmentList());
+                                            adapter.notifyDataSetChanged();
+                                        }
+                                        if (roomData.getRoom().getPictures()!=null&&!"".equals(roomData.getRoom().getPictures())){
+                                            Picasso.with(con).load(Ip.imagePath+roomData.getRoom().getPictures()).error(R.mipmap.errorphoto).into(home_device_roomsetting_rela_condition_imageView);
+                                        }
+                                    }
+                                    else {
+                                        mToast.Toast(con,"获取房间信息失败");
+                                    }
+
                                 }
-                                if (roomData.getPictures()!=null&&!"".equals(roomData.getPictures())){
-                                    Picasso.with(con).load(Ip.imagePath+roomData.getPictures()).error(R.mipmap.errorphoto).into(home_device_roomsetting_rela_condition_imageView);
+                               else {
+                                    mToast.Toast(con,roomData.getMessage());
                                 }
 
-                            }
+
                         }
                         else {
                             mToast.ToastFaild(con,ToastType.GSONEMPTY);
@@ -143,15 +152,41 @@ public class HomeDeviceSettingActivity extends MyActivity {
                         mToast.ToastFaild(con,ToastType.FAILD);
                     }
                     break;
+                case 3:
+                    try{
+                        Bean_deleteScene dele=mGson.gson.fromJson(resStr,Bean_deleteScene.class);
+                        if (dele!=null){
+                            if ("0".equals(dele.getCode())){
+                                mToast.Toast(con,"删除成功");
+                                finish();
+                            }
+                            else {
+                                mToast.Toast(con,dele.getResult());
+                            }
+                        }
+                        else {
+                            mToast.ToastFaild(con,ToastType.GSONEMPTY);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        e.printStackTrace();
+                        mToast.ToastFaild(con,ToastType.GSONFAILD);
+                    }
+                    break;
             }
         }
     };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initTitleView(R.layout.activity_my_user_title);
+        myActivity_title= (TextView) findViewById(R.id.myActivity_title);
+        my_user_info_submmit= (TextView) findViewById(R.id.my_user_info_submmit);
+        my_user_info_submmit.setText("删除");
         initChildView(R.layout.activity_home_device_setting);
         unbinder= ButterKnife.bind(this,ChildView);
-        setTitle(getIntent().getStringExtra("name"));
+        myActivity_title.setText(getIntent().getStringExtra("name"));
         RoomId=getIntent().getStringExtra("id");
         ShowChildView(DEFAULTRESID);
 
@@ -280,9 +315,9 @@ public class HomeDeviceSettingActivity extends MyActivity {
         if (resultCode==200){
             if (requestCode==100){//添加设备返回
                 Bundle bundle=data.getBundleExtra("data");
-                Bean_getRoomData.EquipmentListBean bean= (Bean_getRoomData.EquipmentListBean) bundle.getSerializable("data");
+                Bean_getRoomData.RoomBean.EquipmentListBean bean= (Bean_getRoomData.RoomBean.EquipmentListBean) bundle.getSerializable("data");
                 list.add(bean);
-                roomData.setEquipmentList(list);
+                roomData.getRoom().setEquipmentList(list);
                 adapter.notifyDataSetChanged();
             }
         }
@@ -351,12 +386,12 @@ public class HomeDeviceSettingActivity extends MyActivity {
         String name=home_sence_scene_rela_eidtext.getText().toString();
         if (!"".equals(name)&&!TextUtils.isEmpty(name)){
             Map<String,String>mp=new HashMap<>();
-            mp.put("id",roomData.getId()+"");
+            mp.put("id",roomData.getRoom().getId()+"");
             mp.put("roomName",name);
-            mp.put("oid",roomData.getOid()+"");
-            mp.put("familyId",roomData.getFamilyId()+"");
-            if (roomData.getEquipmentList()!=null&&roomData.getEquipmentList().size()>0){
-                String json=mGson.gson.toJson(roomData.getEquipmentList());
+            mp.put("oid",roomData.getRoom().getOid()+"");
+            mp.put("familyId",roomData.getRoom().getFamilyId()+"");
+            if (roomData.getRoom().getEquipmentList()!=null&&roomData.getRoom().getEquipmentList().size()>0){
+                String json=mGson.gson.toJson(roomData.getRoom().getEquipmentList());
                 mp.put("equipmentList",json);
             }
            else {
@@ -397,7 +432,7 @@ public class HomeDeviceSettingActivity extends MyActivity {
             @Override
             public void onClick(View v) {
                     list.remove(deleteId);
-                    roomData.setEquipmentList(list);
+                roomData.getRoom().setEquipmentList(list);
                     adapter.notifyDataSetChanged();
                     pop.dismiss();
             }
@@ -436,5 +471,29 @@ public class HomeDeviceSettingActivity extends MyActivity {
             }
         });
 
+    }
+
+    //删除房间的按钮
+    public void Submit(View vi){
+        if (roomData==null){
+            mToast.Toast(con,"没有查询到该情景的相关信息，无法删除");
+            return;
+        }
+        HashMap<String,String>mp=new HashMap<>();
+        mp.put("token",UserInfo.userToken);
+        mp.put("ids",roomData.getRoom().getId()+"");
+        okhttp.getCall(Ip.serverPath+Ip.interface_deleteRoom,mp,okhttp.OK_POST).enqueue(new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+                handler.sendEmptyMessage(0);
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+                resStr=response.body().string();
+                Log.i("删除房间--","名称---"+roomData.getRoom().getRoomName()+"---结果--"+resStr);
+                handler.sendEmptyMessage(3);
+            }
+        });
     }
 }

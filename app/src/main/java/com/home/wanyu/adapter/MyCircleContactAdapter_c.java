@@ -1,6 +1,7 @@
 package com.home.wanyu.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,12 +11,16 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.home.wanyu.Ip.Ip;
 import com.home.wanyu.R;
 import com.home.wanyu.activity.MyCircleContactActivity;
+import com.home.wanyu.bean.Bean_QZ;
 import com.home.wanyu.lzhUtils.DataUtils;
 import com.home.wanyu.myview.MyGridView;
 import com.home.wanyu.myview.RoundImageView;
+import com.squareup.picasso.Picasso;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
@@ -29,9 +34,9 @@ import butterknife.ButterKnife;
  */
 //我的圈子的适配器
 public class MyCircleContactAdapter_c extends BaseAdapter{
-    List<Map<String,String>> listCircle;
+    List<Bean_QZ.RowsBean>listCircle;
     private Context context;
-    public MyCircleContactAdapter_c(List<Map<String,String>> listCircle,Context context){
+    public MyCircleContactAdapter_c(List<Bean_QZ.RowsBean>listCircle,Context context){
         this.listCircle=listCircle;
         this.context=context;
     }
@@ -61,14 +66,7 @@ public class MyCircleContactAdapter_c extends BaseAdapter{
         else {
             hodler= (ViewHodler) convertView.getTag();
         }
-//        mp.put("select","0");//是否被选择
-//        mp.put("islike","0");
-//        mp.put("image",resId[i%resId.length]+"");//头像
-//        mp.put("title","圈子标题"+i);
-//        mp.put("data",data[i%data.length]);
-//        mp.put("address","名流一品");
-//        mp.put("name",name[i%name.length]);
-//        mp.put("contact","今天天气很好"+i);
+
         if (MyCircleContactActivity.state==0){//当前显示的是编辑
             hodler.activity_my_circle_contact_list_layout.setVisibility(View.GONE);
         }
@@ -76,57 +74,69 @@ public class MyCircleContactAdapter_c extends BaseAdapter{
             hodler.activity_my_circle_contact_list_layout.setVisibility(View.VISIBLE);
         }
         hodler.activity_my_circle_contact_list_select.setTag(position);
+        if (listCircle.get(position).isSele()){
+            hodler.activity_my_circle_contact_list_select.setSelected(true);
+        }
+        else {
+            hodler.activity_my_circle_contact_list_select.setSelected(false);
+        }
         hodler.activity_my_circle_contact_list_select.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int pos= (int) v.getTag();
-                if (v.isSelected()){
-                    listCircle.get(pos).put("select","0");
+                if (v.isSelected()){//已经被选中
+                    listCircle.get(pos).setSele(false);
                 }
-                else {
-                    listCircle.get(pos).put("select","1");
-                }
+                else {//没有被选中
+                    listCircle.get(pos).setSele(true);
+                    }
                 v.setSelected(!v.isSelected());
             }
         });
-        hodler.circle_head_img.setImageResource(Integer.parseInt(listCircle.get(position).get("image")));
-        hodler.circle_name_tv.setText(listCircle.get(position).get("name"));
-        hodler.circle_type_tv.setText(listCircle.get(position).get("title"));
-        hodler.circle_commend_msg.setText(listCircle.get(position).get("contact"));
+        Picasso.with(context).load(Ip.imagePath+listCircle.get(position).getAvatar()).error(R.mipmap.errorphoto).into(hodler.circle_head_img);
+        hodler.circle_name_tv.setText(listCircle.get(position).getUserName());
+//
+//        |State          |Object   |发状态实体类
+//        发状态实体类字段说明
+//                |id             |Long      |Y    |编号
+//                |content        |String    |Y    |内容
+//                |picture        |String    |N    |图片--最多6张图片
+//                |commentNum     |Integer   |N    |评论数
+//                |likeNum        |Integer   |N    |点赞数
+//                |personalId     |Long      |Y    |个人信息编号
+//                |visibleRange   |Integer   |Y    |范围--"1=本小区的人可以看到2=其他小区都能看到"
+//                |residentialQuartersId|Long      |Y    |小区编号--小区表
+//                |createTime     |java.sql.Timestamp|Y    |发布时间
+//                |categoryId     |Long      |Y    |分类编号
+
+
+        hodler.circle_type_tv.setVisibility(View.GONE);//圈子没有标题
+
+        hodler.circle_commend_msg.setText(listCircle.get(position).getContent());
+        String time=listCircle.get(position).getCreateTimeString();//内容
+//        2017-05-17 16:10:54
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        long millionSeconds;
-        try{
-            millionSeconds = sdf.parse(listCircle.get(position).get("data")).getTime();//毫秒
-            hodler.circle_time_tv.setText(DataUtils.getData(millionSeconds));
+        long mils;
+        try {
+            mils=sdf.parse(listCircle.get(position).getCreateTimeString()).getTime();//毫秒
+        } catch (ParseException e) {
+            mils=0;
+            e.printStackTrace();
         }
-        catch (Exception e){
-            millionSeconds=0;
-            hodler.circle_time_tv.setText("未知");
-        }
-        hodler.circle_like_num.setText(listCircle.get(position).get("likenum"));
-        hodler.circle_commend_num.setText(listCircle.get(position).get("pl"));
-        if ("0".equals(listCircle.get(position).get("islike"))){
-            hodler.circle_like_img.setSelected(false);
-        }
-        else if ("1".equals(listCircle.get(position).get("islike"))){
-            hodler.circle_like_img.setSelected(true);
-        }
-        hodler.circle_like_img.setTag(position);
-        hodler.circle_like_img.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               int pos= (int) v.getTag();
-                if (v.isSelected()){
-                    listCircle.get(pos).put("islike","0");
-                }
-                else {
-                    listCircle.get(pos).put("islike","1");
-                }
-                v.setSelected(!v.isSelected());
+        String data=DataUtils.getData(mils);
+        hodler.circle_time_tv.setText(data);
+
+        hodler.circle_like_num.setText(listCircle.get(position).getLikeNum()+"");
+        hodler.circle_commend_num.setText(listCircle.get(position).getCommentNum()+"");
+        hodler.circle_like_img.setSelected(listCircle.get(position).isIslike());//是否已经点赞
+        String picture=listCircle.get(position).getPicture();
+        if (!"".equals(picture)&&!TextUtils.isEmpty(picture)){
+            String[] pic = picture.split(",");
+            if (pic!=null&&pic.length>0){
+                MyCircleContactAdapterGridAdapter adapter=new MyCircleContactAdapterGridAdapter(pic,context);
+                hodler.circle_gridview_friend.setAdapter(adapter);
             }
-        });
-        MyCircleContactAdapterGridAdapter adapter=new MyCircleContactAdapterGridAdapter(Integer.parseInt(listCircle.get(position).get("imageNum")),context);
-        hodler.circle_gridview_friend.setAdapter(adapter);
+        }
         return convertView;
     }
     class ViewHodler{
@@ -140,6 +150,7 @@ public class MyCircleContactAdapter_c extends BaseAdapter{
         @BindView(R.id.circle_type_tv_1)TextView circle_type_tv;//标题
         @BindView(R.id.circle_commend_msg_1)TextView circle_commend_msg;//内容
         @BindView(R.id.circle_time_tv_1)TextView circle_time_tv;//时间
+
         @BindView(R.id.circle_like_num_1)TextView circle_like_num;//点赞数
         @BindView(R.id.circle_like_img_1)ImageView circle_like_img;//点赞的imageview
         @BindView(R.id.circle_commend_num_1)TextView circle_commend_num;//评论数
@@ -148,11 +159,4 @@ public class MyCircleContactAdapter_c extends BaseAdapter{
         @BindView(R.id.circle_gridview_friend_1)MyGridView circle_gridview_friend;//图片
     }
 
-    private void setAllSelect(int st) {//0全选，1取消全选
-        if (listCircle!=null&&listCircle.size()>0){
-            for (int i=0;i<listCircle.size();i++){
-                listCircle.get(i).put("select","1");
-            }
-        }
-    }
 }

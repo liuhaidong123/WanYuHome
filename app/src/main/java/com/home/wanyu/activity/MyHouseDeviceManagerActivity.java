@@ -200,9 +200,9 @@ public class MyHouseDeviceManagerActivity extends MyActivity {
                         break;
                     case "roomAdd"://获取当前房间中不存在的设备
                         Intent intent1=new Intent();
-                        intent1.setClass(con,HomeDeviceSettingActivity.class);
+//                        intent1.setClass(con,HomeDeviceSettingActivity.class);
                         Bundle bundle1=new Bundle();
-                        Bean_getRoomData.EquipmentListBean bean=new Bean_getRoomData.EquipmentListBean();
+                        Bean_getRoomData.RoomBean.EquipmentListBean bean=new Bean_getRoomData.RoomBean.EquipmentListBean();
                         Bean_AllDevice.EquipmentListBean bean1=list.get(position);
                         bean.setIconId(bean1.getIconId());
                         bean.setCreateTimeString(bean1.getCreateTimeString());
@@ -225,7 +225,7 @@ public class MyHouseDeviceManagerActivity extends MyActivity {
                         break;
                     case "sceneAdd"://获取当前情景中不存在的设备
                         Intent intent2=new Intent();
-                        intent2.setClass(con,HomeSenceSettingActivity.class);
+//                        intent2.setClass(con,HomeSenceSettingActivity.class);
                         Bundle bundle2=new Bundle();
                         Bean_getSceneData.EquipmentListBean bean2=new  Bean_getSceneData.EquipmentListBean();
                         Bean_AllDevice.EquipmentListBean bean3=list.get(position);

@@ -37,7 +37,7 @@ public class DataUtils {
             return "刚刚";
         }
         else {
-            return "0";
+            return "刚刚";
         }
     }
 }

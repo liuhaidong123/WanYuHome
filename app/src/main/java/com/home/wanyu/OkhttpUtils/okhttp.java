@@ -67,7 +67,6 @@ public class okhttp {
                     builder.add(s, mp.get(s));
                 }
             }
-
             Request request = new Request.Builder()
                     .url(url)
                     .post(builder.build())

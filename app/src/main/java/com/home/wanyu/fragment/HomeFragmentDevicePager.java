@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.home.wanyu.Icons.Device;
@@ -51,6 +52,7 @@ public class HomeFragmentDevicePager extends Fragment implements HomeFragmentDev
     private int pos;//当前的情景的position
     @BindView(R.id.fragment_home_device_viewpager_item_MylistView)ListView myListView;
     @BindView(R.id.fragment_home_device_viewpager_item_MyFloating) MyFloatingView floatingView;
+    @BindView(R.id.deviceSetting_emptyView)RelativeLayout deviceSetting_emptyView;
     private HomeDevicePagerItemListApdater adapter;
 //    private String[]title={"客厅灯","电视","客厅插座"};
 //    private int[]url={R.mipmap.light,R.mipmap.tv,R.mipmap.socket};
@@ -128,7 +130,7 @@ public class HomeFragmentDevicePager extends Fragment implements HomeFragmentDev
         });
         return vi;
     }
-    @OnClick({R.id.fragment_home_device_viewpager_item_toplayout,R.id.fragment_home_device_viewpager_item_MyFloating})
+    @OnClick({R.id.fragment_home_device_viewpager_item_toplayout,R.id.fragment_home_device_viewpager_item_MyFloating,R.id.deviceSetting_emptyView})
     public void click(View vi){
         switch (vi.getId()){
 //            case R.id.fragment_home_device_viewpager_item_MyFloating:
@@ -143,8 +145,17 @@ public class HomeFragmentDevicePager extends Fragment implements HomeFragmentDev
                 intent.putExtra("name",SceneName);
                 startActivity(intent);
                 break;
+            case R.id.deviceSetting_emptyView://没有添加设备时
+                if (listBean.getId()==0L){
+                    mToast.Toast(getActivity(),"不支持设置的房间类型");
+                    return;
+                }
+                Intent intent2=new Intent(getActivity(),HomeDeviceSettingActivity.class);
+                intent2.putExtra("id",listBean.getId()+"");
+                intent2.putExtra("name",SceneName);
+                startActivity(intent2);
+                break;
         }
-
     }
     private void initData() {
         if (listBean!=null){
@@ -155,8 +166,10 @@ public class HomeFragmentDevicePager extends Fragment implements HomeFragmentDev
                 adapter = new HomeDevicePagerItemListApdater(listBeanX, getActivity(),floatingView,listBean.getFamilyId()+"");
                 myListView.setAdapter(adapter);
                 floatingView.setVisibility(View.VISIBLE);
+                deviceSetting_emptyView.setVisibility(View.GONE);
             }
             else {
+                myListView.setEmptyView(deviceSetting_emptyView);
                 floatingView.setVisibility(View.GONE);
             }
         }
@@ -183,12 +196,11 @@ public class HomeFragmentDevicePager extends Fragment implements HomeFragmentDev
                 }
                 else {
                     listBeanX.get(i).setState(0L);
-                }
+                    }
             }
             adapter.notifyDataSetChanged();
         }
     }
-
     @Override
     public void onDestroy() {
         super.onDestroy();

@@ -32,10 +32,12 @@ import com.home.wanyu.Ip.ToastType;
 import com.home.wanyu.Ip.mGson;
 import com.home.wanyu.Ip.mToast;
 import com.home.wanyu.Ip.okhttpTools;
+import com.home.wanyu.OkhttpUtils.okhttp;
 import com.home.wanyu.R;
 import com.home.wanyu.User.UserInfo;
 import com.home.wanyu.adapter.HomeSceneSettingListAdapter;
 import com.home.wanyu.adapter.PopDataGridViewAdapter;
+import com.home.wanyu.bean.Bean_deleteScene;
 import com.home.wanyu.bean.Bean_getRoomData;
 import com.home.wanyu.bean.Bean_getSceneData;
 import com.home.wanyu.bean.Bean_sceneSetting;
@@ -45,10 +47,14 @@ import com.home.wanyu.lzhView.wheelView.MyWheelViewAdapterArray;
 import com.home.wanyu.lzhView.wheelView.OnWheelChangedListener;
 import com.home.wanyu.lzhView.wheelView.WheelView;
 import com.home.wanyu.myview.MyListView;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -67,6 +73,9 @@ import butterknife.Unbinder;
 //    intent.putExtra("name",SceneName);
 //intent.putExtra("id",listBean.getId()+"");
 public class HomeSenceSettingActivity extends MyActivity{
+    private TextView my_user_info_submmit;
+    private TextView myActivity_title;
+
     private int deleteId;
     private PopupWindow popX;
     private    PopupWindow popW;
@@ -100,6 +109,7 @@ public class HomeSenceSettingActivity extends MyActivity{
     private int sceneDistance;//定位启动的距离
     Bean_getSceneData sceneData;
     //sceneMode:1一键，2定时，3定位
+    private String resStr;
     private Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -173,17 +183,42 @@ public class HomeSenceSettingActivity extends MyActivity{
                         mToast.ToastFaild(con,ToastType.FAILD);
                     }
                     break;
-
+                case 3://删除情景
+                    try{
+                        Bean_deleteScene dele=mGson.gson.fromJson(resStr,Bean_deleteScene.class);
+                        if (dele!=null){
+                            if ("0".equals(dele.getCode())){
+                                mToast.Toast(con,"删除成功");
+                                finish();
+                            }
+                            else {
+                                mToast.Toast(con,dele.getResult());
+                            }
+                        }
+                        else {
+                            mToast.ToastFaild(con,ToastType.GSONEMPTY);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        e.printStackTrace();
+                        mToast.ToastFaild(con,ToastType.GSONFAILD);
+                    }
+                    break;
             }
         }
     };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initTitleView(R.layout.activity_my_user_title);
+        myActivity_title= (TextView) findViewById(R.id.myActivity_title);
+        my_user_info_submmit= (TextView) findViewById(R.id.my_user_info_submmit);
+        my_user_info_submmit.setText("删除");
+
         initChildView(R.layout.activity_home_sence_setting);
         unbinder=ButterKnife.bind(this,ChildView);
-
-        setTitle(getIntent().getStringExtra("name"));
+        myActivity_title.setText(getIntent().getStringExtra("name"));
         SenceId=getIntent().getStringExtra("id");
 
         ShowChildView(DEFAULTRESID);
@@ -259,6 +294,29 @@ public class HomeSenceSettingActivity extends MyActivity{
                 break;
             }
         }
+    //删除情景http://192.168.1.55:8080/smarthome/mobileapi/scene/delete.do?ids=1234,12345&token=9DB2FD6FDD2F116CD47CE6C48B3047EE
+    private void deleteScene() {
+        if (sceneData==null){
+            mToast.Toast(con,"没有查询到该情景的相关信息，无法删除");
+            return;
+        }
+        HashMap<String,String>mp=new HashMap<>();
+        mp.put("token",UserInfo.userToken);
+        mp.put("ids",sceneData.getId()+"");
+        okhttp.getCall(Ip.serverPath+Ip.interface_deleteScene,mp,okhttp.OK_POST).enqueue(new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+                handler.sendEmptyMessage(0);
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+                resStr=response.body().string();
+                Log.i("删除情景--","名称---"+sceneData.getSceneName()+"---结果--"+resStr);
+                handler.sendEmptyMessage(3);
+            }
+        });
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -666,6 +724,10 @@ public class HomeSenceSettingActivity extends MyActivity{
                 getWindow().setAttributes(params);
             }
         });
+    }
 
+    //删除房间的按钮
+    public void Submit(View vi){
+        deleteScene();
     }
 }

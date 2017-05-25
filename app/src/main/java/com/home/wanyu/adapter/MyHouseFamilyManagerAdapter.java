@@ -68,24 +68,9 @@ public class MyHouseFamilyManagerAdapter extends BaseAdapter{
         else {
             hodler= (ViewHodler) convertView.getTag();
         }
-        hodler.lockshare_list_item_text.setText(list.get(position).getTrueName());
-        int type=list.get(position).getUserType();
-        String tp;
-        switch (type){//userType|成员类型0=家庭成员1=租客2=访客|成员类型0=家庭成员1=租客2=访客
-            case 0:
-                tp="家庭成员";
-                break;
-            case 1:
-                tp="租客";
-                break;
-            case 2:
-                tp="访客";
-                break;
-            default:
-                tp="自定义类型";
-                break;
-        }
-        hodler.lockshare_list_item_text_pro.setText(tp);
+        hodler.lockshare_list_item_text.setText(list.get(position).getUserName());
+
+        hodler.lockshare_list_item_text_pro.setText(list.get(position).getComment());
         Picasso.with(context).load(Ip.imagePath+list.get(position).getAuthentication()).error(R.mipmap.errorphoto).into(hodler.lockshare_list_item_image);
 //        if ("1".equals(list.get(position).get("select"))){
 //            hodler.locklayout.setSelected(true);

@@ -21,6 +21,7 @@
         <activity
             android:name=".activity.StartActivity"
             android:screenOrientation="portrait"
+            android:launchMode="singleTop"
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,18 +34,17 @@
             android:name=".activity.MainActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme" />
+            />
         <!-- 情景设置 -->
         <activity
             android:name=".activity.HomeSenceSettingActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme" />
+            />
         <activity android:name=".activity.RepairActivity" />
         <activity android:name=".activity.SelectImgActivity" />
         <activity android:name=".activity.OrderActivity" />
         <activity android:name=".activity.AddAddressActivity" />
-        android:screenOrientation="portrait" />
         <activity
             android:name=".activity.HomeDeviceAddActivity"
             android:launchMode="singleTop"
@@ -66,6 +66,10 @@
         <activity android:name=".activity.LifeMoneyActivity2" />
         <activity android:name=".activity.MoneyNumActivity" />
         <activity android:name=".activity.MoneyInputSureActivity" />
+<<<<<<< HEAD
+=======
+        <!--<activity android:name=".activity.HomeSenceAddSenceActivity" />-->
+>>>>>>> ce7571fc552996c36129ac267470b52a63a16c43
         <activity android:name=".activity.TestActivity" />
         <activity android:name=".activity.CircleMessageActivity" />
         <activity android:name=".activity.CirclePostActivity" />
@@ -80,6 +84,12 @@
         <activity android:name=".activity.CarPoolingPostActivity" />
         <activity android:name=".activity.CarPoolingMsgActivity" />
         <activity android:name=".activity.CarPoolingCommentActivity" />
+<<<<<<< HEAD
+=======
+        <!--<activity android:name=".activity.MoneyInputSureActivity" />-->
+        <!-- <activity android:name=".activity.HomeSenceAddSenceActivity" /> -->
+        <!--<activity android:name=".activity.TestActivity" />-->
+>>>>>>> ce7571fc552996c36129ac267470b52a63a16c43
         <activity android:name=".activity.DeviceSettingLightActivity" />
         <activity android:name=".activity.DeviceSettingSwitchActivity" />
         <activity android:name=".activity.DeviceSettingCurtainActivity" />
@@ -97,6 +107,7 @@
         <activity android:name=".activity.MyHouseFamilyAddActivity" />
         <activity android:name=".activity.MyHouseFamilyEditor" />
         <activity android:name=".activity.MyCircleContactActivity" />
+<<<<<<< HEAD
         <activity android:name=".activity.ExpressActivity" />
         <activity android:name=".activity.CommercialActivity" />
         <activity android:name=".activity.CommercialSearchAddressActivity" />
@@ -110,6 +121,20 @@
         <activity android:name=".activity.HousePostCardActivity"
             android:windowSoftInputMode="stateHidden"
             ></activity>
+=======
+        <activity android:name=".activity.MySettingActivity" />
+        <activity android:name=".activity.MySettingChangePhoneActivity" />
+        <activity android:name=".activity.MyAboutUsActivity" />
+        <activity android:name=".activity.OtherPersonInfoActivity" />
+        <activity
+            android:name=".activity.MyContactUs"
+            android:label="@string/title_activity_my_contact_us"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".activity.MySettingChangePsdActivity" />
+        <activity android:name=".activity.LoginAndRegisterActivity" />
+        <activity android:name=".activity.DeviceSettingLockRecordActivity" />
+        <activity android:name=".activity.DeviceSettingLockChangePSDActivity"></activity>
+>>>>>>> ce7571fc552996c36129ac267470b52a63a16c43
     </application>
 
 </manifest>

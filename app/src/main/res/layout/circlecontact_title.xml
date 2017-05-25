@@ -31,12 +31,14 @@
                 android:text="个人信息"
                 android:textColor="@color/titlecolor3"
                 android:textSize="17sp"/>
+
             <ImageView
                 android:layout_marginLeft="5dp"
                 android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/amore"/>
+                android:src="@mipmap/amore"
+                android:id="@+id/imageView" />
         </LinearLayout>
 
         <TextView

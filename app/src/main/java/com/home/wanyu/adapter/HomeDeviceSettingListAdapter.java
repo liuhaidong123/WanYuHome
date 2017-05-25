@@ -22,9 +22,9 @@ import java.util.List;
  */
 //房间设置适配器
 public class HomeDeviceSettingListAdapter extends BaseAdapter{
-    private  List<Bean_getRoomData.EquipmentListBean> list;
+    private  List<Bean_getRoomData.RoomBean.EquipmentListBean> list;
     private Context context;
-    public HomeDeviceSettingListAdapter( List<Bean_getRoomData.EquipmentListBean> list,Context context) {
+    public HomeDeviceSettingListAdapter(List<Bean_getRoomData.RoomBean.EquipmentListBean> list,Context context) {
         this.list = list;
         this.context = context;
     }

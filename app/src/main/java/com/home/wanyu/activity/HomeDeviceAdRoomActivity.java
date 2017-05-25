@@ -4,8 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.home.wanyu.R;
-
-//添加房间的接口
+//无用的activity
 public class HomeDeviceAdRoomActivity extends AppCompatActivity {
 
     @Override
