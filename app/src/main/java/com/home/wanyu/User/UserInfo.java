@@ -14,7 +14,6 @@ public class UserInfo {
         public static String userPsd;//密码
         public static long personalId = 11l;
         public static String userToken = "9DB2FD6FDD2F116CD47CE6C48B3047EE";//登陆后获取的token
-
         //检查是否已经登陆
         public static boolean checkLogin(Context context) {
                 return false;
@@ -27,7 +26,6 @@ public class UserInfo {
                         userToken = preference.getString("userToken", "0");
                         personalId = preference.getLong("personalId", -1l);
                         if (!"0".equals(userName) && !"0".equals(userToken) && personalId != -1l) {
-
                                 return true;
                         }
                 }
@@ -42,8 +40,6 @@ public class UserInfo {
                 editor.remove("personalId");
                 editor.commit();
         }
-
-
         //保存登陆后返回的信息（目前保存：userName,userToken,personalId字段）
         public static void savaLogin() {
 

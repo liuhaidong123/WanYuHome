@@ -148,11 +148,11 @@ public class HomeFragment extends Fragment  {
                 mToast.DebugToast(getActivity(),"切换实景");
 //              startActivity(new Intent(getActivity(), TestActivity.class));
                 //他人的信息页面
-                Intent intent=new Intent(getActivity(),OtherPersonInfoActivity.class);
-                intent.putExtra("id","1");
-                startActivity(intent);
+//                Intent intent=new Intent(getActivity(),OtherPersonInfoActivity.class);
+//                intent.putExtra("id","1");
+//                startActivity(intent);
                 //注册登录页面
-//                startActivity(new Intent(getActivity(),LoginAndRegisterActivity.class));
+                startActivity(new Intent(getActivity(),LoginAndRegisterActivity.class));
                 break;
             case R.id.fragment_home_top_add:
                 showWindow();
