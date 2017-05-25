@@ -100,4 +100,9 @@ public class UrlTools {
 
     //社区拼车评论
     public static final String CAR_POOLING_COMMENT="/mobileapi/carpooling/addcommentCarpooling.do?";
+
+    //社区加入接口
+    public static final String CAR_POOLING_JOIN="/mobileapi/carpoolingLog/addCarpoolingLog.do?" ;
+    //接单
+    public static final String CAR_POOLING_ORDER="/mobileapi/carpoolingLog/addCarpoolingLog.do?" ;
 }

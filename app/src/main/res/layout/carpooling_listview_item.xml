@@ -151,7 +151,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/car_start_address_rl"
-                android:layout_marginBottom="25dp"
+
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp">
@@ -178,12 +178,45 @@
                     android:textSize="14sp" />
             </RelativeLayout>
 
+
+            <RelativeLayout
+                android:id="@+id/car_person_num_rl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/car_end_address_rl"
+                android:layout_marginBottom="25dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp">
+
+                <TextView
+
+                    android:id="@+id/car_person_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="人数"
+                    android:textColor="@color/homeFragTopTextColor"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/car_person_msg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/car_person_tv"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="88人"
+                    android:textColor="@color/titlecolor3"
+                    android:textSize="14sp" />
+            </RelativeLayout>
+
             <RelativeLayout
 
                 android:id="@+id/car_end_rl"
                 android:layout_width="match_parent"
                 android:layout_height="36dp"
-                android:layout_below="@id/car_end_address_rl"
+                android:layout_below="@id/car_person_num_rl"
                 android:background="@color/white">
 
                 <TextView
@@ -251,7 +284,7 @@
                 android:id="@+id/car_end_chen_rl"
                 android:layout_width="match_parent"
                 android:layout_height="36dp"
-                android:layout_below="@id/car_end_address_rl"
+                android:layout_below="@id/car_person_num_rl"
                 android:background="@color/white"
                 android:visibility="gone"
                >

@@ -2,6 +2,8 @@ package com.home.wanyu.apater;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.os.Parcelable;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
@@ -11,12 +13,16 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.home.wanyu.HttpUtils.HttpTools;
 import com.home.wanyu.HttpUtils.UrlTools;
 import com.home.wanyu.R;
+import com.home.wanyu.User.UserInfo;
 import com.home.wanyu.activity.CarPoolingMsgActivity;
 import com.home.wanyu.activity.StartActivity;
 import com.home.wanyu.bean.carPoolingList.Result;
+import com.home.wanyu.bean.getAreaActivityComment.Root;
 import com.home.wanyu.myUtils.ImgUitls;
 import com.home.wanyu.myview.RoundImageView;
 import com.squareup.picasso.Picasso;
@@ -33,11 +39,46 @@ public class CarPoolingAda extends BaseAdapter {
     private LayoutInflater mInflater;
     private List<Result> mlist = new ArrayList<>();
     private int over;
+    private int mPosition;
+    private HttpTools httpTools;
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (msg.what == 130) {//加入拼车
+                Object o = msg.obj;
+                if (o != null && o instanceof Root) {
+                    Root root = (Root) o;
+                    if (root.getCode().equals("0")) {
+                        Toast.makeText(mContext, "加入拼车成功", Toast.LENGTH_SHORT).show();
+                        mlist.get(mPosition).setIslike(true);
+                        mlist.get(mPosition).setParticipateNumber(mlist.get(mPosition).getParticipateNumber() + 1);
+                        notifyDataSetChanged();
+                    } else {
+                        Toast.makeText(mContext, "亲，您已经加入此拼车，不能重复加入了哦", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            } else if (msg.what == 131) {//接单
+                Object o = msg.obj;
+                if (o != null && o instanceof Root) {
+                    Root root = (Root) o;
+                    if (root.getCode().equals("0")) {
+                        Toast.makeText(mContext, "接单成功", Toast.LENGTH_SHORT).show();
+                        mlist.get(mPosition).setOrders(true);
+                        notifyDataSetChanged();
+                    } else {
+                        Toast.makeText(mContext, "亲，您已经接过此单子了哦", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        }
+    };
 
     public CarPoolingAda(Context mContext, List<Result> mlist) {
         this.mContext = mContext;
         this.mlist = mlist;
         this.mInflater = LayoutInflater.from(this.mContext);
+        httpTools = HttpTools.getHttpToolsInstance();
     }
 
     public void setMlist(List<Result> mlist, int over) {
@@ -84,6 +125,7 @@ public class CarPoolingAda extends BaseAdapter {
             holder.chenke_rl = (RelativeLayout) convertView.findViewById(R.id.car_end_chen_rl);
             holder.chen_comment = (TextView) convertView.findViewById(R.id.car_jie_comment_num);
             holder.chen_state = (TextView) convertView.findViewById(R.id.car_chen_state_tv);
+            holder.person_num = (TextView) convertView.findViewById(R.id.car_chen_state_tv);
             convertView.setTag(holder);
         } else {
             holder = (CarHolder) convertView.getTag();
@@ -95,31 +137,31 @@ public class CarPoolingAda extends BaseAdapter {
         holder.start_time.setText(mlist.get(position).getDepartureTimeString());
         holder.start_address.setText(mlist.get(position).getDeparturePlace());
         holder.end_address.setText(mlist.get(position).getEnd());
+        holder.person_num.setText(mlist.get(position).getCnumber()+"");
 
 
         if (mlist.get(position).getCtype() == 1) {//乘客
             holder.shen.setText("乘客");
             holder.chenke_rl.setVisibility(View.VISIBLE);
             holder.siji_rl.setVisibility(View.GONE);
-
+            holder.chen_comment.setText(mlist.get(position).getComment() + "");
 
             if (over == 1) {
                 holder.chen_state.setText("正在进行");
+                //是否接单
+                if (mlist.get(position).isOrders()) {
+                    holder.dan.setBackgroundResource(R.drawable.house_think_bg);
+                    holder.dan.setTextColor(ContextCompat.getColor(mContext, R.color.white));
+                } else {
+                    holder.dan.setBackgroundResource(R.drawable.repair_submit_bg);
+                    holder.dan.setTextColor(ContextCompat.getColor(mContext, R.color.white));
+                }
+
             } else if (over == 2) {
                 holder.chen_state.setText("已结束");
-            }
-
-                //是否接单
-            if (mlist.get(position).isOrders()) {
                 holder.dan.setBackgroundResource(R.drawable.house_think_bg);
                 holder.dan.setTextColor(ContextCompat.getColor(mContext, R.color.white));
-            } else {
-                holder.dan.setBackgroundResource(R.drawable.repair_submit_bg);
-                holder.dan.setTextColor(ContextCompat.getColor(mContext, R.color.white));
             }
-
-            holder.chen_comment.setText(mlist.get(position).getComment() + "");
-
 
         } else {
 
@@ -129,17 +171,17 @@ public class CarPoolingAda extends BaseAdapter {
 
             if (over == 1) {
                 holder.state.setText("正在进行");
+                if (mlist.get(position).islike()) {
+                    holder.join_img.setImageResource(R.mipmap.community_add);
+                } else {
+                    holder.join_img.setImageResource(R.mipmap.community_add_no);
+                }
             } else if (over == 2) {
                 holder.state.setText("已结束");
+                holder.join_img.setImageResource(R.mipmap.community_add_no);
             }
 
             holder.join_num.setText(mlist.get(position).getParticipateNumber() + "人参加");
-
-            if (mlist.get(position).islike()) {
-                holder.join_img.setImageResource(R.mipmap.community_add);
-            } else {
-                holder.join_img.setImageResource(R.mipmap.community_add_no);
-            }
             holder.comment_num.setText(mlist.get(position).getComment() + "");
         }
 
@@ -151,7 +193,7 @@ public class CarPoolingAda extends BaseAdapter {
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, CarPoolingMsgActivity.class);
                 intent.putExtra("bean", (Result) mlist.get(position));
-                intent.putExtra("state",over);
+                intent.putExtra("state", over);
                 mContext.startActivity(intent);
             }
         });
@@ -162,6 +204,21 @@ public class CarPoolingAda extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 finalConvertView.setFocusable(false);
+                mPosition = position;
+                if (over == 2) {
+                    Toast.makeText(mContext, "请，此拼车活动已结束了哦", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (mlist.get(position).islike()) {
+                        Toast.makeText(mContext, "亲，您已经加入此拼车，不能重复加入了哦", Toast.LENGTH_SHORT).show();
+                    } else {
+                        if (mlist.get(position).getParticipateNumber() < mlist.get(position).getCnumber()) {
+                            httpTools.carPoolingJoin(handler, UserInfo.userToken, mlist.get(position).getId());
+                        } else {
+                            Toast.makeText(mContext, "亲，人数已满，不能继续添加了哦", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                }
 
             }
         });
@@ -172,6 +229,18 @@ public class CarPoolingAda extends BaseAdapter {
             public void onClick(View v) {
                 finalConvertView.setFocusable(false);
 
+                mPosition = position;
+                if (over == 2) {
+                    Toast.makeText(mContext, "亲，此拼车活动已结束了哦", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (mlist.get(position).isOrders()) {
+                        Toast.makeText(mContext, "亲，您已经接过此单子了哦", Toast.LENGTH_SHORT).show();
+                    } else {
+                        httpTools.carPoolingOrder(handler, UserInfo.userToken, mlist.get(position).getId());
+                    }
+                }
+
+
             }
         });
         return convertView;
@@ -179,7 +248,7 @@ public class CarPoolingAda extends BaseAdapter {
 
     class CarHolder {
         RoundImageView head_img;
-        TextView name, time, shen, start_time, start_address, end_address, state, comment_num, join_num;
+        TextView name, time, shen, start_time, start_address, end_address, state, comment_num, join_num, person_num;
         ImageView join_img;
         RelativeLayout siji_rl, chenke_rl;
         TextView dan;

@@ -169,13 +169,13 @@ public class CarPoolingPostActivity extends AppCompatActivity implements View.On
 
 
         } else if (id == mSiji_img.getId()) {//司机
-            mFlag = 1;
+            mFlag = 2;
             mSiji_img.setImageResource(R.mipmap.car_post_chen);
             mCheng_img.setImageResource(R.mipmap.car_post_chen_no);
         } else if (id == mCheng_img.getId()) {//乘客
             mSiji_img.setImageResource(R.mipmap.car_post_chen_no);
             mCheng_img.setImageResource(R.mipmap.car_post_chen);
-            mFlag = 2;
+            mFlag = 1;
         } else if (id == mShowTime_btn.getId()) {//弹出选择时间
             showPopuWindow();
         } else if (id == mOther_img.getId()) {//其他小区可见
@@ -255,9 +255,9 @@ public class CarPoolingPostActivity extends AppCompatActivity implements View.On
     }
 
     public String getShen() {
-        if (mFlag == 1) {
+        if (mFlag == 2) {
             return "司机";
-        } else if (mFlag == 2) {
+        } else if (mFlag == 1) {
             return "乘客";
         } else {
             return "";

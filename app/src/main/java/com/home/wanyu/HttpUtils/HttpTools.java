@@ -1260,6 +1260,88 @@ public class HttpTools {
         });
     }
 
+
+    //社区拼车加入接口
+    public void carPoolingJoin(final Handler handler, String token,long carpoolingId) {
+        String url = UrlTools.BASE + UrlTools.CAR_POOLING_JOIN + "token=" + token + "&carpoolingId=" + carpoolingId;
+
+        mFinalHttp.get(url, new AjaxCallBack<String>() {
+            @Override
+            public void onStart() {
+                super.onStart();
+                Log.e("onStart", "社区拼车加入接口");
+            }
+
+            @Override
+            public void onSuccess(String s) {
+                super.onSuccess(s);
+                Log.e("onSuccess", "社区拼车加入接口" + s);
+                try {
+                    Message message = new Message();
+                    com.home.wanyu.bean.getAreaActivityComment.Root root = mGson.fromJson(s, com.home.wanyu.bean.getAreaActivityComment.Root.class);
+                    message.obj = root;
+                    message.what = 130;
+                    handler.sendMessage(message);
+
+                } catch (Exception e) {
+                    Log.e("错误码", e.toString());
+                    // handler.sendEmptyMessage(200);
+                }
+
+            }
+
+            @Override
+            public void onFailure(Throwable t, int errorNo, String strMsg) {
+                super.onFailure(t, errorNo, strMsg);
+                if (strMsg == null) {
+                    strMsg = "--null";
+                }
+                Log.e("onFailure", "社区拼车加入接口" + strMsg);
+                // handler.sendEmptyMessage(203);
+            }
+        });
+    }
+    //社区拼车接单接口
+    public void carPoolingOrder(final Handler handler, String token,long carpoolingId) {
+        String url = UrlTools.BASE + UrlTools.CAR_POOLING_ORDER + "token=" + token + "&carpoolingId=" + carpoolingId;
+
+        mFinalHttp.get(url, new AjaxCallBack<String>() {
+            @Override
+            public void onStart() {
+                super.onStart();
+                Log.e("onStart", "社区拼车接单接口");
+            }
+
+            @Override
+            public void onSuccess(String s) {
+                super.onSuccess(s);
+                Log.e("onSuccess", "社区拼车接单接口" + s);
+                try {
+                    Message message = new Message();
+                    com.home.wanyu.bean.getAreaActivityComment.Root root = mGson.fromJson(s, com.home.wanyu.bean.getAreaActivityComment.Root.class);
+                    message.obj = root;
+                    message.what = 131;
+                    handler.sendMessage(message);
+
+                } catch (Exception e) {
+                    Log.e("错误码", e.toString());
+                    // handler.sendEmptyMessage(200);
+                }
+
+            }
+
+            @Override
+            public void onFailure(Throwable t, int errorNo, String strMsg) {
+                super.onFailure(t, errorNo, strMsg);
+                if (strMsg == null) {
+                    strMsg = "--null";
+                }
+                Log.e("onFailure", "社区拼车接单接口" + strMsg);
+                // handler.sendEmptyMessage(203);
+            }
+        });
+    }
+
 }
 
 
