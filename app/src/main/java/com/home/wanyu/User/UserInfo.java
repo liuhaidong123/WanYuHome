@@ -12,14 +12,9 @@ import android.widget.EditText;
 public class UserInfo {
         public static String userName;//用户名
         public static String userPsd;//密码
-<<<<<<< HEAD
-        public static long personalId=11l;
-        public static String userToken="EC9CDB5177C01F016403DFAAEE3C1182";//登陆后获取的token
-=======
         public static long personalId = 11l;
         public static String userToken = "9DB2FD6FDD2F116CD47CE6C48B3047EE";//登陆后获取的token
 
->>>>>>> ce7571fc552996c36129ac267470b52a63a16c43
         //检查是否已经登陆
         public static boolean checkLogin(Context context) {
                 return false;
