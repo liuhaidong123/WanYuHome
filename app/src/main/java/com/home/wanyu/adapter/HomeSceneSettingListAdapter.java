@@ -58,7 +58,7 @@ public class HomeSceneSettingListAdapter extends BaseAdapter{
         else {
             viewHodler= (ViewHodler) convertView.getTag();
         }
-        if (list.get(position).getIconId()>=0&&list.get(position).getIconId()<=6){
+        if (list.get(position).getIconId()>=0&&list.get(position).getIconId()<=icon.mIconId[icon.mIconId.length-1]){
             viewHodler.activity_homeSceneSetting_listitem_rela_image.setImageResource(icon.mIconRes[list.get(position).getIconId()]);
         }
        else {
@@ -72,7 +72,7 @@ public class HomeSceneSettingListAdapter extends BaseAdapter{
         }
         else if (state==0){
             viewHodler.activity_homeSceneSetting_listitem_rela_switch.setChecked(true);
-        }
+            }
         viewHodler.activity_homeSceneSetting_listitem_rela_switch.setTag(position);
 
         viewHodler.activity_homeSceneSetting_listitem_rela_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

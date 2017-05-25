@@ -44,16 +44,47 @@
             android:layout_below="@+id/fragment_home_scene_viewpager_item_toplayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <ListView
-                android:background="@drawable/layoutwhite"
-                android:scrollbars="none"
-                android:layout_marginTop="10dp"
-                android:divider="@color/homefragmentFgColor"
-                android:dividerHeight="1dp"
-                android:id="@+id/fragment_home_scene_viewpager_item_MylistView"
+
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-            </ListView>
+                <ListView
+                    android:background="@drawable/layoutwhite"
+                    android:scrollbars="none"
+                    android:layout_marginTop="10dp"
+                    android:divider="@color/homefragmentFgColor"
+                    android:dividerHeight="1dp"
+                    android:id="@+id/fragment_home_scene_viewpager_item_MylistView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                </ListView>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/deviceSetting_emptyView_scene">
+                    <LinearLayout
+                        android:layout_centerInParent="true"
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <com.home.wanyu.myview.RoundImageView
+                            android:layout_width="160dp"
+                            android:layout_height="160dp"
+                            android:layout_gravity="center_horizontal"
+                            android:src="@mipmap/nodevice"/>
+                        <TextView
+                            android:textSize="@dimen/textSize13"
+                            android:textColor="@color/colorc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="@string/nodevice"
+                            android:gravity="center"
+                            android:layout_marginTop="15dp"/>
+                    </LinearLayout>
+                </RelativeLayout>
+            </RelativeLayout>
+
             <com.home.wanyu.lzhView.MyFloatingView
                 android:layout_marginRight="15dp"
                 android:layout_marginBottom="10dp"

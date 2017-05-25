@@ -1,12 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-<TextView
+    android:orientation="vertical"
+    android:background="@color/homefragmentFgColor"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:text="没有查询到数据"
-    android:gravity="center"
-    android:textSize="18sp"
-    android:textColor="#f50101"/>
+    android:layout_height="match_parent">
+<com.home.wanyu.myview.RoundImageView
+    android:layout_marginTop="125dp"
+    android:layout_gravity="center_horizontal"
+    android:id="@+id/emptyView_image"
+    android:layout_width="160dp"
+    android:src="@mipmap/nodevice"
+    android:layout_height="160dp" />
+    <TextView
+        android:layout_marginTop="15dp"
+        android:textColor="#cccccc"
+        android:textSize="@dimen/textSize13"
+        android:gravity="center"
+        android:text="还没有添加家人哦\n去添加吧"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/emptyView_textview"/>
 </LinearLayout>

@@ -19,7 +19,6 @@
         android:id="@+id/textView2" />
 
     <TextView
-        android:clickable="true"
         android:id="@+id/pop_submit"
         android:text="确定"
         android:padding="10dp"

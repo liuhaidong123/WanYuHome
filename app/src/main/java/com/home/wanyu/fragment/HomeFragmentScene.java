@@ -6,6 +6,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -35,7 +36,7 @@ import butterknife.Unbinder;
 public class HomeFragmentScene extends Fragment implements HomeFragment.HomeData{
     private Unbinder unbinder;
     private MyAdapter adapter;
-    @BindView(R.id.fragment_home_scene_viewpager)  ViewPager fragment_home_scene_viewpager;
+    ViewPager fragment_home_scene_viewpager;
     @BindView(R.id.fragment_home_scene_tablayout)
     TabLayout fragment_home_scene_tablayout;
 //    @BindArray(R.array.homeSceneString) String[]Sence;
@@ -46,44 +47,52 @@ public class HomeFragmentScene extends Fragment implements HomeFragment.HomeData
     @Override
     public View onCreateView(LayoutInflater inflater,  ViewGroup container,  Bundle savedInstanceState) {
         View vi=inflater.inflate(R.layout.fragment_home_scene,null);
-//        initData();
-        unbinder= ButterKnife.bind(this,vi);
-        return vi;
+//            initData();
+            unbinder= ButterKnife.bind(this,vi);
+            fragment_home_scene_viewpager= (ViewPager) vi.findViewById(R.id.fragment_home_scene_viewpager);
+            return vi;
     }
 
     private void initData() {
         if (listScene!=null&&listScene.size()>0){
             int size=listScene.size();
-            listFragment=new ArrayList<>();
-            listTable=new ArrayList<>();
+                listFragment=new ArrayList<>();
+                listTable=new ArrayList<>();
             for (int i=0;i<size;i++){
                 listTable.add(listScene.get(i).getSceneName());
                 HomeFragmentScenePager mFrag=new HomeFragmentScenePager();
                 mFrag.sendMsg(listScene.get(i));
                 listFragment.add(mFrag);
             }
+            adapter=new MyAdapter(getChildFragmentManager());
+            fragment_home_scene_viewpager.setAdapter(adapter);
+//            fragment_home_scene_viewpager.setOffscreenPageLimit(0);
+            fragment_home_scene_tablayout.setupWithViewPager(fragment_home_scene_viewpager,true);
+            listFragment.get(0).setSceneName(listTable.get(0),0);
+            fragment_home_scene_tablayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+                @Override
+                public void onTabSelected(TabLayout.Tab tab) {
+                    String title=listTable.get(tab.getPosition());
+                    listFragment.get(tab.getPosition()).setSceneName(title,tab.getPosition());
+//                listFragment.get(tab.getPosition()).sendMsg(listScene.get(tab.getPosition()));
+                }
+
+                @Override
+                public void onTabUnselected(TabLayout.Tab tab) {
+
+                }
+
+                @Override
+                public void onTabReselected(TabLayout.Tab tab) {
+
+                }
+            });
+
         }
-        adapter=new MyAdapter(getChildFragmentManager());
-        fragment_home_scene_viewpager.setAdapter(adapter);
-        fragment_home_scene_tablayout.setupWithViewPager(fragment_home_scene_viewpager,true);
-
-        listFragment.get(0).setSceneName(listTable.get(0),0);
-        fragment_home_scene_tablayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                String title=listTable.get(tab.getPosition());
-                listFragment.get(tab.getPosition()).setSceneName(title,tab.getPosition());
+        else {
+            Log.e("0000000000","9999999");
+            return;
             }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-            }
-        });
 
     }
     @Override
@@ -111,7 +120,7 @@ public class HomeFragmentScene extends Fragment implements HomeFragment.HomeData
 
 
 
-    class MyAdapter extends FragmentPagerAdapter {
+    class MyAdapter extends FragmentStatePagerAdapter {
         public MyAdapter(FragmentManager fm) {
             super(fm);
         }
@@ -125,14 +134,35 @@ public class HomeFragmentScene extends Fragment implements HomeFragment.HomeData
         public int getCount() {
             return listFragment.size();
         }
-
-
-        @Override
+                @Override
         public CharSequence getPageTitle(int position) {
             return listTable.get(position);
         }
+//        public MyAdapter(FragmentManager fm) {
+//            super(fm);
+//        }
+//
+//        @Override
+//        public Fragment getItem(int position) {
+//            return listFragment.get(position);
+//        }
+//
+//        @Override
+//        public int getCount() {
+//            return listFragment.size();
+//        }
+//
+//        @Override
+//        public void destroyItem(ViewGroup container, int position, Object object) {
+////            super.destroyItem(container, position, object);
+//            container.removeView(listFragment.get(position));
+//        }
+//
+//        @Override
+//        public CharSequence getPageTitle(int position) {
+//            return listTable.get(position);
+//        }
         }
-
 
     //homeFragmentDevicePager的数据传递
     public interface SceneData{

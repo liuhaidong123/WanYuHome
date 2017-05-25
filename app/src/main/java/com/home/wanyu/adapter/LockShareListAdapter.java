@@ -9,8 +9,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.home.wanyu.Ip.Ip;
 import com.home.wanyu.R;
+import com.home.wanyu.bean.Bean_FamilyUserS;
 import com.home.wanyu.myview.RoundImageView;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,15 +28,13 @@ import butterknife.ButterKnife;
  */
 
 public class LockShareListAdapter extends BaseAdapter{
-    private int current;
     private Context context;
-    private List<Map<String,String>> list;
-    private String[]pro={"租户","游客","弟弟","妹妹","哥哥","姐姐"};
-    private String[] name={"LIM","ZY","刘文","刘一"};
-    private int[] ResId={R.mipmap.it1,R.mipmap.it2,R.mipmap.it3};
-    public LockShareListAdapter(Context context){
+    List<Bean_FamilyUserS.PersonalListBean> list;
+    SelectCurrent se;
+    public LockShareListAdapter(Context context,List<Bean_FamilyUserS.PersonalListBean> list,SelectCurrent se){
         this.context=context;
-            init();
+        this.list=list;
+        this.se=se;
     }
     @Override
     public int getCount() {
@@ -61,13 +62,14 @@ public class LockShareListAdapter extends BaseAdapter{
         else {
             hodler= (ViewHodler) convertView.getTag();
         }
-        hodler.lockshare_list_item_text.setText(list.get(position).get("name"));
-        hodler.lockshare_list_item_text_pro.setText(list.get(position).get("pro"));
-        hodler.lockshare_list_item_image.setImageResource(Integer.parseInt(list.get(position).get("url")));
-        if ("1".equals(list.get(position).get("select"))){
+        hodler.lockshare_list_item_text.setText(list.get(position).getUserName());
+        hodler.lockshare_list_item_text_pro.setText(list.get(position).getComment());
+        Picasso.with(context).load(Ip.imagePath+list.get(position).getAvatar()).error(R.mipmap.errorphoto).into(hodler.lockshare_list_item_image);
+
+        if (list.get(position).isSele()){
             hodler.locklayout.setSelected(true);
         }
-        else if ("0".equals(list.get(position).get("select"))){
+        else {
             hodler.locklayout.setSelected(false);
         }
 //        current=position;
@@ -76,7 +78,7 @@ public class LockShareListAdapter extends BaseAdapter{
             @Override
             public void onClick(View v) {
                 int pos= (int) v.getTag();
-                Toast.makeText(context,"--"+pos,Toast.LENGTH_SHORT).show();
+                se.sele(pos);
                 setSelect(pos);
                 notifyDataSetChanged();
             }
@@ -93,32 +95,13 @@ public class LockShareListAdapter extends BaseAdapter{
         @BindView(R.id.locklayout)RelativeLayout locklayout;
     }
 
-    public void init(){
-        list=new ArrayList<>();
-        for (int i=0;i<7;i++){
-            Map<String,String>mp=new HashMap<>();
-            mp.put("url",ResId[i%ResId.length]+"");
-            mp.put("pro",pro[i%pro.length]);
-            mp.put("name",name[i%name.length]);
-            mp.put("select","0");
-            list.add(mp);
-        }
-    }
     public void setSelect(int pos){
         for (int i=0;i<list.size();i++){
-            if (i==pos){
-              if (list.get(i).get("select")=="0"){
-                  list.get(i).put("select","1");
-              }
-                else {
-                  list.get(i).put("select","0");
-              }
-            }
-            else {
-                list.get(i).put("select","0");
-            }
-
+            list.get(i).setSele(false);
         }
-
+        list.get(pos).setSele(true);
+    }
+    public interface SelectCurrent{
+        void sele(int pos);
     }
 }

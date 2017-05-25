@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 
 import com.home.wanyu.Ip.okhttpTools;
 import com.home.wanyu.R;
+import com.home.wanyu.myview.RoundImageView;
 
 import butterknife.Unbinder;
 
@@ -26,6 +28,9 @@ import butterknife.Unbinder;
  */
 
 public  abstract  class MyActivity extends Activity {
+    private TextView emptyView_textview;//空白页的textview
+    private RoundImageView emptyView_image;//空白页的imageview
+
     protected String TAG=getClass().getSimpleName();
     protected okhttpTools mTools;
     protected Context con=this;
@@ -207,7 +212,28 @@ public  abstract  class MyActivity extends Activity {
             }
         });
     }
-
+    //查询不到数据时显示到view（可以设置页面的图片以及问题,智能使用默认的layout布局）
+    public void initEmptyViewSetting(String text,int imageResId){
+        emptyView=LayoutInflater.from(this).inflate(R.layout.emptyview,null);
+        emptyView_textview= (TextView) emptyView.findViewById(R.id.emptyView_textview);
+        emptyView_image= (RoundImageView) emptyView.findViewById(R.id.emptyView_image);
+        emptyView_textview.setText(text);
+        emptyView_image.setImageResource(imageResId);
+        ViewGroup.LayoutParams params=new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        emptyView.setLayoutParams(params);
+//        emptyView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (isLoading){
+//                    return;
+//                }
+//                else {
+//                    isLoading=true;//当前正在请求数据,再次点击时不再继续向服务器发送请求数据的申请
+////                    getSerVerData();
+//                }
+//            }
+//        });
+    }
     //初始化错误的view
     public void initErrorView(int resId){
         errorView=LayoutInflater.from(this).inflate(resId,null);
@@ -303,4 +329,6 @@ public  abstract  class MyActivity extends Activity {
             unbinder.unbind();
         }
     }
+
+
 }

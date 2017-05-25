@@ -9,8 +9,10 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.home.wanyu.Ip.Ip;
 import com.home.wanyu.R;
 import com.home.wanyu.lzhUtils.WindowUtils;
+import com.squareup.picasso.Picasso;
 
 /**
  * Created by wanyu on 2017/5/16.
@@ -19,14 +21,14 @@ import com.home.wanyu.lzhUtils.WindowUtils;
 public class MyCircleContactAdapterGridAdapter extends BaseAdapter{
     private Context context;
     private int cout;//图片个数
-    private int[] resId={R.mipmap.ph1,R.mipmap.ph2,R.mipmap.ph3,R.mipmap.ph4,R.mipmap.ph5};
-    public MyCircleContactAdapterGridAdapter(int count,Context context){
-        this.cout=count;
+    String[]res;
+    public MyCircleContactAdapterGridAdapter(String[]res,Context context){
+       this.res=res;
         this.context=context;
     }
     @Override
     public int getCount() {
-        return cout;
+        return res==null?0:res.length;
     }
 
     @Override
@@ -51,7 +53,7 @@ public class MyCircleContactAdapterGridAdapter extends BaseAdapter{
         else {
             hodler= (ViewHodler) convertView.getTag();
         }
-        hodler.grid_image_a.setImageResource(resId[position%resId.length]);
+        Picasso.with(context).load(Ip.imagePath+res[position]).error(R.mipmap.errorphoto).into(hodler.grid_image_a);
         int width= WindowUtils.getWinowWidth(context)/5;
         ViewGroup.LayoutParams params= hodler.grid_image_a.getLayoutParams();
         params.width=width;

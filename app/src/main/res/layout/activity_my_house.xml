@@ -4,102 +4,149 @@
     android:id="@+id/activity_my_house"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="10dp"
     android:orientation="vertical"
-    android:paddingRight="10dp"
     android:background="@color/homefragmentFgColor"
     tools:context="com.home.wanyu.activity.MyHouseActivity">
     <RelativeLayout
-    android:paddingLeft="15dp"
-    android:paddingRight="15dp"
-    android:id="@+id/my_house_layout_Housemsg"
-    android:layout_marginTop="10dp"
-    android:background="@drawable/banck"
-    android:layout_width="match_parent"
-    android:layout_height="70dp">
-    <ImageView
-        android:id="@+id/img1"
-        android:layout_centerVertical="true"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:src="@mipmap/house"/>
-    <TextView
-        android:layout_marginLeft="10dp"
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@+id/img1"
-        android:text="我的房屋信息"
-        android:textSize="@dimen/textSize15"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/titlecolor3"/>
-    <ImageView
-        android:layout_alignParentRight="true"
-        android:src="@mipmap/more5"
-        android:layout_centerVertical="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-</RelativeLayout>
-
-    <RelativeLayout
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:id="@+id/my_house_layout_familyImage"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/banck"
+        android:layout_marginTop="1dp"
+        android:id="@+id/activity_my_house_rela_select"
+        android:background="@color/white"
         android:layout_width="match_parent"
-        android:layout_height="70dp">
-        <ImageView
-            android:id="@+id/img2"
-            android:layout_centerVertical="true"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@mipmap/house"/>
-        <TextView
-            android:layout_marginLeft="10dp"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/img2"
-            android:text="我的家人管理"
-            android:textSize="@dimen/textSize15"
+        android:layout_height="40dp">
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/titlecolor3"/>
-        <ImageView
-            android:layout_alignParentRight="true"
-            android:src="@mipmap/more5"
-            android:layout_centerVertical="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_centerInParent="true">
+            <TextView
+                android:id="@+id/activity_my_house_rela_select_name"
+                android:layout_gravity="center_vertical"
+                android:textSize="14sp"
+                android:textColor="@color/titlecolor3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="我创建的家"/>
+            <ImageView
+                android:id="@+id/more"
+                android:layout_marginLeft="5dp"
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/amore"/>
+        </LinearLayout>
+
     </RelativeLayout>
-
-
-    <RelativeLayout
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:id="@+id/my_house_layout_Device"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/banck"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp">
-        <ImageView
-            android:id="@+id/img3"
-            android:layout_centerVertical="true"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@mipmap/house"/>
-        <TextView
-            android:layout_marginLeft="10dp"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/img3"
-            android:text="我的设备管理"
-            android:textSize="@dimen/textSize15"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/titlecolor3"/>
-        <ImageView
-            android:layout_alignParentRight="true"
-            android:src="@mipmap/more5"
-            android:layout_centerVertical="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </RelativeLayout>
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:id="@+id/activity_my_house_bottom"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+            <RelativeLayout
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:id="@+id/my_house_layout_Housemsg"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/banck"
+                android:layout_width="match_parent"
+                android:layout_height="70dp">
+                <ImageView
+                    android:id="@+id/img1"
+                    android:layout_centerVertical="true"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@mipmap/house"/>
+                <TextView
+                    android:layout_marginLeft="10dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/img1"
+                    android:text="我的房屋信息"
+                    android:textSize="@dimen/textSize15"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/titlecolor3"/>
+                <ImageView
+                    android:layout_alignParentRight="true"
+                    android:src="@mipmap/more5"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:id="@+id/my_house_layout_familyImage"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/banck"
+                android:layout_width="match_parent"
+                android:layout_height="70dp">
+                <ImageView
+                    android:id="@+id/img2"
+                    android:layout_centerVertical="true"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@mipmap/house"/>
+                <TextView
+                    android:layout_marginLeft="10dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/img2"
+                    android:text="我的家人管理"
+                    android:textSize="@dimen/textSize15"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/titlecolor3"/>
+                <ImageView
+                    android:layout_alignParentRight="true"
+                    android:src="@mipmap/more5"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:id="@+id/my_house_layout_Device"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/banck"
+                android:layout_width="match_parent"
+                android:layout_height="70dp">
+                <ImageView
+                    android:id="@+id/img3"
+                    android:layout_centerVertical="true"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@mipmap/house"/>
+                <TextView
+                    android:layout_marginLeft="10dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/img3"
+                    android:text="我的设备管理"
+                    android:textSize="@dimen/textSize15"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/titlecolor3"/>
+                <ImageView
+                    android:layout_alignParentRight="true"
+                    android:src="@mipmap/more5"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+        </LinearLayout>
+        <RelativeLayout
+            android:background="@drawable/layou"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/rela">
+        </RelativeLayout>
+    </FrameLayout>
+
+
 </LinearLayout>

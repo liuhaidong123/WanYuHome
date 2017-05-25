@@ -38,23 +38,27 @@ public class MyHouseFamilyManagerActivity extends MyActivity {
             super.handleMessage(msg);
             switch (msg.what){
                 case 0:
+                    ShowErrorView(DEFAULTRESID);
                     mToast.ToastFaild(con, ToastType.FAILD);
                     break;
                 case 1:
+                    int def=1;
                     try{
                         Bean_FamilyUserS userS= mGson.gson.fromJson(mTools.mResponStr,Bean_FamilyUserS.class);
                         if (userS!=null){
                             if ("0".equals(userS.getCode())){
                                 userS.getPersonalList();
                                 if (userS.getPersonalList()!=null&&userS.getPersonalList().size()>0){
+                                    ShowChildView(DEFAULTRESID);
+                                    def=0;
                                     list.clear();
                                     list.addAll(userS.getPersonalList());
                                     adapter.notifyDataSetChanged();
                                 }
                             }
                             else {
-                                mToast.Toast(con,userS.getMessage());
-                            }
+                                    mToast.Toast(con,userS.getMessage());
+                                }
                         }
                         else {
                             mToast.ToastFaild(con,ToastType.GSONEMPTY);
@@ -63,6 +67,9 @@ public class MyHouseFamilyManagerActivity extends MyActivity {
                     catch (Exception e){
                         e.printStackTrace();
                         mToast.ToastFaild(con,ToastType.GSONFAILD);
+                    }
+                    if (def==1){
+                        ShowEmptyView(DEFAULTRESID);
                     }
                     break;
             }
@@ -73,8 +80,8 @@ public class MyHouseFamilyManagerActivity extends MyActivity {
         super.onCreate(savedInstanceState);
         initTitleView(R.layout.myhousefamilymanager_title);
         initChildView(R.layout.activity_my_house_family_manager);
-        ShowChildView(DEFAULTRESID);
         unbinder= ButterKnife.bind(this,ChildView);
+        initEmptyViewSetting("您还没有添加家人哦！\n去添加吧",R.mipmap.nofamily);
         initData();
         mTools=new okhttpTools();
     }
@@ -82,6 +89,7 @@ public class MyHouseFamilyManagerActivity extends MyActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        ShowLoadView(DEFAULTRESID);
         getSerVerData();
     }
 

@@ -175,9 +175,9 @@
         <item>lim的卧室</item>
     </string-array>
     <string-array name="addressStr">
-        <item>访客</item>
         <item>业主</item>
-        <item>租户</item>
+        <item>租客</item>
+        <item>访客</item>
     </string-array>
     <string name="title_activity_home_device_add_wifi">HomeDeviceAddWifiActivity</string>
     <string name="homedeviceAddWifiErrorStr">可能出现的问题：\nwifi密码是否正确?\n您的网络是否可用?\n设备是否已经打开?\n联系我们：\n邮箱：wangyukeji</string>
@@ -217,4 +217,12 @@
         <item>朋友</item>
         <item>自定义</item>
     </string-array>
+    <string name="inputType">0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.!$_</string>
+    <string name="my_settings_aboutOurs_msg">宇家app是以家庭住宅为平台，利用物联网为您和家人提供家电控制、窗帘控制、智能照明、安全管理等服务。\n无论您身在何处，都可以随时操控家中等智能设备，亦可以
+    根据您的喜好和生活习惯智能调节。离家、回家、休闲、娱乐等多种情景模式一键切换，为您打造舒适、便捷、安全、节能、环保的智能化生活环境</string>
+    <string name="versionName">宇家1.0</string>
+    <string name="my_settings_aboutOurs_versionCode">当前版本号：1.0(wanyu2017)</string>
+    <string name="title_activity_my_contact_us">MyContactUs</string>
+    <string name="infor">我已确认阅并同意《使用条款与隐私协议》</string>
+    <string name="nodevice">还没有添加设备哦！\n去添加吧</string>
 </resources>

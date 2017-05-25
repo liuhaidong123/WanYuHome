@@ -30,14 +30,14 @@
             android:textColor="@color/select"
             android:textSize="15sp"
             android:layout_centerVertical="true"
-            android:paddingTop="10dp"
-            android:padding="10dp"
+           android:paddingTop="10dp"
+            android:paddingBottom="10dp"
             android:onClick="Submit"
             android:text="提交审核"
             android:layout_alignParentRight="true"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
-            android:id="@+id/my_user_info_submmit"
+            android:id="@+id/my_user_info_submmit_t"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
     </RelativeLayout>

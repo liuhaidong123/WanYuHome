@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_my_setting_change_psd_1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/homefragmentFgColor"
+    tools:context="com.home.wanyu.activity.MySettingChangePsdActivity">
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:paddingBottom="20dp"
+        android:paddingTop="20dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:textSize="14sp"
+                android:text="填写旧密码"
+                android:textColor="#666666"/>
+
+            <EditText
+                android:inputType="textPassword"
+                android:digits="@string/inputType"
+                android:maxLength="11"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/edit_white_dinkwhite"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:id="@+id/activity_my_setting_change_Edit_phone_1"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:textSize="14sp"
+                android:text="填写新密码"
+                android:textColor="#666666"/>
+            <EditText
+                android:maxLength="15"
+                android:inputType="textPassword"
+                android:digits="@string/inputType"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/edit_white_dinkwhite"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:id="@+id/activity_my_setting_change_Edit_psd_1"/>
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:textSize="14sp"
+                android:text="重复新密码"
+                android:textColor="#666666"/>
+            <EditText
+                android:maxLength="15"
+                android:inputType="textPassword"
+                android:digits="@string/inputType"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/edit_white_dinkwhite"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:id="@+id/activity_my_setting_change_Edit_psd_more_1"/>
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

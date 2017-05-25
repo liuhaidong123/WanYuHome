@@ -128,10 +128,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scrollbars="none"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:dividerHeight="1dp"
-                    android:divider="#e9e9e9"
+                    android:divider="@null"
                     android:background="@color/white"
                     android:id="@+id/home_senceAdd_listview">
                 </com.home.wanyu.myview.MyListView>
@@ -142,10 +139,10 @@
                     android:background="@color/white"
                     android:layout_width="match_parent"
                     android:layout_height="50dp">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="#e9e9e9"/>
+                    <!--<TextView-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="1dp"-->
+                        <!--android:background="#e9e9e9"/>-->
 
                     <RelativeLayout
                         android:id="@+id/activity_homeSceneSetting_rela_sence_add"

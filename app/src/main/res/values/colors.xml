@@ -101,4 +101,10 @@
     <color name="switchTextColor">#fefffe</color>
     <color name="switchFalseColor">#b1b7b1</color>
     <color name="switchTrueColor">#00bfff</color>
+    <color name="al">#00000000</color>
+    <color name="al2">#79e4e7e4</color>
+    <color name="loginregiter_unselect">#9ae8e8</color>
+    <color name="loginregiter_select">#4dbfcd</color>
+    <color name="login_start">#38d5d5</color>
+    <color name="login_end">#1ab3e3</color>
 </resources>

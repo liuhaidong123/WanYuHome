@@ -20,11 +20,21 @@ public class Bean_FamilyUserS {
     /**
      * result : success
      * code : 0
-     * personalList : [{"qq":"123456","gender":1,"idCard":"123456","telephone":13717883005,"avatar":"","userMame":"lipengwei","familyId":1,"trueName":"李朋伟","weixin":"123456","id":1,"userType":0,"email":"123456@123.com","authentication":0},{"qq":"","gender":0,"idCard":"","telephone":18782931356,"avatar":"","userMame":"123","familyId":1,"trueName":"13","weixin":"","id":10,"userType":1,"email":"","authentication":0},{"qq":"","gender":0,"idCard":"","telephone":18335277251,"avatar":"","userMame":"liuhaidong","familyId":1,"trueName":"刘海懂","weixin":"","id":11,"userType":2,"email":"","authentication":0}]
+     * personalList : [{"gender":2,"idCard":"","myFamilyId":4,"trueName":"刘海懂","id":11,"email":"","authentication":0,"qq":"","telephone":18335277251,"avatar":"/static/image/2017517/33fcf14c9abf477bb8bb36d06c37773e.jpg","userName":"刘海","familyId":1,"weixin":"","comment":"18335277251","userType":0,"familyPersonalId":11}]
      */
     private String message;
     private String result;
     private String code;
+
+    public boolean isSele() {
+        return Sele;
+    }
+
+    public void setSele(boolean sele) {
+        Sele = sele;
+    }
+
+    private boolean Sele;
     private List<PersonalListBean> personalList;
 
     public String getResult() {
@@ -52,43 +62,49 @@ public class Bean_FamilyUserS {
     }
 
     public static class PersonalListBean implements Serializable{
-        /**
-         * qq : 123456
-         * gender : 1
-         * idCard : 123456
-         * telephone : 13717883005
-         * avatar :
-         * userMame : lipengwei
-         * familyId : 1
-         * trueName : 李朋伟
-         * weixin : 123456
-         * id : 1
-         * userType : 0
-         * email : 123456@123.com
-         * authentication : 0
-         */
+        public boolean isSele() {
+            return sele;
+        }
 
-        private String qq;
+        public void setSele(boolean sele) {
+            this.sele = sele;
+        }
+
+        /**
+         * gender : 2
+         * idCard :
+         * myFamilyId : 4
+         * trueName : 刘海懂
+         * id : 11
+         * email :
+         * authentication : 0
+         * qq :
+         * telephone : 18335277251
+         * avatar : /static/image/2017517/33fcf14c9abf477bb8bb36d06c37773e.jpg
+         * userName : 刘海
+         * familyId : 1
+         * weixin :
+         * comment : 18335277251
+         * userType : 0
+         * familyPersonalId : 11
+         */
+        private boolean sele;
         private int gender;
         private String idCard;
-        private long telephone;
-        private String avatar;
-        private String userMame;
-        private int familyId;
+        private int myFamilyId;
         private String trueName;
-        private String weixin;
         private int id;
-        private int userType;
         private String email;
         private int authentication;
-
-        public String getQq() {
-            return qq;
-        }
-
-        public void setQq(String qq) {
-            this.qq = qq;
-        }
+        private String qq;
+        private long telephone;
+        private String avatar;
+        private String userName;
+        private int familyId;
+        private String weixin;
+        private String comment;
+        private int userType;
+        private int familyPersonalId;
 
         public int getGender() {
             return gender;
@@ -104,6 +120,54 @@ public class Bean_FamilyUserS {
 
         public void setIdCard(String idCard) {
             this.idCard = idCard;
+        }
+
+        public int getMyFamilyId() {
+            return myFamilyId;
+        }
+
+        public void setMyFamilyId(int myFamilyId) {
+            this.myFamilyId = myFamilyId;
+        }
+
+        public String getTrueName() {
+            return trueName;
+        }
+
+        public void setTrueName(String trueName) {
+            this.trueName = trueName;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public String getEmail() {
+            return email;
+        }
+
+        public void setEmail(String email) {
+            this.email = email;
+        }
+
+        public int getAuthentication() {
+            return authentication;
+        }
+
+        public void setAuthentication(int authentication) {
+            this.authentication = authentication;
+        }
+
+        public String getQq() {
+            return qq;
+        }
+
+        public void setQq(String qq) {
+            this.qq = qq;
         }
 
         public long getTelephone() {
@@ -122,12 +186,12 @@ public class Bean_FamilyUserS {
             this.avatar = avatar;
         }
 
-        public String getUserMame() {
-            return userMame;
+        public String getUserName() {
+            return userName;
         }
 
-        public void setUserMame(String userMame) {
-            this.userMame = userMame;
+        public void setUserName(String userName) {
+            this.userName = userName;
         }
 
         public int getFamilyId() {
@@ -138,14 +202,6 @@ public class Bean_FamilyUserS {
             this.familyId = familyId;
         }
 
-        public String getTrueName() {
-            return trueName;
-        }
-
-        public void setTrueName(String trueName) {
-            this.trueName = trueName;
-        }
-
         public String getWeixin() {
             return weixin;
         }
@@ -154,12 +210,12 @@ public class Bean_FamilyUserS {
             this.weixin = weixin;
         }
 
-        public int getId() {
-            return id;
+        public String getComment() {
+            return comment;
         }
 
-        public void setId(int id) {
-            this.id = id;
+        public void setComment(String comment) {
+            this.comment = comment;
         }
 
         public int getUserType() {
@@ -170,20 +226,12 @@ public class Bean_FamilyUserS {
             this.userType = userType;
         }
 
-        public String getEmail() {
-            return email;
+        public int getFamilyPersonalId() {
+            return familyPersonalId;
         }
 
-        public void setEmail(String email) {
-            this.email = email;
-        }
-
-        public int getAuthentication() {
-            return authentication;
-        }
-
-        public void setAuthentication(int authentication) {
-            this.authentication = authentication;
+        public void setFamilyPersonalId(int familyPersonalId) {
+            this.familyPersonalId = familyPersonalId;
         }
     }
 }

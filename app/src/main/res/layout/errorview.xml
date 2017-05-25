@@ -1,15 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:background="#abb1ab"
+    android:background="@color/homefragmentFgColor"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-<TextView
-    android:id="@+id/errorViewText"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="我是错误的view"
-    android:textColor="#f70410"
-    android:textSize="18sp"
-    android:layout_centerInParent="true"/>
+    <ImageView
+        android:id="@+id/error_image"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="125dp"
+        android:src="@mipmap/nonetwork"
+        android:scaleType="fitCenter"
+        android:layout_width="160dp"
+        android:layout_height="160dp" />
+    <TextView
+        android:layout_below="@+id/error_image"
+        android:textColor="@color/colorc"
+        android:textSize="@dimen/textSize13"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:text="网络异常\n请检查您的网络是否连接"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/emptyView_textview"/>
 </RelativeLayout>

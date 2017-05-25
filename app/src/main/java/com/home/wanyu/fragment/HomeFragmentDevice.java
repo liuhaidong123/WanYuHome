@@ -6,6 +6,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,11 +61,11 @@ private Unbinder unbinder;
                 fragment_home_device_tablayout.addTab(fragment_home_device_tablayout.newTab().setText(listTable.get(i)));
             }
         }
-
             adapter=new MyAdapter(getChildFragmentManager());
             fragment_home_device_viewpager.setAdapter(adapter);
             fragment_home_device_tablayout.setupWithViewPager(fragment_home_device_viewpager,true);
             listFragment.get(0).setSceneName(listTable.get(0),0);
+
             fragment_home_device_tablayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -93,7 +94,7 @@ private Unbinder unbinder;
 
 
 
-    class MyAdapter extends FragmentPagerAdapter {
+    class MyAdapter extends FragmentStatePagerAdapter {
 
         public MyAdapter(FragmentManager fm) {
             super(fm);
