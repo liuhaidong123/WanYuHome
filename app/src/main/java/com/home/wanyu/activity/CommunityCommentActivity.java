@@ -260,6 +260,14 @@ public class CommunityCommentActivity extends AppCompatActivity implements View.
         }
         //点赞GridView
         mLikeGridView = (MyGridView) findViewById(R.id.community_like_gridview);
+        mLikeGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent=new Intent(CommunityCommentActivity.this,OtherPersonInfoActivity.class);
+                intent.putExtra("id",mLikeList.get(position).getPersonalId()+"");
+                startActivity(intent);
+            }
+        });
         //加入GridView
         mJoinGridView = (MyGridView) findViewById(R.id.community_join_gridview);
         //添加图片GridView

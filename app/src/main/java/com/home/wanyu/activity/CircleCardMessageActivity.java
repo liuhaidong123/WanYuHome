@@ -1,5 +1,6 @@
 package com.home.wanyu.activity;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
@@ -190,6 +191,9 @@ public class CircleCardMessageActivity extends AppCompatActivity implements View
         mGridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent=new Intent(CircleCardMessageActivity.this,OtherPersonInfoActivity.class);
+                intent.putExtra("id",mLikeList.get(position).getPersonalId()+"");
+                startActivity(intent);
 
             }
         });

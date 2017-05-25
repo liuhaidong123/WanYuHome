@@ -25,7 +25,6 @@
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -66,7 +65,6 @@
         <activity android:name=".activity.LifeMoneyActivity2" />
         <activity android:name=".activity.MoneyNumActivity" />
         <activity android:name=".activity.MoneyInputSureActivity" />
-        <activity android:name=".activity.HomeSenceAddSenceActivity" />
         <activity android:name=".activity.TestActivity" />
         <activity android:name=".activity.CircleMessageActivity" />
         <activity android:name=".activity.CirclePostActivity" />
@@ -81,9 +79,6 @@
         <activity android:name=".activity.CarPoolingPostActivity" />
         <activity android:name=".activity.CarPoolingMsgActivity" />
         <activity android:name=".activity.CarPoolingCommentActivity"></activity>
-        <activity android:name=".activity.MoneyInputSureActivity" />
-        <!-- <activity android:name=".activity.HomeSenceAddSenceActivity" /> -->
-        <activity android:name=".activity.TestActivity" />
         <activity android:name=".activity.DeviceSettingLightActivity" />
         <activity android:name=".activity.DeviceSettingSwitchActivity" />
         <activity android:name=".activity.DeviceSettingCurtainActivity" />
@@ -101,7 +96,6 @@
         <activity android:name=".activity.MyHouseFamilyAddActivity" />
         <activity android:name=".activity.MyHouseFamilyEditor" />
         <activity android:name=".activity.MyCircleContactActivity" />
-<<<<<<< HEAD
         <activity android:name=".activity.ExpressActivity" />
         <activity android:name=".activity.CommercialActivity" />
         <activity android:name=".activity.CommercialSearchAddressActivity" />
@@ -115,21 +109,6 @@
         <activity android:name=".activity.HousePostCardActivity"
             android:windowSoftInputMode="stateHidden"
             ></activity>
-=======
-        <activity android:name=".activity.MySettingActivity" />
-        <activity android:name=".activity.MySettingChangePhoneActivity" />
-        <activity android:name=".activity.MyAboutUsActivity" />
-        <activity android:name=".activity.OtherPersonInfoActivity" />
-        <activity
-            android:name=".activity.MyContactUs"
-            android:label="@string/title_activity_my_contact_us"
-            android:theme="@style/AppTheme" />
-        <activity android:name=".activity.MySettingChangePsdActivity" />
-        <activity android:name=".activity.LoginAndRegisterActivity" />
-        <activity android:name=".activity.DeviceSettingLockRecordActivity" />
-        <activity android:name=".activity.DeviceSettingLockChangePSDActivity"></activity>
->>>>>>> ce7571fc552996c36129ac267470b52a63a16c43
-        <activity android:name=".activity.MyCircleContactActivity" />
         <activity android:name=".activity.MySettingActivity" />
         <activity android:name=".activity.MySettingChangePhoneActivity" />
         <activity android:name=".activity.MyAboutUsActivity" />
