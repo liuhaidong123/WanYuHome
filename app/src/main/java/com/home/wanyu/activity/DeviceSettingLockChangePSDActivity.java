@@ -114,7 +114,6 @@ public class DeviceSettingLockChangePSDActivity extends MyActivity {
                     public void onFailure(Request request, IOException e) {
                         handler.sendEmptyMessage(0);
                     }
-
                     @Override
                     public void onResponse(Response response) throws IOException {
                         resStr=response.body().string();
