@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_house_look_message"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    tools:context="com.home.wanyu.activity.HouseLookMessageActivity">
+    <RelativeLayout
+        android:id="@+id/add_address_title"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/house_look_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingLeft="10dp"
+            android:paddingRight="20dp"
+            android:src="@mipmap/property_back" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:gravity="center"
+            android:text="@string/look_msg"
+            android:textColor="@color/title_color"
+            android:textSize="17sp" />
+    </RelativeLayout>
+
+
+    <ScrollView
+        android:id="@+id/look_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/look_house_btn"
+        android:layout_below="@+id/add_address_title"
+        android:scrollbars="none">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/look_msg_viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="273dp">
+
+            </android.support.v4.view.ViewPager>
+
+            <TextView
+                android:id="@+id/img_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/look_msg_viewpager"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="-30dp"
+                android:text=""
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+            <RelativeLayout
+                android:id="@+id/look_title_rl"
+                android:layout_width="match_parent"
+                android:layout_height="58dp"
+                android:layout_below="@id/look_msg_viewpager"
+                android:background="@color/white">
+
+                <RelativeLayout
+                    android:id="@+id/look_title_msg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp">
+
+                    <TextView
+                        android:id="@+id/look_area_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="涿州名流一品"
+                        android:textColor="@color/titlecolor3"
+                        android:textSize="17sp" />
+
+                    <TextView
+                        android:id="@+id/look_area_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/look_area_name"
+                        android:layout_marginTop="12dp"
+                        android:text="发布：1天前"
+                        android:textColor="@color/color9"
+                        android:textSize="12sp" />
+                </RelativeLayout>
+
+
+            </RelativeLayout>
+
+
+            <LinearLayout
+                android:id="@+id/look_three_ll"
+                android:layout_width="match_parent"
+                android:layout_height="69dp"
+                android:layout_below="@id/look_title_rl"
+                android:layout_marginTop="1dp"
+                android:background="@color/white"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/look_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/look_price"
+                        android:textColor="@color/titlecolor3"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/look_price_msg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="1000元/月"
+                        android:textColor="@color/bg_rect"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/bg_color" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/look_type"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/look_type"
+                        android:textColor="@color/titlecolor3"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/look_type_msg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="1室1厅1卫"
+                        android:textColor="@color/bg_rect"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/bg_color" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/look_m"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/look_m"
+                        android:textColor="@color/titlecolor3"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/look_m_msg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="40.0㎡"
+                        android:textColor="@color/bg_rect"
+                        android:textSize="15sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/look_ceng_rl"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_below="@id/look_three_ll"
+                android:layout_marginTop="1dp"
+                android:background="@color/white">
+
+                <TextView
+                    android:id="@+id/looh_ceng"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:paddingLeft="10dp"
+                    android:text="@string/look_ceng"
+                    android:textColor="@color/color9"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/looh_ceng_msg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/looh_ceng"
+                    android:text="3层/共6层"
+                    android:textColor="@color/titlecolor3"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/looh_direction"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="63dp"
+                    android:layout_toRightOf="@id/looh_ceng_msg"
+                    android:text="@string/look_direction"
+                    android:textColor="@color/color9"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/looh_direction_msg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/looh_direction"
+                    android:text="南北"
+                    android:textColor="@color/titlecolor3"
+                    android:textSize="15sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/look_configure"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/look_ceng_rl"
+                android:layout_marginTop="1dp"
+                android:background="@color/white">
+
+                <TextView
+                    android:id="@+id/look_configure_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/look_configure"
+                    android:textSize="15sp" />
+
+                <com.home.wanyu.myview.MyGridView
+                    android:id="@+id/look_configure_gridview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/look_configure_tv"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="13dp"
+                    android:numColumns="4"
+                    android:scrollbars="none"
+                    android:verticalSpacing="10dp">
+
+                </com.home.wanyu.myview.MyGridView>
+            </RelativeLayout>
+
+        </RelativeLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@id/look_house_btn"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/repair_submit_bg"
+        android:text="@string/look_house_btn"
+        android:textColor="@color/white" />
+</RelativeLayout>

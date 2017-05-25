@@ -146,6 +146,9 @@ public class RepairActivity extends AppCompatActivity implements View.OnClickLis
                         mRecordMsgList.addAll(list);
                         mRecordListviewAda.setList(mRecordMsgList);
                         mRecordListviewAda.notifyDataSetChanged();
+//                        if (root.getResult().size() <10) {
+//                            Toast.makeText(RepairActivity.this, "亲，到底了", Toast.LENGTH_SHORT).show();
+//                        }
                     } else if (moreFlag==1){//下拉刷新
                         mRecord_refresh.setRefreshing(false);
                         mRecordMsgList = root.getResult();
@@ -158,9 +161,7 @@ public class RepairActivity extends AppCompatActivity implements View.OnClickLis
                         mRecordListviewAda.notifyDataSetChanged();
                     }
 
-                    if (root.getResult().size() == 0) {
-                        Toast.makeText(RepairActivity.this, "您还没有记录数据", Toast.LENGTH_SHORT).show();
-                    }
+
 
                     if (root.getResult().size() < 10) {
                         mMore_rl.setVisibility(View.GONE);

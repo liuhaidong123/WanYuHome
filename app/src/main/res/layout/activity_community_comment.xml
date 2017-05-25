@@ -40,7 +40,8 @@
             android:paddingRight="10dp"
             android:text="删除"
             android:textColor="@color/title_color"
-            android:textSize="17sp" />
+            android:textSize="17sp"
+            android:visibility="gone" />
 
     </RelativeLayout>
 
@@ -294,6 +295,8 @@
                         android:layout_below="@id/blue_like"
                         android:layout_marginLeft="5dp"
                         android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginRight="5dp"
                         android:layout_toRightOf="@id/blue_like"
                         android:horizontalSpacing="5dp"
                         android:numColumns="7"
@@ -332,6 +335,8 @@
                         android:layout_below="@id/blue_join"
                         android:layout_marginLeft="5dp"
                         android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginRight="5dp"
                         android:layout_toRightOf="@id/blue_join"
                         android:horizontalSpacing="5dp"
                         android:numColumns="7"
@@ -363,53 +368,21 @@
 
                         />
 
-                    <com.home.wanyu.myview.MyExpandableListview
+                    <com.home.wanyu.myview.MyListView
                         android:id="@+id/community_commend_listview"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_below="@id/blue_comment"
+                        android:layout_marginBottom="5dp"
                         android:layout_marginLeft="5dp"
                         android:layout_marginTop="5dp"
                         android:layout_toRightOf="@id/blue_comment"
+                        android:divider="@color/bg_color"
+                        android:dividerHeight="5dp"
                         android:scrollbars="none">
 
-                    </com.home.wanyu.myview.MyExpandableListview>
+                    </com.home.wanyu.myview.MyListView>
 
-                    <RelativeLayout
-                        android:id="@+id/community_many_relative"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/community_commend_listview"
-                        android:layout_marginTop="5dp">
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_alignParentTop="true"
-                            android:background="@color/repair_line" />
-
-                        <TextView
-                            android:id="@+id/footer_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            android:paddingBottom="15dp"
-                            android:paddingEnd="20dp"
-                            android:paddingStart="20dp"
-                            android:paddingTop="14dp"
-                            android:text="加载更多"
-                            android:textColor="@color/title_color"
-                            android:textSize="13sp" />
-
-                        <ProgressBar
-                            android:id="@+id/pbLocate"
-                            style="?android:attr/progressBarStyleSmall"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_toEndOf="@+id/footer_tv" />
-
-                    </RelativeLayout>
 
                     <View
                         android:layout_width="match_parent"
@@ -435,14 +408,14 @@
                         android:textSize="15sp" />
 
                     <com.home.wanyu.myview.MyGridView
-                        android:id="@+id/activity_join_gridview"
+                        android:id="@+id/activity_img_gridview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/activity_tv"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginTop="5dp"
+                        android:layout_margin="10dp"
                         android:numColumns="4"
-                        android:scrollbars="none">
+                        android:scrollbars="none"
+                        android:verticalSpacing="5dp">
 
                     </com.home.wanyu.myview.MyGridView>
 
@@ -468,7 +441,10 @@
         android:layout_alignParentBottom="true"
         android:orientation="vertical">
 
-
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/repair_line" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -476,7 +452,7 @@
             android:orientation="horizontal">
 
             <LinearLayout
-                android:background="@drawable/line_bg"
+                android:id="@+id/comment_ll"
                 android:layout_width="0dp"
                 android:layout_height="38dp"
                 android:layout_weight="1"
@@ -499,8 +475,13 @@
 
             </LinearLayout>
 
+            <View
+                android:layout_width="1dp"
+                android:layout_height="38dp"
+                android:background="@color/repair_line" />
+
             <LinearLayout
-                android:background="@drawable/line_bg"
+                android:id="@+id/like_ll"
                 android:layout_width="0dp"
                 android:layout_height="38dp"
                 android:layout_weight="1"
@@ -522,8 +503,12 @@
                     android:textSize="14sp" />
             </LinearLayout>
 
+            <View
+                android:layout_width="1dp"
+                android:layout_height="38dp"
+                android:background="@color/repair_line" />
+
             <LinearLayout
-                android:background="@drawable/line_bg"
                 android:id="@+id/join_ll"
                 android:layout_width="0dp"
                 android:layout_height="38dp"
@@ -541,12 +526,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:text="加入"
+                    android:text="参加"
                     android:textColor="@color/title_color"
                     android:textSize="14sp" />
 
             </LinearLayout>
+
         </LinearLayout>
+
+
     </LinearLayout>
 
 </RelativeLayout>

@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_home_service"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    tools:context="com.home.wanyu.activity.HomeServiceActivity">
+
+    <RelativeLayout
+        android:id="@+id/order_msg_title"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/HomeService_msg_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingLeft="10dp"
+            android:paddingRight="20dp"
+            android:src="@mipmap/property_back" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:gravity="center"
+            android:text="@string/property_home_service"
+            android:textColor="@color/title_color"
+            android:textSize="17sp" />
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/HomeService_img"
+        android:layout_width="match_parent"
+        android:layout_height="168dp"
+        android:layout_below="@id/order_msg_title"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/main_background4" />
+
+    <RelativeLayout
+        android:id="@+id/HomeService_rl"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_below="@id/HomeService_img"
+        android:layout_marginTop="1dp"
+        android:background="@color/white">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp">
+
+            <TextView
+                android:id="@+id/HomeService_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="一站家政"
+                android:textColor="@color/title_color"
+                android:textSize="15sp" />
+
+            <RatingBar
+                android:id="@+id/homeService_ratingBar"
+                style="@style/Base.Widget.AppCompat.RatingBar.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/HomeService_name"
+                android:layout_marginTop="10dp"
+                android:numStars="5"
+                android:rating="1.5">
+
+
+            </RatingBar>
+
+            <TextView
+                android:id="@+id/decoration_msg_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/homeService_ratingBar"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@id/homeService_ratingBar"
+                android:text="均价:¥200元"
+                android:textColor="@color/titlecolor3" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/HomeService_address_rl"
+        android:layout_width="match_parent"
+        android:layout_height="58dp"
+        android:layout_below="@id/HomeService_rl"
+        android:layout_marginTop="1dp"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/goods_msg_address_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:src="@mipmap/commercial_address_no" />
+
+
+        <TextView
+            android:id="@+id/Homeservice_address_TV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@id/goods_msg_address_img"
+            android:text="涿州市富康街32号"
+            android:textColor="@color/titlecolor3"
+            android:textSize="15sp" />
+
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/home_serve"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_below="@id/HomeService_address_rl"
+        android:layout_marginTop="5dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:text="服务项目"
+        android:textColor="@color/titlecolor3"
+        android:textSize="15sp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/home_ask_btn"
+        android:layout_below="@id/home_serve"
+        android:layout_marginTop="1dp"
+        android:scrollbars="none">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.home.wanyu.myview.MyListView
+                android:id="@+id/homeservice_listview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="@color/bg_color"
+                android:dividerHeight="1dp"
+                android:scrollbars="none">
+
+            </com.home.wanyu.myview.MyListView>
+
+
+            <RelativeLayout
+                android:id="@+id/homeservice_more_rl"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_below="@id/homeservice_listview"
+                android:background="@color/white">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/bg_color" />
+
+                <TextView
+                    android:id="@+id/footer_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="点击查看更多"
+                    android:textColor="#333333"
+                    android:textSize="15sp" />
+
+                <ProgressBar
+                    android:id="@+id/homeservice_pbLocate"
+                    style="?android:attr/progressBarStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toEndOf="@+id/footer_tv" />
+
+
+                <ImageView
+                    android:id="@+id/homeservice_bottom_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toEndOf="@id/footer_tv"
+                    android:src="@mipmap/bottom_back" />
+            </RelativeLayout>
+        </RelativeLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@id/home_ask_btn"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:text="@string/decoration_ask"
+        android:background="@drawable/repair_submit_bg" />
+
+
+</RelativeLayout>

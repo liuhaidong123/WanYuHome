@@ -9,7 +9,7 @@
     <string name="property_commercial">小区商户</string>
     <string name="property_home_service">家政服务</string>
     <string name="property_home_message">租房信息</string>
-    <string name="property_decoration">装修</string>
+    <string name="property_decoration">装修服务</string>
     <string name="circle_title">圈子</string>
     <string name="i_will">我要报修</string>
     <string name="i_record">报修记录</string>
@@ -25,6 +25,7 @@
     <string name="add_area">小&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;区</string>
     <string name="add_name">业主姓名</string>
     <string name="add_phone">手&#160;&#160;机&#160;&#160;号</string>
+    <string name="add_person">乘坐人数</string>
     <string name="add_lou">小区楼号</string>
     <string name="add_ceng">楼&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;层</string>
     <string name="add_unit">单&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;元</string>
@@ -58,7 +59,8 @@
 
     <string name="circle_msg_title">友邻圈</string>
     <string name="circle_post_send">发送</string>
-    <string name="circle_post_type">选择分类</string>
+    <string name="circle_post_type">选择类型</string>
+    <string name="circle_post_area">选择小区</string>
     <string name="circle_post_hint">内容...</string>
     <string name="circle_post_other_area">其他小区可看</string>
     <string name="comment_hint">说点什么...</string>
@@ -91,6 +93,64 @@
     <string name="car_post_chen">乘客</string>
     <string name="car_msg_comment">评论</string>
     <string name="car_comment_send">发表</string>
+    <string name="express_shou">收快递</string>
+    <string name="express_fa">发快递</string>
+    <string name="express_prompt">提货码有效期为三天,失效后请到物业办公司处理。</string>
+
+    <string name="express_state">物流状态</string>
+    <string name="express_zi">自&#160;&#160;提&#160;&#160;柜</string>
+    <string name="express_ma">提&#160;&#160;货&#160;&#160;码</string>
+    <string name="express_from">承运来源</string>
+    <string name="express_num">运单编号</string>
+
+    <string name="change_address">切换地址</string>
+    <string name="address_hos">历史地址</string>
+    <string name="decoration_title">装修服务</string>
+    <string name="decoration_ask">立即咨询</string>
+
+    <string name="input_hint">输入小区名、户型</string>
+    <string name="search_cancle">取消</string>
+    <string name="city_hint">请输入城市名</string>
+    <string name="area_hint">请输入小区名 如:名流一品</string>
+    <string name="no_hint">未知城市或小区</string>
+    <string name="look_msg">详情</string>
+
+    <string name="look_price">租金</string>
+    <string name="look_type">户型</string>
+    <string name="look_m">面积</string>
+    <string name="look_ceng">楼层:</string>
+    <string name="look_direction">朝向:</string>
+    <string name="look_configure">房屋配置:</string>
+    <string name="look_house_btn">预约看房</string>
+    <string name="look_call_alert">您本日还有6次房源机会，联系房东将会扣除1次，确认联系房东。</string>
+    <string name="look_house_think">在考虑下</string>
+    <string name="look_house_now">马上联系</string>
+    <string name="house_post">出租</string>
+    <string name="house_rent_type">出租方式</string>
+    <string name="house_rent_type_all">整租</string>
+    <string name="house_rent_type_other">合租</string>
+
+    <string name="house_rent_area"><font color="#00bfff">*</font>区&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;域</string>
+    <string name="house_rent_wo"><font color="#00bfff">*</font>卧&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;室</string>
+    <string name="house_rent_name"><font color="#00bfff">*</font>小区名称</string>
+    <string name="house_rent_huType"><font color="#00bfff">*</font>房屋户型</string>
+    <string name="house_rent_m"><font color="#00bfff">*</font>房屋面积</string>
+    <string name="house_rent_lou"><font color="#00bfff">*</font>楼&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;层</string>
+    <string name="house_rent_direction">&#160;&#160;朝&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;向</string>
+    <string name="house_rent_configure">&#160;&#160;房屋配置</string>
+    <string name="house_rent_money"><font color="#00bfff">*</font>租&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;金</string>
+    <string name="house_rent_add_img">&#160;&#160;添加照片</string>
+    <string name="house_rent_phone_person"><font color="#00bfff">*</font>联&#160;&#160;系&#160;&#160;人</string>
+    <string name="house_rent_phone_num"><font color="#00bfff">*</font>联系电话</string>
+    <string name="house_rent_submit">提交</string>
+    <string name="house_rent_hint_small_area">小区名称</string>
+    <string name="house_shi">室</string>
+    <string name="house_ting">厅</string>
+    <string name="house_wei">卫</string>
+    <string name="house_m">㎡</string>
+
+
+
 
     <string-array name="homeSceneString">
         <item>回家</item>

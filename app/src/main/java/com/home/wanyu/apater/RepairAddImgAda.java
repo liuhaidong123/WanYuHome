@@ -85,14 +85,5 @@ public class RepairAddImgAda extends BaseAdapter {
     class ImgHolder {
         ImageView imageView;
     }
-    //获取真实的url
-    public  Uri getRealUri(Context context, String uri){
-        String pth="";
-        String[] proj = { MediaStore.Images.Media.DATA};
-        Uri u=Uri.parse(uri);
-        if (u.getScheme()==null) {
-            u = Uri.fromFile(new File(u.getPath()));
-        }
-        return u;
-    }
+
 }

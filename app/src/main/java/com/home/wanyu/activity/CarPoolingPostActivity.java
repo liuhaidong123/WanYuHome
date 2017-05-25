@@ -1,5 +1,7 @@
 package com.home.wanyu.activity;
 
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -15,7 +17,11 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.home.wanyu.HttpUtils.HttpTools;
 import com.home.wanyu.R;
+import com.home.wanyu.bean.getAreaActivityLike.Root;
+
+import net.tsz.afinal.http.AjaxParams;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -38,14 +44,36 @@ public class CarPoolingPostActivity extends AppCompatActivity implements View.On
     private Calendar mCalendar;
     private TextView mSure_time, mCancle_time;
     private TextView mShowTime_btn;
-    private EditText mStart_tv, mEnd_tv, mPhone;
+    private EditText mStart_tv, mEnd_tv, mPhone,mPerson_edit;
     private ImageView mOther_img;
     private boolean isImg = false;
+
+    private int mStartYear;
+    private HttpTools mHttptools;
+    private Handler handler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (msg.what==127){
+                Object o=msg.obj;
+                if (o!=null&&o instanceof Root){
+                    Root root= (Root) o;
+                    if (root.getCode().equals("0")){
+                        Toast.makeText(CarPoolingPostActivity.this,"发布成功",Toast.LENGTH_SHORT).show();
+                        finish();
+                    }else {
+                        Toast.makeText(CarPoolingPostActivity.this,"发布失败",Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_car_pooling_post);
+        mHttptools=HttpTools.getHttpToolsInstance();
         initView();
     }
 
@@ -108,6 +136,9 @@ public class CarPoolingPostActivity extends AppCompatActivity implements View.On
         //其他小区可看
         mOther_img = (ImageView) findViewById(R.id.car_post_select_img_btn);
         mOther_img.setOnClickListener(this);
+
+        mPerson_edit=(EditText) findViewById(R.id.car_post_person_msg);
+
     }
 
     @Override
@@ -116,9 +147,18 @@ public class CarPoolingPostActivity extends AppCompatActivity implements View.On
         if (id == mback.getId()) {
             finish();
         } else if (id == mPost_btn.getId()) {//发布
-            if (checkStartEndTime(mSelect_time.getText().toString())){
+            if (checkStartEndTime(mStartYear+"-"+mSelect_time.getText().toString()+":"+"00")){
                 if (!(getShen().equals("")||getStartAddresss().equals("")||getEndAddresss().equals("")||getPhone().equals(""))){
                     Toast.makeText(this,"内容正确",Toast.LENGTH_SHORT).show();
+                    AjaxParams ajaxParams=new AjaxParams();
+                    ajaxParams.put("ctype",mFlag+"");
+                    ajaxParams.put("startTime",mSelect_time.getText().toString());
+                    ajaxParams.put("departurePlace",getStartAddresss());
+                    ajaxParams.put("end",getEndAddresss());
+                    ajaxParams.put("cnumber",getPersonNum());
+                    ajaxParams.put("telephone",getPhone());
+                    mHttptools.carPooloingPost(handler,ajaxParams);
+
                 }else {
                     Toast.makeText(this,"请您补全内容",Toast.LENGTH_SHORT).show();
                 }
@@ -148,7 +188,36 @@ public class CarPoolingPostActivity extends AppCompatActivity implements View.On
             }
         } else if (id == mSure_time.getId()) {//确认时间
             mPopupwindow.dismiss();
-            mSelect_time.setText(mDatePicker.getYear() + "-" + (mDatePicker.getMonth() + 1) + "-" + mDatePicker.getDayOfMonth() + " " + mTimePicker.getCurrentHour() + ":" + mTimePicker.getCurrentMinute() + ":" + "00");
+            String month="";
+            String day="";
+            String hour="";
+            String minute="";
+            mStartYear=mDatePicker.getYear();
+            if (mDatePicker.getMonth() + 1<10){
+                month="0"+(mDatePicker.getMonth() + 1);
+            }else {
+                month=mDatePicker.getMonth() + 1+"";
+            }
+
+            if ( mDatePicker.getDayOfMonth()<10){
+                day="0"+mDatePicker.getDayOfMonth();
+            }else {
+                day=mDatePicker.getDayOfMonth()+"";
+            }
+
+            if (mTimePicker.getCurrentHour()<10){
+                hour="0"+mTimePicker.getCurrentHour();
+            }else {
+                hour=""+mTimePicker.getCurrentHour();
+            }
+
+            if (mTimePicker.getCurrentMinute()<10){
+                minute="0"+mTimePicker.getCurrentMinute();
+            }else {
+                minute=""+mTimePicker.getCurrentMinute();
+            }
+
+            mSelect_time.setText(month + "-" + day + " " + hour + ":" + minute);
         } else if (id == mCancle_time.getId()) {//取消时间
             mPopupwindow.dismiss();
         }
@@ -196,27 +265,34 @@ public class CarPoolingPostActivity extends AppCompatActivity implements View.On
     }
 
     public String getStartAddresss() {
-        if (mStart_tv.getText().toString().equals("")) {
+        if (mStart_tv.getText().toString().trim().equals("")) {
             return "";
         }
-        return mStart_tv.getText().toString();
+        return mStart_tv.getText().toString().trim();
 
     }
 
     public String getEndAddresss() {
-        if (mEnd_tv.getText().toString().equals("")) {
+        if (mEnd_tv.getText().toString().trim().equals("")) {
             return "";
         }
-        return mEnd_tv.getText().toString();
+        return mEnd_tv.getText().toString().trim();
 
     }
 
     public String getPhone() {
-        if (!checkPhone(mPhone.getText().toString())) {
+        if (!checkPhone(mPhone.getText().toString().trim())) {
             return "";
         }
-        return mPhone.getText().toString();
+        return mPhone.getText().toString().trim();
 
+    }
+
+    public String getPersonNum(){
+        if (mPerson_edit.getText().toString().trim().equals("")){
+            return "";
+        }
+        return mPerson_edit.getText().toString().trim();
     }
 
 

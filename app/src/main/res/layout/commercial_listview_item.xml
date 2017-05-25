@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="127dp"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/goods_img"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/main_background4"
+
+            />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/goods_img">
+
+            <TextView
+                android:id="@+id/goods_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="西饼店"
+                android:textColor="@color/titlecolor3"
+                android:textSize="15sp" />
+
+            <RatingBar
+                android:id="@+id/ratingBar"
+                style="@style/Base.Widget.AppCompat.RatingBar.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/goods_name"
+                android:layout_marginTop="10dp"
+                android:numStars="5"
+                android:rating="1.5">
+
+            </RatingBar>
+
+
+            <TextView
+                android:id="@+id/goods_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ratingBar"
+                android:layout_marginTop="10dp"
+                android:text="人均:¥20/人"
+                android:textColor="@color/titlecolor3"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_below="@id/goods_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="150m"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/name_color"
+                android:textSize="12sp"
+                />
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>

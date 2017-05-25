@@ -247,12 +247,47 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/car_post_person_rl"
+        android:layout_width="match_parent"
+        android:layout_height="50.5dp"
+        android:layout_below="@id/car_post_phone_rl"
+        android:layout_marginTop="1dp"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/car_post_person"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:text="@string/add_person"
+            android:textColor="@color/name_color" />
+
+
+        <EditText
+            android:id="@+id/car_post_person_msg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_toRightOf="@id/car_post_person"
+            android:background="@null"
+            android:hint="乘坐人数"
+            android:inputType="number"
+            android:maxLength="11"
+            android:textColor="@color/titlecolor3"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
         android:id="@+id/car_post_other_area_rl"
         android:layout_width="match_parent"
         android:layout_height="37dp"
         android:layout_below="@id/car_post_phone_rl"
         android:layout_marginTop="1dp"
-        android:background="@color/white">
+        android:background="@color/white"
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/car_post_select_img_btn"
@@ -277,7 +312,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/car_post_other_area_rl"
+        android:layout_below="@id/car_post_person_rl"
         android:layout_marginTop="1dp"
         android:background="@color/white">
 

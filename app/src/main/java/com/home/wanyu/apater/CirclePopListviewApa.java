@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.home.wanyu.R;
+import com.home.wanyu.bean.getCircleTitleList.Result;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,11 +18,11 @@ import java.util.List;
  */
 
 public class CirclePopListviewApa extends BaseAdapter {
-    private List<String> list = new ArrayList<>();
+    private List<Result> list = new ArrayList<>();
     private Context mContext;
     private LayoutInflater mInflater;
 
-    public CirclePopListviewApa(Context mContext, List<String> list) {
+    public CirclePopListviewApa(Context mContext, List<Result> list) {
         this.mContext = mContext;
         this.list = list;
         this.mInflater = LayoutInflater.from(this.mContext);
@@ -53,7 +54,7 @@ public class CirclePopListviewApa extends BaseAdapter {
         } else {
             holder = (PopHolder) convertView.getTag();
         }
-        holder.textView.setText(list.get(position));
+        holder.textView.setText(list.get(position).getCname());
         return convertView;
     }
 

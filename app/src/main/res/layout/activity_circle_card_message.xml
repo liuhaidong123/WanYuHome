@@ -31,6 +31,7 @@
             android:textSize="17sp" />
 
         <TextView
+            android:visibility="gone"
             android:id="@+id/circle_card_msg_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -54,11 +55,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/line"
-        android:layout_marginBottom="15dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/white">
+        android:background="@color/white"
+        android:paddingBottom="15dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp">
 
         <RelativeLayout
             android:id="@+id/circle_title1"
@@ -69,6 +70,7 @@
                 android:id="@+id/circle_card_head_img"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
+                android:scaleType="centerCrop"
                 android:src="@mipmap/main_background4" />
 
             <TextView
@@ -120,23 +122,23 @@
             android:maxLines="20"
             android:text="你的生活你的生活你的生活你的生活你的生活你的生活你的生活你的生活你的生活你的生活" />
 
-        <com.home.wanyu.myview.MyGridView
-            android:id="@+id/circle_gridview_friend"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/circle_card_commend_msg"
-            android:layout_marginLeft="50dp"
-            android:layout_marginTop="10dp"
-            android:horizontalSpacing="14sp"
-            android:numColumns="4"
-            android:scrollbars="none">
+        <!--<com.home.wanyu.myview.MyGridView-->
+        <!--android:id="@+id/circle_gridview_friend"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@id/circle_card_commend_msg"-->
+        <!--android:layout_marginLeft="50dp"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:horizontalSpacing="14sp"-->
+        <!--android:numColumns="4"-->
+        <!--android:scrollbars="none">-->
 
-        </com.home.wanyu.myview.MyGridView>
+        <!--</com.home.wanyu.myview.MyGridView>-->
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/circle_gridview_friend"
+            android:layout_below="@id/circle_card_commend_msg"
             android:layout_marginLeft="50dp"
             android:layout_marginTop="19dp">
 
@@ -184,156 +186,129 @@
                 android:id="@+id/circle_like_img"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
                 android:layout_toLeftOf="@id/circle_like_num"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
                 android:src="@mipmap/circle_like_no" />
         </RelativeLayout>
 
     </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_above="@+id/card_comment_box"
-        android:id="@+id/like_rl"
+    <ScrollView
+        android:id="@+id/scroll_rl"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/circle_head_rl"
-        android:layout_marginLeft="10dp"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/card_comment_box"
+        android:layout_below="@id/circle_head_rl"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
-        android:background="@color/bg_color">
+        android:layout_marginLeft="10dp"
+        android:background="@color/bg_color"
+        android:scrollbars="none">
 
-        <ImageView
-            android:id="@+id/blue_like"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="27dp"
-            android:layout_marginTop="5dp"
-            android:src="@mipmap/circle_blue_like"
-
-            />
-
-        <com.home.wanyu.myview.MyGridView
-            android:id="@+id/circle_card_gridview"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/blue_like"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_toRightOf="@id/blue_like"
-            android:horizontalSpacing="5dp"
-            android:numColumns="7"
-            android:verticalSpacing="5dp">
+            android:layout_height="match_parent">
 
-        </com.home.wanyu.myview.MyGridView>
+            <ImageView
+                android:id="@+id/blue_like"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="27dp"
+                android:layout_marginTop="5dp"
+                android:src="@mipmap/circle_blue_like" />
 
-        <View
-            android:id="@+id/line_f"
-            android:layout_marginTop="5dp"
-            android:layout_below="@id/circle_card_gridview"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/repair_line" />
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/line_f"
-            android:scrollbars="none">
-
-            <RelativeLayout
+            <com.home.wanyu.myview.MyGridView
+                android:id="@+id/circle_card_gridview"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_below="@id/blue_like"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_toRightOf="@id/blue_like"
+                android:horizontalSpacing="5dp"
+                android:numColumns="7"
+                android:verticalSpacing="5dp">
+
+            </com.home.wanyu.myview.MyGridView>
 
 
-                <ImageView
-                    android:id="@+id/blue_msg"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="27dp"
-                    android:layout_marginTop="5dp"
-                    android:src="@mipmap/circle_blue_msg" />
-
-                <com.home.wanyu.myview.MyExpandableListview
-                    android:id="@+id/circle_commend_listview"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_below="@id/blue_msg"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_toRightOf="@id/blue_msg"
-                    android:scrollbars="none">
-
-                </com.home.wanyu.myview.MyExpandableListview>
+            <View
+                android:id="@+id/line_f"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/circle_card_gridview"
+                android:layout_marginTop="5dp"
+                android:background="@color/repair_line" />
 
 
-                <RelativeLayout
-                    android:id="@+id/many_relative"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/circle_commend_listview"
-                    android:layout_marginTop="5dp">
+            <ImageView
+                android:id="@+id/blue_msg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/line_f"
+                android:layout_marginLeft="27dp"
+                android:layout_marginTop="5dp"
+                android:src="@mipmap/circle_blue_msg" />
 
-                    <TextView
-                        android:id="@+id/footer_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:paddingBottom="15dp"
-                        android:paddingEnd="20dp"
-                        android:paddingStart="20dp"
-                        android:paddingTop="14dp"
-                        android:text="加载更多"
-                        android:textColor="@color/title_color"
-                        android:textSize="13sp" />
+            <com.home.wanyu.myview.MyListView
+                android:id="@+id/comment_listview_circle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/blue_msg"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_toRightOf="@id/blue_msg"
+                android:divider="@color/bg_color"
+                android:dividerHeight="5dp"
+                android:scrollbars="none">
 
-                    <ProgressBar
-                        android:id="@+id/pbLocate"
-                        style="?android:attr/progressBarStyleSmall"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_toEndOf="@+id/footer_tv" />
+            </com.home.wanyu.myview.MyListView>
+        </RelativeLayout>
+    </ScrollView>
 
-                </RelativeLayout>
-            </RelativeLayout>
-
-        </ScrollView>
-    </RelativeLayout>
 
     <RelativeLayout
         android:id="@id/card_comment_box"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerVertical="true"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:background="@drawable/comment_bg">
+        android:layout_height="55dp"
+        android:layout_alignParentBottom="true">
 
-        <ImageView
-            android:id="@+id/writing_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:src="@mipmap/writing" />
-
-        <EditText
-            android:id="@+id/edit"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@id/writing_img"
-            android:background="@null"
-            android:hint="@string/comment_hint"
-            android:imeOptions="actionSend"
-            android:inputType="text"
-            android:maxLines="1"
-            android:maxLength="500"
-            android:textColor="@color/bg_color"
-            android:textSize="15sp" />
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/comment_bg">
+
+            <ImageView
+                android:id="@+id/writing_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:src="@mipmap/writing" />
+
+            <EditText
+                android:id="@+id/edit"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/writing_img"
+                android:background="@null"
+                android:hint="@string/comment_hint"
+                android:imeOptions="actionSend"
+                android:inputType="text"
+                android:maxLength="500"
+                android:maxLines="1"
+                android:textColor="@color/titlecolor3"
+                android:textColorHint="@color/name_color"
+                android:textSize="15sp" />
+        </RelativeLayout>
+
     </RelativeLayout>
 
 

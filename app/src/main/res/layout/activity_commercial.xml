@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_commercial"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    tools:context="com.home.wanyu.activity.CommercialActivity">
+
+    <RelativeLayout
+        android:id="@+id/order_msg_title"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/commercial_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingLeft="10dp"
+            android:paddingRight="20dp"
+            android:src="@mipmap/property_back" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:gravity="center"
+            android:text="@string/property_commercial"
+            android:textColor="@color/title_color"
+            android:textSize="17sp" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/commercial_address_msg"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_below="@id/order_msg_title"
+        android:layout_marginTop="1dp"
+        android:background="@color/white">
+
+        <RelativeLayout
+            android:id="@+id/commercial_address_rl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true">
+
+            <ImageView
+                android:id="@+id/address_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/commercial_address" />
+
+            <TextView
+                android:id="@+id/address_msg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@id/address_img"
+                android:text="名流一品"
+                android:textColor="@color/titlecolor3"
+                android:textSize="15sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@id/address_msg"
+                android:src="@mipmap/bottom_back" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/commercial_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/commercial_address_msg"
+        android:layout_marginTop="1dp">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.home.wanyu.myview.MyListView
+                    android:id="@+id/commercial_listview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:divider="@color/bg_color"
+                    android:dividerHeight="1dp"
+                    android:scrollbars="none">
+
+                </com.home.wanyu.myview.MyListView>
+
+
+                <RelativeLayout
+                    android:id="@+id/commercial_more_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_below="@id/commercial_listview"
+                    android:background="@color/white">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/bg_color" />
+
+                    <TextView
+                        android:id="@+id/footer_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="加载更多"
+                        android:textColor="#333333"
+                        android:textSize="13sp" />
+
+                    <ProgressBar
+                        android:id="@+id/circle_pbLocate"
+                        style="?android:attr/progressBarStyleSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toEndOf="@+id/footer_tv" />
+                </RelativeLayout>
+            </RelativeLayout>
+        </ScrollView>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+</RelativeLayout>

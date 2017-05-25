@@ -116,57 +116,88 @@
         android:numColumns="7"
         android:scrollbars="none"></GridView>
 
-    <ScrollView
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/circle_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/circle_gridview">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.home.wanyu.myview.MyListView
+                    android:id="@+id/circle_listview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:divider="@color/bg_color"
+                    android:dividerHeight="1dp"
+                    android:scrollbars="none">
+
+
+                </com.home.wanyu.myview.MyListView>
+
+                <RelativeLayout
+                    android:id="@+id/circle_more_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_below="@+id/circle_listview"
+                    android:background="@color/white"
+                    android:visibility="gone">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/bg_color" />
+
+                    <TextView
+                        android:id="@+id/footer_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="加载更多"
+                        android:textColor="#333333"
+                        android:textSize="13sp" />
+
+                    <ProgressBar
+                        android:id="@+id/circle_pbLocate"
+                        style="?android:attr/progressBarStyleSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@+id/footer_tv"
+                        android:visibility="invisible" />
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+
+        </ScrollView>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <RelativeLayout
+        android:id="@+id/no_data_rl"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/circle_gridview"
-        android:scrollbars="none">
+        android:layout_margin="5dp"
+        android:background="@color/white"
+        android:visibility="gone">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <com.home.wanyu.myview.MyListView
-                android:id="@+id/circle_listview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:divider="@color/bg_color"
-                android:dividerHeight="1dp"
-                android:scrollbars="none">
-
-
-            </com.home.wanyu.myview.MyListView>
-
-            <RelativeLayout
-                android:id="@+id/circle_more_rl"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_below="@+id/circle_listview"
-                android:background="@color/white">
-
-                <TextView
-                    android:id="@+id/footer_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:text="加载更多"
-                    android:textColor="#333333"
-                    android:textSize="13sp" />
-
-                <ProgressBar
-                    android:id="@+id/pbLocate"
-                    style="?android:attr/progressBarStyleSmall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toEndOf="@+id/footer_tv" />
-            </RelativeLayout>
-
-        </RelativeLayout>
-
-
-    </ScrollView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="抱歉,没有数据哦"
+            android:textColor="@color/bg_rect" />
+    </RelativeLayout>
 
     <ImageView
         android:id="@+id/circle_post_img"

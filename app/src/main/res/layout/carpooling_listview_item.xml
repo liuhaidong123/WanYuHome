@@ -197,6 +197,8 @@
                     android:textColor="@color/bg_rect"
                     android:textSize="14sp" />
 
+
+
                 <TextView
                     android:id="@+id/car_join_num"
                     android:layout_width="wrap_content"
@@ -214,7 +216,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingLeft="10dp"
                     android:layout_toLeftOf="@id/car_join_num"
                     android:src="@mipmap/community_add_no"
 
@@ -226,7 +229,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="27dp"
+                    android:layout_marginRight="17dp"
                     android:layout_toLeftOf="@+id/car_join_img"
                     android:text="25"
                     android:textColor="@color/name_color"
@@ -305,4 +308,6 @@
 
 
     </RelativeLayout>
+
+
 </RelativeLayout>

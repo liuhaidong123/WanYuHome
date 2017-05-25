@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="178dp"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/house_msg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="26dp"
+            android:layout_marginLeft="18dp"
+            android:layout_marginRight="18dp"
+            android:layout_marginTop="35dp"
+            android:text="@string/look_call_alert"
+            android:textColor="@color/titlecolor3"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/house_cancle"
+            android:layout_marginLeft="18dp"
+            android:layout_width="120dp"
+            android:layout_height="45dp"
+            android:layout_below="@id/house_msg"
+            android:background="@drawable/house_think_bg"
+            android:gravity="center"
+            android:text="@string/look_house_think"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+
+            />
+
+        <TextView
+            android:id="@+id/house_sure"
+            android:layout_marginRight="18dp"
+            android:layout_width="120dp"
+            android:layout_height="45dp"
+            android:layout_below="@id/house_msg"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/repair_submit_bg"
+            android:gravity="center"
+            android:text="@string/look_house_now"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+
+            />
+    </RelativeLayout>
+</RelativeLayout>

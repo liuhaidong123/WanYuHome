@@ -8,28 +8,28 @@
     tools:context="com.home.wanyu.activity.AddAddressActivity">
 
     <RelativeLayout
-        android:id="@+id/add_address_title"
+    android:id="@+id/add_address_title"
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
+    android:background="@color/white">
+
+    <ImageView
+        android:id="@+id/add_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:paddingLeft="10dp"
+        android:paddingRight="20dp"
+        android:src="@mipmap/property_back" />
+
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:background="@color/white">
-
-        <ImageView
-            android:id="@+id/add_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:paddingLeft="10dp"
-            android:paddingRight="20dp"
-            android:src="@mipmap/property_back" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:gravity="center"
-            android:text="@string/add_address"
-            android:textColor="@color/title_color"
-            android:textSize="17sp" />
-    </RelativeLayout>
+        android:gravity="center"
+        android:text="@string/add_address"
+        android:textColor="@color/title_color"
+        android:textSize="17sp" />
+</RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/city_rl"
@@ -243,7 +243,7 @@
             android:layout_toRightOf="@+id/ceng_tv"
             android:background="@null"
             android:maxLines="1"
-            android:inputType="text"
+            android:inputType="number"
             android:textColor="@color/homeFragChangeColor"
             android:textSize="13sp" />
         <TextView
@@ -284,7 +284,7 @@
             android:layout_toRightOf="@+id/unit_tv"
             android:background="@null"
             android:maxLines="1"
-            android:inputType="text"
+            android:inputType="number"
             android:textColor="@color/homeFragChangeColor"
             android:textSize="13sp" />
         <TextView
@@ -325,7 +325,7 @@
             android:layout_toRightOf="@+id/hourse_tv"
             android:background="@null"
             android:maxLines="1"
-            android:inputType="text"
+            android:inputType="number"
             android:textColor="@color/homeFragChangeColor"
             android:textSize="13sp" />
         <TextView

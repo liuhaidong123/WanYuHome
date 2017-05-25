@@ -228,7 +228,7 @@ public class AddAddressActivity extends AppCompatActivity implements View.OnClic
                 mMap.put("yard", getArea());
                 mMap.put("yardid", String.valueOf(mAreaID));
                 mMap.put("ownerName", getName());
-                mMap.put("ownerTelephone", getPhone());
+                mMap.put("ownertelephone", getPhone());
                 mMap.put("buildingNumber", getLou()+"号楼");
                 mMap.put("floor", getCeng()+"层");
                 mMap.put("unitNumber", getUnit()+"单元");

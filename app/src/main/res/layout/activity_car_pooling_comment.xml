@@ -26,11 +26,12 @@
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:gravity="center"
-            android:text="@string/car_pin"
+            android:text="写评论"
             android:textColor="@color/title_color"
             android:textSize="17sp" />
 
         <TextView
+            android:id="@+id/post_all"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -62,7 +63,8 @@
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
         android:hint="你的评论或者你回复别人的评论"
-        android:textColor="@color/name_color"
+        android:textColorHint="@color/name_color"
+        android:textColor="@color/titlecolor3"
         android:textSize="14sp" />
 
 </RelativeLayout>

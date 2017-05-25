@@ -19,6 +19,7 @@ import com.home.wanyu.User.UserInfo;
 import com.home.wanyu.activity.CarPoolingActivity;
 import com.home.wanyu.activity.CircleMessageActivity;
 import com.home.wanyu.activity.CommunityMessageActivity;
+import com.home.wanyu.activity.MyHouseInfoActivity;
 import com.home.wanyu.apater.CircleAdapter;
 import com.home.wanyu.bean.CircleBean;
 import com.home.wanyu.bean.getCircleArea.Result;
@@ -58,7 +59,7 @@ public class CommunicationFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View vi = inflater.inflate(R.layout.fragment_communication, null);
-        mHttptools=HttpTools.getHttpToolsInstance();
+        mHttptools = HttpTools.getHttpToolsInstance();
         mHttptools.getCircleArea(mHandler, UserInfo.userToken);
         initView(vi);
         return vi;
@@ -77,6 +78,8 @@ public class CommunicationFragment extends Fragment {
                 if (mCircleAreaList != null && mCircleAreaList.size() == 0) {
                     Toast.makeText(getContext(), "请添加小区地址", Toast.LENGTH_SHORT).show();
                     //跳转到添加小区页面
+                    Intent intent = new Intent(getContext(), MyHouseInfoActivity.class);
+                    startActivity(intent);
 
                 } else {
                     //友邻圈

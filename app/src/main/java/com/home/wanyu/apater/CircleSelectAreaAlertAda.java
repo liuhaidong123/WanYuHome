@@ -29,6 +29,10 @@ public class CircleSelectAreaAlertAda extends BaseAdapter {
         this.mInfalter = LayoutInflater.from(this.mContext);
     }
 
+    public void setList(List<Result> list) {
+        this.list = list;
+    }
+
     @Override
     public int getCount() {
         return list.size();

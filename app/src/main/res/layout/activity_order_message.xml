@@ -202,21 +202,5 @@
         android:textSize="15sp" />
 
 
-    <RelativeLayout
-        android:visibility="gone"
-        android:id="@+id/bar_rl"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/bar_bg">
-
-        <ProgressBar
-            android:id="@+id/httptoosl_bar"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_centerInParent="true"
-            android:paddingTop="15dp"
-
-            />
-    </RelativeLayout>
 
 </RelativeLayout>

@@ -5,7 +5,7 @@ package com.home.wanyu.HttpUtils;
  */
 
 public class UrlTools {
-    public static final String BASE = "http://192.168.1.55:8080/smarthome";
+    public static final String BASE = "http://192.168.1.33:8080/smarthome";
     //判断有没有用户地址
     //http://192.168.1.55:8080/smarthome/mobileapi/family/findFamilyAddress.do?token=EC9CDB5177C01F016403DFAAEE3C1182
     public static final String HAVE_USER_ADDRESS = "/mobileapi/family/findFamilyAddress.do?";
@@ -40,4 +40,64 @@ public class UrlTools {
 
     //友邻圈获取小区接口 token=
     public static final String GET_CIRCLE_AREA="/mobileapi/residentialQuarters/findRQ.do?";
+
+
+    //获取友邻圈小分类接口列表
+    public static final String GET_CIRCLE_SMALL_TYPE="/mobilepub/category/findAll.do";
+
+    //获取友邻圈帖子列表
+    public static final String GET_CIRCLE_CARD_LIST="/mobileapi/state/findstate.do?";
+
+    //友邻圈点赞接口
+    public static final String CIRCLE_LIKE="/mobileapi/state/LikeStat.do?";
+
+    //友邻圈发布状态
+    public static final String CIRCLE_POST_CARD="/mobileapi/state/PublishState.do?";
+
+    //友邻圈获取评论列表，点赞头像接口token=EC9CDB5177C01F016403DFAAEE3C1182&stateId=1&coverPersonalId=1
+    public static final String GET_CIRCLE_COMMENT_LIST="/mobileapi/state/findStateOne.do?";
+
+    //学术圈评论接口
+    public static final String CIRCLE_COMMENT="/mobileapi/state/commentStat.do?";
+
+    //学术圈删除帖子接口
+    public static final String CIRCLE_DELETE_CARD="/mobileapi/state/delteState.do?";
+
+
+    //社区活动首页列表接口
+    public static final String GET_AREA_ACTIVITY_LIST="/mobileapi/activity/findActivity.do?";
+
+    //社区活动详情接口
+    public static final String GET_AREA_ACTIVITY_MSG="/mobileapi/activity/findActivityOne.do?";
+
+    //社区活动点赞接口
+    public static final String GET_AREA_ACTIVITY_LIKE="/mobileapi/upVote/updateActivityLikeNum.do?";
+
+    //社区活动添加图片接口
+    public static final String AREA_ACTIVITY_POST_IMG="/mobileapi/activity/AddactivityPictrue.do";
+
+    //社区活动评论接口
+    public static final String AREA_ACTIVITY_COMMENT="/mobileapi/activity/addcomment.do?";
+
+    //社区活动加入
+    public static final String AREA_ACTIVITY_JOIN="/mobileapi/activityLog/updateActivityparticipateNumber.do?";
+
+    //发布社区活动
+    public static final String AREA_ACTIVITY_POST="/mobileapi/activity/PublishActivity.do?";
+
+    //删除活动
+    public static final String AREA_ACTIVITY_DELETE="/mobileapi/activity/delete.do?";
+
+    //社区平车首页接口
+    public static final String CAR_POOLING_LIST="/mobileapi/carpooling/findcarpoolingAll.do?";
+
+    //社区发布活动
+    public static final String CAR_POOLING_POST="/mobileapi/carpooling/PublishCarpooling.do?";
+
+    //社区拼车详情
+    public static final String CAR_POOLING_MSG="/mobileapi/carpooling/findCarpoolingOne.do?" ;
+
+
+    //社区拼车评论
+    public static final String CAR_POOLING_COMMENT="/mobileapi/carpooling/addcommentCarpooling.do?";
 }

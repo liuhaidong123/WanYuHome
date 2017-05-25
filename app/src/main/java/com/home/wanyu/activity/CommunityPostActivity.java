@@ -1,5 +1,7 @@
 package com.home.wanyu.activity;
 
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,7 +19,11 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.home.wanyu.HttpUtils.HttpTools;
 import com.home.wanyu.R;
+import com.home.wanyu.bean.getAreaActivityLike.Root;
+
+import net.tsz.afinal.http.AjaxParams;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -39,15 +45,38 @@ public class CommunityPostActivity extends AppCompatActivity implements View.OnC
     private TextView mStart_time, mEnd_time;
     private int mFlag = -1;
 
+    private int mStartYear;
+    private int mEndYear;
     private TextView mPost_btn;
     private EditText mTitle, mAddress, mPerson, mPhone, mContent;
-    private ImageView mOther_area_btn;
-    private boolean mImgSelect = false;
+//    private ImageView mOther_area_btn;
+//    private boolean mImgSelect = false;
 
+    private HttpTools mhttptools;
+    private Handler mhandler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+
+            if (msg.what==124){
+                Object o=msg.obj;
+                if (o!=null && o instanceof Root){
+                    Root root= (Root) o;
+                    if (root.getCode().equals("0")){
+                        Toast.makeText(CommunityPostActivity.this, "发布成功", Toast.LENGTH_SHORT).show();
+                       finish();
+                    }else {
+                        Toast.makeText(CommunityPostActivity.this, "发布失败", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_community);
+        mhttptools=HttpTools.getHttpToolsInstance();
         initView();
     }
 
@@ -106,8 +135,8 @@ public class CommunityPostActivity extends AppCompatActivity implements View.OnC
         mPhone = (EditText) findViewById(R.id.community_phone_edit);
         mContent = (EditText) findViewById(R.id.community_content_edit);
 //其他小区可见性
-        mOther_area_btn = (ImageView) findViewById(R.id.community_on_off_btn);
-        mOther_area_btn.setOnClickListener(this);
+//        mOther_area_btn = (ImageView) findViewById(R.id.community_on_off_btn);
+//        mOther_area_btn.setOnClickListener(this);
     }
 
     @Override
@@ -125,17 +154,84 @@ public class CommunityPostActivity extends AppCompatActivity implements View.OnC
             mPopupwindow.dismiss();
             if (mFlag == 1) {//设置开始时间
                 mStart_time.setTextColor(ContextCompat.getColor(this, R.color.title_color));
-                mStart_time.setText(mDatePicker.getYear() + "-" + (mDatePicker.getMonth() + 1) + "-" + mDatePicker.getDayOfMonth() + " " + mTimePicker.getCurrentHour() + ":" + mTimePicker.getCurrentMinute() + ":" + "00");
+                String month="";
+                String day="";
+                String hour="";
+                String minute="";
+                mStartYear=mDatePicker.getYear();
+                if (mDatePicker.getMonth() + 1<10){
+                    month="0"+(mDatePicker.getMonth() + 1);
+                }else {
+                    month=mDatePicker.getMonth() + 1+"";
+                }
+
+                if ( mDatePicker.getDayOfMonth()<10){
+                    day="0"+mDatePicker.getDayOfMonth();
+                }else {
+                    day=mDatePicker.getDayOfMonth()+"";
+                }
+
+                if (mTimePicker.getCurrentHour()<10){
+                    hour="0"+mTimePicker.getCurrentHour();
+                }else {
+                    hour=""+mTimePicker.getCurrentHour();
+                }
+
+                if (mTimePicker.getCurrentMinute()<10){
+                    minute="0"+mTimePicker.getCurrentMinute();
+                }else {
+                    minute=""+mTimePicker.getCurrentMinute();
+                }
+
+                mStart_time.setText(month + "-" + day + " " + hour + ":" + minute);
             } else if (mFlag == 2) {//设置结束时间
                 mEnd_time.setTextColor(ContextCompat.getColor(this, R.color.title_color));
-                mEnd_time.setText(mDatePicker.getYear() + "-" + (mDatePicker.getMonth() + 1) + "-" + mDatePicker.getDayOfMonth() + " " + mTimePicker.getCurrentHour() + ":" + mTimePicker.getCurrentMinute() + ":" + "00");
+                String month="";
+                String day="";
+                String hour="";
+                String minute="";
+                mEndYear=mDatePicker.getYear();
+                if (mDatePicker.getMonth() + 1<10){
+                    month="0"+(mDatePicker.getMonth() + 1);
+                }else {
+                    month=mDatePicker.getMonth() + 1+"";
+                }
+
+                if ( mDatePicker.getDayOfMonth()<10){
+                    day="0"+mDatePicker.getDayOfMonth();
+                }else {
+                    day=mDatePicker.getDayOfMonth()+"";
+                }
+
+                if (mTimePicker.getCurrentHour()<10){
+                    hour="0"+mTimePicker.getCurrentHour();
+                }else {
+                    hour=""+mTimePicker.getCurrentHour();
+                }
+
+                if (mTimePicker.getCurrentMinute()<10){
+                    minute="0"+mTimePicker.getCurrentMinute();
+                }else {
+                    minute=""+mTimePicker.getCurrentMinute();
+                }
+
+                mEnd_time.setText(month + "-" + day + " " + hour + ":" + minute );
             }
         } else if (id == mCancle_time.getId()) {//取消选择时间
             mPopupwindow.dismiss();
         } else if (id == mPost_btn.getId()) {//发布
-            if (checkStartEndTime(mStart_time.getText().toString(), mEnd_time.getText().toString())) {
+            if (checkStartEndTime(mStartYear+"-"+mStart_time.getText().toString()+":"+"00", mEndYear+"-"+mEnd_time.getText().toString()+":"+"00")) {
                 if (!(getActTitle().equals("") || getActAddress().equals("") || getActPersonNum().equals("") || getActPhone().equals("") || getActContent().equals(""))) {
-                    Toast.makeText(this, "所有信息填写正确", Toast.LENGTH_SHORT).show();
+                  //  Toast.makeText(this, "所有信息填写正确", Toast.LENGTH_SHORT).show();
+                    AjaxParams ajaxParams=new AjaxParams();
+                    ajaxParams.put("activityTheme",getActTitle());
+                    ajaxParams.put("activityContent",getActContent());
+                    ajaxParams.put("activityAddress",getActAddress());
+                    ajaxParams.put("activityNumber",getActPersonNum());
+                    ajaxParams.put("activityTelephone",getActPhone());
+                    ajaxParams.put("starttimeString",mStart_time.getText().toString());
+                    ajaxParams.put("endtimeString", mEnd_time.getText().toString());
+                    mhttptools.areaActivityPost(mhandler,ajaxParams);
                 } else {
                     Toast.makeText(this, "请填写正确的活动信息", Toast.LENGTH_SHORT).show();
                 }
@@ -143,16 +239,9 @@ public class CommunityPostActivity extends AppCompatActivity implements View.OnC
             } else {
                 Toast.makeText(this, "请选择正确活动时间", Toast.LENGTH_SHORT).show();
             }
-        } else if (id == mOther_area_btn.getId()) {//其他小区可见
-            if (!mImgSelect) {
-                mOther_area_btn.setImageResource(R.mipmap.circle_button_on);
-                mImgSelect = true;
-            } else {
-                mOther_area_btn.setImageResource(R.mipmap.circle_button_off);
-                mImgSelect = false;
-            }
-
         }
+
+
     }
     //项目中的popuwindow显示
 
@@ -212,10 +301,10 @@ public class CommunityPostActivity extends AppCompatActivity implements View.OnC
     }
 
     public String getActAddress() {
-        if (mAddress.getText().toString().equals("")) {
+        if (mAddress.getText().toString().trim().equals("")) {
             return "";
         }
-        return mAddress.getText().toString();
+        return mAddress.getText().toString().trim();
     }
 
     public String getActPersonNum() {
@@ -233,10 +322,10 @@ public class CommunityPostActivity extends AppCompatActivity implements View.OnC
     }
 
     public String getActContent() {
-        if (mContent.getText().toString().equals("")) {
+        if (mContent.getText().toString().trim().equals("")) {
             return "";
         }
-        return mContent.getText().toString();
+        return mContent.getText().toString().trim();
     }
 
     public boolean checkStartEndTime(String starttime, String endtime) {

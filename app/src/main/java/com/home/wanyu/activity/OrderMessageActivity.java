@@ -32,6 +32,7 @@ import com.home.wanyu.apater.OrderYearAda;
 import com.home.wanyu.bean.haveAddress.Result;
 import com.home.wanyu.bean.haveAddress.Root;
 import com.home.wanyu.bean.waterEleRan.ItemsYear;
+import com.home.wanyu.myUtils.MyDialog;
 import com.home.wanyu.myview.MyListView;
 
 import java.util.ArrayList;
@@ -93,7 +94,7 @@ public class OrderMessageActivity extends AppCompatActivity implements View.OnCl
             } else if (msg.what == 104) {//根据年份，月份，地址查询业主的缴费情况
                 Object o = msg.obj;
                 if (o != null && o instanceof com.home.wanyu.bean.waterEleRan.Root) {
-                    mBar_rl.setVisibility(View.GONE);
+                    MyDialog.stopDia();
                     com.home.wanyu.bean.waterEleRan.Root root = (com.home.wanyu.bean.waterEleRan.Root) o;
                     mList = root.getItemsYear();
                     mAdapter.setList(mList);
@@ -103,7 +104,6 @@ public class OrderMessageActivity extends AppCompatActivity implements View.OnCl
         }
     };
 
-    private RelativeLayout mBar_rl;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -209,8 +209,7 @@ public class OrderMessageActivity extends AppCompatActivity implements View.OnCl
         mAdapter = new OrderMsgAda(this, mList);
         mListview.setAdapter(mAdapter);
 
-        mBar_rl= (RelativeLayout) findViewById(R.id.bar_rl);
-        mBar_rl.setOnClickListener(this);
+
     }
 
     @Override
@@ -249,8 +248,8 @@ public class OrderMessageActivity extends AppCompatActivity implements View.OnCl
             startActivityForResult(intent, 123);
 
         } else if (id == mSearch_btn.getId()) {//查询账单
-            mBar_rl.setVisibility(View.VISIBLE);
-            mList .clear();
+            MyDialog.showDialog(this);
+            mList.clear();
             mAdapter.setList(mList);
             mAdapter.notifyDataSetChanged();
             if (mMonth_tv.getText().toString().equals("全部")) {
@@ -260,8 +259,6 @@ public class OrderMessageActivity extends AppCompatActivity implements View.OnCl
 
             }
 
-        }else if (id==mBar_rl.getId()){
-            mBar_rl.setVisibility(View.GONE);
         }
     }
 

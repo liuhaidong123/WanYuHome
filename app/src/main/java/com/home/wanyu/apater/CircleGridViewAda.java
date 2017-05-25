@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.home.wanyu.R;
 import com.home.wanyu.bean.CircleFriend;
+import com.home.wanyu.bean.getCircleTitleList.Result;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,18 +20,18 @@ import java.util.List;
  */
 
 public class CircleGridViewAda extends BaseAdapter {
-    private List<CircleFriend> list = new ArrayList<>();
+    private List<Result> list = new ArrayList<>();
     private Context mContext;
     private LayoutInflater minflater;
 
 
-    public CircleGridViewAda(Context mContext, List<CircleFriend> list) {
+    public CircleGridViewAda(Context mContext, List<Result> list) {
         this.mContext = mContext;
         this.list = list;
         this.minflater = LayoutInflater.from(this.mContext);
     }
 
-    public void setList(List<CircleFriend> list) {
+    public void setList(List<Result> list) {
         this.list = list;
     }
 
@@ -61,7 +62,7 @@ public class CircleGridViewAda extends BaseAdapter {
         } else {
             holder = (CircleTitleHolder) convertView.getTag();
         }
-        holder.textView.setText(list.get(position).getType());
+        holder.textView.setText(list.get(position).getCname());
         if (list.get(position).isFlag()) {
             holder.imageView.setImageResource(R.mipmap.circle_bottom_line);
         } else {

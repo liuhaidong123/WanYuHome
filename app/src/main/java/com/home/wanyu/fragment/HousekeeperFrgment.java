@@ -22,6 +22,11 @@ import com.home.wanyu.HttpUtils.HttpTools;
 import com.home.wanyu.R;
 import com.home.wanyu.User.UserInfo;
 import com.home.wanyu.activity.AddAddressActivity;
+import com.home.wanyu.activity.CommercialActivity;
+import com.home.wanyu.activity.DecorationActivity;
+import com.home.wanyu.activity.ExpressActivity;
+import com.home.wanyu.activity.HomeServiceActivity;
+import com.home.wanyu.activity.HouseMsgActivity;
 import com.home.wanyu.activity.LifeMoneyActivity;
 import com.home.wanyu.activity.LifeMoneyActivity2;
 import com.home.wanyu.activity.OrderActivity;
@@ -61,6 +66,12 @@ public class HousekeeperFrgment extends Fragment implements ViewPager.OnPageChan
     private LinearLayout mRepair_ll;
     private LinearLayout mOrder_ll;
     private LinearLayout mLife_money_ll;
+    private LinearLayout mExpress_ll;
+    private LinearLayout mCommercial_ll;
+    private LinearLayout mDecoration_ll;
+    private LinearLayout mHomeService_ll;
+    private LinearLayout mHouseMsg_ll;
+
 
     private HttpTools mHttptools;
     private Root mHaveRoot;
@@ -158,6 +169,24 @@ public class HousekeeperFrgment extends Fragment implements ViewPager.OnPageChan
         //生活缴费
         mLife_money_ll = (LinearLayout) view.findViewById(R.id.property_life_money);
         mLife_money_ll.setOnClickListener(this);
+        //快递收发
+        mExpress_ll= (LinearLayout) view.findViewById(R.id.property_express);
+        mExpress_ll.setOnClickListener(this);
+
+        //小区商户
+        mCommercial_ll= (LinearLayout) view.findViewById(R.id.property_commercial);
+        mCommercial_ll.setOnClickListener(this);
+//装修
+        mDecoration_ll= (LinearLayout) view.findViewById(R.id.property_decoration);
+        mDecoration_ll.setOnClickListener(this);
+//家政服务
+        mHomeService_ll= (LinearLayout) view.findViewById(R.id.property_home_srevice);
+        mHomeService_ll.setOnClickListener(this);
+
+        //租房信息
+        mHouseMsg_ll= (LinearLayout) view.findViewById(R.id.property_home_message);
+        mHouseMsg_ll.setOnClickListener(this);
+
     }
 
     /**
@@ -252,7 +281,7 @@ public class HousekeeperFrgment extends Fragment implements ViewPager.OnPageChan
             }else if (mHaveRoot!=null&&mHaveRoot.getCode().equals("0")){//有地址的话，直接显示物业账单信息
                 startActivity(new Intent(getActivity(), OrderMessageActivity.class));
             }else {
-                Toast.makeText(getContext(),"获取地址错误,",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(),"获取地址错误",Toast.LENGTH_SHORT).show();
             }
 
         } else if (id == mLife_money_ll.getId()) {//生活缴费
@@ -262,9 +291,19 @@ public class HousekeeperFrgment extends Fragment implements ViewPager.OnPageChan
             }else if (mHaveRoot!=null&&mHaveRoot.getCode().equals("0")){//有地址的话，直接显示物业账单信息
                 startActivity(new Intent(getActivity(), LifeMoneyActivity2.class));
             }else {
-                Toast.makeText(getContext(),"获取地址错误,",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(),"获取地址错误",Toast.LENGTH_SHORT).show();
             }
 
+        }else if (id==mExpress_ll.getId()){//快递收发
+            startActivity(new Intent(getActivity(),ExpressActivity.class));
+        }else if (id==mCommercial_ll.getId()){//小区商户
+            startActivity(new Intent(getActivity(),CommercialActivity.class));
+        }else if (id==mDecoration_ll.getId()){//装修
+            startActivity(new Intent(getActivity(),DecorationActivity.class));
+        }else if (id==mHomeService_ll.getId()){//家政服务
+            startActivity(new Intent(getActivity(),HomeServiceActivity.class));
+        }else if (id==mHouseMsg_ll.getId()){//租房信息
+            startActivity(new Intent(getActivity(),HouseMsgActivity.class));
         }
 
     }

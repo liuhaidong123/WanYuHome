@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="107dp"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/house_location_img"
+            android:layout_width="100dp"
+            android:layout_height="75dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/main_background4" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_toRightOf="@id/house_location_img">
+
+            <TextView
+                android:id="@+id/house_msg_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="涿州名流一品 一室一厅 48平米 押一付一 南北"
+                android:textColor="@color/titlecolor3"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/house_type_tv"
+                android:layout_width="52dp"
+                android:layout_height="20dp"
+                android:layout_below="@id/house_msg_tv"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/house_type_bg"
+                android:gravity="center"
+                android:text="合租"
+                android:textColor="@color/house_type"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/house_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/house_type_tv"
+                android:layout_marginTop="4dp"
+                android:text="1600元/月"
+                android:textColor="@color/bg_rect"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/house_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/house_type_tv"
+                android:layout_marginTop="4dp"
+                android:text="1天前"
+                android:textColor="@color/color9"
+                android:textSize="12sp" />
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>

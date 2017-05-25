@@ -89,6 +89,7 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/car_msg_btn"
         android:layout_below="@id/car_msg_title_rl"
+        android:layout_marginTop="1dp"
         android:layout_marginBottom="1dp"
         android:background="@color/white">
 
@@ -250,19 +251,24 @@
 
                         />
 
-                    <com.home.wanyu.myview.MyExpandableListview
+                    <com.home.wanyu.myview.MyListView
                         android:id="@+id/car_msg_commend_listview"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_below="@id/blue_comment"
                         android:layout_marginLeft="5dp"
                         android:layout_marginTop="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:dividerHeight="5dp"
+                        android:divider="@color/bg_color"
                         android:layout_toRightOf="@id/blue_comment"
                         android:scrollbars="none">
 
-                    </com.home.wanyu.myview.MyExpandableListview>
+                    </com.home.wanyu.myview.MyListView>
 
                     <RelativeLayout
+                        android:visibility="gone"
                         android:id="@+id/community_many_relative"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -342,7 +348,13 @@
                 android:textSize="14sp" />
         </LinearLayout>
 
+        <View
+            android:layout_width="1dp"
+            android:layout_height="37dp"
+            android:background="@color/bg_color"
+            />
         <LinearLayout
+            android:visibility="gone"
             android:id="@+id/car_msg_jiedan"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -369,11 +381,13 @@
             android:visibility="gone">
 
             <ImageView
+                android:id="@+id/join_img_car"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/community_add_no" />
 
             <TextView
+                android:id="@+id/join_num_car"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
