@@ -8,9 +8,13 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.home.wanyu.Ip.Ip;
 import com.home.wanyu.R;
+import com.home.wanyu.bean.Bean_Message;
 import com.home.wanyu.bean.CircleFriend;
+import com.home.wanyu.lzhUtils.MyCirleView;
 import com.home.wanyu.myview.RoundImageView;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,12 +25,10 @@ import java.util.List;
 
 public class CircleYouMsgAda extends BaseAdapter {
     private Context mContext;
-    private LayoutInflater minflater;
-
-
-    public CircleYouMsgAda(Context mContext) {
+    private List<Bean_Message.RowsBean> listMessage;
+    public CircleYouMsgAda(Context mContext,List<Bean_Message.RowsBean> listMessage) {
         this.mContext = mContext;
-        this.minflater = LayoutInflater.from(this.mContext);
+       this.listMessage=listMessage;
     }
 
 //    public void setList(List<CircleFriend> list) {
@@ -35,12 +37,12 @@ public class CircleYouMsgAda extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return 20;
+        return listMessage==null?0:listMessage.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return listMessage.get(position);
     }
 
     @Override
@@ -53,21 +55,31 @@ public class CircleYouMsgAda extends BaseAdapter {
         YouHolder holder = null;
         if (convertView == null) {
             holder = new YouHolder();
-            convertView = minflater.inflate(R.layout.circle_you_msg_item, null);
-
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.circle_you_msg_item, null);
             holder.imageView = (RoundImageView) convertView.findViewById(R.id.you_msg_head);
             holder.name = (TextView) convertView.findViewById(R.id.you_msg_name);
             holder.otherName = (TextView) convertView.findViewById(R.id.you_msg_content);
+            holder.mssage= (MyCirleView) convertView.findViewById(R.id.mssage);
             holder.time = (TextView) convertView.findViewById(R.id.you_msg_time);
             convertView.setTag(holder);
         } else {
             holder = (YouHolder) convertView.getTag();
         }
+        if (listMessage.get(position).isIsRead()){
+           holder.mssage.setVisibility(View.GONE);
+        }
+        else {
+            holder.mssage.setVisibility(View.VISIBLE);
+            }
+        Picasso.with(mContext).load(Ip.imagePath+listMessage.get(position).getAvatar()).placeholder(R.mipmap.loadinge).error(R.mipmap.loadinge).into(holder.imageView);
+        holder.name.setText(listMessage.get(position).getTitle());
+        holder.otherName.setText(listMessage.get(position).getContent());
 
         return convertView;
     }
 
     class YouHolder {
+        MyCirleView mssage;
         TextView name;
         RoundImageView imageView;
         TextView otherName;

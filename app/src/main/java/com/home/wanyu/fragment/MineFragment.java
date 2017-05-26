@@ -20,6 +20,7 @@ import com.home.wanyu.Ip.mToast;
 import com.home.wanyu.Ip.okhttpTools;
 import com.home.wanyu.R;
 import com.home.wanyu.User.UserInfo;
+import com.home.wanyu.activity.CircleGiveYouCommentActivity;
 import com.home.wanyu.activity.MyAboutUsActivity;
 import com.home.wanyu.activity.MyCircleContactActivity;
 import com.home.wanyu.activity.MyContactUs;
@@ -84,7 +85,7 @@ public class MineFragment extends Fragment{
                                 } else if (gender == 2) {//女
                                     fragment_mine_image_usersex.setSelected(false);
                                 }
-                                Picasso.with(getActivity()).load(Ip.imagePath+personal.getAvatar()).error(R.mipmap.errorphoto).into(fragment_mine_image_userphoto);
+                                Picasso.with(getActivity()).load(Ip.imagePath+personal.getAvatar()).error(R.mipmap.loadinge).placeholder(R.mipmap.loadinge).into(fragment_mine_image_userphoto);
                             }
                             else {
                                 mToast.Toast(getActivity(), userInfo.getResult());
@@ -111,7 +112,7 @@ public class MineFragment extends Fragment{
         return vi;
     }
     @OnClick({R.id.fragment_mine_image_userEditor,R.id.fragment_mine_layout_myhome,R.id.fragment_mine_layout_mycircle
-    ,R.id.fragment_mine_image_settings,R.id.fragment_mine_layout_about,R.id.fragment_mine_layout_contacts})
+    ,R.id.fragment_mine_image_settings,R.id.fragment_mine_layout_about,R.id.fragment_mine_layout_contacts,R.id.fragment_mine_image_msg})
     public void click(View vi){
         switch (vi.getId()){
             case R.id.fragment_mine_image_userEditor://用户信息编辑
@@ -136,6 +137,9 @@ public class MineFragment extends Fragment{
                 break;
             case R.id.fragment_mine_layout_contacts://意见反馈
                 startActivity(new Intent(getActivity(), MyContactUs.class));
+                break;
+            case R.id.fragment_mine_image_msg://消息
+                startActivity(new Intent(getActivity(), CircleGiveYouCommentActivity.class));
                 break;
         }
     }

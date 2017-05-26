@@ -9,6 +9,8 @@ public class Ip {
     public static final String serverPath="http://192.168.1.55:8080/smarthome/mobileapi/";
     public static final String imagePath="http://192.168.1.55:8080/smarthome/";
     public static final String pths="http://192.168.1.55:8080/smarthome/mobilepub";
+
+
 //    家》设备页面获取房间列表接口, 家》情景页面获取情景列表接口
     public static final String interface_Home_getSceneAndRoom="scene/findList.do?";
 
@@ -140,4 +142,21 @@ public class Ip {
 
     //修改门锁密码:http://192.168.1.55:8080/smarthome/mobileapi/equipment/doorPasswd.do?
     public static final String interface_changeDoorPsd="equipment/doorPasswd.do?";
+
+
+    //注册获取验证码:http://192.168.1.55:8080/smarthome/mobilepub/personal/vcode.do?telephone=18782931356
+    public static final String interface_getSMSCODE_register="/personal/vcode.do?";
+    //注册http://192.168.1.55:8080/smarthome/mobilepub/personal/register.do?telephone=18782931356&password=123&vcode=000886
+    public static final String interface_get_register="/personal/register.do?";
+
+    //获取消息接口http://192.168.1.55:8080/smarthome/mobileapi/message/findPage.do?token=9DB2FD6FDD2F116CD47CE6C48B3047EE&msgType=&msgTypeBegin=2&msgTypeEnd=3
+    public static final String interface_get_Message="message/findPage.do?";
+
+    //登录:http://localhost:8080/smarthome/mobilepub/personal/login.do?telephone=18782931356&password=123
+    public static final String interface_Login="/personal/login.do?";
+    //登录验证码:http://localhost:8080/smarthome/mobilepub/personal/loginvcode.do?telephone=18782931356
+    public static final String interface_LoginSMSCODE="/personal/loginvcode.do?";
+
+    //退出登录:http://localhost:8080/smarthome/mobilepub/personal/Exitlogin.do?token=ACDCE729BCE6FABC50881A867CAFC1BC
+    public static final String interface_ClearLogin="/personal/Exitlogin.do?";
 }

@@ -85,7 +85,7 @@ public class Bean_AC
         private String activityAddress;
         private Object starttime;
         private int likeNum;
-        private int activityTelephone;
+        private long activityTelephone;
         private String starttimeString;
         private int id;
         private String activityContent;
@@ -158,11 +158,11 @@ public class Bean_AC
             this.likeNum = likeNum;
         }
 
-        public int getActivityTelephone() {
+        public long getActivityTelephone() {
             return activityTelephone;
         }
 
-        public void setActivityTelephone(int activityTelephone) {
+        public void setActivityTelephone(long activityTelephone) {
             this.activityTelephone = activityTelephone;
         }
 

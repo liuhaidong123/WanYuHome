@@ -1,11 +1,13 @@
 package com.home.wanyu.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +17,23 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.home.wanyu.Ip.Ip;
+import com.home.wanyu.Ip.ToastType;
+import com.home.wanyu.Ip.mGson;
 import com.home.wanyu.Ip.mToast;
+import com.home.wanyu.OkhttpUtils.okhttp;
 import com.home.wanyu.R;
+import com.home.wanyu.User.UserInfo;
+import com.home.wanyu.activity.MainActivity;
+import com.home.wanyu.bean.Bean_M;
+import com.home.wanyu.bean.Bean_Register;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -51,8 +67,13 @@ public class LoginFragment extends Fragment{
     @BindView(R.id.login_sms_edit_psd)EditText login_sms_edit_psd;//验证码输入框
     @BindView(R.id.login_sms_text)TextView login_sms_text;//发送验证码的按钮
     @BindView(R.id.lyout_sms)LinearLayout lyout_sms;//验证码所在的layout
+
+    private String tele;
     private boolean isClick=true;//是否可以点击
     private int timeOut=59;//读秒器
+
+    private String cookie;
+    private boolean isLogin=false;//是否正在执行登录操作
     //验证码登录
 //    activity_my_house_family_add_getSmSCode.setBackground(getResources().getDrawable(R.drawable.editrighe));
 //}
@@ -88,26 +109,97 @@ public class LoginFragment extends Fragment{
 
         }
     };
+    private String resStr;
+    private Handler hand=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+                case -1://获取验证码失败
+                    setClickable(true);
+                    mToast.ToastFaild(getActivity(), ToastType.FAILD);
+                    break;
+                case 1://获取验证码成功
+                    try{
+                        Bean_M bean_m= mGson.gson.fromJson(resStr,Bean_M.class);
+                        if (bean_m!=null){
+                            if ("0".equals(bean_m.getCode())){
+                                login_sms_edit_psd.setText(bean_m.getResult());
+                                timeOut=59;
+                                setClickable(false);
+                        new Thread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                         while (timeOut>-1){
+                                            try {
+                                                    handler.sendEmptyMessage(timeOut);
+                                                    Thread.sleep(1000);
+                                                    timeOut--;
+                                                } catch (InterruptedException e) {
+                                                             e.printStackTrace();
+                                                        }
+                                                     }
+                                                    }
+                                                         }).start();
+                                        }
+                            else {
+                                setClickable(true);
+                                login_psd_edit_phone.setText(bean_m.getMessage());
+                                }
+                        }
+                        else {
+                            setClickable(true);
+                        }
+                    }
+                    catch (Exception e){
+                        e.printStackTrace();
+                        setClickable(true);
+                    }
+                    break;
+                case -2:
+                    isLogin=false;
+                    mToast.ToastFaild(getActivity(),ToastType.FAILD);
+                    break;
+                case 2:
+                    isLogin=false;
+                    try{
+                        Bean_Register login=mGson.gson.fromJson(resStr,Bean_Register.class);
+                        if (login!=null){
+                        if ("0".equals(login.getCode())){
+                            UserInfo.savaLogin(tele,login.getToken(),login.getPersonalId(),getActivity());
+                            startActivity(new Intent(getActivity(), MainActivity.class));
+                            mToast.Toast(getActivity(),"登录成功");
+                            getActivity().finish();
+                        }
+                            else {
+                            mToast.Toast(getActivity(),login.getMessage());
+                            }
+                        }
+
+                    }
+                    catch (Exception e){
+                        e.printStackTrace();
+                        mToast.ToastFaild(getActivity(),ToastType.GSONFAILD);
+                    }
+                    break;
+            }
+        }
+    };
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View vi=inflater.inflate(R.layout.frag_login_psd,null);
         unbinder= ButterKnife.bind(this,vi);
         return vi;
     }
-    @OnClick({R.id.login_btn_login,R.id.login_psd_image_select,R.id.login_text_select,R.id.login_sms_text})
+    @OnClick({R.id.login_btn_login,R.id.login_text_select,R.id.login_sms_text})
     public void click(View view){
         switch (view.getId()){
             case R.id.login_btn_login://登录按钮
-                if(login_psd_image_select.isSelected()){
                     login();
-                }
-                else {
-                    mToast.Toast(getActivity(),"您还没有阅读或者同意隐私条款");
-                    }
                 break;
-            case R.id.login_psd_image_select://使用条款的选择按钮
-                login_psd_image_select.setSelected(!login_psd_image_select.isSelected());
-                break;
+//            case R.id.login_psd_image_select://使用条款的选择按钮
+//                login_psd_image_select.setSelected(!login_psd_image_select.isSelected());
+//                break;
             case R.id.login_text_select://切换密码登录与验证码登录的view
                 if (loginType==TYPE_PSD){
                     loginType=TYPE_SMS;
@@ -123,28 +215,15 @@ public class LoginFragment extends Fragment{
                 }
                 break;
             case R.id.login_sms_text://发送验证码的按钮
+                String ph=login_psd_edit_phone.getText().toString();
+                if ("".equals(ph)|TextUtils.isEmpty(ph)|!isPhoneNum(ph)){
+                    mToast.Toast(getActivity(),"您输入的手机号不正确");
+                    return;
+                }
                 if (isClick==false){
                     return;
                 }
-                Random random=new Random();
-                int sms=random.nextInt(10)+100000;
-                login_sms_edit_psd.setText(sms+"");
-                timeOut=59;
-                setClickable(false);
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        while (timeOut>-1){
-                            try {
-                                handler.sendEmptyMessage(timeOut);
-                                Thread.sleep(1000);
-                                timeOut--;
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                }).start();
+                getSmsCode();
                 break;
         }
     }
@@ -156,17 +235,18 @@ public class LoginFragment extends Fragment{
                 if (loginType==TYPE_SMS){//验证码denglu
                     String smsCode=login_sms_edit_psd.getText().toString();
                     if (!"".equals(smsCode)&&!TextUtils.isEmpty(smsCode)&&smsCode.length()==6){
-                            mToast.Toast(getActivity(),"验证码登录");
+//                            mToast.Toast(getActivity(),"验证码登录");
+                        sendLogin();
                     }
                     else {
                         mToast.Toast(getActivity(),"验证码不正确");
                     }
-
                 }
              else if (loginType==TYPE_PSD){//密码登录
                         String psd=login_psd_edit_psd.getText().toString();
                     if (!"".equals(psd)&&!TextUtils.isEmpty(psd)){
-                        mToast.Toast(getActivity(),"密码登录");
+//                        mToast.Toast(getActivity(),"密码登录");
+                        sendLogin();
                     }
                     else {
                         mToast.Toast(getActivity(),"密码不正确");
@@ -204,5 +284,79 @@ public class LoginFragment extends Fragment{
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    //获取验证码http://localhost:8080/smarthome/mobilepub/personal/loginvcode.do?telephone=18782931356
+    public void getSmsCode(){
+        if (isClick==false){
+            return;
+        }
+        isClick=false;
+        Map<String,String> mp=new HashMap<>();
+        mp.put("telephone",login_psd_edit_phone.getText().toString());
+        okhttp.getCall(Ip.pths+Ip.interface_LoginSMSCODE,mp,okhttp.OK_POST).enqueue(new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+                hand.sendEmptyMessage(-1);
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+                    resStr=response.body().string();
+                    cookie=response.headers().get("Set-Cookie");
+                    Log.i("登录获取验证码-",resStr);
+                    hand.sendEmptyMessage(1);
+            }
+        });
+    }
+
+
+    public void sendLogin(){
+        if (isLogin){
+            mToast.Toast(getActivity(),"正在操作，请稍后");
+            return;
+        }
+        isLogin=true;
+//        http://localhost:8080/smarthome/mobilepub/personal/login.do?telephone=18782931356&password=123
+//        telephone    Long      用户电话
+//        password     String      密码
+        Map<String,String>map=new HashMap<>();
+        tele=login_psd_edit_phone.getText().toString();
+        map.put("telephone",tele);
+        switch (loginType){
+            case TYPE_SMS://验证码登录
+                map.put("password",login_sms_edit_psd.getText().toString());
+                okhttp.getCallCookie(Ip.pths+Ip.interface_Login,map,cookie).enqueue(new Callback() {
+                    @Override
+                    public void onFailure(Request request, IOException e) {
+                        hand.sendEmptyMessage(-2);
+                    }
+
+                    @Override
+                    public void onResponse(Response response) throws IOException {
+                        resStr=response.body().string();
+                        Log.i("登录返回--"+loginType,resStr);
+                        hand.sendEmptyMessage(2);
+                    }
+                });
+                break;
+            case TYPE_PSD://密码登录
+                map.put("password",login_psd_edit_psd.getText().toString());
+                okhttp.getCall(Ip.pths+Ip.interface_Login,map,okhttp.OK_POST).enqueue(new Callback() {
+                    @Override
+                    public void onFailure(Request request, IOException e) {
+                        hand.sendEmptyMessage(-2);
+                    }
+
+                    @Override
+                    public void onResponse(Response response) throws IOException {
+                        resStr=response.body().string();
+                        Log.i("登录返回--"+loginType,resStr);
+                        hand.sendEmptyMessage(2);
+                    }
+                });
+                break;
+        }
+
     }
 }
