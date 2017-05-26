@@ -107,6 +107,7 @@ public class HomeSenceAddSenceActivity extends MyActivity {
                         if (setting!=null){
                             if ("0".equals(setting.getCode())){
                                 mToast.Toast(con,"添加成功");
+                                finish();
                             }
                             else {
                                 ServerCode.showResponseMsg(con,setting.getCode());

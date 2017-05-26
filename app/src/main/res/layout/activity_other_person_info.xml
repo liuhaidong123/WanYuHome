@@ -17,6 +17,7 @@
                 android:layout_height="@dimen/titleHeight"
                 android:background="#ffffff">
                 <ImageView
+                    android:onClick="retu"
                     android:id="@+id/titleImage_3"
                     android:layout_centerVertical="true"
                     android:layout_width="wrap_content"

@@ -110,7 +110,7 @@ public class MyUserMsgEditorActivity extends MyActivity {
 
     private void initData() {
         if (personal!=null){
-            Picasso.with(con).load(Ip.imagePath+personal.getAvatar()).error(R.mipmap.errorphoto).into(activity_my_user_msg_editor_image);
+            Picasso.with(con).load(Ip.imagePath+personal.getAvatar()).error(R.mipmap.loadinge).placeholder(R.mipmap.loadinge).into(activity_my_user_msg_editor_image);
             activity_my_user_msg_editor_Name.setText(personal.getUserName()==null?"未填写":personal.getUserName());
             int gender=personal.getGender();   //|性别1=男，2=女
             if (gender==1){

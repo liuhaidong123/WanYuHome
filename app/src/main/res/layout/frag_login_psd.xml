@@ -155,6 +155,7 @@
 
         <!--//使用条款-->
         <LinearLayout
+            android:visibility="gone"
             android:gravity="center"
             android:id="@+id/login_layout_select"
             android:layout_below="@+id/login_layout"

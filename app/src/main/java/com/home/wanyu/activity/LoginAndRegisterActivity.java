@@ -43,7 +43,6 @@ public class LoginAndRegisterActivity extends FragmentActivity {
         login_register_text_login.setSelected(true);
         getSupportFragmentManager().beginTransaction().add(R.id.login_register_fragmentLayout,loginFragment).add(R.id.login_register_fragmentLayout,registerFragment)
                 .hide(loginFragment).hide(registerFragment).show(mFrag).commit();
-
     }
 
     @OnClick({R.id.login_register_text_login,R.id.login_register_text_register})
@@ -72,4 +71,6 @@ public class LoginAndRegisterActivity extends FragmentActivity {
             unbinder.unbind();
         }
     }
+
+
 }

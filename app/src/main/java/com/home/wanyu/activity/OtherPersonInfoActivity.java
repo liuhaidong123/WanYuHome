@@ -298,8 +298,6 @@ public class OtherPersonInfoActivity extends Activity {
             }
     });
 }
-
-
     public void setLoadingState(int state){
         switch (state){
             case 0://显示加载更多
@@ -314,5 +312,8 @@ public class OtherPersonInfoActivity extends Activity {
                 break;
         }
 
+    }
+    public void retu(View vi){
+        finish();
     }
 }

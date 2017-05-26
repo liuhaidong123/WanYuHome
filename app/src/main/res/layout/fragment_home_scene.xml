@@ -10,34 +10,34 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/homefragmentFgColor"/>
-        <android.support.design.widget.TabLayout
-            android:id="@+id/fragment_home_scene_tablayout"
-            app:tabMode="scrollable"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            app:tabIndicatorColor="#2ac0f3"
-            app:tabSelectedTextColor="#2ac0f3"
-            app:tabTextColor="#333333"
-            />
-    <FrameLayout
-        android:background="@color/homefragmentFgbac"
-        android:padding="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <android.support.v4.view.ViewPager
-            android:id="@+id/fragment_home_scene_viewpager"
+        <RelativeLayout
+            android:id="@+id/homescene_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-        </android.support.v4.view.ViewPager>
-        <!--<com.home.wanyu.lzhView.MyFloatingView-->
-            <!--android:id="@+id/fragment_home_scene_floatingView"-->
-            <!--android:background="#00000000"-->
-            <!--android:layout_width="80dp"-->
-            <!--android:layout_marginBottom="15dp"-->
-            <!--android:layout_marginRight="15dp"-->
-            <!--android:layout_gravity="bottom|right"-->
-            <!--android:layout_height="80dp" />-->
-    </FrameLayout>
+            <android.support.design.widget.TabLayout
+                android:id="@+id/fragment_home_scene_tablayout"
+                app:tabMode="scrollable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                app:tabIndicatorColor="#2ac0f3"
+                app:tabSelectedTextColor="#2ac0f3"
+                app:tabTextColor="#333333"
+                />
+            <FrameLayout
+                android:layout_below="@+id/fragment_home_scene_tablayout"
+                android:background="@color/homefragmentFgbac"
+                android:padding="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/fragment_home_scene_viewpager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                </android.support.v4.view.ViewPager>
+            </FrameLayout>
+        </RelativeLayout>
+
+
 
 </LinearLayout>

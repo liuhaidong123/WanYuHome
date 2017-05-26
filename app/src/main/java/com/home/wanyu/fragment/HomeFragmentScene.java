@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
+import android.widget.RelativeLayout;
 
 import com.home.wanyu.R;
 import com.home.wanyu.bean.Bean_SceneAndRoom;
@@ -39,6 +40,7 @@ public class HomeFragmentScene extends Fragment implements HomeFragment.HomeData
     ViewPager fragment_home_scene_viewpager;
     @BindView(R.id.fragment_home_scene_tablayout)
     TabLayout fragment_home_scene_tablayout;
+    @BindView(R.id.homescene_layout)RelativeLayout homescene_layout;//情景所在的layout
 //    @BindArray(R.array.homeSceneString) String[]Sence;
     private ArrayList<String>listTable;//获取到的标题个数
     private ArrayList<HomeFragmentScenePager>listFragment;
@@ -102,15 +104,17 @@ public class HomeFragmentScene extends Fragment implements HomeFragment.HomeData
             unbinder.unbind();
         }
     }
-
-
     //刷新数据，在homeFragment获取数据后刷新
     @Override
     public void sendMsg(Object msg) {
         if (msg!=null){
             listScene= (List<Bean_SceneAndRoom.SceneListBean>) msg;
             if (listScene!=null&&listScene.size()>0){
+                homescene_layout.setVisibility(View.VISIBLE);
                 initData();
+            }
+            else {
+                homescene_layout.setVisibility(View.GONE);
             }
         }
     }

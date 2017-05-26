@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.home.wanyu.R;
+import com.home.wanyu.User.UserInfo;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,7 +33,13 @@ public class StartActivity extends AppCompatActivity {
                     start_textV.setText(Html.fromHtml("<font color=\'#858585\'>剩余 </font><font color=\'#f02387\'>"+time+"</font><font color='#858585'>s</font>"));
                     break;
                 case 0:
-                    startActivity(new Intent(StartActivity.this,MainActivity.class));
+                    if (UserInfo.isLogin(StartActivity.this)){//已经登录
+                        startActivity(new Intent(StartActivity.this,MainActivity.class));
+                    }
+                    else {
+                        startActivity(new Intent(StartActivity.this,LoginAndRegisterActivity.class));
+                    }
+
                     finish();
                     break;
             }
@@ -65,8 +72,14 @@ public class StartActivity extends AppCompatActivity {
                 return;
             }
             time=-1;
+        if (UserInfo.isLogin(StartActivity.this)){//已经登录
             startActivity(new Intent(StartActivity.this,MainActivity.class));
-            finish();
+        }
+        else {
+            startActivity(new Intent(StartActivity.this,LoginAndRegisterActivity.class));
+        }
+
+        finish();
         }
 
 
