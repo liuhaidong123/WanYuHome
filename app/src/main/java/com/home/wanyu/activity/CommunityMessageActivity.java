@@ -217,6 +217,7 @@ private long userId;
             mEnd_tv.setTextColor(ContextCompat.getColor(this, R.color.white));
         } else if (id == mMsg.getId()) {//消息
             Intent intent = new Intent(this, CircleGiveYouCommentActivity.class);
+            intent.putExtra("type",1);
             startActivity(intent);
         } else if (id == mMore_rl.getId()) {//加载更多
             check =2;

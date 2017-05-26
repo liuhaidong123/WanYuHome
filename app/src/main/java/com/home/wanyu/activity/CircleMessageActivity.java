@@ -328,6 +328,7 @@ public class CircleMessageActivity extends AppCompatActivity implements View.OnC
             startActivity(new Intent(this, CirclePostActivity.class));
         } else if (id == mMsg_img.getId()) {//跳转消息页面
             Intent intent = new Intent(this, CircleGiveYouCommentActivity.class);
+            intent.putExtra("type",0);
             startActivity(intent);
         } else if (id == mback.getId()) {//返回
             finish();

@@ -673,14 +673,14 @@ public class HttpTools {
 
     //友邻圈评论接口
     //public void circleComment(final Handler handler, String token, long stateId, long coverPersonalId, String content) {
-    public void circleComment(final Handler handler,AjaxParams ajaxParams){
-      //  String url = UrlTools.BASE + UrlTools.CIRCLE_COMMENT + "token=" + token + "&stateId=" + stateId + "&coverPersonalId=" + coverPersonalId + "&content=" + content;
+    public void circleComment(final Handler handler, AjaxParams ajaxParams) {
+        //  String url = UrlTools.BASE + UrlTools.CIRCLE_COMMENT + "token=" + token + "&stateId=" + stateId + "&coverPersonalId=" + coverPersonalId + "&content=" + content;
         String url = UrlTools.BASE + UrlTools.CIRCLE_COMMENT;
         mFinalHttp.addHeader("Cookie", "token=" + UserInfo.userToken);
         mFinalHttp.post(url, ajaxParams, new AjaxCallBack<String>() {
 
 
-     //   mFinalHttp.get(url, new AjaxCallBack<String>() {
+            //   mFinalHttp.get(url, new AjaxCallBack<String>() {
             @Override
             public void onStart() {
                 super.onStart();
@@ -716,7 +716,6 @@ public class HttpTools {
             }
         });
     }
-
 
 
     //删除圈子帖子接口
@@ -761,10 +760,9 @@ public class HttpTools {
     }
 
 
-
     //获取社区活动首页列表接口
-    public void getAreaActivityList(final Handler handler, String token, int over ,int start,int limit) {
-        String url = UrlTools.BASE + UrlTools.GET_AREA_ACTIVITY_LIST + "token=" + token + "&over=" + over+"&start="+start+"&limit="+limit;
+    public void getAreaActivityList(final Handler handler, String token, int over, int start, int limit) {
+        String url = UrlTools.BASE + UrlTools.GET_AREA_ACTIVITY_LIST + "token=" + token + "&over=" + over + "&start=" + start + "&limit=" + limit;
 
         mFinalHttp.get(url, new AjaxCallBack<String>() {
             @Override
@@ -805,7 +803,7 @@ public class HttpTools {
 
 
     //获取社区活动详情接口
-    public void getAreaActivityMsg(final Handler handler, String token,long ActivityId) {
+    public void getAreaActivityMsg(final Handler handler, String token, long ActivityId) {
         String url = UrlTools.BASE + UrlTools.GET_AREA_ACTIVITY_MSG + "token=" + token + "&ActivityId=" + ActivityId;
 
         mFinalHttp.get(url, new AjaxCallBack<String>() {
@@ -847,7 +845,7 @@ public class HttpTools {
 
 
     //获取社区活动点赞接口
-    public void getAreaActivityLike(final Handler handler, String token,long ActivityId) {
+    public void getAreaActivityLike(final Handler handler, String token, long ActivityId) {
         String url = UrlTools.BASE + UrlTools.GET_AREA_ACTIVITY_LIKE + "token=" + token + "&ActivityId=" + ActivityId;
 
         mFinalHttp.get(url, new AjaxCallBack<String>() {
@@ -887,51 +885,51 @@ public class HttpTools {
         });
     }
 
-   // 社区活动添加图片接口
-   public void AreaActivityPosImg(final Handler handler,AjaxParams ajaxParams) {
-       String url = UrlTools.BASE + UrlTools.AREA_ACTIVITY_POST_IMG ;
-       mFinalHttp.addHeader("Cookie", "token=" + UserInfo.userToken);
-       mFinalHttp.post(url, ajaxParams,new AjaxCallBack<String>() {
-           @Override
-           public void onStart() {
-               super.onStart();
-               Log.e("onStart", "社区活动添加图片接口");
-           }
+    // 社区活动添加图片接口
+    public void AreaActivityPosImg(final Handler handler, AjaxParams ajaxParams) {
+        String url = UrlTools.BASE + UrlTools.AREA_ACTIVITY_POST_IMG;
+        mFinalHttp.addHeader("Cookie", "token=" + UserInfo.userToken);
+        mFinalHttp.post(url, ajaxParams, new AjaxCallBack<String>() {
+            @Override
+            public void onStart() {
+                super.onStart();
+                Log.e("onStart", "社区活动添加图片接口");
+            }
 
-           @Override
-           public void onSuccess(String s) {
-               super.onSuccess(s);
-               Log.e("onSuccess", "社区活动添加图片接口" + s);
-               try {
-                   Message message = new Message();
-                   com.home.wanyu.bean.getAreaPostImg.Root root = mGson.fromJson(s, com.home.wanyu.bean.getAreaPostImg.Root.class);
-                   message.obj = root;
-                   message.what = 121;
-                   handler.sendMessage(message);
+            @Override
+            public void onSuccess(String s) {
+                super.onSuccess(s);
+                Log.e("onSuccess", "社区活动添加图片接口" + s);
+                try {
+                    Message message = new Message();
+                    com.home.wanyu.bean.getAreaPostImg.Root root = mGson.fromJson(s, com.home.wanyu.bean.getAreaPostImg.Root.class);
+                    message.obj = root;
+                    message.what = 121;
+                    handler.sendMessage(message);
 
-               } catch (Exception e) {
-                   Log.e("错误码", e.toString());
-                   // handler.sendEmptyMessage(200);
-               }
+                } catch (Exception e) {
+                    Log.e("错误码", e.toString());
+                    // handler.sendEmptyMessage(200);
+                }
 
-           }
+            }
 
-           @Override
-           public void onFailure(Throwable t, int errorNo, String strMsg) {
-               super.onFailure(t, errorNo, strMsg);
-               if (strMsg == null) {
-                   strMsg = "--null";
-               }
-               Log.e("onFailure", "社区活动添加图片接口" + strMsg);
-               // handler.sendEmptyMessage(203);
-           }
-       });
-   }
+            @Override
+            public void onFailure(Throwable t, int errorNo, String strMsg) {
+                super.onFailure(t, errorNo, strMsg);
+                if (strMsg == null) {
+                    strMsg = "--null";
+                }
+                Log.e("onFailure", "社区活动添加图片接口" + strMsg);
+                // handler.sendEmptyMessage(203);
+            }
+        });
+    }
 
     //社区活动评论
-    public void AreaActivityComment(final Handler handler,AjaxParams ajaxParams) {
+    public void AreaActivityComment(final Handler handler, AjaxParams ajaxParams) {
         String url = UrlTools.BASE + UrlTools.AREA_ACTIVITY_COMMENT;
-        mFinalHttp.post(url,ajaxParams, new AjaxCallBack<String>() {
+        mFinalHttp.post(url, ajaxParams, new AjaxCallBack<String>() {
             @Override
             public void onStart() {
                 super.onStart();
@@ -970,7 +968,7 @@ public class HttpTools {
 
 
     //获取社区活动加入接口
-    public void areaActivityJoin(final Handler handler, String token,long ActivityId) {
+    public void areaActivityJoin(final Handler handler, String token, long ActivityId) {
         String url = UrlTools.BASE + UrlTools.AREA_ACTIVITY_JOIN + "token=" + token + "&ActivityId=" + ActivityId;
 
         mFinalHttp.get(url, new AjaxCallBack<String>() {
@@ -1012,10 +1010,10 @@ public class HttpTools {
 
 
     // 社区活动发布接口a
-    public void areaActivityPost(final Handler handler,AjaxParams ajaxParams) {
-        String url = UrlTools.BASE + UrlTools.AREA_ACTIVITY_POST ;
+    public void areaActivityPost(final Handler handler, AjaxParams ajaxParams) {
+        String url = UrlTools.BASE + UrlTools.AREA_ACTIVITY_POST;
         mFinalHttp.addHeader("Cookie", "token=" + UserInfo.userToken);
-        mFinalHttp.post(url, ajaxParams,new AjaxCallBack<String>() {
+        mFinalHttp.post(url, ajaxParams, new AjaxCallBack<String>() {
             @Override
             public void onStart() {
                 super.onStart();
@@ -1053,8 +1051,8 @@ public class HttpTools {
     }
 
     //获取社区活动加入接口
-    public void areaActivityDelete(final Handler handler, String token,long ActivityId,long PublisherPersonalId) {
-        String url = UrlTools.BASE + UrlTools.AREA_ACTIVITY_DELETE + "token=" + token + "&ActivityId=" + ActivityId+"&PublisherPersonalId="+PublisherPersonalId;
+    public void areaActivityDelete(final Handler handler, String token, long ActivityId, long PublisherPersonalId) {
+        String url = UrlTools.BASE + UrlTools.AREA_ACTIVITY_DELETE + "token=" + token + "&ActivityId=" + ActivityId + "&PublisherPersonalId=" + PublisherPersonalId;
 
         mFinalHttp.get(url, new AjaxCallBack<String>() {
             @Override
@@ -1095,8 +1093,8 @@ public class HttpTools {
 
 
     //获取社区平车首页列表
-    public void getCarPoolingList(final Handler handler, String token,int over,int start ,int limit) {
-        String url = UrlTools.BASE + UrlTools.CAR_POOLING_LIST + "token=" + token + "&over=" + over+"&start="+start+"&limit="+limit;
+    public void getCarPoolingList(final Handler handler, String token, int over, int start, int limit) {
+        String url = UrlTools.BASE + UrlTools.CAR_POOLING_LIST + "token=" + token + "&over=" + over + "&start=" + start + "&limit=" + limit;
 
         mFinalHttp.get(url, new AjaxCallBack<String>() {
             @Override
@@ -1137,10 +1135,10 @@ public class HttpTools {
 
 
     // 社区拼车发布接口
-    public void carPooloingPost(final Handler handler,AjaxParams ajaxParams) {
-        String url = UrlTools.BASE + UrlTools.CAR_POOLING_POST ;
+    public void carPooloingPost(final Handler handler, AjaxParams ajaxParams) {
+        String url = UrlTools.BASE + UrlTools.CAR_POOLING_POST;
         mFinalHttp.addHeader("Cookie", "token=" + UserInfo.userToken);
-        mFinalHttp.post(url, ajaxParams,new AjaxCallBack<String>() {
+        mFinalHttp.post(url, ajaxParams, new AjaxCallBack<String>() {
             @Override
             public void onStart() {
                 super.onStart();
@@ -1179,7 +1177,7 @@ public class HttpTools {
 
 
     //获取社区平车详情
-    public void carPoolingMsg(final Handler handler, String token,long carpoolingId) {
+    public void carPoolingMsg(final Handler handler, String token, long carpoolingId) {
         String url = UrlTools.BASE + UrlTools.CAR_POOLING_MSG + "token=" + token + "&carpoolingId=" + carpoolingId;
 
         mFinalHttp.get(url, new AjaxCallBack<String>() {
@@ -1221,9 +1219,9 @@ public class HttpTools {
 
 
     //社区拼车评论
-    public void carPoolingComment(final Handler handler,AjaxParams ajaxParams) {
+    public void carPoolingComment(final Handler handler, AjaxParams ajaxParams) {
         String url = UrlTools.BASE + UrlTools.CAR_POOLING_COMMENT;
-        mFinalHttp.post(url,ajaxParams, new AjaxCallBack<String>() {
+        mFinalHttp.post(url, ajaxParams, new AjaxCallBack<String>() {
             @Override
             public void onStart() {
                 super.onStart();
@@ -1262,7 +1260,7 @@ public class HttpTools {
 
 
     //社区拼车加入接口
-    public void carPoolingJoin(final Handler handler, String token,long carpoolingId) {
+    public void carPoolingJoin(final Handler handler, String token, long carpoolingId) {
         String url = UrlTools.BASE + UrlTools.CAR_POOLING_JOIN + "token=" + token + "&carpoolingId=" + carpoolingId;
 
         mFinalHttp.get(url, new AjaxCallBack<String>() {
@@ -1301,8 +1299,9 @@ public class HttpTools {
             }
         });
     }
+
     //社区拼车接单接口
-    public void carPoolingOrder(final Handler handler, String token,long carpoolingId) {
+    public void carPoolingOrder(final Handler handler, String token, long carpoolingId) {
         String url = UrlTools.BASE + UrlTools.CAR_POOLING_ORDER + "token=" + token + "&carpoolingId=" + carpoolingId;
 
         mFinalHttp.get(url, new AjaxCallBack<String>() {
@@ -1342,6 +1341,172 @@ public class HttpTools {
         });
     }
 
+
+    //小区商户接口
+    public void shoppingList(final Handler handler, String token, int start, int limit, String rname, double lat2, double lng2) {
+        String url = UrlTools.BASE + UrlTools.SOPPING_LIST + "token=" + token + "&start=" + start + "&limit=" + limit + "&rname=" + rname + "&lat2=" + lat2 + "&lng2=" + lng2;
+
+        mFinalHttp.get(url, new AjaxCallBack<String>() {
+            @Override
+            public void onStart() {
+                super.onStart();
+                Log.e("onStart", "小区商户接口");
+            }
+
+            @Override
+            public void onSuccess(String s) {
+                super.onSuccess(s);
+                Log.e("onSuccess", "小区商户接口" + s);
+                try {
+                    Message message = new Message();
+                    com.home.wanyu.bean.shoppingList.Root root = mGson.fromJson(s, com.home.wanyu.bean.shoppingList.Root.class);
+                    message.obj = root;
+                    message.what = 132;
+                    handler.sendMessage(message);
+
+                } catch (Exception e) {
+                    Log.e("错误码", e.toString());
+                    // handler.sendEmptyMessage(200);
+                }
+
+            }
+
+            @Override
+            public void onFailure(Throwable t, int errorNo, String strMsg) {
+                super.onFailure(t, errorNo, strMsg);
+                if (strMsg == null) {
+                    strMsg = "--null";
+                }
+                Log.e("onFailure", "小区商户接口" + strMsg);
+                // handler.sendEmptyMessage(203);
+            }
+        });
+    }
+
+
+    //家政服务id=11，装修服务id=12接口
+    public void homeService(final Handler handler, String token, long businessId) {
+        String url = UrlTools.BASE + UrlTools.HOME_SERVICE + "token=" + token + "&businessId=" + businessId;
+
+        mFinalHttp.get(url, new AjaxCallBack<String>() {
+            @Override
+            public void onStart() {
+                super.onStart();
+                Log.e("onStart", "家政服务接口");
+            }
+
+            @Override
+            public void onSuccess(String s) {
+                super.onSuccess(s);
+                Log.e("onSuccess", "家政服务接口" + s);
+                try {
+                    Message message = new Message();
+                    com.home.wanyu.bean.homeService.Root root = mGson.fromJson(s, com.home.wanyu.bean.homeService.Root.class);
+                    message.obj = root;
+                    message.what = 133;
+                    handler.sendMessage(message);
+
+                } catch (Exception e) {
+                    Log.e("错误码", e.toString());
+                    // handler.sendEmptyMessage(200);
+                }
+
+            }
+
+            @Override
+            public void onFailure(Throwable t, int errorNo, String strMsg) {
+                super.onFailure(t, errorNo, strMsg);
+                if (strMsg == null) {
+                    strMsg = "--null";
+                }
+                Log.e("onFailure", "家政服务接口" + strMsg);
+                // handler.sendEmptyMessage(203);
+            }
+        });
+    }
+
+
+    //搜索小区地址
+    public void shoppingSearchAddress(final Handler handler, String rname) {
+        String url = UrlTools.BASE + UrlTools.SHOPPING_SEARCH_ADDRESS + "rname=" + rname ;
+
+        mFinalHttp.get(url, new AjaxCallBack<String>() {
+            @Override
+            public void onStart() {
+                super.onStart();
+                Log.e("onStart", "搜索小区地址");
+            }
+
+            @Override
+            public void onSuccess(String s) {
+                super.onSuccess(s);
+                Log.e("onSuccess", "搜索小区地址" + s);
+                try {
+                    Message message = new Message();
+                    com.home.wanyu.bean.shoppingSearchAddress.Root root = mGson.fromJson(s, com.home.wanyu.bean.shoppingSearchAddress.Root.class);
+                    message.obj = root;
+                    message.what = 135;
+                    handler.sendMessage(message);
+
+                } catch (Exception e) {
+                    Log.e("错误码", e.toString());
+                    // handler.sendEmptyMessage(200);
+                }
+
+            }
+
+            @Override
+            public void onFailure(Throwable t, int errorNo, String strMsg) {
+                super.onFailure(t, errorNo, strMsg);
+                if (strMsg == null) {
+                    strMsg = "--null";
+                }
+                Log.e("onFailure", "搜索小区地址" + strMsg);
+                // handler.sendEmptyMessage(203);
+            }
+        });
+    }
+
+    //未领取的快递
+    public void expressNOGet(final Handler handler, String token) {
+        String url = UrlTools.BASE + UrlTools.EXPRESS_NO_GET + "token=" + UserInfo.userToken ;
+
+        mFinalHttp.get(url, new AjaxCallBack<String>() {
+            @Override
+            public void onStart() {
+                super.onStart();
+                Log.e("onStart", "未领取的快递");
+            }
+
+            @Override
+            public void onSuccess(String s) {
+                super.onSuccess(s);
+                Log.e("onSuccess", "未领取的快递" + s);
+                try {
+                    Message message = new Message();
+                    com.home.wanyu.bean.Express.Root root = mGson.fromJson(s, com.home.wanyu.bean.Express.Root.class);
+                    message.obj = root;
+                    message.what = 136;
+                    handler.sendMessage(message);
+
+                } catch (Exception e) {
+                    Log.e("错误码", e.toString());
+                    // handler.sendEmptyMessage(200);
+                }
+
+            }
+
+            @Override
+            public void onFailure(Throwable t, int errorNo, String strMsg) {
+                super.onFailure(t, errorNo, strMsg);
+                if (strMsg == null) {
+                    strMsg = "--null";
+                }
+                Log.e("onFailure", "未领取的快递" + strMsg);
+                // handler.sendEmptyMessage(203);
+            }
+        });
+    }
 }
 
 

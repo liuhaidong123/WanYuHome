@@ -61,7 +61,7 @@ public class OrderAddressActivity extends AppCompatActivity implements View.OnCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_address);
         mHttptools=HttpTools.getHttpToolsInstance();
-        mHttptools.haveUserAddress(mHandler, UserInfo.userToken);//获取地址列表
+
         initView();
     }
 
@@ -135,5 +135,11 @@ public class OrderAddressActivity extends AppCompatActivity implements View.OnCl
         android.view.WindowManager.LayoutParams p = alert.getWindow().getAttributes();  //获取对话框当前的参数值
         p.width = (int) ((int)dm.widthPixels / a);
         alert.getWindow().setAttributes(p);//设置生效
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mHttptools.haveUserAddress(mHandler, UserInfo.userToken);//获取地址列表
     }
 }

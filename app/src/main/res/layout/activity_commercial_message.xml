@@ -23,6 +23,7 @@
             android:src="@mipmap/property_back" />
 
         <TextView
+            android:id="@+id/commercial_shop_name"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:gravity="center"
@@ -168,6 +169,7 @@
 
 
             <RelativeLayout
+                android:visibility="gone"
                 android:id="@+id/commercial_goods_more_rl"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
@@ -189,6 +191,7 @@
                     android:textSize="15sp" />
 
                 <ProgressBar
+                    android:visibility="invisible"
                     android:id="@+id/goods_msg_pbLocate"
                     style="?android:attr/progressBarStyleSmall"
                     android:layout_width="wrap_content"
@@ -198,6 +201,7 @@
                     android:layout_toEndOf="@id/footer_tv" />
 
                 <ImageView
+                    android:visibility="gone"
                     android:id="@+id/goods_bottom_back"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

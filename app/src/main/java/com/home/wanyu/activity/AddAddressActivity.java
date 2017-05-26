@@ -108,6 +108,8 @@ public class AddAddressActivity extends AppCompatActivity implements View.OnClic
                        } else if (getIntent().getIntExtra("order", -1) == 22) {
                            startActivity(new Intent(AddAddressActivity.this, OrderMessageActivity.class));
                            finish();
+                       }else {
+                           finish();
                        }
                    }else if (root.getCode().equals("-1")){
                        Toast.makeText(AddAddressActivity.this,"请确定您的业主姓名与绑定的手机号是否正确",Toast.LENGTH_SHORT).show();
@@ -229,10 +231,10 @@ public class AddAddressActivity extends AppCompatActivity implements View.OnClic
                 mMap.put("yardid", String.valueOf(mAreaID));
                 mMap.put("ownerName", getName());
                 mMap.put("ownertelephone", getPhone());
-                mMap.put("buildingNumber", getLou()+"号楼");
-                mMap.put("floor", getCeng()+"层");
-                mMap.put("unitNumber", getUnit()+"单元");
-                mMap.put("roomNumber", getHourse()+"号房");
+                mMap.put("buildingNumber", getLou()+"");
+                mMap.put("floor", getCeng()+"");
+                mMap.put("unitNumber", getUnit()+"");
+                mMap.put("roomNumber", getHourse()+"");
                 mHttptools.addUserAddress(mHandler, mMap);
 
             }

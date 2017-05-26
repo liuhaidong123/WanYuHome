@@ -58,6 +58,7 @@
                 android:textSize="12sp" />
 
             <TextView
+                android:id="@+id/km_shop"
                 android:layout_below="@id/goods_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

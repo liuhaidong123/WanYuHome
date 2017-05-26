@@ -1,10 +1,15 @@
 package com.home.wanyu.activity;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -18,10 +23,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.home.wanyu.HttpUtils.HttpTools;
 import com.home.wanyu.R;
 import com.home.wanyu.apater.CommercialAddressHositoryAda;
+import com.home.wanyu.apater.ShoppingSearchAda;
 import com.home.wanyu.bean.Hository;
 import com.home.wanyu.bean.getCircleCommentMsg.LikeNum;
+import com.home.wanyu.bean.shoppingSearchAddress.Result;
+import com.home.wanyu.bean.shoppingSearchAddress.Root;
 import com.home.wanyu.myUtils.SearchAddressDB;
 
 import java.util.ArrayList;
@@ -33,18 +42,51 @@ public class CommercialSearchAddressActivity extends AppCompatActivity implement
     private EditText mEdit_content;
 
 
-
     private ImageView delete_img;
-    private ListView mListview;
+    private ListView mListview, mSearchListview;
     private List<Hository> mList = new ArrayList<>();
+    private List<Result> mSearchList = new ArrayList<>();
     private CommercialAddressHositoryAda mAdapter;
+    private ShoppingSearchAda mSearchAda;
     private SearchAddressDB mMyDB;
     private SQLiteDatabase mSQLite;
+
+    private RelativeLayout mdelete_rl;
+    private HttpTools mHttptools;
+    private Handler mhandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (msg.what == 135) {
+                Object o = msg.obj;
+                if (o != null && o instanceof Root) {
+                    Root root = (Root) o;
+                    if (root.getResult() != null) {
+                        if (root.getResult().size() == 0) {
+                            Toast.makeText(CommercialSearchAddressActivity.this, "亲，没有您想到的地址哦", Toast.LENGTH_SHORT).show();
+                        } else {
+                            mdelete_rl.setVisibility(View.GONE);
+                            mListview.setVisibility(View.GONE);
+                            mSearchListview.setVisibility(View.VISIBLE);
+                            mSearchList = root.getResult();
+                            mSearchAda = new ShoppingSearchAda(CommercialSearchAddressActivity.this, mSearchList);
+                            mSearchListview.setAdapter(mSearchAda);
+                        }
+                    } else {
+                        Toast.makeText(CommercialSearchAddressActivity.this, "数据错误", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_commercial_search_address);
+        mHttptools = HttpTools.getHttpToolsInstance();
         initView();
     }
 
@@ -74,7 +116,7 @@ public class CommercialSearchAddressActivity extends AppCompatActivity implement
                         //do something;
                         if (!getContent().equals("")) {
                             //请求数据
-
+                            mHttptools.shoppingSearchAddress(mhandler, getContent());
                             //将搜索的内容存到数据库中
                             ContentValues valuesDrug = new ContentValues();
                             valuesDrug.put("addressName", getContent());
@@ -92,11 +134,42 @@ public class CommercialSearchAddressActivity extends AppCompatActivity implement
             }
         });
 
+        mEdit_content.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    if (count==0){
+                        mdelete_rl.setVisibility(View.VISIBLE);
+                        mListview.setVisibility(View.VISIBLE);
+                        mSearchListview.setVisibility(View.GONE);
+                    }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
         //删除记录
+        mdelete_rl = (RelativeLayout) findViewById(R.id.delete_rl);
         delete_img = (ImageView) findViewById(R.id.delete);
         delete_img.setOnClickListener(this);
-
-//        记录列表
+        //搜索到小区listview
+        mSearchListview = (ListView) findViewById(R.id.search_listview);
+        mSearchListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent=getIntent();
+                intent.putExtra("name",mSearchList.get(position).getRname());
+                setResult(RESULT_OK,intent);
+                finish();
+            }
+        });
+        // 记录列表
         mListview = (ListView) findViewById(R.id.hos_listview);
         mAdapter = new CommercialAddressHositoryAda(this, mList);
         mListview.setAdapter(mAdapter);
@@ -104,6 +177,9 @@ public class CommercialSearchAddressActivity extends AppCompatActivity implement
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //调用接口搜索
+                mEdit_content.setText(mList.get(position).getAddress());
+                //请求数据
+                mHttptools.shoppingSearchAddress(mhandler, mList.get(position).getAddress());
             }
         });
 
