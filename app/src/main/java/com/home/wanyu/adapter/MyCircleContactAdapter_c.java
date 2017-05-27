@@ -22,6 +22,7 @@ import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -133,7 +134,11 @@ public class MyCircleContactAdapter_c extends BaseAdapter{
         if (!"".equals(picture)&&!TextUtils.isEmpty(picture)){
             String[] pic = picture.split(",");
             if (pic!=null&&pic.length>0){
-                MyCircleContactAdapterGridAdapter adapter=new MyCircleContactAdapterGridAdapter(pic,context);
+                List<String>li=new ArrayList<>();
+                for (int i=0;i<pic.length;i++){
+                    li.add(pic[i]);
+                }
+                MyCircleContactAdapterGridAdapter adapter=new MyCircleContactAdapterGridAdapter(li,context);
                 hodler.circle_gridview_friend.setAdapter(adapter);
             }
         }
