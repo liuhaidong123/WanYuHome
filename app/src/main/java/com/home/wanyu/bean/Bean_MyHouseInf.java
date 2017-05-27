@@ -81,7 +81,7 @@ public class Bean_MyHouseInf {
         private int lat;
         private String address;
         private int lng;
-        private int ownerTelephone;
+        private Long ownerTelephone;
         private int areaCode;
         private int userType;
         private List<?> items;
@@ -214,11 +214,11 @@ public class Bean_MyHouseInf {
             this.lng = lng;
         }
 
-        public int getOwnerTelephone() {
+        public Long getOwnerTelephone() {
             return ownerTelephone;
         }
 
-        public void setOwnerTelephone(int ownerTelephone) {
+        public void setOwnerTelephone(Long ownerTelephone) {
             this.ownerTelephone = ownerTelephone;
         }
 

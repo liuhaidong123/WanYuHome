@@ -198,8 +198,8 @@ public class MyHouseInfoActivity extends MyActivity {
                                 }
                         }
                         else {
-//                            mToast.ToastFaild(con,ToastType.GSONEMPTY);
-                            mToast.Toast(con,"0000000");
+                            mToast.ToastFaild(con,ToastType.GSONEMPTY);
+//                            mToast.Toast(con,"0000000");
                         }
                     }
                     catch (Exception e){
@@ -220,7 +220,7 @@ public class MyHouseInfoActivity extends MyActivity {
                             }
                         }
                         else {
-                            mToast.Toast(con,"1111111");
+                            mToast.ToastFaild(con,ToastType.GSONEMPTY);
                         }
                     }
                     catch (Exception e){
