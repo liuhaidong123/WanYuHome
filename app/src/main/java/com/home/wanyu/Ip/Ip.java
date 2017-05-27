@@ -151,6 +151,14 @@ public class Ip {
 
     //获取消息接口http://192.168.1.55:8080/smarthome/mobileapi/message/findPage.do?token=9DB2FD6FDD2F116CD47CE6C48B3047EE&msgType=&msgTypeBegin=2&msgTypeEnd=3
     public static final String interface_get_Message="message/findPage.do?";
+    //消息已读设置:http://192.168.1.55:8080/smarthome/mobileapi/messageLog/save.do?token=9DB2FD6FDD2F116CD47CE6C48B3047EE
+    public static final String interface_MessageRead="messageLog/save.do?";
+    //删除消息http://192.168.1.55:8080/smarthome/mobileapi/message/delete.do?ids=1234,12345&token=9DB2FD6FDD2F116CD47CE6C48B3047EE
+    public static final String interface_MessageDelete="message/delete.do?";
+
+    //获取有无未读消息http://192.168.1.55:8080/smarthome/mobileapi/message/hasmessage.do?msgType=&token=9DB2FD6FDD2F116CD47CE6C48B3047EE
+    public static final String interface_MessageisRead="message/hasmessage.do?";
+
 
     //登录:http://localhost:8080/smarthome/mobilepub/personal/login.do?telephone=18782931356&password=123
     public static final String interface_Login="/personal/login.do?";
@@ -159,4 +167,7 @@ public class Ip {
 
     //退出登录:http://localhost:8080/smarthome/mobilepub/personal/Exitlogin.do?token=ACDCE729BCE6FABC50881A867CAFC1BC
     public static final String interface_ClearLogin="/personal/Exitlogin.do?";
+
+
+
 }

@@ -28,15 +28,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@mipmap/settings"/>
-                <ImageView
-                    android:layout_alignParentRight="true"
+
+                <com.home.wanyu.lzhUtils.MyImageView
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
-                    android:layout_centerVertical="true"
                     android:id="@+id/fragment_mine_image_msg"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/news"/>
+                    android:src="@mipmap/news"
+                    android:layout_alignTop="@+id/fragment_mine_image_settings"
+                    android:layout_alignParentEnd="true" />
             </RelativeLayout>
             <RelativeLayout
                 android:id="@+id/fragment_mine_image_userEditor"

@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import com.home.wanyu.Ip.ToastType;
 import com.home.wanyu.Ip.mGson;
 import com.home.wanyu.Ip.mToast;
 import com.home.wanyu.Ip.okhttpTools;
+import com.home.wanyu.OkhttpUtils.okhttp;
 import com.home.wanyu.R;
 import com.home.wanyu.User.UserInfo;
 import com.home.wanyu.activity.CircleGiveYouCommentActivity;
@@ -28,11 +30,20 @@ import com.home.wanyu.activity.MyHouseActivity;
 import com.home.wanyu.activity.MySettingActivity;
 import com.home.wanyu.activity.MyUserMsgEditorActivity;
 import com.home.wanyu.bean.Bean_FamilyUserS;
+import com.home.wanyu.bean.Bean_M;
+import com.home.wanyu.bean.Bean_UnReadMsg;
 import com.home.wanyu.bean.Bean_UserInfo;
+import com.home.wanyu.lzhUtils.MyCirleView;
+import com.home.wanyu.lzhUtils.MyImageView;
 import com.home.wanyu.myview.RoundImageView;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
 import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.BindViews;
@@ -47,7 +58,7 @@ import butterknife.Unbinder;
 public class MineFragment extends Fragment{
     private Unbinder unbinder;
     @BindView(R.id.fragment_mine_image_settings)ImageView fragment_mine_image_settings;//设置的image
-    @BindView(R.id.fragment_mine_image_msg)ImageView fragment_mine_image_msg;//消息的iamge
+    @BindView(R.id.fragment_mine_image_msg)MyImageView fragment_mine_image_msg;//消息的iamge
     @BindView(R.id.fragment_mine_image_userEditor)RelativeLayout fragment_mine_image_userEditor;//用户信息的layout
     @BindView(R.id.fragment_mine_image_userphoto)RoundImageView fragment_mine_image_userphoto;//用户头像的image
     @BindView(R.id.fragment_mine_image_username)TextView fragment_mine_image_username;//用户名字
@@ -62,7 +73,9 @@ public class MineFragment extends Fragment{
     @BindView(R.id.fragment_mine_layout_myaddress)RelativeLayout fragment_mine_layout_myaddress;//收货地址的view
     @BindView(R.id.fragment_mine_layout_about)RelativeLayout fragment_mine_layout_about;//关于宇家的view
     @BindView(R.id.fragment_mine_layout_contacts)RelativeLayout fragment_mine_layout_contacts;//意见反馈的view
+
     private okhttpTools tools;
+    private String resStr;
     Bean_UserInfo.PersonalBean personal;
     private Handler handler=new Handler(){
         @Override
@@ -98,6 +111,21 @@ public class MineFragment extends Fragment{
                     catch (Exception e){
                         e.printStackTrace();
                         mToast.ToastFaild(getActivity(), ToastType.GSONFAILD);
+                    }
+                    break;
+                case 2://获取有无未读消息
+                    try{
+                        Bean_UnReadMsg m=mGson.gson.fromJson(resStr,Bean_UnReadMsg.class);
+                        if (m!=null){
+                            if ("0".equals(m.getCode())){
+                                if (m.isHasMessage()){
+                                    fragment_mine_image_msg.setRead(true);
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception e){
+                        e.printStackTrace();
                     }
                     break;
             }
@@ -153,6 +181,8 @@ public class MineFragment extends Fragment{
     @Override
     public void onStart() {
         super.onStart();
+        fragment_mine_image_msg.setRead(false);
+        getUnReadMsg();//获取有无未读消息
     }
 
     @Override
@@ -177,5 +207,25 @@ public class MineFragment extends Fragment{
                 }
             }
         }
+    }
+
+    //http://192.168.1.55:8080/smarthome/mobileapi/message/hasmessage.do?msgType=&token=9DB2FD6FDD2F116CD47CE6C48B3047EE
+//    Method:GET
+    public void getUnReadMsg() {
+      Map<String,String> mp=new HashMap<>();
+        mp.put("token",UserInfo.userToken);
+        okhttp.getCall(Ip.serverPath+Ip.interface_MessageisRead,mp,okhttp.OK_GET).enqueue(new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+                handler.sendEmptyMessage(0);
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+                resStr=response.body().string();
+                Log.i("获取有无未读消息--",resStr);
+                handler.sendEmptyMessage(2);
+            }
+        });
     }
 }

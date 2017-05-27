@@ -1,23 +1,33 @@
 package com.home.wanyu.activity;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.home.wanyu.Ip.Ip;
+import com.home.wanyu.Ip.ToastType;
 import com.home.wanyu.Ip.mGson;
 import com.home.wanyu.Ip.mToast;
 import com.home.wanyu.OkhttpUtils.okhttp;
 import com.home.wanyu.R;
 import com.home.wanyu.User.UserInfo;
 import com.home.wanyu.apater.CircleYouMsgAda;
+import com.home.wanyu.bean.Bean_M;
 import com.home.wanyu.bean.Bean_Message;
 import com.home.wanyu.lzhUtils.MyActivity;
 import com.home.wanyu.myview.MyListView;
@@ -30,7 +40,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+//消息列表
 public class CircleGiveYouCommentActivity extends MyActivity {
     private ImageView mBack;
     private MyListView mListview;
@@ -45,7 +55,9 @@ public class CircleGiveYouCommentActivity extends MyActivity {
     RelativeLayout listempty;
     private int start=0;
     private int limit=1;
-
+    private PopupWindow pop;
+    private int deletePos;
+    private boolean isDelete=false;
     private List<Bean_Message.RowsBean> listMessage;
     private String resStr;
     private Handler handler=new Handler(){
@@ -86,6 +98,52 @@ public class CircleGiveYouCommentActivity extends MyActivity {
                     catch (Exception e){
                         e.printStackTrace();
                         many_relative.setVisibility(View.GONE);
+                    }
+                    mListview.setEmptyView(listempty);
+                    break;
+                case 2://删除消息
+                    try{
+                        Bean_M b=mGson.gson.fromJson(resStr,Bean_M.class);
+                        if (b!=null){
+                            if ("0".equals(b.getCode())){
+                                listMessage.remove(deletePos);
+                                mAdpater.notifyDataSetChanged();
+                                if (mAdpater!=null&&mAdpater.getCount()==0){
+                                    many_relative.setVisibility(View.GONE);
+                                }
+
+                            }
+                            else {
+                                mToast.Toast(con,b.getMessage());
+                            }
+
+                        }
+                        else {
+                            mToast.ToastFaild(con, ToastType.GSONEMPTY);
+                        }
+                    }
+                    catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    break;
+                case 3://消息已读设置
+                    try{
+                        Bean_M b=mGson.gson.fromJson(resStr,Bean_M.class);
+                        if (b!=null){
+                            if ("0".equals(b.getCode())){
+                              Log.i("消息已读设置成功----","success");
+                            }
+                            else {
+                                mToast.Toast(con,b.getMessage());
+                            }
+
+                        }
+                        else {
+                            mToast.ToastFaild(con, ToastType.GSONEMPTY);
+                        }
+                    }
+                    catch (Exception e){
+                        e.printStackTrace();
                     }
                     break;
             }
@@ -129,7 +187,6 @@ public class CircleGiveYouCommentActivity extends MyActivity {
         mListview= (MyListView) findViewById(R.id.you_msg_listview);
         mAdpater=new CircleYouMsgAda(this,listMessage);
         mListview.setAdapter(mAdpater);
-        mListview.setEmptyView(listempty);
         many_relative.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -137,7 +194,79 @@ public class CircleGiveYouCommentActivity extends MyActivity {
                 getSerVerData();
             }
         });
+        mListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    if (listMessage!=null&&listMessage.get(position).isIsRead()==false){
+                        listMessage.get(position).setIsRead(true);
+                        mAdpater.notifyDataSetChanged();
+                        setReadMessage(position);//设置已读
+                    }
+            }
+        });
+        mListview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                    deletePos =position;
+                    showWindow(deletePos);
+                    return false;
+            }
+        });
     }
+    //设置已读http://192.168.1.55:8080/smarthome/mobileapi/messageLog/save.do?token=9DB2FD6FDD2F116CD47CE6C48B3047EE
+//    Method:POST
+//    |token          |String   |Y    |令牌
+//    |messageId      |Long     |N    |消息表编号
+    public void setReadMessage(int pos){
+        Map<String,String>mp=new HashMap<>();
+        mp.put("token",UserInfo.userToken);
+        mp.put("messageId",listMessage.get(pos).getId()+"");
+        okhttp.getCall(Ip.serverPath+Ip.interface_MessageRead,mp,okhttp.OK_POST).enqueue(new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+                isDelete=false;
+                handler.sendEmptyMessage(0);
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+                isDelete=false;
+                resStr=response.body().string();
+                Log.i("消息已读设置--"+deletePos,resStr);
+                handler.sendEmptyMessage(3);
+            }
+        });
+    }
+
+
+    //删除消息http://192.168.1.55:8080/smarthome/mobileapi/message/delete.do?ids=1234,12345&token=9DB2FD6FDD2F116CD47CE6C48B3047EE
+//    Method:POST
+    private void deleteMessage(int position) {
+        if (isDelete){
+            mToast.Toast(con,"正在操作，请稍后");
+            return;
+        }
+        isDelete=true;
+        Map<String,String>mp=new HashMap<>();
+        mp.put("token",UserInfo.userToken);
+        mp.put("ids",listMessage.get(position).getId()+"");
+        okhttp.getCall(Ip.serverPath+Ip.interface_MessageDelete,mp,okhttp.OK_POST).enqueue(new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+                isDelete=false;
+                handler.sendEmptyMessage(0);
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+                isDelete=false;
+                resStr=response.body().string();
+                Log.i("删除消息--"+deletePos,resStr);
+                handler.sendEmptyMessage(2);
+            }
+        });
+    }
+
 
     public void setLoadingState(int state){
         switch (state){
@@ -206,5 +335,55 @@ public class CircleGiveYouCommentActivity extends MyActivity {
                     handler.sendEmptyMessage(1);
             }
         });
+    }
+    //删除消息的view
+    private void showWindow(int pos) {
+        deletePos=pos;
+        pop = new PopupWindow();
+        View v = LayoutInflater.from(con).inflate(R.layout.pop_device_delete, null);
+        TextView pop_delete= (TextView) v.findViewById(R.id.pop_delete);
+        pop_delete.setText("删除消息");
+        TextView pop_cancle= (TextView) v.findViewById(R.id.pop_cancle);
+        pop_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteMessage(deletePos);
+                pop.dismiss();
+            }
+        });
+        pop_cancle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pop.dismiss();
+            }
+        });
+        RelativeLayout parent = (RelativeLayout) findViewById(R.id.activity_circle_give_you_comment);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        WindowManager.LayoutParams params = getWindow().getAttributes();
+        params.alpha = 0.6f;
+        getWindow().setAttributes(params);
+
+        pop.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+        pop.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        pop.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        pop.setContentView(v);
+        pop.setBackgroundDrawable(new ColorDrawable(Color.argb(000, 255, 255, 255)));
+        pop.setTouchable(true);
+        pop.setFocusable(true);
+        pop.setOutsideTouchable(true);
+
+        pop.setAnimationStyle(R.style.popup2_anim);
+        pop.showAtLocation(parent, Gravity.CENTER,0,0);
+        pop.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+                WindowManager.LayoutParams params = getWindow().getAttributes();
+                params.alpha = 1f;
+                getWindow().setAttributes(params);
+            }
+        });
+
     }
 }

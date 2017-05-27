@@ -147,6 +147,9 @@ public class MyHouseInfoActivity extends MyActivity {
                         if (info!=null){
                                 if ("0".equals(info.getCode())){
                                     Bean_MyHouseInf.FamilyBean familyBean=info.getFamily();
+                                    if (familyBean==null){
+                                        return;
+                                    }
                                     name_tv_msg.setText(familyBean.getOwnerName());
                                     phone_tv_msg.setText(familyBean.getOwnerTelephone()+"");
                                     lou_tv_msg.setText(familyBean.getBuildingNumber());//楼号
@@ -191,12 +194,12 @@ public class MyHouseInfoActivity extends MyActivity {
                                 }
                             }
                             else {
-//                                mToast.Toast(con,info.getMessage());
-                            }
+                                mToast.Toast(con,info.getResult());
+                                }
                         }
                         else {
 //                            mToast.ToastFaild(con,ToastType.GSONEMPTY);
-//                            mToast.Toast(con,"0000000");
+                            mToast.Toast(con,"0000000");
                         }
                     }
                     catch (Exception e){

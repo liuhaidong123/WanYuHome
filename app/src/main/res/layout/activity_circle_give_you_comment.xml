@@ -48,7 +48,6 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
             <RelativeLayout
                 android:id="@+id/tt"
                 android:layout_width="match_parent"
@@ -57,7 +56,7 @@
                     android:id="@+id/you_msg_listview"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:divider="@color/repair_line"
+                    android:divider="#f1f1f1"
                     android:dividerHeight="1dp"
                     android:scrollbars="none">
                 </com.home.wanyu.myview.MyListView>
@@ -90,7 +89,7 @@
                     android:id="@+id/line2"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/repair_line" />
+                    android:background="#f1f1f1"/>
                 <TextView
                     android:id="@+id/footer_tv"
                     android:layout_width="wrap_content"
