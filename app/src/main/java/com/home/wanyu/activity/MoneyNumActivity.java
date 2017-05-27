@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.home.wanyu.R;
+import com.home.wanyu.bean.haveAddress.Result;
 import com.home.wanyu.myUtils.ImgUitls;
 
 public class MoneyNumActivity extends AppCompatActivity implements View.OnClickListener {
@@ -20,7 +21,7 @@ public class MoneyNumActivity extends AppCompatActivity implements View.OnClickL
     private TextView mUnit_tv;
     private TextView mCity_tv;
     private TextView mAddress_tv;
-
+    private Result result;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +42,17 @@ public class MoneyNumActivity extends AppCompatActivity implements View.OnClickL
         mUnit_tv = (TextView) findViewById(R.id.money2_unit_msg);
         //用户编号
         mEdit = (EditText) findViewById(R.id.money2_num_edit);
+
+        //获取地址实体类
+        result= (Result) getIntent().getSerializableExtra("bean");
+
+        if (result!=null){
+            mCity_tv.setText(result.getCity());
+            mAddress_tv.setText(result.getDetailAddress());
+        }else {
+            mCity_tv.setText("未知城市");
+            mAddress_tv.setText("未知地址");
+        }
 
         //下一步或者保存
         mSubmit_btn = (Button) findViewById(R.id.money2_submit);
@@ -63,11 +75,25 @@ public class MoneyNumActivity extends AppCompatActivity implements View.OnClickL
                if (getEditNum().equals("")){
                    Toast.makeText(this,"请填写您的缴费编号",Toast.LENGTH_SHORT).show();
                }else {
-                   Intent intent=new Intent(this,MoneyInputSureActivity.class);
-                   startActivity(intent);
+                   if (result!=null){
+                       Intent intent=new Intent(this,MoneyInputSureActivity.class);
+                       intent.putExtra("bean",result);
+                       //还需要交费类型,用户编号
+                       // intent.putExtra("type", "");
+                       // intent.putExtra("usernum", "");
+                       startActivity(intent);
+                   }else {
+                       Toast.makeText(this,"无法获取地址",Toast.LENGTH_SHORT).show();
+                   }
+
                }
             } else if (getIntent().getIntExtra("update", -1) == 1) {//修改编号，保存
-               finish();
+                if (getEditNum().equals("")){
+                    Toast.makeText(this,"请填写您的缴费编号",Toast.LENGTH_SHORT).show();
+                }else {
+                    finish();
+                }
+
             }
 
         }

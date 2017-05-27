@@ -8,7 +8,14 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.home.wanyu.HttpUtils.UrlTools;
 import com.home.wanyu.R;
+import com.home.wanyu.bean.homeService.Menulist;
+import com.home.wanyu.myUtils.ImgUitls;
+import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by liuhaidong on 2017/5/18.
@@ -17,21 +24,29 @@ import com.home.wanyu.R;
 public class CommercialOthersGoodsAda extends BaseAdapter {
     private Context mContext;
     private LayoutInflater mInflater;
-
-    public CommercialOthersGoodsAda(Context mContext) {
+    private List<Menulist> mList = new ArrayList<>();
+    public CommercialOthersGoodsAda(Context mContext,List<Menulist> mList) {
         this.mContext = mContext;
+        this.mList=mList;
         this.mInflater = LayoutInflater.from(this.mContext);
     }
 
+    public List<Menulist> getmList() {
+        return mList;
+    }
+
+    public void setmList(List<Menulist> mList) {
+        this.mList = mList;
+    }
 
     @Override
     public int getCount() {
-        return 6;
+        return mList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return mList.get(position);
     }
 
     @Override
@@ -52,7 +67,11 @@ public class CommercialOthersGoodsAda extends BaseAdapter {
         } else {
             holder = (OthersGoodsHolder) convertView.getTag();
         }
-
+        Picasso.with(mContext).load(UrlTools.BASE+mList.get(position).getPicture()).resize(ImgUitls.getWith(mContext)/3,ImgUitls.getWith(mContext)/3).error(R.mipmap.error_small).into(
+                holder.imageView
+        );
+        holder.name.setText(mList.get(position).getProductName());
+        holder.price.setText("¥"+mList.get(position).getPrice()+"元");
 
         return convertView;
     }

@@ -105,4 +105,34 @@ public class UrlTools {
     public static final String CAR_POOLING_JOIN="/mobileapi/carpoolingLog/addCarpoolingLog.do?" ;
     //接单
     public static final String CAR_POOLING_ORDER="/mobileapi/carpoolingLog/addCarpoolingLog.do?" ;
+
+//小区商户列表
+    public static final String SOPPING_LIST="/mobileapi/business/findBusinessList.do?";
+
+
+    //搜索小区地址
+    public static final String SHOPPING_SEARCH_ADDRESS="/mobilepub/residentialQuarters/FuzzyQuery.do?" ;
+
+    //家政服务接口
+    public static final String HOME_SERVICE="/mobileapi/business/findbusinessOne.do?" ;
+
+
+    //获取物业管家首页未收取的快递
+    public static final String EXPRESS_NO_GET="/mobileapi/takeExpress/findListNot.do?";
+
+    //获取所有快递
+    public static final String EXPRESS_ALL_LIST="/mobileapi/takeExpress/findList.do?";
+
+    //获取快递公司信息
+    public static final String EXPRESS_COMPANY_MSG="/mobileapi/express/findList.do?";
+
+    //修改物业账单地址
+    public static final String ADDRESS_UPDATE="/mobileapi/detailHome/get.do?";
+
+    //提交修改地址
+    public static final String ADDRESS_UPDATE_SUBMIT="/mobileapi/detailHome/UpdateDetailHomeAddress.do?";
+
+    //删除物业地址
+    public static final String ADDRESS_DELETE="/mobileapi/family/deleteDetailHomeAddress.do?";
 }
+

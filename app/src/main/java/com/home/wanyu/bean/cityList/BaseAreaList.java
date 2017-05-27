@@ -21,6 +21,8 @@ public class BaseAreaList {
 
     private long id;
 
+
+
     private List<String> childrenList;
 
     public int getLevel() {

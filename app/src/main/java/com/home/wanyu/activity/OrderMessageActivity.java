@@ -80,16 +80,19 @@ public class OrderMessageActivity extends AppCompatActivity implements View.OnCl
                 Object o = msg.obj;
                 if (o != null && o instanceof Root) {
                     Root root = (Root) o;
-                    mAddressList = root.getResult();
-                    if (mAddressList.size() != 0) {
-                        mAddressCity_tv.setText(mAddressList.get(0).getCity());
-                        mAddress_tv.setText(mAddressList.get(0).getDetailAddress());
-                        //根据年份，月份，地址查询业主的缴费情况
-                        mHttptools.getMoneyByYearMonthAddress(mHandler, UserInfo.userToken, mAddress_tv.getText().toString(), mYear_tv.getText().toString(), mMonth_tv.getText().toString());
-                    } else {
-                        mAddressCity_tv.setText("未知城市");
-                        mAddress_tv.setText("未知小区");
+                    if (root.getResult()!=null){
+                        mAddressList = root.getResult();
+                        if (mAddressList.size() != 0) {
+                            mAddressCity_tv.setText(mAddressList.get(0).getCity());
+                            mAddress_tv.setText(mAddressList.get(0).getDetailAddress());
+                            //根据年份，月份，地址查询业主的缴费情况
+                            mHttptools.getMoneyByYearMonthAddress(mHandler, UserInfo.userToken, mAddress_tv.getText().toString(), mYear_tv.getText().toString(), mMonth_tv.getText().toString());
+                        } else {
+                            mAddressCity_tv.setText("未知城市");
+                            mAddress_tv.setText("未知小区");
+                        }
                     }
+
                 }
             } else if (msg.what == 104) {//根据年份，月份，地址查询业主的缴费情况
                 Object o = msg.obj;

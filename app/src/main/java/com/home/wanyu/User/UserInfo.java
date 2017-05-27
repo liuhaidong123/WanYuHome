@@ -15,7 +15,6 @@ public class UserInfo {
         public static long personalId = 11l;
         public static String userToken = "9DB2FD6FDD2F116CD47CE6C48B3047EE";//登陆后获取的token
 
-        //检查是否已经登录
         public static boolean isLogin(Context context) {
                 SharedPreferences preference = context.getSharedPreferences("USER", Context.MODE_APPEND);
                 if (preference.contains("userName") && preference.contains("userToken") && preference.contains("personalId")) {//此三个都是登陆后返回的

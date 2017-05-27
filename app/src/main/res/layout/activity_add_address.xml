@@ -23,6 +23,7 @@
         android:src="@mipmap/property_back" />
 
     <TextView
+        android:id="@+id/title_address"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:gravity="center"

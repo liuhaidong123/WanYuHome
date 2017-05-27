@@ -158,6 +158,7 @@ public class CarPoolingActivity extends AppCompatActivity implements View.OnClic
             finish();
         } else if (id == mMsg.getId()) {//跳转消息
             Intent in = new Intent(this, CircleGiveYouCommentActivity.class);
+            in.putExtra("type",2);
             startActivity(in);
         } else if (id == mCar_Now_ll.getId()) {//正在进行背景，文字
             over = 1;
