@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.home.wanyu.HttpUtils.HttpTools;
 import com.home.wanyu.R;
@@ -38,30 +39,47 @@ public class OrderAddressActivity extends AppCompatActivity implements View.OnCl
     private View mView;
     private TextView mDelete;
     private TextView mUpdate;
-
+    private long addressId = -1;
+    private int mPosition;
     private HttpTools mHttptools;
-    private Handler mHandler=new Handler(){
+    private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            if(msg.what==100){
-                Object o=msg.obj;
-                if (o!=null&&o instanceof Root){
-                    Root root= (Root) o;
-                    mList=root.getResult();
-                    mAdapter.setList(mList);
-                    mAdapter.notifyDataSetChanged();
+            if (msg.what == 100) {
+                Object o = msg.obj;
+                if (o != null && o instanceof Root) {
+                    Root root = (Root) o;
+                    if (root.getResult()!=null){
+                        mList = root.getResult();
+                        mAdapter.setList(mList);
+                        mAdapter.notifyDataSetChanged();
+                    }
                 }
+            }else if (msg.what==141){//删除地址
+                Object o = msg.obj;
+                if (o != null && o instanceof com.home.wanyu.bean.getAreaActivityLike.Root) {
+                    com.home.wanyu.bean.getAreaActivityLike.Root root = (com.home.wanyu.bean.getAreaActivityLike.Root) o;
+                    if (root.getCode().equals("0")){
+                        Toast.makeText(OrderAddressActivity.this, "删除地址成功", Toast.LENGTH_SHORT).show();
+                        mList.remove(mPosition);
+                        mAdapter.setList(mList);
+                        mAdapter.notifyDataSetChanged();
+                    }else {
+                        Toast.makeText(OrderAddressActivity.this, "删除地址失败", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
             }
 
         }
     };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_address);
-        mHttptools=HttpTools.getHttpToolsInstance();
-
+        mHttptools = HttpTools.getHttpToolsInstance();
         initView();
     }
 
@@ -79,8 +97,8 @@ public class OrderAddressActivity extends AppCompatActivity implements View.OnCl
         mBuilder = new AlertDialog.Builder(this);
         mAlert = mBuilder.create();
         mView = LayoutInflater.from(this).inflate(R.layout.address_delete_orupdate_alert, null);
-        mDelete= (TextView) mView.findViewById(R.id.delete);
-        mUpdate=(TextView) mView.findViewById(R.id.update);
+        mDelete = (TextView) mView.findViewById(R.id.delete);
+        mUpdate = (TextView) mView.findViewById(R.id.update);
         mUpdate.setOnClickListener(this);
         mDelete.setOnClickListener(this);
         mAlert.setView(mView);
@@ -89,9 +107,9 @@ public class OrderAddressActivity extends AppCompatActivity implements View.OnCl
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (mList.size()!=0){
+                if (mList.size() != 0) {
                     Intent intent = getIntent();
-                    intent.putExtra("result",mList.get(position));
+                    intent.putExtra("result", mList.get(position));
                     setResult(RESULT_OK, intent);
                     finish();
                 }
@@ -102,8 +120,10 @@ public class OrderAddressActivity extends AppCompatActivity implements View.OnCl
         mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                addressId=mList.get(position).getId();
+                mPosition=position;
                 mAlert.show();
-                setAlertWidth(mAlert,1.5f);
+                setAlertWidth(mAlert, 1.5f);
                 return true;
             }
         });
@@ -118,11 +138,14 @@ public class OrderAddressActivity extends AppCompatActivity implements View.OnCl
         } else if (id == mAddAddress_btn.getId()) {
             Intent intent = new Intent(this, AddAddressActivity.class);
             startActivity(intent);
-        } else if (id == mDelete.getId()) {
+        } else if (id == mDelete.getId()) {//删除
+            mHttptools.addressDelete(mHandler,UserInfo.userToken,addressId);
             mAlert.dismiss();
-        }else if (id == mUpdate.getId()) {
+        } else if (id == mUpdate.getId()) {//修改
             mAlert.dismiss();
             Intent intent = new Intent(this, AddAddressActivity.class);
+            intent.putExtra("type",10);
+            intent.putExtra("id",addressId);
             startActivity(intent);
         }
     }
@@ -133,7 +156,7 @@ public class OrderAddressActivity extends AppCompatActivity implements View.OnCl
         WindowManager m = getWindowManager();
         m.getDefaultDisplay().getMetrics(dm);
         android.view.WindowManager.LayoutParams p = alert.getWindow().getAttributes();  //获取对话框当前的参数值
-        p.width = (int) ((int)dm.widthPixels / a);
+        p.width = (int) ((int) dm.widthPixels / a);
         alert.getWindow().setAttributes(p);//设置生效
     }
 

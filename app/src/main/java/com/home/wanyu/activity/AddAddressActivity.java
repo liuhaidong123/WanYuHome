@@ -37,6 +37,7 @@ import java.util.regex.Pattern;
 
 public class AddAddressActivity extends AppCompatActivity implements View.OnClickListener {
     private ImageView mBack;
+    private TextView mTitle_Address;
     private RelativeLayout mCity_rl;
     private TextView mCity_tv;
     private RelativeLayout mArea_rl;
@@ -63,9 +64,9 @@ public class AddAddressActivity extends AppCompatActivity implements View.OnClic
     private AlertAreaAda mAreaAda;
     private List<Result> mAreaList = new ArrayList<>();
     private ListView mAreaListview;
-
+    private String areaCode;
     private int mFlag = -1;
-    private long mAreaID=-1;
+    private long mAreaID = -1;
     private HttpTools mHttptools;
     private Map<String, String> mMap = new HashMap<>();
     private Handler mHandler = new Handler() {
@@ -76,62 +77,106 @@ public class AddAddressActivity extends AppCompatActivity implements View.OnClic
                 Object o = msg.obj;
                 if (o != null && o instanceof Root) {
                     Root root = (Root) o;
-                    mCityList = root.getBaseAreaList();
-                    mCityAda.setList(mCityList);
-                    mCityAda.notifyDataSetChanged();
-                    if (mCityList.size() != 0) {
-                        mCity_tv.setText(mCityList.get(0).getAreaName());
-                        mHttptools.getAreaList(mHandler, mCityList.get(0).getAreaCode());//请求小区接口
-                    } else {
-                        mCity_tv.setText("");
+                    if (root.getBaseAreaList() != null) {
+                        mCityList = root.getBaseAreaList();
+                        mCityAda.setList(mCityList);
+                        mCityAda.notifyDataSetChanged();
+                        if (mCityList.size() != 0) {
+                            mCity_tv.setText(mCityList.get(0).getAreaName());
+                            areaCode=mCityList.get(0).getAreaCode();
+                            mHttptools.getAreaList(mHandler, mCityList.get(0).getAreaCode());//请求小区接口
+                        } else {
+                            areaCode="";
+                            mCity_tv.setText("");
+                        }
                     }
+
                 }
             } else if (msg.what == 103) {//获取小区
                 Object o = msg.obj;
                 if (o != null && o instanceof com.home.wanyu.bean.areaList.Root) {
                     com.home.wanyu.bean.areaList.Root root = (com.home.wanyu.bean.areaList.Root) o;
-                    mAreaList=root.getResult();
-                    mAreaAda.setList(mAreaList);
-                    mAreaAda.notifyDataSetChanged();
+                    if (root.getResult()!=null){
+                        mAreaList = root.getResult();
+                        mAreaAda.setList(mAreaList);
+                        mAreaAda.notifyDataSetChanged();
+                    }
                 }
-            }else if (msg.what == 101) {//添加地址判断是否有业主或者添加的房间重复
+            } else if (msg.what == 101) {//添加地址判断是否有业主或者添加的房间重复
                 Object o = msg.obj;
                 if (o != null && o instanceof com.home.wanyu.bean.addAddressNoOwner.Root) {
                     com.home.wanyu.bean.addAddressNoOwner.Root root = (com.home.wanyu.bean.addAddressNoOwner.Root) o;
-                   if (root.getCode().equals("0")){
-                       Toast.makeText(AddAddressActivity.this,"添加地址成功",Toast.LENGTH_SHORT).show();
-                       //跳转到生活缴费
-                       if (getIntent().getIntExtra("order", -1) == 11) {
-                           startActivity(new Intent(AddAddressActivity.this, LifeMoneyActivity2.class));
-                           finish();
-                           //跳转到物业账单
-                       } else if (getIntent().getIntExtra("order", -1) == 22) {
-                           startActivity(new Intent(AddAddressActivity.this, OrderMessageActivity.class));
-                           finish();
-                       }else {
-                           finish();
-                       }
-                   }else if (root.getCode().equals("-1")){
-                       Toast.makeText(AddAddressActivity.this,"请确定您的业主姓名与绑定的手机号是否正确",Toast.LENGTH_SHORT).show();
-                   }else if (root.getCode().equals("-2")){
-                       Toast.makeText(AddAddressActivity.this,"抱歉，您已添加过该地址，添加失败",Toast.LENGTH_SHORT).show();
-                   }
+                    if (root.getCode().equals("0")) {
+                        Toast.makeText(AddAddressActivity.this, "添加地址成功", Toast.LENGTH_SHORT).show();
+                        //跳转到生活缴费
+                        if (getIntent().getIntExtra("order", -1) == 11) {
+                            //startActivity(new Intent(AddAddressActivity.this, LifeMoneyActivity2.class));
+                            finish();
+                            //跳转到物业账单
+                        } else if (getIntent().getIntExtra("order", -1) == 22) {
+                            //startActivity(new Intent(AddAddressActivity.this, OrderMessageActivity.class));
+                            finish();
+                        } else {
+                            finish();
+                        }
+                    } else if (root.getCode().equals("-1")) {
+                        Toast.makeText(AddAddressActivity.this, "请确定您的业主姓名与绑定的手机号是否正确", Toast.LENGTH_SHORT).show();
+                    } else if (root.getCode().equals("-2")) {
+                        Toast.makeText(AddAddressActivity.this, "抱歉，您已添加过该地址，添加失败", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }else if (msg.what == 139) {//获取小区
+                Object o1 = msg.obj;
+                if (o1 != null && o1 instanceof com.home.wanyu.bean.addressUpdate.Root) {
+                    com.home.wanyu.bean.addressUpdate.Root root1 = (com.home.wanyu.bean.addressUpdate.Root) o1;
+                    //姓名，手机，楼号，楼层，单元，房号
+                    if (root1.getResult() != null) {
+                        mName.setText(root1.getResult().getOwnerName());
+                        mPhone.setText(root1.getResult().getRqtelephone() + "");
+                        mLou.setText(root1.getResult().getBuildingNumber() + "");
+                        mCeng.setText(root1.getResult().getFloor() + "");
+                        mUnit.setText(root1.getResult().getUnitNumber() + "");
+                        mHourse.setText(root1.getResult().getRoomNumber() + "");
+
+                    }
+                }
+            }else if (msg.what==140){//提交修改地址
+               Object o= msg.obj;
+                if (o!=null&& o instanceof  com.home.wanyu.bean.getAreaActivityLike.Root){
+                    com.home.wanyu.bean.getAreaActivityLike.Root root = (com.home.wanyu.bean.getAreaActivityLike.Root) o;
+
+                    if (root.getCode().equals("0")){
+                        Toast.makeText(AddAddressActivity.this, "修改地址成功", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }else {
+                        Toast.makeText(AddAddressActivity.this, "修改地址失败", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         }
     };
+
+    private long addressId = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_address);
         mHttptools = HttpTools.getHttpToolsInstance();
-        mHttptools.getCityList(mHandler);//请求城市列表
-
+        mHttptools.getCityList(mHandler);
         initView();
     }
 
     public void initView() {
+
+        mTitle_Address= (TextView) findViewById(R.id.title_address);
+
+        if (getIntent().getIntExtra("type", -1) == 10) {
+            addressId = getIntent().getLongExtra("id", -1);
+            mHttptools.addressUpdate(mHandler, UserInfo.userToken, addressId); //根据地址id修改地址
+            mTitle_Address.setText("修改地址");
+        }
+
         mBack = (ImageView) findViewById(R.id.add_back);
         mBack.setOnClickListener(this);
 
@@ -150,7 +195,8 @@ public class AddAddressActivity extends AppCompatActivity implements View.OnClic
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 mCity_tv.setText(mCityList.get(position).getAreaName());
-                mHttptools.getAreaList(mHandler,mCityList.get(position).getAreaCode());
+                mHttptools.getAreaList(mHandler, mCityList.get(position).getAreaCode());
+                areaCode= mCityList.get(position).getAreaCode();
                 mCityAlert.dismiss();
             }
         });
@@ -174,7 +220,7 @@ public class AddAddressActivity extends AppCompatActivity implements View.OnClic
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 mArea_tv.setText(mAreaList.get(position).getRname());
-                mAreaID=mAreaList.get(position).getId();
+                mAreaID = mAreaList.get(position).getId();
                 mAreaAlert.dismiss();
             }
         });
@@ -205,37 +251,50 @@ public class AddAddressActivity extends AppCompatActivity implements View.OnClic
     public void onClick(View v) {
         int id = v.getId();
         if (id == mCity_rl.getId()) {//选择城市弹框
-            mCityAlert.show();
-            setAlertWidth(mCityAlert, 2);
+            if (mCityList.size()!=0){
+                mCityAlert.show();
+                setAlertWidth(mCityAlert, 2);
+            }else {
+                Toast.makeText(this, "抱歉，无法显示城市", Toast.LENGTH_SHORT).show();
+            }
+
         } else if (id == mBack.getId()) {
             finish();
         } else if (id == mArea_rl.getId()) {//选择小区弹框
-            mAreaAlert.show();
-            setAlertWidth(mAreaAlert, 2);
+            if (mAreaList.size()!=0){
+                mAreaAlert.show();
+                setAlertWidth(mAreaAlert, 2);
+            }else {
+                Toast.makeText(this, "抱歉，无法显示小区", Toast.LENGTH_SHORT).show();
+            }
+
         } else if (id == mSubmit.getId()) {
             if (getCity().equals("") || getArea().equals("") || getName().equals("") || getPhone().equals("") || getLou().equals("") || getCeng().equals("") || getUnit().equals("") || getHourse().equals("")) {
                 Toast.makeText(this, "亲,请补全地址信息哦", Toast.LENGTH_SHORT).show();
-                //跳转到生活缴费
-                if (getIntent().getIntExtra("money", -1) == 11) {
-                    startActivity(new Intent(this, LifeMoneyActivity2.class));
-                    //跳转到物业账单
-                } else if (getIntent().getIntExtra("order", -1) == 22) {
-                    startActivity(new Intent(this, OrderMessageActivity.class));
-                }
 
             } else {
-               // Toast.makeText(this, "亲,地址正确", Toast.LENGTH_SHORT).show();
+
+                // Toast.makeText(this, "亲,地址正确", Toast.LENGTH_SHORT).show();
                 mMap.put("token", UserInfo.userToken);
                 mMap.put("city", getCity());
                 mMap.put("yard", getArea());
                 mMap.put("yardid", String.valueOf(mAreaID));
                 mMap.put("ownerName", getName());
                 mMap.put("ownertelephone", getPhone());
-                mMap.put("buildingNumber", getLou()+"");
-                mMap.put("floor", getCeng()+"");
-                mMap.put("unitNumber", getUnit()+"");
-                mMap.put("roomNumber", getHourse()+"");
-                mHttptools.addUserAddress(mHandler, mMap);
+                mMap.put("buildingNumber", getLou() + "");
+                mMap.put("floor", getCeng() + "");
+                mMap.put("unitNumber", getUnit() + "");
+                mMap.put("roomNumber", getHourse() + "");
+                mMap.put("areaCode", areaCode);
+
+                if (getIntent().getIntExtra("type", -1) == 10){//提交修改地址
+                    mMap.put("AddressId", addressId+"");
+                    mHttptools.addressUpdateSubmit(mHandler,mMap);
+
+                }else {
+                    mHttptools.addUserAddress(mHandler, mMap);
+                }
+
 
             }
         }

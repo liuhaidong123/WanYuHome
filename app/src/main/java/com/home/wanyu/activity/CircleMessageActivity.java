@@ -80,18 +80,19 @@ public class CircleMessageActivity extends AppCompatActivity implements View.OnC
                 Object o = msg.obj;
                 if (o != null && o instanceof Root) {
                     Root root = (Root) o;
-                    mCircleAreaList = root.getResult();
-                    mAreaAdapter.setList(mCircleAreaList);
-                    mAreaAdapter.notifyDataSetChanged();
-                    if (mCircleAreaList!=null&&mCircleAreaList.size() != 0) {
+                    if (root.getResult() == null) {
+                        //默认第一个小区
+                        mMyArea_tv.setText("用户未填写");
+                        Toast.makeText(CircleMessageActivity.this,"亲，请完善您的房屋信息哦",Toast.LENGTH_SHORT).show();
+                    } else {
+                        mCircleAreaList = root.getResult();
+                        mAreaAdapter.setList(mCircleAreaList);
+                        mAreaAdapter.notifyDataSetChanged();
                         //默认第一个小区
                         mMyArea_tv.setText(mCircleAreaList.get(0).getRname());
                         areaID = mCircleAreaList.get(0).getId();
                     }
-                    else {
-                        //默认第一个小区
-                        mMyArea_tv.setText("用户未填写");
-                    }
+
                     mHttptools.getCircleSmallType(mHandler);//获取小标题列表数据
                 }
             } else if (msg.what == 111) {//获取小标题列表
@@ -99,15 +100,22 @@ public class CircleMessageActivity extends AppCompatActivity implements View.OnC
                 //默认全部
                 if (o != null && o instanceof com.home.wanyu.bean.getCircleTitleList.Root) {
                     com.home.wanyu.bean.getCircleTitleList.Root root = (com.home.wanyu.bean.getCircleTitleList.Root) o;
-                    mTitleList = root.getResult();
-                    mTitleGridviewAda.setList(mTitleList);
-                    mTitleGridviewAda.notifyDataSetChanged();
-                    if (mCircleAreaList==null){
-                        return;
+                    if (root.getResult() != null) {
+                        mTitleList = root.getResult();
+                        mTitleGridviewAda.setList(mTitleList);
+                        mTitleGridviewAda.notifyDataSetChanged();
+                        if (mCircleAreaList.size()!=0){
+                            //获取友邻圈帖子列表
+                            mHttptools.getCircleCardList(mHandler, UserInfo.userToken, mCircleAreaList.get(0).getId(), myOrOtherID, start, limmit, mTitleList.get(0).getId());
+                        }else {
+                            mSwipe_refresh.setRefreshing(false);
+                            mSwipe_refresh.setEnabled(false);
+                            mNO_data_rl.setVisibility(View.VISIBLE);
+                        }
                     }
-                    //获取友邻圈帖子列表
-                    mHttptools.getCircleCardList(mHandler, UserInfo.userToken,mCircleAreaList.get(0).getId(), myOrOtherID, start, limmit, mTitleList.get(0).getId());
                 }
+
+
             } else if (msg.what == 202) {//获取小标题列表数据错误
                 Toast.makeText(CircleMessageActivity.this, "数据错误", Toast.LENGTH_SHORT).show();
             } else if (msg.what == 112) {//获取友邻圈帖子列表接口
@@ -119,20 +127,20 @@ public class CircleMessageActivity extends AppCompatActivity implements View.OnC
                     if (check == 1) {//刷新
                         mSwipe_refresh.setRefreshing(false);
 
-                        Log.e("RQid=",areaID+"");
-                        Log.e("cateID=",typeID+"");
-                        Log.e("我的或其他ID=",myOrOtherID+"");
+                        Log.e("RQid=", areaID + "");
+                        Log.e("cateID=", typeID + "");
+                        Log.e("我的或其他ID=", myOrOtherID + "");
 
                         if (root.getResult() == null) {
                             mNO_data_rl.setVisibility(View.VISIBLE);
                             mCardList.clear();
-                            mFriendAda.setList(mCardList,-1);
+                            mFriendAda.setList(mCardList, -1);
                             mFriendAda.notifyDataSetChanged();
 
                         } else {
                             mCardList = root.getResult();
                             if (mCardList != null) {
-                                mFriendAda.setList(mCardList,root.getUserid());
+                                mFriendAda.setList(mCardList, root.getUserid());
                                 mFriendAda.notifyDataSetChanged();
                             }
                             if (root.getResult().size() == 0) {
@@ -149,7 +157,7 @@ public class CircleMessageActivity extends AppCompatActivity implements View.OnC
                                 mBar.setVisibility(View.INVISIBLE);
                             }
 
-                            Log.e("userid=",root.getUserid()+"");
+                            Log.e("userid=", root.getUserid() + "");
                         }
 
                     } else if (check == 2) {//加载更多
@@ -159,7 +167,7 @@ public class CircleMessageActivity extends AppCompatActivity implements View.OnC
                             list = root.getResult();
                             mCardList.addAll(list);
                             if (mCardList != null) {
-                                mFriendAda.setList(mCardList,root.getUserid());
+                                mFriendAda.setList(mCardList, root.getUserid());
                                 mFriendAda.notifyDataSetChanged();
                             }
 
@@ -179,7 +187,7 @@ public class CircleMessageActivity extends AppCompatActivity implements View.OnC
             } else if (msg.what == 203) {
                 mSwipe_refresh.setRefreshing(false);
                 mCardList.clear();
-                mFriendAda.setList(mCardList,-1);
+                mFriendAda.setList(mCardList, -1);
                 mFriendAda.notifyDataSetChanged();
                 mMore_rl.setVisibility(View.GONE);
                 mBar.setVisibility(View.INVISIBLE);
@@ -236,8 +244,8 @@ public class CircleMessageActivity extends AppCompatActivity implements View.OnC
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                if (  mTitleList != null&&mTitleList.size() != 0 &&mCircleAreaList != null&& mCircleAreaList.size() != 0) {
-                    check=1;
+                if (mTitleList != null && mTitleList.size() != 0 && mCircleAreaList != null ) {
+                    check = 1;
                     ImageView imageView = (ImageView) view.findViewById(R.id.circle_small_line);
                     for (int i = 0; i < mTitleList.size(); i++) {
                         if (mTitleGridviewAda.getItem(position) == mTitleList.get(i)) {
@@ -248,10 +256,12 @@ public class CircleMessageActivity extends AppCompatActivity implements View.OnC
                     }
                     mTitleGridviewAda.notifyDataSetChanged();
                     typeID = mTitleList.get(position).getId();
-                    //获取指定列表友邻圈帖子列表
-                    start = 0;
-                    mSwipe_refresh.setRefreshing(true);
-                    mHttptools.getCircleCardList(mHandler, UserInfo.userToken, areaID, myOrOtherID, start, limmit, mTitleList.get(position).getId());
+                    if ( mCircleAreaList.size() != 0){
+                        //获取指定列表友邻圈帖子列表
+                        start = 0;
+                        mSwipe_refresh.setRefreshing(true);
+                        mHttptools.getCircleCardList(mHandler, UserInfo.userToken, areaID, myOrOtherID, start, limmit, mTitleList.get(position).getId());
+                    }
                 }
             }
         });
@@ -286,7 +296,7 @@ public class CircleMessageActivity extends AppCompatActivity implements View.OnC
                 if (mCircleAreaList != null && mCircleAreaList.size() != 0) {
                     mMyArea_tv.setText(mCircleAreaList.get(position).getRname());
                     mYearAlert.dismiss();
-                    check=1;
+                    check = 1;
                     areaID = mCircleAreaList.get(position).getId();
                     start = 0;
                     mSwipe_refresh.setRefreshing(true);
@@ -305,8 +315,10 @@ public class CircleMessageActivity extends AppCompatActivity implements View.OnC
         //点击我的小区
         if (id == mMyArea_ll.getId()) {
             myOrOtherID = 1;
-            mYearAlert.show();
-            setAlertWidth(mYearAlert, 2f);
+            if (mCircleAreaList.size()!=0){
+                mYearAlert.show();
+                setAlertWidth(mYearAlert, 2f);
+            }
             mMyArea_ll.setBackgroundResource(R.color.bg_rect);
             mMyArea_tv.setTextColor(ContextCompat.getColor(this, R.color.white));
             mOtherArea_ll.setBackgroundResource(R.color.white);
@@ -314,16 +326,15 @@ public class CircleMessageActivity extends AppCompatActivity implements View.OnC
             //点击其他小区
         } else if (id == mOtherArea_ll.getId()) {
             myOrOtherID = 2;
-            check=1;
+            check = 1;
             mMyArea_ll.setBackgroundResource(R.color.white);
             mMyArea_tv.setTextColor(ContextCompat.getColor(this, R.color.title_color));
             //  mMyArea_tv.setText("我的小区");
 
             mOtherArea_ll.setBackgroundResource(R.color.bg_rect);
             mOther_tv.setTextColor(ContextCompat.getColor(this, R.color.white));
-
             //获取指定列表友邻圈帖子列表
-            if (mTitleList != null && mTitleList.size() != 0  && mCircleAreaList != null&& mCircleAreaList.size() != 0) {
+            if (mTitleList != null && mTitleList.size() != 0 && mCircleAreaList != null && mCircleAreaList.size() != 0) {
                 start = 0;
                 mSwipe_refresh.setRefreshing(true);
                 mHttptools.getCircleCardList(mHandler, UserInfo.userToken, areaID, myOrOtherID, start, limmit, typeID);
@@ -332,13 +343,13 @@ public class CircleMessageActivity extends AppCompatActivity implements View.OnC
             startActivity(new Intent(this, CirclePostActivity.class));
         } else if (id == mMsg_img.getId()) {//跳转消息页面
             Intent intent = new Intent(this, CircleGiveYouCommentActivity.class);
-            intent.putExtra("type",0);
+            intent.putExtra("type", 0);
             startActivity(intent);
         } else if (id == mback.getId()) {//返回
             finish();
         } else if (id == mMore_rl.getId()) {//加载更多
             check = 2;
-            start+=10;
+            start += 10;
             mBar.setVisibility(View.VISIBLE);
             mHttptools.getCircleCardList(mHandler, UserInfo.userToken, areaID, myOrOtherID, start, limmit, typeID);
         }
@@ -358,10 +369,10 @@ public class CircleMessageActivity extends AppCompatActivity implements View.OnC
     @Override
     protected void onResume() {
         super.onResume();
-        if (areaID!=-1&&typeID!=-1){
-            start=0;
+        if (areaID != -1 && typeID != -1) {
+            start = 0;
             mHttptools.getCircleCardList(mHandler, UserInfo.userToken, areaID, myOrOtherID, start, limmit, typeID);
-            Log.e("onResume","areaID="+areaID+"---typeID="+typeID);
+            Log.e("onResume", "areaID=" + areaID + "---typeID=" + typeID);
         }
     }
 }

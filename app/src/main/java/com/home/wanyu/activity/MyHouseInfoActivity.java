@@ -191,12 +191,12 @@ public class MyHouseInfoActivity extends MyActivity {
                                 }
                             }
                             else {
-                                mToast.Toast(con,info.getResult());
+//                                mToast.Toast(con,info.getMessage());
                             }
                         }
                         else {
 //                            mToast.ToastFaild(con,ToastType.GSONEMPTY);
-                            mToast.Toast(con,"0000000");
+//                            mToast.Toast(con,"0000000");
                         }
                     }
                     catch (Exception e){

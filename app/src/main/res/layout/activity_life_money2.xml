@@ -89,7 +89,7 @@
                 android:layout_marginTop="5dp"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="名流一品3号楼3单元3061221222222222222222222"
+                android:text="名流一品3号楼3单元306"
                 android:textColor="@color/titlecolor3" />
         </RelativeLayout>
 

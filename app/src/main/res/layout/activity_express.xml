@@ -125,6 +125,7 @@
                     </com.home.wanyu.myview.MyListView>
 
                     <RelativeLayout
+                        android:visibility="gone"
                         android:id="@+id/express_many_relative"
                         android:layout_width="match_parent"
                         android:layout_height="45dp"

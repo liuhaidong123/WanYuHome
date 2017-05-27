@@ -8,12 +8,20 @@ import java.util.List;
 
 public class Bean_MyHouseInf {
 
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
     /**
      * result : success
      * code : 0
      * Family : {"personalId":0,"roomNumber":"102","city":"涿州市","residentialQuartersId":1,"unitNumber":"5","residentialQuartersName":"","ownerName":"刘文","areaName":"黑龙江 哈尔滨市 阿城市","familyName":"13717883005","buildingNumber":"12","familyState":0,"id":1,"floor":"","lat":0,"address":"名流一品小区1号楼一单元1楼355号","lng":0,"ownerTelephone":17743516301,"areaCode":110101,"userType":0,"items":[]}
      */
-
+    private String message;
     private String result;
     private String code;
     private FamilyBean Family;

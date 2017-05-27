@@ -30,17 +30,17 @@
 
         <ImageView
             android:id="@+id/express_phone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="63.5dp"
+            android:layout_height="63.5dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="15dp"
+            android:paddingRight="15dp"
+            android:paddingLeft="15dp"
             android:src="@mipmap/express_phone" />
 
         <View
             android:layout_width="1dp"
             android:layout_height="66dp"
-            android:layout_marginRight="15dp"
             android:layout_toLeftOf="@id/express_phone"
             android:background="@color/bg_color"
 

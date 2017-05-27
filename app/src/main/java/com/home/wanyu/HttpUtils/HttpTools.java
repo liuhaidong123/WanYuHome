@@ -1428,7 +1428,7 @@ public class HttpTools {
 
     //搜索小区地址
     public void shoppingSearchAddress(final Handler handler, String rname) {
-        String url = UrlTools.BASE + UrlTools.SHOPPING_SEARCH_ADDRESS + "rname=" + rname ;
+        String url = UrlTools.BASE + UrlTools.SHOPPING_SEARCH_ADDRESS + "rname=" + rname;
 
         mFinalHttp.get(url, new AjaxCallBack<String>() {
             @Override
@@ -1469,7 +1469,7 @@ public class HttpTools {
 
     //未领取的快递
     public void expressNOGet(final Handler handler, String token) {
-        String url = UrlTools.BASE + UrlTools.EXPRESS_NO_GET + "token=" + UserInfo.userToken ;
+        String url = UrlTools.BASE + UrlTools.EXPRESS_NO_GET + "token=" + UserInfo.userToken;
 
         mFinalHttp.get(url, new AjaxCallBack<String>() {
             @Override
@@ -1507,6 +1507,213 @@ public class HttpTools {
             }
         });
     }
+
+    //全部快递
+    public void expressAllList(final Handler handler, String token,int start,int limit) {
+        String url = UrlTools.BASE + UrlTools.EXPRESS_ALL_LIST + "token=" + UserInfo.userToken+"&start="+start+"&limit="+limit;
+
+        mFinalHttp.get(url, new AjaxCallBack<String>() {
+            @Override
+            public void onStart() {
+                super.onStart();
+                Log.e("onStart", "全部快递");
+            }
+
+            @Override
+            public void onSuccess(String s) {
+                super.onSuccess(s);
+                Log.e("onSuccess", "全部快递" + s);
+                try {
+                    Message message = new Message();
+                    com.home.wanyu.bean.expressList.Root root = mGson.fromJson(s, com.home.wanyu.bean.expressList.Root.class);
+                    message.obj = root;
+                    message.what = 137;
+                    handler.sendMessage(message);
+
+                } catch (Exception e) {
+                    Log.e("错误码", e.toString());
+                    // handler.sendEmptyMessage(200);
+                }
+
+            }
+
+            @Override
+            public void onFailure(Throwable t, int errorNo, String strMsg) {
+                super.onFailure(t, errorNo, strMsg);
+                if (strMsg == null) {
+                    strMsg = "--null";
+                }
+                Log.e("onFailure", "全部快递" + strMsg);
+                // handler.sendEmptyMessage(203);
+            }
+        });
+    }
+
+    //快递公司信息
+    public void expressCompanyMsg(final Handler handler, String token) {
+        String url = UrlTools.BASE + UrlTools.EXPRESS_COMPANY_MSG + "token=" + UserInfo.userToken;
+
+        mFinalHttp.get(url, new AjaxCallBack<String>() {
+            @Override
+            public void onStart() {
+                super.onStart();
+                Log.e("onStart", "快递公司信息");
+            }
+
+            @Override
+            public void onSuccess(String s) {
+                super.onSuccess(s);
+                Log.e("onSuccess", "快递公司信息" + s);
+                try {
+                    Message message = new Message();
+                    com.home.wanyu.bean.expressCompany.Root root = mGson.fromJson(s, com.home.wanyu.bean.expressCompany.Root.class);
+                    message.obj = root;
+                    message.what = 138;
+                    handler.sendMessage(message);
+
+                } catch (Exception e) {
+                    Log.e("错误码", e.toString());
+                    // handler.sendEmptyMessage(200);
+                }
+
+            }
+
+            @Override
+            public void onFailure(Throwable t, int errorNo, String strMsg) {
+                super.onFailure(t, errorNo, strMsg);
+                if (strMsg == null) {
+                    strMsg = "--null";
+                }
+                Log.e("onFailure", "快递公司信息" + strMsg);
+                // handler.sendEmptyMessage(203);
+            }
+        });
+    }
+
+
+    //修改物业地址信息
+    public void addressUpdate(final Handler handler, String token,long AddressId) {
+        String url = UrlTools.BASE + UrlTools.ADDRESS_UPDATE + "token=" + UserInfo.userToken+"&AddressId="+AddressId;
+
+        mFinalHttp.get(url, new AjaxCallBack<String>() {
+            @Override
+            public void onStart() {
+                super.onStart();
+                Log.e("onStart", "修改物业地址信息");
+            }
+
+            @Override
+            public void onSuccess(String s) {
+                super.onSuccess(s);
+                Log.e("onSuccess", "修改物业地址信息" + s);
+                try {
+                    Message message = new Message();
+                    com.home.wanyu.bean.addressUpdate.Root root = mGson.fromJson(s, com.home.wanyu.bean.addressUpdate.Root.class);
+                    message.obj = root;
+                    message.what = 139;
+                    handler.sendMessage(message);
+
+                } catch (Exception e) {
+                    Log.e("错误码", e.toString());
+                    // handler.sendEmptyMessage(200);
+                }
+
+            }
+
+            @Override
+            public void onFailure(Throwable t, int errorNo, String strMsg) {
+                super.onFailure(t, errorNo, strMsg);
+                if (strMsg == null) {
+                    strMsg = "--null";
+                }
+                Log.e("onFailure", "修改物业地址信息" + strMsg);
+                // handler.sendEmptyMessage(203);
+            }
+        });
+    }
+
+    //提交修改物业地址信息
+    public void addressUpdateSubmit(final Handler handler, Map<String,String> map) {
+        String url = UrlTools.BASE + UrlTools.ADDRESS_UPDATE_SUBMIT;
+
+        mFinalHttp.post(url, new AjaxParams(map), new AjaxCallBack<String>() {
+            @Override
+            public void onStart() {
+                super.onStart();
+                Log.e("onStart", "提交修改物业地址信息");
+            }
+
+            @Override
+            public void onSuccess(String s) {
+                super.onSuccess(s);
+                Log.e("onSuccess", "提交修改物业地址信息" + s);
+                try {
+                    Message message = new Message();
+                    com.home.wanyu.bean.getAreaActivityLike.Root root = mGson.fromJson(s, com.home.wanyu.bean.getAreaActivityLike.Root.class);
+                    message.obj = root;
+                    message.what = 140;
+                    handler.sendMessage(message);
+
+                } catch (Exception e) {
+                    Log.e("错误码", e.toString());
+                    // handler.sendEmptyMessage(200);
+                }
+
+            }
+
+            @Override
+            public void onFailure(Throwable t, int errorNo, String strMsg) {
+                super.onFailure(t, errorNo, strMsg);
+                if (strMsg == null) {
+                    strMsg = "--null";
+                }
+                Log.e("onFailure", "提交修改物业地址信息" + strMsg);
+                // handler.sendEmptyMessage(203);
+            }
+        });
+    }
+    //删除物业地址信息
+    public void addressDelete(final Handler handler, String token,long AddressId) {
+        String url = UrlTools.BASE + UrlTools.ADDRESS_DELETE + "token=" + UserInfo.userToken+"&AddressId="+AddressId;
+
+        mFinalHttp.get(url, new AjaxCallBack<String>() {
+            @Override
+            public void onStart() {
+                super.onStart();
+                Log.e("onStart", "删除物业地址信息");
+            }
+
+            @Override
+            public void onSuccess(String s) {
+                super.onSuccess(s);
+                Log.e("onSuccess", "删除物业地址信息" + s);
+                try {
+                    Message message = new Message();
+                    com.home.wanyu.bean.getAreaActivityLike.Root root = mGson.fromJson(s, com.home.wanyu.bean.getAreaActivityLike.Root.class);
+                    message.obj = root;
+                    message.what = 141;
+                    handler.sendMessage(message);
+
+                } catch (Exception e) {
+                    Log.e("错误码", e.toString());
+                    // handler.sendEmptyMessage(200);
+                }
+
+            }
+
+            @Override
+            public void onFailure(Throwable t, int errorNo, String strMsg) {
+                super.onFailure(t, errorNo, strMsg);
+                if (strMsg == null) {
+                    strMsg = "--null";
+                }
+                Log.e("onFailure", "删除物业地址信息" + strMsg);
+                // handler.sendEmptyMessage(203);
+            }
+        });
+    }
+
+
 }
 
 

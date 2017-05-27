@@ -95,7 +95,7 @@ public class HousekeeperFrgment extends Fragment implements ViewPager.OnPageChan
                     com.home.wanyu.bean.Express.Root root = (com.home.wanyu.bean.Express.Root) o;
                    if (root!=null&&root.getResult()!=null){
                        if (root.getResult().size()==0){
-                           mExpress_msg.setText("您还没有未领取的快递o");
+                           mExpress_msg.setText("您还没有未领取的快递");
                        }else {
                            mExpress_msg.setText("您还有"+root.getResult().size()+"个快递未领取");
                        }

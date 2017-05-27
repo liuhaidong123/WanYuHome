@@ -120,6 +120,19 @@ public class UrlTools {
     //获取物业管家首页未收取的快递
     public static final String EXPRESS_NO_GET="/mobileapi/takeExpress/findListNot.do?";
 
+    //获取所有快递
+    public static final String EXPRESS_ALL_LIST="/mobileapi/takeExpress/findList.do?";
 
+    //获取快递公司信息
+    public static final String EXPRESS_COMPANY_MSG="/mobileapi/express/findList.do?";
 
+    //修改物业账单地址
+    public static final String ADDRESS_UPDATE="/mobileapi/detailHome/get.do?";
+
+    //提交修改地址
+    public static final String ADDRESS_UPDATE_SUBMIT="/mobileapi/detailHome/UpdateDetailHomeAddress.do?";
+
+    //删除物业地址
+    public static final String ADDRESS_DELETE="/mobileapi/family/deleteDetailHomeAddress.do?";
 }
+
