@@ -107,7 +107,6 @@ public class CarPoolingCommentActivity extends AppCompatActivity implements View
                     Log.e("coverPersonalId",getIntent().getLongExtra("coverPersonalId", -1)+"");
                     httptools.carPoolingComment(mhandler,ajax);
 
-
                 }
 
 

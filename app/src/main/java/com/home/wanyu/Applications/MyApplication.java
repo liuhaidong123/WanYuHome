@@ -9,6 +9,8 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.jpush.android.api.JPushInterface;
+
 /**
  * Created by wanyu on 2017/5/26.
  */
@@ -62,6 +64,9 @@ public class MyApplication extends Application{
             }
 
         }
+
+        JPushInterface.setDebugMode(true);//发不时设为false
+        JPushInterface.init(getApplicationContext());
     }
 
 
