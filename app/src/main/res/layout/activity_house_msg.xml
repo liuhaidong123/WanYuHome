@@ -23,7 +23,7 @@
 
         <RelativeLayout
             android:id="@+id/house_location_address"
-            android:layout_width="81dp"
+            android:layout_width="85dp"
             android:layout_height="30dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="17dp"
@@ -48,8 +48,8 @@
                     android:layout_marginLeft="5dp"
                     android:layout_toRightOf="@id/location_img"
                     android:ellipsize="end"
-                    android:maxLength="2"
-                    android:text="定位"
+                    android:maxLength="3"
+                    android:text=""
                     android:textColor="@color/titlecolor3"
                     android:textSize="15sp" />
             </RelativeLayout>
@@ -59,10 +59,11 @@
 
         <RelativeLayout
             android:id="@+id/input_area_name"
-            android:layout_width="242dp"
+            android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:layout_toRightOf="@id/house_location_address"
             android:background="@drawable/location_bg">
 
@@ -84,6 +85,8 @@
                 android:textColor="@color/color9"
                 android:text="@string/input_hint" />
         </RelativeLayout>
+
+
     </RelativeLayout>
 
     <android.support.v4.widget.SwipeRefreshLayout
@@ -113,6 +116,7 @@
                 </com.home.wanyu.myview.MyListView>
 
                 <RelativeLayout
+                    android:visibility="gone"
                     android:id="@+id/house_location_area_more_rl"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
@@ -135,6 +139,7 @@
                         android:textSize="13sp" />
 
                     <ProgressBar
+                        android:visibility="invisible"
                         android:id="@+id/circle_pbLocate"
                         style="?android:attr/progressBarStyleSmall"
                         android:layout_width="wrap_content"

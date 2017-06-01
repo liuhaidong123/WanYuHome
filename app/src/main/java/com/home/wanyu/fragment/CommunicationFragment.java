@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +40,7 @@ public class CommunicationFragment extends Fragment {
     private ListView mListview;
     private CircleAdapter mAdapter;
     private List<CircleBean> mList = new ArrayList<>();
-    private List<Result> mCircleAreaList;
+    private List<Result> mCircleAreaList = new ArrayList<>();
     private HttpTools mHttptools;
     private Handler mHandler = new Handler() {
         @Override
@@ -49,7 +50,9 @@ public class CommunicationFragment extends Fragment {
                 Object o = msg.obj;
                 if (o != null && o instanceof Root) {
                     Root root = (Root) o;
-                    mCircleAreaList = root.getResult();
+                    if (root.getResult() != null) {
+                        mCircleAreaList = root.getResult();
+                    }
 
                 }
             }
@@ -60,7 +63,6 @@ public class CommunicationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View vi = inflater.inflate(R.layout.fragment_communication, null);
         mHttptools = HttpTools.getHttpToolsInstance();
-        mHttptools.getCircleArea(mHandler, UserInfo.userToken);
         initView(vi);
         return vi;
     }
@@ -75,7 +77,7 @@ public class CommunicationFragment extends Fragment {
         mListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (mCircleAreaList != null && mCircleAreaList.size() == 0) {
+                if (mCircleAreaList.size() == 0) {
                     Toast.makeText(getContext(), "请添加小区地址", Toast.LENGTH_SHORT).show();
                     //跳转到添加小区页面
                     Intent intent = new Intent(getContext(), MyHouseInfoActivity.class);
@@ -96,5 +98,13 @@ public class CommunicationFragment extends Fragment {
                 }
             }
         });
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.e("圈子onResume","==");
+        mHttptools.getCircleArea(mHandler, UserInfo.userToken);//友邻圈获取小区接口
     }
 }

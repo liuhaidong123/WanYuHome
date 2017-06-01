@@ -194,7 +194,7 @@ public class MyHouseInfoActivity extends MyActivity {
                                 }
                             }
                             else {
-                                mToast.Toast(con,info.getResult());
+                                mToast.Toast(con,info.getMessage());
                                 }
                         }
                         else {
@@ -216,7 +216,7 @@ public class MyHouseInfoActivity extends MyActivity {
                                 finish();
                             }
                             else {
-                                mToast.Toast(con,info.getResult());
+                                mToast.Toast(con,info.getMessage());
                             }
                         }
                         else {

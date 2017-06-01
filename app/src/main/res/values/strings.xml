@@ -108,7 +108,7 @@
     <string name="decoration_title">装修服务</string>
     <string name="decoration_ask">立即咨询</string>
 
-    <string name="input_hint">输入小区名、户型</string>
+    <string name="input_hint">输入小区名,如:名流一品</string>
     <string name="search_cancle">取消</string>
     <string name="city_hint">请输入城市名</string>
     <string name="area_hint">请输入小区名 如:名流一品</string>
@@ -148,6 +148,8 @@
     <string name="house_ting">厅</string>
     <string name="house_wei">卫</string>
     <string name="house_m">㎡</string>
+    <string name="network">没有网络了\n去检查一下网络吧！</string>
+
 
 
 

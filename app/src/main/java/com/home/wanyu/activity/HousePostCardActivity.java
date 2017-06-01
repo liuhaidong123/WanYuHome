@@ -8,6 +8,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.os.Build;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -21,6 +23,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -29,15 +33,23 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.home.wanyu.HttpUtils.HttpTools;
 import com.home.wanyu.R;
+import com.home.wanyu.User.UserInfo;
 import com.home.wanyu.apater.CirclePostImgGridViewAda;
 import com.home.wanyu.apater.HouseLookConfigureAda;
+import com.home.wanyu.apater.HousePostConfigureAda;
 import com.home.wanyu.apater.HousePostImgAda;
 import com.home.wanyu.bean.HouseLookConfigure;
+import com.home.wanyu.bean.getAreaActivityLike.Root;
 import com.home.wanyu.lzhView.wheelView.MyWheelAdapter50;
 import com.home.wanyu.lzhView.wheelView.OnWheelChangedListener;
 import com.home.wanyu.lzhView.wheelView.WheelView;
+import com.home.wanyu.myUtils.ImgUitls;
+import com.home.wanyu.myUtils.MyDialog;
 import com.home.wanyu.myview.MyGridView;
+
+import net.tsz.afinal.http.AjaxParams;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -52,12 +64,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class HousePostCardActivity extends AppCompatActivity implements View.OnClickListener {
     private ImageView mback;
-
+    private TextView mPostNum;
+    private EditText mAreaName, mShi, mTing, mWei, mM_size, mCeng, mAll_ceng, mMoney, mName, mPhone;
     private MyGridView myConfigureGridView;
-    private HouseLookConfigureAda mConfigureAda;
+    private HousePostConfigureAda mConfigureAda;
     private List<HouseLookConfigure> mConfigureList = new ArrayList<>();
     private List<HouseLookConfigure> mSelectConfigureList = new ArrayList<>();
 
@@ -105,11 +120,53 @@ public class HousePostCardActivity extends AppCompatActivity implements View.OnC
     private int mBigCityPosition = 0;
     private int mSmallCityPosition = 0;
 
+    private Button mSubmit_btn;
+
+    private int postNum;
+    private HttpTools mhttptools;
+    private Handler handler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (msg.what==149){
+                Object o=msg.obj;
+                if (o!=null&&o instanceof  com.home.wanyu.bean.getAreaActivityLike.Root){
+                    com.home.wanyu.bean.getAreaActivityLike.Root root= (Root) o;
+                    MyDialog.stopDia();
+                    if (root.getCode().equals("0")){
+                        Toast.makeText(HousePostCardActivity.this, "发布成功", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }else {
+                        Toast.makeText(HousePostCardActivity.this, "发布失败", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }else if (msg.what==150){//获取总数
+                Object o=msg.obj;
+                if (o!=null&&o instanceof  com.home.wanyu.bean.HousePostNumber.PostNum){
+                    com.home.wanyu.bean.HousePostNumber.PostNum  root= (com.home.wanyu.bean.HousePostNumber.PostNum ) o;
+                    if (root.getCode().equals("0")){
+                        postNum=root.getNumber();
+                        if (postNum==0){
+                            mPostNum.setText("抱歉,您本月发布的的房源已经达到上限，请下个月发布");
+                        }else {
+                            mPostNum.setText("您本月可以发帖"+8+"条,"+"本月还可以免费发帖"+(8-postNum)+"条");
+                        }
+
+                    }else {
+                        mPostNum.setText("无法获取您本月发布房屋的数量");
+                        postNum=-1;
+                    }
+                }
+            }
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_house_post_card);
-       pullXml();
+        mhttptools=HttpTools.getHttpToolsInstance();
+        mhttptools.housePostNumber(handler, UserInfo.userToken);//获取发布房源的总数
+        pullXml();
         initView();
     }
 
@@ -117,7 +174,22 @@ public class HousePostCardActivity extends AppCompatActivity implements View.OnC
         mback = (ImageView) findViewById(R.id.house_post_back);
         mback.setOnClickListener(this);
 
+        mPostNum=(TextView) findViewById(R.id.house_prompt_num);
 
+        mAreaName = (EditText) findViewById(R.id.area_name);
+        mShi = (EditText) findViewById(R.id.house_shi_edit);
+        mTing = (EditText) findViewById(R.id.house_ting_edit);
+        mWei = (EditText) findViewById(R.id.house_wei_edit);
+        mM_size = (EditText) findViewById(R.id.house_m_edit);
+        mCeng = (EditText) findViewById(R.id.house_ceng_edit);
+        mAll_ceng = (EditText) findViewById(R.id.house_all_ceng_edit);
+        mMoney = (EditText) findViewById(R.id.house_money_edit);
+        mName = (EditText) findViewById(R.id.house_phone_name_edit);
+        mPhone = (EditText) findViewById(R.id.house_phone_num_edit);
+
+        //提交
+        mSubmit_btn = (Button) findViewById(R.id.house_post_submit);
+        mSubmit_btn.setOnClickListener(this);
         //配置
         mConfigureList.add(new HouseLookConfigure("电视", R.mipmap.house_conigure_no, 1));
         mConfigureList.add(new HouseLookConfigure("宽带", R.mipmap.house_conigure_no, 2));
@@ -130,7 +202,7 @@ public class HousePostCardActivity extends AppCompatActivity implements View.OnC
         mConfigureList.add(new HouseLookConfigure("柜子", R.mipmap.house_conigure_no, 9));
         mConfigureList.add(new HouseLookConfigure("沙发", R.mipmap.house_conigure_no, 10));
 
-        mConfigureAda = new HouseLookConfigureAda(this, mConfigureList);
+        mConfigureAda = new HousePostConfigureAda(this, mConfigureList);
         myConfigureGridView = (MyGridView) findViewById(R.id.house_configure_gridview);
         myConfigureGridView.setAdapter(mConfigureAda);
         //点击选择配置
@@ -196,8 +268,6 @@ public class HousePostCardActivity extends AppCompatActivity implements View.OnC
         mHzu_img.setOnClickListener(this);
 
 
-
-
         //朝向弹框
         mDirection_ll = (LinearLayout) findViewById(R.id.direction_ll);
         mDirection_ll.setOnClickListener(this);
@@ -229,7 +299,6 @@ public class HousePostCardActivity extends AppCompatActivity implements View.OnC
         mMoneyList.add("押一付三");
         mMoneyList.add("半年付");
         mMoneyList.add("年付");
-
 
 
         //选择城市弹框
@@ -368,15 +437,103 @@ public class HousePostCardActivity extends AppCompatActivity implements View.OnC
             showCityPop();
         } else if (id == R.id.sure_city_btn) {//确定城市
             mCityPop.dismiss();
-            mCity_name.setText(listCitys.get(mBigCityPosition) + " " + mapAreas.get(listCitys.get(mBigCityPosition)).get(mSmallCityPosition));
+            mCity_name.setText(mapAreas.get(listCitys.get(mBigCityPosition)).get(mSmallCityPosition));
 
         } else if (id == R.id.cancle_city_btn) {//取消城市
             mCityPop.dismiss();
             mBigCityPosition = 0;
             mSmallCityPosition = 0;
+        } else if (id == mSubmit_btn.getId()) {//提交
+            if (postNum!=-1){
+
+                if (postNum==0){
+                    Toast.makeText(this,"抱歉,您本月发布的的房源已经达到上限，请下个月发布",Toast.LENGTH_SHORT).show();
+                }else {
+                    if (mZuFlag==1){
+                        if (mImgList.size()==0||mPay_money_tv.getText().toString().trim().equals("")||mSelectConfigureList.size()==0||mDirection_tv.getText().toString().trim().equals("")||mCity_name.getText().toString().trim().equals("") ||getAreaname().equals("")||getShi().equals("")||getWei().equals("")||getTing().equals("")||getMsize().equals("")||getceng().equals("")||getAllceng().equals("")||getMoney().equals("")||getMName().equals("")||getMPhone().equals("")){
+                            Toast.makeText(this,"请补全信息",Toast.LENGTH_SHORT).show();
+                        }else {
+                            MyDialog.showDialog(this);
+                            StringBuilder stringBuilder=new StringBuilder();
+                            for (int i=0;i<mSelectConfigureList.size();i++){
+                                stringBuilder.append(mSelectConfigureList.get(i).getName()+"；");
+                            }
+
+                            AjaxParams ajaxParams=new AjaxParams();
+                            ajaxParams.put("rentalTyoe",1+"");
+                            ajaxParams.put("cyty",mCity_name.getText().toString().trim());
+                            Log.e("cyty",mCity_name.getText().toString().trim());
+                            ajaxParams.put("residentialQuarters",getAreaname());
+                            ajaxParams.put("apartmentLayout",getShi()+"室"+getTing()+"厅"+getWei()+"卫");
+                            ajaxParams.put("housingArea",getMsize());
+                            ajaxParams.put("floor",getceng());
+                            ajaxParams.put("floord",getAllceng());
+                            ajaxParams.put("direction",mDirection_tv.getText().toString());
+                            ajaxParams.put("houseAllocation",stringBuilder.toString());
+                            ajaxParams.put("rent",getMoney());
+                            ajaxParams.put("paymentMethod",mPay_money_tv.getText().toString().trim());
+                            ajaxParams.put("contacts",getMName());
+                            ajaxParams.put("telephone",getMPhone());
+
+                            for (int i=0;i<mImgList.size();i++){
+                                File file=   transImage(mImgList.get(i), ImgUitls.getWith(this),ImgUitls.getHeight(this),90,"图片"+i);
+                                try {
+                                    ajaxParams.put("图片"+i,file);
+                                } catch (FileNotFoundException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                            mhttptools.housePostCard(handler,ajaxParams);
+
+                        }
+
+                    }else if (mZuFlag==2){
+                        if (mWo_name.getText().toString().toString().trim().equals("")||mImgList.size()==0||mPay_money_tv.getText().toString().trim().equals("")||mSelectConfigureList.size()==0||mDirection_tv.getText().toString().trim().equals("")||mCity_name.getText().toString().trim().equals("") ||getAreaname().equals("")||getMsize().equals("")||getceng().equals("")||getAllceng().equals("")||getMoney().equals("")||getMName().equals("")||getMPhone().equals("")){
+                            Toast.makeText(this,"请补全信息",Toast.LENGTH_SHORT).show();
+                        }else {
+                            MyDialog.showDialog(this);
+                            StringBuilder stringBuilder=new StringBuilder();
+                            for (int i=0;i<mSelectConfigureList.size();i++){
+                                stringBuilder.append(mSelectConfigureList.get(i).getName()+"；");
+                            }
+
+                            AjaxParams ajaxParams=new AjaxParams();
+                            ajaxParams.put("rentalTyoe",2+"");
+                            ajaxParams.put("cyty",mCity_name.getText().toString().trim());
+                            ajaxParams.put("residentialQuarters",getAreaname());
+                            ajaxParams.put("apartmentLayout",mWo_name.getText().toString().toString());
+                            ajaxParams.put("housingArea",getMsize());
+                            ajaxParams.put("floor",getceng());
+                            ajaxParams.put("floord",getAllceng());
+                            ajaxParams.put("direction",mDirection_tv.getText().toString());
+                            ajaxParams.put("houseAllocation",stringBuilder.toString());
+                            ajaxParams.put("rent",getMoney());
+                            ajaxParams.put("paymentMethod",mPay_money_tv.getText().toString().trim());
+                            ajaxParams.put("contacts",getMName());
+                            ajaxParams.put("telephone",getMPhone());
+                            for (int i=0;i<mImgList.size();i++){
+                                File file=   transImage(mImgList.get(i), ImgUitls.getWith(this),ImgUitls.getHeight(this),90,"图片"+i);
+                                try {
+                                    ajaxParams.put("图片"+i,file);
+                                } catch (FileNotFoundException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                            mhttptools.housePostCard(handler,ajaxParams);
+
+                        }
+
+                    }
+                }
+            }else {
+                Toast.makeText(this,"抱歉,无法获取您本月发布房屋的数量",Toast.LENGTH_SHORT).show();
+            }
+
+
         }
 
     }
+
 
     /**
      * @param pathName 图片路径
@@ -632,5 +789,91 @@ public class HousePostCardActivity extends AppCompatActivity implements View.OnC
         }
         return true;
     }
+
+    /**
+     * 检查手机号
+     *
+     * @param phonenum
+     * @return true 代表手机号正确
+     */
+    public boolean checkPhone(String phonenum) {
+        Pattern p = null;
+        Matcher m = null;
+        boolean b = false;
+        p = Pattern.compile("^[1][3,4,5,8][0-9]{9}$"); // 验证手机号
+        m = p.matcher(phonenum);
+        b = m.matches();
+        return b;
+    }
+
+    public String getAreaname() {
+        if (mAreaName.getText().toString().trim().equals("")) {
+            return "";
+        }
+        return mAreaName.getText().toString().trim();
+    }
+
+    public String getShi() {
+        if (mShi.getText().toString().trim().equals("")) {
+            return "";
+        }
+        return mShi.getText().toString().trim();
+    }
+    public String getTing() {
+        if (mTing.getText().toString().trim().equals("")) {
+            return "";
+        }
+        return mTing.getText().toString().trim();
+    }
+
+    public String getWei() {
+        if (mWei.getText().toString().trim().equals("")) {
+            return "";
+        }
+        return mWei.getText().toString().trim();
+    }
+
+    public String getMsize() {
+        if (mM_size.getText().toString().trim().equals("")) {
+            return "";
+        }
+        return mM_size.getText().toString().trim();
+    }
+
+    public String getceng() {
+        if (mCeng.getText().toString().trim().equals("")) {
+            return "";
+        }
+        return mCeng.getText().toString().trim();
+    }
+
+    public String getAllceng() {
+        if (mAll_ceng.getText().toString().trim().equals("")) {
+            return "";
+        }
+        return mAll_ceng.getText().toString().trim();
+    }
+
+    public String getMoney() {
+        if (mMoney.getText().toString().trim().equals("")) {
+            return "";
+        }
+        return mMoney.getText().toString().trim();
+    }
+
+    public String getMName() {
+        if (mName.getText().toString().trim().equals("")) {
+            return "";
+        }
+        return mName.getText().toString().trim();
+    }
+
+    public String getMPhone() {
+        if (!checkPhone(mPhone.getText().toString().trim())) {
+            return "";
+        }
+        return mPhone.getText().toString().trim();
+    }
+
 }
 

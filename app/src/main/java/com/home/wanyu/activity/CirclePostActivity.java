@@ -45,6 +45,7 @@ import com.home.wanyu.bean.getCircleArea.Result;
 import com.home.wanyu.bean.getCircleArea.Root;
 import com.home.wanyu.myUtils.ImgUitls;
 import com.home.wanyu.myUtils.MyDialog;
+import com.home.wanyu.myUtils.NetWorkMyUtils;
 
 import net.tsz.afinal.http.AjaxParams;
 
@@ -108,9 +109,11 @@ public class CirclePostActivity extends AppCompatActivity implements View.OnClic
                 Object o = msg.obj;
                 if (o != null && o instanceof Root) {
                     Root root = (Root) o;
-                    mCircleAreaList = root.getResult();
-                    mAreaAdapter = new CirclePopAreaAda(CirclePostActivity.this, mCircleAreaList);
-                    mAreaListView.setAdapter(mAreaAdapter);
+                    if (root.getResult()!=null){
+                        mCircleAreaList = root.getResult();
+                        mAreaAdapter = new CirclePopAreaAda(CirclePostActivity.this, mCircleAreaList);
+                        mAreaListView.setAdapter(mAreaAdapter);
+                    }
 
                 }
             } else if (msg.what == 114) {//发帖返回结果
@@ -337,25 +340,30 @@ public class CirclePostActivity extends AppCompatActivity implements View.OnClic
             if (!getContent().equals("")) {
                 if (typeID != -1) {//类型
                     if (areaID != -1) {//小区
+                        if (NetWorkMyUtils.isNetworkConnected(this)){
+                            mSend_card.setFocusable(false);
+                            MyDialog.showDialog(this);
+                            ajaxParams.put("RQid", String.valueOf(areaID));
+                            ajaxParams.put("categoryId", String.valueOf(typeID));
+                            ajaxParams.put("content", getContent());
+                            ajaxParams.put("visibleRange", String.valueOf(mLookBtn_flag));
 
-                        MyDialog.showDialog(this);
-                        ajaxParams.put("RQid", String.valueOf(areaID));
-                        ajaxParams.put("categoryId", String.valueOf(typeID));
-                        ajaxParams.put("content", getContent());
-                        ajaxParams.put("visibleRange", String.valueOf(mLookBtn_flag));
-
-                        Log.e("RQid=",areaID+"");
-                        Log.e("categoryId=",typeID+"");
-                        Log.e("content=",getContent());
-                        Log.e("visibleRange=",mLookBtn_flag+"");
-                        for (int i = 0; i < mImgList.size(); i++) {
-                            try {
-                                ajaxParams.put("图片" + i, transImage(mImgList.get(i), ImgUitls.getWith(this), ImgUitls.getHeight(this), 90, "图片" + i));
-                            } catch (FileNotFoundException e) {
-                                e.printStackTrace();
+                            Log.e("RQid=",areaID+"");
+                            Log.e("categoryId=",typeID+"");
+                            Log.e("content=",getContent());
+                            Log.e("visibleRange=",mLookBtn_flag+"");
+                            for (int i = 0; i < mImgList.size(); i++) {
+                                try {
+                                    ajaxParams.put("图片" + i, transImage(mImgList.get(i), ImgUitls.getWith(this), ImgUitls.getHeight(this), 90, "图片" + i));
+                                } catch (FileNotFoundException e) {
+                                    e.printStackTrace();
+                                }
                             }
+                            mHttptools.circlePostCard(mHandler, ajaxParams);
+                        }else {
+                            Toast.makeText(this, "请检查网络", Toast.LENGTH_SHORT).show();
                         }
-                        mHttptools.circlePostCard(mHandler, ajaxParams);
+
 
                     } else {
                         Toast.makeText(this, "请选择小区", Toast.LENGTH_SHORT).show();

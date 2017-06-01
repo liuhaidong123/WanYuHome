@@ -8,7 +8,17 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.home.wanyu.HttpUtils.UrlTools;
 import com.home.wanyu.R;
+import com.home.wanyu.bean.HouseFirstList.Rows;
+import com.home.wanyu.myUtils.ImgUitls;
+import com.home.wanyu.myUtils.TimeUtils;
+import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static android.media.CamcorderProfile.get;
 
 /**
  * Created by liuhaidong on 2017/5/22.
@@ -17,20 +27,28 @@ import com.home.wanyu.R;
 public class HouseMsgListAda extends BaseAdapter {
     private Context mContext;
     private LayoutInflater mInflater;
+    private List<Rows> mList = new ArrayList<>();
 
-    public HouseMsgListAda(Context mContext) {
+
+    public HouseMsgListAda(Context mContext,List<Rows> mList) {
         this.mContext = mContext;
+        this.mList=mList;
         this.mInflater = LayoutInflater.from(mContext);
+    }
+
+
+    public void setmList(List<Rows> mList) {
+        this.mList = mList;
     }
 
     @Override
     public int getCount() {
-        return 6;
+        return mList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return mList.get(position);
     }
 
     @Override
@@ -53,6 +71,21 @@ public class HouseMsgListAda extends BaseAdapter {
         } else {
             holder = (HouseListHolder) convertView.getTag();
         }
+
+     if (!mList.get(position).getPicture().equals("")){
+         String [] str=mList.get(position).getPicture().split(";");
+         Picasso.with(mContext).load(UrlTools.BASE+str[0]).resize(ImgUitls.getWith(mContext)/4,ImgUitls.getWith(mContext)/4).error(R.mipmap.error_small).into(holder.imageView);
+     }else {
+         Picasso.with(mContext).load(R.mipmap.error_small).into(holder.imageView);
+     }
+        holder.msg.setText(mList.get(position).getCyty()+mList.get(position).getResidentialQuarters()+" "+mList.get(position).getApartmentLayout()+" "+mList.get(position).getHousingArea()+"平米 "+mList.get(position).getPaymentMethod()+" "+mList.get(position).getDirection());
+        if (mList.get(position).getRentalTyoe()==1){
+            holder.type.setText("整租");
+        }else {
+            holder.type.setText("合租");
+        }
+        holder.price.setText(mList.get(position).getRent()+"元/月");
+        holder.time.setText(TimeUtils.getTime(mList.get(position).getCreateTimeString()));
         return convertView;
     }
 

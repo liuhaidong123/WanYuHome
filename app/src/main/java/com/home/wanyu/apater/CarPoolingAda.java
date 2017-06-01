@@ -206,7 +206,7 @@ public class CarPoolingAda extends BaseAdapter {
                 finalConvertView.setFocusable(false);
                 mPosition = position;
                 if (over == 2) {
-                    Toast.makeText(mContext, "请，此拼车活动已结束了哦", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "亲，此拼车活动已结束了哦", Toast.LENGTH_SHORT).show();
                 } else {
                     if (mlist.get(position).islike()) {
                         Toast.makeText(mContext, "亲，您已经加入此拼车，不能重复加入了哦", Toast.LENGTH_SHORT).show();

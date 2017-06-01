@@ -75,10 +75,12 @@ public class CircleCardMessageActivity extends AppCompatActivity implements View
                         Toast.makeText(CircleCardMessageActivity.this, "点赞成功", Toast.LENGTH_SHORT).show();
                         Picasso.with(CircleCardMessageActivity.this).load(R.mipmap.circle_like).error(R.mipmap.error_small).into(mLike_img);
                         mLikeNum.setText(((Integer.valueOf(mLikeNum.getText().toString()) + 1) + ""));
+                        mHttptools.getCircleCommentList(mHandler, UserInfo.userToken, stateId);//获取评论列表接口
                     } else {
                         Toast.makeText(CircleCardMessageActivity.this, "撤销点赞", Toast.LENGTH_SHORT).show();
                         Picasso.with(CircleCardMessageActivity.this).load(R.mipmap.circle_like_no).error(R.mipmap.error_small).into(mLike_img);
                         mLikeNum.setText(((Integer.valueOf(mLikeNum.getText().toString()) - 1) + ""));
+                        mHttptools.getCircleCommentList(mHandler, UserInfo.userToken, stateId);//获取评论列表接口
                     }
                 }
             } else if (msg.what == 115) {//获取评论列表

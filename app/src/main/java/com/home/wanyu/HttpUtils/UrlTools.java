@@ -5,7 +5,8 @@ package com.home.wanyu.HttpUtils;
  */
 
 public class UrlTools {
-    public static final String BASE = "http://192.168.1.33:8080/smarthome";
+
+    public static final String BASE = "http://192.168.1.55:8080/smarthome";
     //判断有没有用户地址
     //http://192.168.1.55:8080/smarthome/mobileapi/family/findFamilyAddress.do?token=EC9CDB5177C01F016403DFAAEE3C1182
     public static final String HAVE_USER_ADDRESS = "/mobileapi/family/findFamilyAddress.do?";
@@ -134,5 +135,31 @@ public class UrlTools {
 
     //删除物业地址
     public static final String ADDRESS_DELETE="/mobileapi/family/deleteDetailHomeAddress.do?";
+
+    //友邻圈，社区活动，社区拼车小红点
+    public static final String GET_RED_CIRCLE_MSG="/mobileapi/message/hasmessage.do?";
+
+    //租房首页信息列表
+    public static final String GET_HOUSE_LIST="/mobileapi/rental/findPage.do?";
+
+    //租房搜索城市接口
+    public static final String GET_HOUSE_CITY_LIST="/mobilepub/baseArea/getList.do?";
+
+    //租房根据城市搜索小区接口
+    public static final String GET_HOUSE_AREA_BY_CITY="/mobilepub/residentialQuarters/findRname.do?";
+
+    //租房根据城市和小区搜索所有户型接口
+    public static final String GET_HOUSE_BY_AREA_AND_CITY="/mobileapi/rental/findPage.do?";
+
+    //租房详情
+    public static final String GET_HOUSE_MSG="/mobileapi/rental/get.do?";
+
+    //租房打电话接口
+    public static final String HOUSE_CALL_PHONE="/mobileapi/contactrecord/addContactrecord.do?";
+    //发布租房接口
+    public static final String HOUSE_POST_CARD="/mobileapi/rental/PublishRental.do?";
+
+    //发布房屋的总数
+    public static final String HOUSE_POST_NUMBER="/mobileapi/rental/findNumber.do?";
 }
 

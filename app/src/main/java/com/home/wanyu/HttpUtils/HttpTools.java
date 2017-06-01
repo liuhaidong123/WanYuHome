@@ -414,7 +414,7 @@ public class HttpTools {
     }
 
 
-    //友邻圈获取小区接口
+    //友邻圈获取我的家接口
     public void getCircleArea(final Handler handler, String token) {
         String url = UrlTools.BASE + UrlTools.GET_CIRCLE_AREA + "token=" + token;
 
@@ -422,13 +422,13 @@ public class HttpTools {
             @Override
             public void onStart() {
                 super.onStart();
-                Log.e("onStart", "友邻圈获取小区接口");
+                Log.e("onStart", "友邻圈获取我的家接口");
             }
 
             @Override
             public void onSuccess(String s) {
                 super.onSuccess(s);
-                Log.e("onSuccess", "友邻圈获取小区接口" + s);
+                Log.e("onSuccess", "友邻圈获取我的家接口" + s);
                 try {
                     Message message = new Message();
                     com.home.wanyu.bean.getCircleArea.Root root = mGson.fromJson(s, com.home.wanyu.bean.getCircleArea.Root.class);
@@ -449,7 +449,7 @@ public class HttpTools {
                 if (strMsg == null) {
                     strMsg = "--null";
                 }
-                Log.e("onFailure", "友邻圈获取小区接口" + strMsg);
+                Log.e("onFailure", "友邻圈获取我的家接口" + strMsg);
                 //handler.sendEmptyMessage(201);
             }
         });
@@ -513,7 +513,7 @@ public class HttpTools {
             @Override
             public void onSuccess(String s) {
                 super.onSuccess(s);
-                Log.i("onSuccess", "获取友邻圈帖子接口列表" + s);
+                Log.e("onSuccess", "获取友邻圈帖子接口列表" + s);
                 try {
                     Message message = new Message();
                     com.home.wanyu.bean.getCircleCardList.Root root = mGson.fromJson(s, com.home.wanyu.bean.getCircleCardList.Root.class);
@@ -1713,7 +1713,373 @@ public class HttpTools {
         });
     }
 
+    //友邻圈，社区活动，社区拼车小红点
+    public void getRedCircleMsg(final Handler handler, String token,int  msgTypeBegin,int msgTypeEnd ) {
+        String url = UrlTools.BASE + UrlTools.GET_RED_CIRCLE_MSG + "token=" + UserInfo.userToken+"&msgTypeBegin="+msgTypeBegin+"&msgTypeEnd="+msgTypeEnd;
 
+        mFinalHttp.get(url, new AjaxCallBack<String>() {
+            @Override
+            public void onStart() {
+                super.onStart();
+                Log.e("onStart", "友邻圈，社区活动，社区拼车小红点");
+            }
+
+            @Override
+            public void onSuccess(String s) {
+                super.onSuccess(s);
+                Log.e("onSuccess", "友邻圈，社区活动，社区拼车小红点" + s);
+                try {
+                    Message message = new Message();
+                    com.home.wanyu.bean.redCircleMsg.Root root = mGson.fromJson(s, com.home.wanyu.bean.redCircleMsg.Root.class);
+                    message.obj = root;
+                    message.what = 142;
+                    handler.sendMessage(message);
+
+                } catch (Exception e) {
+                    Log.e("错误码", e.toString());
+                    // handler.sendEmptyMessage(200);
+                }
+
+            }
+
+            @Override
+            public void onFailure(Throwable t, int errorNo, String strMsg) {
+                super.onFailure(t, errorNo, strMsg);
+                if (strMsg == null) {
+                    strMsg = "--null";
+                }
+                Log.e("onFailure", "友邻圈，社区活动，社区拼车小红点" + strMsg);
+                // handler.sendEmptyMessage(203);
+            }
+        });
+    }
+    //租房首页列表
+    public void getHouseFirstList(final Handler handler, String token, int start,int limit,String cyty) {
+        String url = UrlTools.BASE + UrlTools.GET_HOUSE_LIST + "token=" + token+"&start="+start+"&limit="+limit+"&cyty="+cyty;
+
+        mFinalHttp.get(url, new AjaxCallBack<String>() {
+            @Override
+            public void onStart() {
+                super.onStart();
+                Log.e("onStart", "租房首页列表");
+            }
+
+            @Override
+            public void onSuccess(String s) {
+                super.onSuccess(s);
+                Log.e("onSuccess", "租房首页列表" + s);
+                try {
+                    Message message = new Message();
+                    com.home.wanyu.bean.HouseFirstList.Root root = mGson.fromJson(s, com.home.wanyu.bean.HouseFirstList.Root.class);
+                    message.obj = root;
+                    message.what = 143;
+                    handler.sendMessage(message);
+
+                } catch (Exception e) {
+                    Log.e("错误码", e.toString());
+                    // handler.sendEmptyMessage(200);
+                }
+
+            }
+
+            @Override
+            public void onFailure(Throwable t, int errorNo, String strMsg) {
+                super.onFailure(t, errorNo, strMsg);
+                if (strMsg == null) {
+                    strMsg = "--null";
+                }
+                Log.e("onFailure", "租房首页列表" + strMsg);
+                // handler.sendEmptyMessage(203);
+            }
+        });
+    }
+
+    //租房搜索城市列表
+    public void getHouseCityList(final Handler handler, String areaName) {
+        String url = UrlTools.BASE + UrlTools.GET_HOUSE_CITY_LIST + "areaName=" + areaName;
+
+        mFinalHttp.get(url, new AjaxCallBack<String>() {
+            @Override
+            public void onStart() {
+                super.onStart();
+                Log.e("onStart", "租房搜索城市列表");
+            }
+
+            @Override
+            public void onSuccess(String s) {
+                super.onSuccess(s);
+                Log.e("onSuccess", "租房搜索城市列表" + s);
+                try {
+                    Message message = new Message();
+                    com.home.wanyu.bean.HouseSearchCity.Root root = mGson.fromJson(s, com.home.wanyu.bean.HouseSearchCity.Root.class);
+                    message.obj = root;
+                    message.what = 144;
+                    handler.sendMessage(message);
+
+                } catch (Exception e) {
+                    Log.e("错误码", e.toString());
+                    // handler.sendEmptyMessage(200);
+                }
+
+            }
+
+            @Override
+            public void onFailure(Throwable t, int errorNo, String strMsg) {
+                super.onFailure(t, errorNo, strMsg);
+                if (strMsg == null) {
+                    strMsg = "--null";
+                }
+                Log.e("onFailure", "租房搜索城市列表" + strMsg);
+                // handler.sendEmptyMessage(203);
+            }
+        });
+    }
+
+
+    //租房根据城市搜索小区列表
+    public void getHouseAreaByCity(final Handler handler, String rname,String city) {
+        String url = UrlTools.BASE + UrlTools.GET_HOUSE_AREA_BY_CITY + "rname=" + rname+"&city="+city;
+
+        mFinalHttp.get(url, new AjaxCallBack<String>() {
+            @Override
+            public void onStart() {
+                super.onStart();
+                Log.e("onStart", "租房根据城市搜索小区列表");
+            }
+
+            @Override
+            public void onSuccess(String s) {
+                super.onSuccess(s);
+                Log.e("onSuccess", "租房根据城市搜索小区列表" + s);
+                try {
+                    Message message = new Message();
+                    com.home.wanyu.bean.HouseSearchArea.Root root = mGson.fromJson(s, com.home.wanyu.bean.HouseSearchArea.Root.class);
+                    message.obj = root;
+                    message.what = 145;
+                    handler.sendMessage(message);
+
+                } catch (Exception e) {
+                    Log.e("错误码", e.toString());
+                    // handler.sendEmptyMessage(200);
+                }
+
+            }
+
+            @Override
+            public void onFailure(Throwable t, int errorNo, String strMsg) {
+                super.onFailure(t, errorNo, strMsg);
+                if (strMsg == null) {
+                    strMsg = "--null";
+                }
+                Log.e("onFailure", "租房根据城市搜索小区列表" + strMsg);
+                // handler.sendEmptyMessage(203);
+            }
+        });
+    }
+
+    //根据城市和小区搜索所有户型接口列表
+    public void getHouseByAreaAndCity(final Handler handler,String token,String cyty,int start,int limit,String residentialQuarters) {
+        String url = UrlTools.BASE + UrlTools.GET_HOUSE_BY_AREA_AND_CITY + "token=" + token+"&cyty="+cyty+"&residentialQuarters="+residentialQuarters+"&start="+start+"&limit="+limit;
+
+        mFinalHttp.get(url, new AjaxCallBack<String>() {
+            @Override
+            public void onStart() {
+                super.onStart();
+                Log.e("onStart", "根据城市和小区搜索所有户型接口列表");
+            }
+
+            @Override
+            public void onSuccess(String s) {
+                super.onSuccess(s);
+                Log.e("onSuccess", "根据城市和小区搜索所有户型接口列表" + s);
+                try {
+                    Message message = new Message();
+                    com.home.wanyu.bean.HouseFirstList.Root root = mGson.fromJson(s, com.home.wanyu.bean.HouseFirstList.Root.class);
+                    message.obj = root;
+                    message.what = 146;
+                    handler.sendMessage(message);
+
+                } catch (Exception e) {
+                    Log.e("错误码", e.toString());
+                    // handler.sendEmptyMessage(200);
+                }
+
+            }
+
+            @Override
+            public void onFailure(Throwable t, int errorNo, String strMsg) {
+                super.onFailure(t, errorNo, strMsg);
+                if (strMsg == null) {
+                    strMsg = "--null";
+                }
+                Log.e("onFailure", "根据城市和小区搜索所有户型接口列表" + strMsg);
+                // handler.sendEmptyMessage(203);
+            }
+        });
+    }
+
+    //租房信息详情
+    public void getHouseMsg(final Handler handler,String token,long rentalID) {
+        String url = UrlTools.BASE + UrlTools.GET_HOUSE_MSG + "token=" + token+"&rentalID="+rentalID;
+
+        mFinalHttp.get(url, new AjaxCallBack<String>() {
+            @Override
+            public void onStart() {
+                super.onStart();
+                Log.e("onStart", "租房信息详情");
+            }
+
+            @Override
+            public void onSuccess(String s) {
+                super.onSuccess(s);
+                Log.e("onSuccess", "租房信息详情" + s);
+                try {
+                    Message message = new Message();
+                    com.home.wanyu.bean.HouseMsg.Root root = mGson.fromJson(s, com.home.wanyu.bean.HouseMsg.Root.class);
+                    message.obj = root;
+                    message.what = 147;
+                    handler.sendMessage(message);
+
+                } catch (Exception e) {
+                    Log.e("错误码", e.toString());
+                    // handler.sendEmptyMessage(200);
+                }
+
+            }
+
+            @Override
+            public void onFailure(Throwable t, int errorNo, String strMsg) {
+                super.onFailure(t, errorNo, strMsg);
+                if (strMsg == null) {
+                    strMsg = "--null";
+                }
+                Log.e("onFailure", "租房信息详情" + strMsg);
+                // handler.sendEmptyMessage(203);
+            }
+        });
+    }
+
+
+    //租房打电话
+    public void houseCallPhone(final Handler handler,String token,long RentalId) {
+        String url = UrlTools.BASE + UrlTools.HOUSE_CALL_PHONE + "token=" + token+"&RentalId="+RentalId;
+
+        mFinalHttp.get(url, new AjaxCallBack<String>() {
+            @Override
+            public void onStart() {
+                super.onStart();
+                Log.e("onStart", "租房打电话");
+            }
+
+            @Override
+            public void onSuccess(String s) {
+                super.onSuccess(s);
+                Log.e("onSuccess", "租房打电话" + s);
+                try {
+                    Message message = new Message();
+                    com.home.wanyu.bean.getAreaActivityLike.Root root = mGson.fromJson(s, com.home.wanyu.bean.getAreaActivityLike.Root.class);
+                    message.obj = root;
+                    message.what = 148;
+                    handler.sendMessage(message);
+
+                } catch (Exception e) {
+                    Log.e("错误码", e.toString());
+                    // handler.sendEmptyMessage(200);
+                }
+
+            }
+
+            @Override
+            public void onFailure(Throwable t, int errorNo, String strMsg) {
+                super.onFailure(t, errorNo, strMsg);
+                if (strMsg == null) {
+                    strMsg = "--null";
+                }
+                Log.e("onFailure", "租房打电话" + strMsg);
+                // handler.sendEmptyMessage(203);
+            }
+        });
+    }
+
+    // 租房发布接口
+    public void housePostCard(final Handler handler, AjaxParams ajaxParams) {
+        String url = UrlTools.BASE + UrlTools.HOUSE_POST_CARD;
+        mFinalHttp.addHeader("Cookie", "token=" + UserInfo.userToken);
+        mFinalHttp.post(url, ajaxParams, new AjaxCallBack<String>() {
+            @Override
+            public void onStart() {
+                super.onStart();
+                Log.e("onStart", "租房发布接口");
+            }
+
+            @Override
+            public void onSuccess(String s) {
+                super.onSuccess(s);
+                Log.e("onSuccess", "租房发布接口" + s);
+                try {
+                    Message message = new Message();
+                    com.home.wanyu.bean.getAreaActivityLike.Root root = mGson.fromJson(s, com.home.wanyu.bean.getAreaActivityLike.Root.class);
+                    message.obj = root;
+                    message.what = 149;
+                    handler.sendMessage(message);
+
+                } catch (Exception e) {
+                    Log.e("错误码", e.toString());
+                    // handler.sendEmptyMessage(200);
+                }
+
+            }
+
+            @Override
+            public void onFailure(Throwable t, int errorNo, String strMsg) {
+                super.onFailure(t, errorNo, strMsg);
+                if (strMsg == null) {
+                    strMsg = "--null";
+                }
+                Log.e("onFailure", "租房发布接口" + strMsg);
+                // handler.sendEmptyMessage(203);
+            }
+        });
+    }
+
+    //一个月中发布房源的总数
+    public void housePostNumber(final Handler handler, String token){
+        String url=UrlTools.BASE+UrlTools.HOUSE_POST_NUMBER+"token="+token;
+        mFinalHttp.get(url, new AjaxCallBack<String>() {
+            @Override
+            public void onStart() {
+                super.onStart();
+                Log.e("onStart", "一个月中发布房源的总数" );
+            }
+
+            @Override
+            public void onSuccess(String s) {
+                super.onSuccess(s);
+                Log.e("onSuccess", "一个月中发布房源的总数" + s);
+                try {
+                    Message message = new Message();
+                    com.home.wanyu.bean.HousePostNumber.PostNum root = mGson.fromJson(s, com.home.wanyu.bean.HousePostNumber.PostNum.class);
+                    message.obj = root;
+                    message.what = 150;
+                    handler.sendMessage(message);
+
+                } catch (Exception e) {
+                    Log.e("错误码", e.toString());
+                    // handler.sendEmptyMessage(200);
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t, int errorNo, String strMsg) {
+                super.onFailure(t, errorNo, strMsg);
+                if (strMsg == null) {
+                    strMsg = "--null";
+                }
+                Log.e("onFailure", "一个月中发布房源的总数" + strMsg);
+                // handler.sendEmptyMessage(203);
+            }
+        });
+    }
 }
 
 

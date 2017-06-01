@@ -23,6 +23,7 @@ import com.home.wanyu.apater.CommunityListViewAda;
 import com.home.wanyu.bean.getAreaActivityList.Result;
 import com.home.wanyu.bean.getAreaActivityList.Root;
 import com.home.wanyu.myUtils.MyDialog;
+import com.home.wanyu.myUtils.NetWorkMyUtils;
 import com.home.wanyu.myview.MyListView;
 
 import java.util.ArrayList;
@@ -42,11 +43,12 @@ public class CommunityMessageActivity extends AppCompatActivity implements View.
     private TextView mStart_tv, mEnd_tv;
 
     private ImageView mMsg;//消息
+    private ImageView mRed_img;
 
     private SwipeRefreshLayout mRefresh;
     private RelativeLayout mMore_rl;
     private ProgressBar mBar;
-private long userId;
+    private long userId;
     private int start = 0, limit = 10, over = 1;//over=1,正在进行，over=2活动结束
     private int check = 1;//1是刷新，2是加载更多
     private HttpTools mHttptools;
@@ -58,38 +60,39 @@ private long userId;
                 Object o = msg.obj;
                 if (o != null && o instanceof Root) {
                     mRefresh.setRefreshing(false);
-                    MyDialog.stopDia();
                     Root root = (Root) o;
                     List<Result> list = new ArrayList<>();
-                    list = root.getResult();
-                    if (check == 1) {//刷新
-                        if (over == 1) {
-                            userId=root.getUserid();
-                            mNowList.clear();
-                            mNowList.addAll(list);
-                            Log.e("mNowList 的大小",mNowList.size()+"");
-                            mAdapter.setmList(mNowList, over,userId);
-                            mAdapter.notifyDataSetChanged();
+                    if (root.getResult()!=null){
+                        myListView.setVisibility(View.VISIBLE);
+                        list = root.getResult();
+                        if (check == 1) {//刷新
+                            if (over == 1) {
+                                userId = root.getUserid();
+                                mNowList.clear();
+                                mNowList.addAll(list);
+                                Log.e("mNowList 的大小", mNowList.size() + "");
+                                mAdapter.setmList(mNowList, over, userId);
+                                mAdapter.notifyDataSetChanged();
 
 
-                        } else if (over == 2) {
-                            mEndList.clear();
-                            mEndList.addAll(list);
-                            mAdapter.setmList(mEndList, over,userId);
-                            mAdapter.notifyDataSetChanged();
+                            } else if (over == 2) {
+                                mEndList.clear();
+                                mEndList.addAll(list);
+                                mAdapter.setmList(mEndList, over, userId);
+                                mAdapter.notifyDataSetChanged();
+                            }
+
+                        } else if (check == 2) {//加载更多
+                            if (over == 1) {
+                                mNowList.addAll(list);
+                                mAdapter.setmList(mNowList, over, userId);
+                                mAdapter.notifyDataSetChanged();
+                            } else if (over == 2) {
+                                mEndList.addAll(list);
+                                mAdapter.setmList(mEndList, over, userId);
+                                mAdapter.notifyDataSetChanged();
+                            }
                         }
-
-                    } else if (check == 2) {//加载更多
-                        if (over == 1) {
-                            mNowList.addAll(list);
-                            mAdapter.setmList(mNowList, over,userId);
-                            mAdapter.notifyDataSetChanged();
-                        } else if (over == 2) {
-                            mEndList.addAll(list);
-                            mAdapter.setmList(mEndList, over,userId);
-                            mAdapter.notifyDataSetChanged();
-                        }
-                    }
 
                         if (list.size() < 10) {
                             mMore_rl.setVisibility(View.GONE);
@@ -98,21 +101,49 @@ private long userId;
                             mMore_rl.setVisibility(View.VISIBLE);
                             mBar.setVisibility(View.INVISIBLE);
                         }
+                    }
 
-
+                }
+            } else if (msg.what == 142) {//没有没新消息，小红点
+                Object o = msg.obj;
+                //默认全部
+                if (o != null && o instanceof com.home.wanyu.bean.redCircleMsg.Root) {
+                    com.home.wanyu.bean.redCircleMsg.Root root = (com.home.wanyu.bean.redCircleMsg.Root) o;
+                    if (root.getHasMessage()) {
+                        mRed_img.setVisibility(View.VISIBLE);
+                    } else {
+                        mRed_img.setVisibility(View.GONE);
+                    }
                 }
             }
 
         }
     };
+    private ImageView mNetWorkBack;
+    private TextView mNetWorkTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_community_message);
-        mHttptools = HttpTools.getHttpToolsInstance();
-        //mHttptools.getAreaActivityList(mHandler, UserInfo.userToken, over, start, limit);
-        initView();
+        if (NetWorkMyUtils.isNetworkConnected(this)) {
+            setContentView(R.layout.activity_community_message);
+            mHttptools = HttpTools.getHttpToolsInstance();
+            mHttptools.getRedCircleMsg(mHandler, UserInfo.userToken, 31, 50);//没有没新消息，小红点
+            initView();
+        } else {
+            setContentView(R.layout.no_network);
+            mNetWorkBack = (ImageView) findViewById(R.id.network_back);
+            mNetWorkBack.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
+            mNetWorkTitle = (TextView) findViewById(R.id.network_title_msg);
+            mNetWorkTitle.setText("社区活动");
+
+        }
+
     }
 
     private void initView() {
@@ -138,6 +169,7 @@ private long userId;
 //消息
         mMsg = (ImageView) findViewById(R.id.community_news_img);
         mMsg.setOnClickListener(this);
+        mRed_img = (ImageView) findViewById(R.id.red_img);
 //下拉刷新
         mRefresh = (SwipeRefreshLayout) findViewById(R.id.community_refresh_layout);
         mRefresh.setRefreshing(true);
@@ -166,19 +198,18 @@ private long userId;
             //正在进行，
         } else if (id == mMy_start_ll.getId()) {
             over = 1;
-            if (mNowList.size()==0) {
-                Log.e("mNowList 点击的大小",mNowList.size()+"");
-                MyDialog.showDialog(this);
+            if (mNowList.size() == 0) {
+                myListView.setVisibility(View.GONE);
+                mRefresh.setRefreshing(true);
                 start = 0;
                 mHttptools.getAreaActivityList(mHandler, UserInfo.userToken, over, start, limit);//获取活动列表
             } else {
-                Log.e("mNowList 点击的大小",mNowList.size()+"");
-                mAdapter.setmList(mNowList, over,userId);
+                mAdapter.setmList(mNowList, over, userId);
                 mAdapter.notifyDataSetChanged();
-                if (mNowList.size()%10==0){
+                if (mNowList.size() % 10 == 0) {
                     mMore_rl.setVisibility(View.VISIBLE);
                     mBar.setVisibility(View.INVISIBLE);
-                }else {
+                } else {
                     mMore_rl.setVisibility(View.GONE);
                     mBar.setVisibility(View.INVISIBLE);
                 }
@@ -192,20 +223,18 @@ private long userId;
             //活动结束
         } else if (id == mMy_end_ll.getId()) {
             over = 2;
-
-            if (mEndList.size()==0) {
-                Log.e("mEndList 点击的大小",mEndList.size()+"");
-                MyDialog.showDialog(this);
+            if (mEndList.size() == 0) {
+                myListView.setVisibility(View.GONE);
+                mRefresh.setRefreshing(true);
                 start = 0;
                 mHttptools.getAreaActivityList(mHandler, UserInfo.userToken, over, start, limit);//获取活动列表
             } else {
-                Log.e("mEndList 点击的大小",mEndList.size()+"");
-                mAdapter.setmList(mEndList, over,userId);
+                mAdapter.setmList(mEndList, over, userId);
                 mAdapter.notifyDataSetChanged();
-                if (mEndList.size()%10==0){
+                if (mEndList.size() % 10 == 0) {
                     mMore_rl.setVisibility(View.VISIBLE);
                     mBar.setVisibility(View.INVISIBLE);
-                }else {
+                } else {
                     mMore_rl.setVisibility(View.GONE);
                     mBar.setVisibility(View.INVISIBLE);
                 }
@@ -217,10 +246,10 @@ private long userId;
             mEnd_tv.setTextColor(ContextCompat.getColor(this, R.color.white));
         } else if (id == mMsg.getId()) {//消息
             Intent intent = new Intent(this, CircleGiveYouCommentActivity.class);
-            intent.putExtra("type",1);
+            intent.putExtra("type", 1);
             startActivity(intent);
         } else if (id == mMore_rl.getId()) {//加载更多
-            check =2;
+            check = 2;
             start += 10;
             mBar.setVisibility(View.VISIBLE);
             mHttptools.getAreaActivityList(mHandler, UserInfo.userToken, over, start, limit);//获取活动列表
@@ -230,10 +259,14 @@ private long userId;
     @Override
     protected void onResume() {
         super.onResume();
-        start=0;
-        check = 1;
-        //获取活动列表
-        mHttptools.getAreaActivityList(mHandler, UserInfo.userToken, over, start, limit);//获取活动列表
+
+        if (NetWorkMyUtils.isNetworkConnected(this)) {
+            start = 0;
+            check = 1;
+            //获取活动列表
+            mHttptools.getAreaActivityList(mHandler, UserInfo.userToken, over, start, limit);//获取活动列表
+        }
+
 
     }
 }

@@ -59,7 +59,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@id/address_img"
-                android:text="名流一品小区"
+                android:text=""
                 android:textColor="@color/titlecolor3"
                 android:textSize="15sp" />
 

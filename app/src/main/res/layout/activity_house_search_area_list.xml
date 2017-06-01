@@ -40,7 +40,7 @@
                 android:layout_marginLeft="5dp"
                 android:src="@mipmap/search" />
 
-            <EditText
+            <TextView
                 android:id="@+id/input_area_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -48,12 +48,8 @@
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@id/search_img"
                 android:background="@null"
-                android:textSize="14sp"
-                android:hint="@string/area_hint"
-                android:imeOptions="actionSearch"
-                android:maxLines="1"
-                android:inputType="text"
-                />
+                android:text="@string/area_hint"
+                android:textSize="14sp" />
         </RelativeLayout>
 
     </RelativeLayout>
@@ -90,7 +86,7 @@
                     android:layout_height="45dp"
                     android:layout_below="@id/house_area_refresh_listview"
                     android:background="@color/white"
-                    >
+                    android:visibility="gone">
 
                     <View
                         android:layout_width="match_parent"
@@ -114,7 +110,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="5dp"
                         android:layout_toEndOf="@+id/footer_tv"
-                        />
+                        android:visibility="invisible" />
                 </RelativeLayout>
             </RelativeLayout>
         </ScrollView>
@@ -125,11 +121,10 @@
         android:id="@+id/area_post_card"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@mipmap/circle_post"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_marginBottom="67.5dp"
         android:layout_marginRight="11dp"
-        />
+        android:src="@mipmap/circle_post" />
 
 </RelativeLayout>

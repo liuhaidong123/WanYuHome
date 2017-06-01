@@ -21,13 +21,15 @@ import com.home.wanyu.apater.CarPoolingAda;
 import com.home.wanyu.bean.carPoolingList.Result;
 import com.home.wanyu.bean.carPoolingList.Root;
 import com.home.wanyu.myUtils.MyDialog;
+import com.home.wanyu.myUtils.NetWorkMyUtils;
 import com.home.wanyu.myview.MyListView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CarPoolingActivity extends AppCompatActivity implements View.OnClickListener {
-    private ImageView mBack, mMsg, mCar_post_img;
+    private ImageView mBack, mMsg, mCar_post_img, mRed_img;
+    ;
     private MyListView mListview;
     private CarPoolingAda mAdapter;
     private List<Result> mNowlist = new ArrayList<>();
@@ -53,61 +55,89 @@ public class CarPoolingActivity extends AppCompatActivity implements View.OnClic
                 Object o = msg.obj;
                 if (o != null && o instanceof Root) {
                     Root root = (Root) o;
-                    if (over==1){//正在进行
+                    if (root.getResult()!=null){
 
-                        if (flag == 1) {//刷新
-                            MyDialog.stopDia();
-                            mrefresh.setRefreshing(false);
-                            mNowlist = root.getResult();
-                            mAdapter.setMlist(mNowlist, over);
-                            mAdapter.notifyDataSetChanged();
-                        } else {
-                            List<Result> list = new ArrayList<>();
-                            list = root.getResult();
-                            mNowlist.addAll(list);
-                            mAdapter.setMlist(mNowlist, over);
-                            mAdapter.notifyDataSetChanged();
+                        if (over == 1) {//正在进行
+                            if (flag == 1) {//刷新
+                                mrefresh.setRefreshing(false);
+                                mNowlist = root.getResult();
+                                mListview.setVisibility(View.VISIBLE);
+                                mAdapter.setMlist(mNowlist, over);
+                                mAdapter.notifyDataSetChanged();
+                            } else {
+                                List<Result> list = new ArrayList<>();
+                                list = root.getResult();
+                                mNowlist.addAll(list);
+                                mAdapter.setMlist(mNowlist, over);
+                                mAdapter.notifyDataSetChanged();
+                            }
+
+                        } else {//结束活动
+                            if (flag == 1) {//刷新
+                                mListview.setVisibility(View.VISIBLE);
+                                mrefresh.setRefreshing(false);
+                                mEndlist = root.getResult();
+                                mAdapter.setMlist(mEndlist, over);
+                                mAdapter.notifyDataSetChanged();
+                            } else {
+                                List<Result> list = new ArrayList<>();
+                                list = root.getResult();
+                                mEndlist.addAll(list);
+                                mAdapter.setMlist(mEndlist, over);
+                                mAdapter.notifyDataSetChanged();
+                            }
+
                         }
-
-                    }else {//结束活动
-
-                        if (flag == 1) {//刷新
-                            MyDialog.stopDia();
-                            mrefresh.setRefreshing(false);
-                            mEndlist = root.getResult();
-                            mAdapter.setMlist(mEndlist, over);
-                            mAdapter.notifyDataSetChanged();
+                        if (root.getResult().size() < 10) {
+                            mBar.setVisibility(View.INVISIBLE);
+                            mMore_rl.setVisibility(View.GONE);
                         } else {
-                            List<Result> list = new ArrayList<>();
-                            list = root.getResult();
-                            mEndlist.addAll(list);
-                            mAdapter.setMlist(mEndlist, over);
-                            mAdapter.notifyDataSetChanged();
+                            mBar.setVisibility(View.INVISIBLE);
+                            mMore_rl.setVisibility(View.VISIBLE);
                         }
-
                     }
 
-
-                    if (root.getResult().size() < 10) {
-                        mBar.setVisibility(View.INVISIBLE);
-                        mMore_rl.setVisibility(View.GONE);
+                }
+            } else if (msg.what == 142) {//没有没新消息，小红点
+                Object o = msg.obj;
+                //默认全部
+                if (o != null && o instanceof com.home.wanyu.bean.redCircleMsg.Root) {
+                    com.home.wanyu.bean.redCircleMsg.Root root = (com.home.wanyu.bean.redCircleMsg.Root) o;
+                    if (root.getHasMessage()) {
+                        mRed_img.setVisibility(View.VISIBLE);
                     } else {
-                        mBar.setVisibility(View.INVISIBLE);
-                        mMore_rl.setVisibility(View.VISIBLE);
+                        mRed_img.setVisibility(View.GONE);
                     }
-
                 }
             }
         }
     };
+    private ImageView mNetWorkBack;
+    private TextView mNetWorkTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_car_pooling);
-        mHttptools = HttpTools.getHttpToolsInstance();
-       // mHttptools.getCarPoolingList(mHandler, UserInfo.userToken, over, start, limit);//社区平车首页
-        initView();
+
+        if (NetWorkMyUtils.isNetworkConnected(this)) {
+            setContentView(R.layout.activity_car_pooling);
+            mHttptools = HttpTools.getHttpToolsInstance();
+            mHttptools.getRedCircleMsg(mHandler, UserInfo.userToken, 51, 70);//没有没新消息，小红点
+            initView();
+        } else {
+            setContentView(R.layout.no_network);
+            mNetWorkBack = (ImageView) findViewById(R.id.network_back);
+            mNetWorkBack.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
+            mNetWorkTitle = (TextView) findViewById(R.id.network_title_msg);
+            mNetWorkTitle.setText(R.string.car_pin);
+        }
+
+
     }
 
     private void initView() {
@@ -137,6 +167,7 @@ public class CarPoolingActivity extends AppCompatActivity implements View.OnClic
         //消息
         mMsg = (ImageView) findViewById(R.id.car_news_img);
         mMsg.setOnClickListener(this);
+        mRed_img = (ImageView) findViewById(R.id.car_red_img);
         //变化背景
         mCar_Now_ll = (LinearLayout) findViewById(R.id.car_now_ll);
         mCar_End_ll = (LinearLayout) findViewById(R.id.car_end_ll);
@@ -158,28 +189,27 @@ public class CarPoolingActivity extends AppCompatActivity implements View.OnClic
             finish();
         } else if (id == mMsg.getId()) {//跳转消息
             Intent in = new Intent(this, CircleGiveYouCommentActivity.class);
-            in.putExtra("type",2);
+            in.putExtra("type", 2);
             startActivity(in);
         } else if (id == mCar_Now_ll.getId()) {//正在进行背景，文字
             over = 1;
             if (mNowlist.size() != 0) {
                 mAdapter.setMlist(mNowlist, over);
                 mAdapter.notifyDataSetChanged();
-                if (mNowlist.size()%10==0){
+                if (mNowlist.size() % 10 == 0) {
                     mBar.setVisibility(View.INVISIBLE);
                     mMore_rl.setVisibility(View.VISIBLE);
-                }else {
+                } else {
                     mBar.setVisibility(View.INVISIBLE);
                     mMore_rl.setVisibility(View.GONE);
                 }
             } else {
+                mListview.setVisibility(View.GONE);
                 start = 0;
                 flag = 1;
-                MyDialog.showDialog(this);
+                mrefresh.setRefreshing(true);
                 mHttptools.getCarPoolingList(mHandler, UserInfo.userToken, over, start, limit);//社区平车首页
             }
-
-
 
             mCar_Now_ll.setBackgroundResource(R.color.bg_rect);
             mCar_now_tv.setTextColor(ContextCompat.getColor(this, R.color.white));
@@ -191,24 +221,23 @@ public class CarPoolingActivity extends AppCompatActivity implements View.OnClic
                 mAdapter.setMlist(mEndlist, over);
                 mAdapter.notifyDataSetChanged();
 
-                if (mEndlist.size()%10==0){
+                if (mEndlist.size() % 10 == 0) {
                     mBar.setVisibility(View.INVISIBLE);
                     mMore_rl.setVisibility(View.VISIBLE);
-                }else {
+                } else {
                     mBar.setVisibility(View.INVISIBLE);
                     mMore_rl.setVisibility(View.GONE);
                 }
             } else {
+                mListview.setVisibility(View.GONE);
                 start = 0;
                 flag = 1;
-                MyDialog.showDialog(this);
+                mrefresh.setRefreshing(true);
                 mHttptools.getCarPoolingList(mHandler, UserInfo.userToken, over, start, limit);//社区平车首页
             }
 
-
             mCar_Now_ll.setBackgroundResource(R.color.white);
             mCar_now_tv.setTextColor(ContextCompat.getColor(this, R.color.title_color));
-
             mCar_End_ll.setBackgroundResource(R.color.bg_rect);
             mCar_end_tv.setTextColor(ContextCompat.getColor(this, R.color.white));
         } else if (id == mCar_post_img.getId()) {//拼车发帖
@@ -225,9 +254,10 @@ public class CarPoolingActivity extends AppCompatActivity implements View.OnClic
     @Override
     protected void onResume() {
         super.onResume();
-        start = 0;
-        flag = 1;
-        mHttptools.getCarPoolingList(mHandler, UserInfo.userToken, over, start, limit);//社区平车首页
-
+        if (NetWorkMyUtils.isNetworkConnected(this)) {
+            start = 0;
+            flag = 1;
+            mHttptools.getCarPoolingList(mHandler, UserInfo.userToken, over, start, limit);//社区平车首页
+        }
     }
 }

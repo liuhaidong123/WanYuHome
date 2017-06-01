@@ -10,7 +10,14 @@ public class Bean_changeHouseInfo {
      * result : success
      * code : 0
      */
+    private String message;
+    public String getMessage() {
+        return message;
+    }
 
+    public void setMessage(String message) {
+        this.message = message;
+    }
     private String result;
     private String code;
 

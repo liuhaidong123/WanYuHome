@@ -8,11 +8,19 @@ public class HouseLookConfigure {
     private String name;
     private int img;
     private long id;
+    private boolean flag;
 
-    public HouseLookConfigure(String name, int img, long id) {
+    public HouseLookConfigure(String name, int img, long id, boolean flag) {
         this.name = name;
         this.img = img;
         this.id = id;
+        this.flag = flag;
+    }
+
+    public HouseLookConfigure(String name, int img ,long id) {
+        this.name = name;
+        this.id = id;
+        this.img = img;
     }
 
     public String getName() {
@@ -37,5 +45,13 @@ public class HouseLookConfigure {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public boolean isFlag() {
+        return flag;
+    }
+
+    public void setFlag(boolean flag) {
+        this.flag = flag;
     }
 }

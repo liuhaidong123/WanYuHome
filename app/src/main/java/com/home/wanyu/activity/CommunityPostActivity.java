@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.home.wanyu.HttpUtils.HttpTools;
 import com.home.wanyu.R;
 import com.home.wanyu.bean.getAreaActivityLike.Root;
+import com.home.wanyu.myUtils.NetWorkMyUtils;
 
 import net.tsz.afinal.http.AjaxParams;
 
@@ -222,7 +223,8 @@ public class CommunityPostActivity extends AppCompatActivity implements View.OnC
         } else if (id == mPost_btn.getId()) {//发布
             if (checkStartEndTime(mStartYear+"-"+mStart_time.getText().toString()+":"+"00", mEndYear+"-"+mEnd_time.getText().toString()+":"+"00")) {
                 if (!(getActTitle().equals("") || getActAddress().equals("") || getActPersonNum().equals("") || getActPhone().equals("") || getActContent().equals(""))) {
-                  //  Toast.makeText(this, "所有信息填写正确", Toast.LENGTH_SHORT).show();
+                if (NetWorkMyUtils.isNetworkConnected(this)){
+                    mPost_btn.setFocusable(false);
                     AjaxParams ajaxParams=new AjaxParams();
                     ajaxParams.put("activityTheme",getActTitle());
                     ajaxParams.put("activityContent",getActContent());
@@ -232,6 +234,10 @@ public class CommunityPostActivity extends AppCompatActivity implements View.OnC
                     ajaxParams.put("starttimeString",mStart_time.getText().toString());
                     ajaxParams.put("endtimeString", mEnd_time.getText().toString());
                     mhttptools.areaActivityPost(mhandler,ajaxParams);
+                }else {
+                    Toast.makeText(this, "请检查网络", Toast.LENGTH_SHORT).show();
+                }
+
                 } else {
                     Toast.makeText(this, "请填写正确的活动信息", Toast.LENGTH_SHORT).show();
                 }

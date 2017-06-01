@@ -20,6 +20,8 @@ import android.widget.Toast;
 import com.home.wanyu.HttpUtils.HttpTools;
 import com.home.wanyu.R;
 import com.home.wanyu.bean.getAreaActivityLike.Root;
+import com.home.wanyu.myUtils.MyDialog;
+import com.home.wanyu.myUtils.NetWorkMyUtils;
 
 import net.tsz.afinal.http.AjaxParams;
 
@@ -58,6 +60,7 @@ public class CarPoolingPostActivity extends AppCompatActivity implements View.On
                 Object o=msg.obj;
                 if (o!=null&&o instanceof Root){
                     Root root= (Root) o;
+                    MyDialog.stopDia();
                     if (root.getCode().equals("0")){
                         Toast.makeText(CarPoolingPostActivity.this,"发布成功",Toast.LENGTH_SHORT).show();
                         finish();
@@ -149,15 +152,22 @@ public class CarPoolingPostActivity extends AppCompatActivity implements View.On
         } else if (id == mPost_btn.getId()) {//发布
             if (checkStartEndTime(mStartYear+"-"+mSelect_time.getText().toString()+":"+"00")){
                 if (!(getShen().equals("")||getStartAddresss().equals("")||getEndAddresss().equals("")||getPhone().equals(""))){
-                    Toast.makeText(this,"内容正确",Toast.LENGTH_SHORT).show();
-                    AjaxParams ajaxParams=new AjaxParams();
-                    ajaxParams.put("ctype",mFlag+"");
-                    ajaxParams.put("startTime",mSelect_time.getText().toString());
-                    ajaxParams.put("departurePlace",getStartAddresss());
-                    ajaxParams.put("end",getEndAddresss());
-                    ajaxParams.put("cnumber",getPersonNum());
-                    ajaxParams.put("telephone",getPhone());
-                    mHttptools.carPooloingPost(handler,ajaxParams);
+                   // Toast.makeText(this,"内容正确",Toast.LENGTH_SHORT).show();
+                    if (NetWorkMyUtils.isNetworkConnected(this)){
+                        mPost_btn.setFocusable(false);
+                        MyDialog.showDialog(this);
+                        AjaxParams ajaxParams=new AjaxParams();
+                        ajaxParams.put("ctype",mFlag+"");
+                        ajaxParams.put("startTime",mSelect_time.getText().toString());
+                        ajaxParams.put("departurePlace",getStartAddresss());
+                        ajaxParams.put("end",getEndAddresss());
+                        ajaxParams.put("cnumber",getPersonNum());
+                        ajaxParams.put("telephone",getPhone());
+                        mHttptools.carPooloingPost(handler,ajaxParams);
+                    }else {
+                        Toast.makeText(this,"请检查网络",Toast.LENGTH_SHORT).show();
+                    }
+
 
                 }else {
                     Toast.makeText(this,"请您补全内容",Toast.LENGTH_SHORT).show();
@@ -304,7 +314,7 @@ public class CarPoolingPostActivity extends AppCompatActivity implements View.On
             Date endDate = dateformat.parse(endtime);
 
             if (endDate.getTime() - System.currentTimeMillis() > 0) {
-                Toast.makeText(this, "时间正确", Toast.LENGTH_SHORT).show();
+               // Toast.makeText(this, "时间正确", Toast.LENGTH_SHORT).show();
                 return true;
             }
             Toast.makeText(this, "时间错误", Toast.LENGTH_SHORT).show();

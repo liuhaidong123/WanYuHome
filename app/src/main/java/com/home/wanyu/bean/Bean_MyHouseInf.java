@@ -7,12 +7,20 @@ import java.util.List;
  */
 
 public class Bean_MyHouseInf {
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
     /**
      * result : success
      * code : 0
      * Family : {"personalId":0,"roomNumber":"","city":"","residentialQuartersId":0,"unitNumber":"","residentialQuartersName":"","ownerName":"","areaName":"","familyName":"17743516301","buildingNumber":"","familyState":3,"id":15,"floor":"","lat":0,"address":"","lng":0,"ownerTelephone":0,"areaCode":0,"userType":0,"items":[]}
      */
-
+    private String message;
     private String result;
     private String code;
     private FamilyBean Family;

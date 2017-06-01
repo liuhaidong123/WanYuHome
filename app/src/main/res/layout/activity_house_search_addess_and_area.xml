@@ -111,6 +111,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/search_title"
+        android:layout_marginTop="10dp"
         android:visibility="gone">
 
         <ImageView
@@ -131,4 +132,16 @@
             android:textColor="@color/titlecolor3"
             android:textSize="15sp" />
     </RelativeLayout>
+
+    <ListView
+        android:id="@+id/search_city_result_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/search_title"
+        android:layout_marginTop="10dp"
+        android:divider="@null"
+        android:visibility="gone">
+
+    </ListView>
+
 </RelativeLayout>

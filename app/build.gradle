@@ -36,4 +36,5 @@ dependencies {
     compile 'com.squareup.okio:okio:1.5.0'
     compile 'com.google.code.gson:gson:2.8.0'
     compile files('libs/afinal_0.5.1_bin.jar')
+    compile files('libs/AMap_Location_V3.4.0_20170427.jar')
 }

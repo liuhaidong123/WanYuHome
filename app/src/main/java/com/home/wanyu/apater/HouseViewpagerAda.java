@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.home.wanyu.HttpUtils.UrlTools;
 import com.home.wanyu.R;
 import com.home.wanyu.myUtils.ImgUitls;
 import com.squareup.picasso.Picasso;
@@ -21,11 +22,11 @@ import java.util.List;
 public class HouseViewpagerAda extends PagerAdapter {
     private Context mContext;
     private LayoutInflater mInflater;
-    private List<Integer> list = new ArrayList<>();
+    private List<String> list = new ArrayList<>();
     private View view;
     private ImageView imageView;
 
-    public HouseViewpagerAda(List<Integer> list, Context mContext) {
+    public HouseViewpagerAda(List<String> list, Context mContext) {
         this.list = list;
         this.mContext = mContext;
         mInflater=LayoutInflater.from(this.mContext);
@@ -46,7 +47,7 @@ public class HouseViewpagerAda extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
         view = mInflater.inflate(R.layout.house_viewpager_item, null);
         imageView = (ImageView) view.findViewById(R.id.viewpager_img);
-        Picasso.with(mContext).load(list.get(position)).resize(ImgUitls.getWith(mContext)/3,ImgUitls.getWith(mContext)/3).into(imageView);
+        Picasso.with(mContext).load(UrlTools.BASE+list.get(position)).resize(ImgUitls.getWith(mContext)/3,ImgUitls.getWith(mContext)/3).error(R.mipmap.error_big).into(imageView);
         container.addView(view);
         return view;
     }
