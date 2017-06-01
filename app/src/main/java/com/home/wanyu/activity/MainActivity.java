@@ -27,7 +27,7 @@ import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-
+import cn.jpush.android.api.JPushInterface;
 
 
 import static android.R.attr.fragment;
@@ -141,6 +141,13 @@ public class MainActivity extends FragmentActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        JPushInterface.onPause(this);
         state=0;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        JPushInterface.onResume(this);
     }
 }
