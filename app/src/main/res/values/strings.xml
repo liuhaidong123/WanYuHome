@@ -151,9 +151,6 @@
     <string name="network">没有网络了\n去检查一下网络吧！</string>
 
 
-
-
-
     <string-array name="homeSceneString">
         <item>回家</item>
         <item>离家</item>
@@ -299,4 +296,7 @@
     <string name="error_network">网络连接异常,初始化失败 请检查网络！</string>
     <string name="logining">程序在后台执行, 请查看日志！</string>
     <string name="setting_su">设置成功</string>
+
+    <string name="carpool">TINE您好，司机张接收了您从名流一品小区到风景公园的拼车。请您尽快与司机进行沟通。</string>
+    <string name="carpool_phone">电话：17743516302</string>
 </resources>

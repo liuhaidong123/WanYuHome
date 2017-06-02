@@ -132,7 +132,7 @@ public class MyCircleContactAdapter_c extends BaseAdapter{
         hodler.circle_like_img.setSelected(listCircle.get(position).isIslike());//是否已经点赞
         String picture=listCircle.get(position).getPicture();
         if (!"".equals(picture)&&!TextUtils.isEmpty(picture)){
-            String[] pic = picture.split(",");
+            String[] pic = picture.split(";");
             if (pic!=null&&pic.length>0){
                 List<String>li=new ArrayList<>();
                 for (int i=0;i<pic.length;i++){
