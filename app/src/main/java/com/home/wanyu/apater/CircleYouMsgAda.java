@@ -26,9 +26,10 @@ import java.util.List;
 public class CircleYouMsgAda extends BaseAdapter {
     private Context mContext;
     private List<Bean_Message.RowsBean> listMessage;
-    public CircleYouMsgAda(Context mContext,List<Bean_Message.RowsBean> listMessage) {
+
+    public CircleYouMsgAda(Context mContext, List<Bean_Message.RowsBean> listMessage) {
         this.mContext = mContext;
-       this.listMessage=listMessage;
+        this.listMessage = listMessage;
     }
 
 //    public void setList(List<CircleFriend> list) {
@@ -37,7 +38,7 @@ public class CircleYouMsgAda extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return listMessage==null?0:listMessage.size();
+        return listMessage == null ? 0 : listMessage.size();
     }
 
     @Override
@@ -59,22 +60,21 @@ public class CircleYouMsgAda extends BaseAdapter {
             holder.imageView = (RoundImageView) convertView.findViewById(R.id.you_msg_head);
             holder.name = (TextView) convertView.findViewById(R.id.you_msg_name);
             holder.otherName = (TextView) convertView.findViewById(R.id.you_msg_content);
-            holder.mssage= (MyCirleView) convertView.findViewById(R.id.mssage);
+            holder.mssage = (MyCirleView) convertView.findViewById(R.id.mssage);
             holder.time = (TextView) convertView.findViewById(R.id.you_msg_time);
             convertView.setTag(holder);
         } else {
             holder = (YouHolder) convertView.getTag();
         }
-        if (listMessage.get(position).isIsRead()){
-           holder.mssage.setVisibility(View.GONE);
-        }
-        else {
+        if (listMessage.get(position).isIsRead()) {
+            holder.mssage.setVisibility(View.GONE);
+        } else {
             holder.mssage.setVisibility(View.VISIBLE);
-            }
-        Picasso.with(mContext).load(Ip.imagePath+listMessage.get(position).getAvatar()).placeholder(R.mipmap.loadinge).error(R.mipmap.loadinge).into(holder.imageView);
+        }
+        Picasso.with(mContext).load(Ip.imagePath + listMessage.get(position).getAvatar()).placeholder(R.mipmap.loadinge).error(R.mipmap.loadinge).into(holder.imageView);
         holder.name.setText(listMessage.get(position).getTitle());
         holder.otherName.setText(listMessage.get(position).getContent());
-
+        holder.time.setText(listMessage.get(position).getCreateTimeString());
         return convertView;
     }
 

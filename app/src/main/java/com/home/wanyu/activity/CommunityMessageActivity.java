@@ -46,7 +46,7 @@ public class CommunityMessageActivity extends AppCompatActivity implements View.
     private ImageView mRed_img;
 
     private SwipeRefreshLayout mRefresh;
-    private RelativeLayout mMore_rl;
+    private RelativeLayout mMore_rl, mNOData_rl;
     private ProgressBar mBar;
     private long userId;
     private int start = 0, limit = 10, over = 1;//over=1,正在进行，over=2活动结束
@@ -62,24 +62,26 @@ public class CommunityMessageActivity extends AppCompatActivity implements View.
                     mRefresh.setRefreshing(false);
                     Root root = (Root) o;
                     List<Result> list = new ArrayList<>();
-                    if (root.getResult()!=null){
+                    if (root.getResult() != null) {
                         myListView.setVisibility(View.VISIBLE);
                         list = root.getResult();
+                        userId = root.getUserid();
                         if (check == 1) {//刷新
                             if (over == 1) {
-                                userId = root.getUserid();
                                 mNowList.clear();
                                 mNowList.addAll(list);
                                 Log.e("mNowList 的大小", mNowList.size() + "");
                                 mAdapter.setmList(mNowList, over, userId);
                                 mAdapter.notifyDataSetChanged();
 
-
                             } else if (over == 2) {
+                                mNOData_rl.setVisibility(View.GONE);
+                                myListView.setVisibility(View.VISIBLE);
                                 mEndList.clear();
                                 mEndList.addAll(list);
                                 mAdapter.setmList(mEndList, over, userId);
                                 mAdapter.notifyDataSetChanged();
+
                             }
 
                         } else if (check == 2) {//加载更多
@@ -93,7 +95,6 @@ public class CommunityMessageActivity extends AppCompatActivity implements View.
                                 mAdapter.notifyDataSetChanged();
                             }
                         }
-
                         if (list.size() < 10) {
                             mMore_rl.setVisibility(View.GONE);
                             mBar.setVisibility(View.INVISIBLE);
@@ -186,6 +187,8 @@ public class CommunityMessageActivity extends AppCompatActivity implements View.
         mMore_rl = (RelativeLayout) findViewById(R.id.many_relative);
         mMore_rl.setOnClickListener(this);
         mBar = (ProgressBar) findViewById(R.id.pbLocate);
+//没有数据显示的页面
+        mNOData_rl = (RelativeLayout) findViewById(R.id.no_data_rl);
     }
 
     @Override
@@ -219,7 +222,6 @@ public class CommunityMessageActivity extends AppCompatActivity implements View.
             mStart_tv.setTextColor(ContextCompat.getColor(this, R.color.white));
             mMy_end_ll.setBackgroundResource(R.color.white);
             mEnd_tv.setTextColor(ContextCompat.getColor(this, R.color.title_color));
-
             //活动结束
         } else if (id == mMy_end_ll.getId()) {
             over = 2;
@@ -266,7 +268,6 @@ public class CommunityMessageActivity extends AppCompatActivity implements View.
             //获取活动列表
             mHttptools.getAreaActivityList(mHandler, UserInfo.userToken, over, start, limit);//获取活动列表
         }
-
 
     }
 }

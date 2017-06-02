@@ -159,8 +159,9 @@ public class CircleFriendListviewAda extends BaseAdapter {
                 finalConvertView.setFocusable(true);
                 Intent intent = new Intent(mContext, CircleCardMessageActivity.class);
                 intent.putExtra("type", 1);
-                intent.putExtra("userid",userID);
-                intent.putExtra("bean",list.get(mPosition));
+               // intent.putExtra("userid",userID);
+                intent.putExtra("stateid",list.get(mPosition).getId());
+                //intent.putExtra("bean",list.get(mPosition));
                 mContext.startActivity(intent);
                 Log.e("跳userid=",userID+"");
             }

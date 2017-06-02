@@ -58,17 +58,16 @@ public class ExpressFaAda extends BaseAdapter {
             holder.imageView = (ImageView) convertView.findViewById(R.id.express_img);
             holder.textView = (TextView) convertView.findViewById(R.id.express_tv);
             holder.phone = (ImageView) convertView.findViewById(R.id.express_phone);
-            holder.phone_img=(ImageView) convertView.findViewById(R.id.express_phone);
             convertView.setTag(holder);
         } else {
             holder = (ShouHolder) convertView.getTag();
         }
 
-        Picasso.with(context).load(UrlTools.BASE+list.get(position).getLogo()).error(R.mipmap.error_small).into(holder.imageView);
+        Picasso.with(context).load(UrlTools.BASE+list.get(position).getLogo()).into(holder.imageView);
         holder.textView.setText(list.get(position).getExpressName());
         Picasso.with(context).load(R.mipmap.express_phone).error(R.mipmap.error_small).into(holder.phone);
 
-        holder.phone_img.setOnClickListener(new View.OnClickListener() {
+        holder.phone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_DIAL);
@@ -84,6 +83,5 @@ public class ExpressFaAda extends BaseAdapter {
         ImageView imageView;
         TextView textView;
         ImageView phone;
-        ImageView phone_img;
     }
 }

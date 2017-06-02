@@ -48,48 +48,57 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <RelativeLayout
                 android:id="@+id/tt"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+
                 <com.home.wanyu.myview.MyListView
                     android:id="@+id/you_msg_listview"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:divider="#f1f1f1"
-                    android:dividerHeight="1dp"
+                    android:dividerHeight="0dp"
                     android:scrollbars="none">
+
                 </com.home.wanyu.myview.MyListView>
+
                 <RelativeLayout
                     android:id="@+id/listempty"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
+
                     <ImageView
                         android:id="@+id/messag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="120dp"
+                        android:src="@mipmap/nomessage" />
+
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/nomessage"/>
-                    <TextView
+                        android:layout_below="@+id/messag"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="15dp"
-                        android:text="您还没有消息哦！"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/messag"/>
+                        android:text="您还没有消息哦！" />
                 </RelativeLayout>
             </RelativeLayout>
+
             <RelativeLayout
                 android:id="@+id/many_relative"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tt">
+
                 <View
                     android:id="@+id/line2"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="#f1f1f1"/>
+                    android:background="#f1f1f1" />
+
                 <TextView
                     android:id="@+id/footer_tv"
                     android:layout_width="wrap_content"
@@ -102,6 +111,7 @@
                     android:text="加载更多"
                     android:textColor="@color/titlecolor3"
                     android:textSize="13sp" />
+
                 <ProgressBar
                     android:id="@+id/pbLocate"
                     style="?android:attr/progressBarStyleSmall"

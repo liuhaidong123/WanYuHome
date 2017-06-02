@@ -7,10 +7,7 @@ import java.util.List;
  */
 
 public class Result {
-
-
-
-
+    private CarpoolingEntity carpoolingEntity;
 
     private List<Commentlist> commentlist;
 
@@ -28,4 +25,14 @@ public class Result {
     public boolean getIsLike(){
         return this.IsLike;
     }
+
+    public CarpoolingEntity getCarpoolingEntity() {
+        return carpoolingEntity;
+    }
+
+    public void setCarpoolingEntity(CarpoolingEntity carpoolingEntity) {
+        this.carpoolingEntity = carpoolingEntity;
+    }
+
+
 }

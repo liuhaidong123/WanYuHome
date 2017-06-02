@@ -56,7 +56,7 @@ public class CommunityListViewAda extends BaseAdapter {
                     } else {
                         Toast.makeText(mContext, "取消点赞", Toast.LENGTH_SHORT).show();
                         mList.get(mPostion).setIslike(false);
-                        mList.get(mPostion).setLikeNum(mList.get(mPostion).getLikeNum()-1);
+                        mList.get(mPostion).setLikeNum(mList.get(mPostion).getLikeNum() - 1);
                     }
                     notifyDataSetChanged();
                 }
@@ -68,10 +68,10 @@ public class CommunityListViewAda extends BaseAdapter {
                     if (root.getCode().equals("0")) {
                         Toast.makeText(mContext, "参加活动成功", Toast.LENGTH_SHORT).show();
                         mList.get(mPostion).setJoined(true);
-                        mList.get(mPostion).setParticipateNumber(mList.get(mPostion).getParticipateNumber()+1);
+                        mList.get(mPostion).setParticipateNumber(mList.get(mPostion).getParticipateNumber() + 1);
                         notifyDataSetChanged();
                     } else {
-                        Toast.makeText(mContext, "您已参加活动", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, "您已经参加过该活动", Toast.LENGTH_SHORT).show();
 
                     }
                 }
@@ -136,9 +136,9 @@ public class CommunityListViewAda extends BaseAdapter {
         holder.name_tv.setText(mList.get(position).getUser_name());
         holder.time_tv.setText(mList.get(position).getCreateTimeString());
         holder.title_tv.setText(mList.get(position).getActivityTheme());
-        holder.time_msg_tv.setText("时间 " + mList.get(position).getStarttimeString() + "至" + mList.get(position).getEndtimeString());
-        holder.address_tv.setText("地点 " + mList.get(position).getActivityAddress());
-        holder.person_tv.setText("人数 " + mList.get(position).getActivityNumber() + "人");
+        holder.time_msg_tv.setText(mList.get(position).getStarttimeString() + "至" + mList.get(position).getEndtimeString());
+        holder.address_tv.setText(mList.get(position).getActivityAddress());
+        holder.person_tv.setText(mList.get(position).getActivityNumber() + "人");
         if (over == 1) {
             holder.state_tv.setText("正在进行");
         } else if (over == 2) {
@@ -147,15 +147,15 @@ public class CommunityListViewAda extends BaseAdapter {
         holder.like_num_tv.setText(mList.get(position).getLikeNum() + "人感兴趣");
         holder.join_num_tv.setText(mList.get(position).getParticipateNumber() + "人参加");
 
-        if (mList.get(position).islike()){
+        if (mList.get(position).islike()) {
             Picasso.with(mContext).load(R.mipmap.circle_like).into(holder.like_img);
-        }else {
+        } else {
             Picasso.with(mContext).load(R.mipmap.circle_like_no).into(holder.like_img);
         }
 
-        if (mList.get(position).isJoined()){
+        if (mList.get(position).isJoined()) {
             Picasso.with(mContext).load(R.mipmap.community_add).into(holder.add_img);
-        }else {
+        } else {
             Picasso.with(mContext).load(R.mipmap.community_add_no).into(holder.add_img);
         }
 
@@ -164,14 +164,10 @@ public class CommunityListViewAda extends BaseAdapter {
             public void onClick(View v) {
                 holder.like_img.setFocusable(false);
                 holder.like_img.setFocusableInTouchMode(false);
-
                 holder.add_img.setFocusable(false);
                 holder.add_img.setFocusableInTouchMode(false);
-
                 Intent intent = new Intent(mContext, CommunityCommentActivity.class);
-                intent.putExtra("bean", (Result) mList.get(position));
-                intent.putExtra("over", over);
-                intent.putExtra("userID", userID);
+                intent.putExtra("activityId",mList.get(position).getId());
                 mContext.startActivity(intent);
             }
         });
@@ -186,7 +182,6 @@ public class CommunityListViewAda extends BaseAdapter {
                 finalConvertView.setFocusableInTouchMode(false);
                 holder.add_img.setFocusable(false);
                 holder.add_img.setFocusableInTouchMode(false);
-
                 httpTools.getAreaActivityLike(handler, UserInfo.userToken, mList.get(position).getId());
 
             }
@@ -200,7 +195,11 @@ public class CommunityListViewAda extends BaseAdapter {
                 finalConvertView.setFocusableInTouchMode(false);
                 holder.like_img.setFocusable(false);
                 holder.like_img.setFocusableInTouchMode(false);
-                httpTools.areaActivityJoin(handler, UserInfo.userToken, mList.get(position).getId());
+                if (over == 2) {
+                    Toast.makeText(mContext, "此活动已结束", Toast.LENGTH_SHORT).show();
+                } else {
+                    httpTools.areaActivityJoin(handler, UserInfo.userToken, mList.get(position).getId());
+                }
             }
         });
 
@@ -218,7 +217,6 @@ public class CommunityListViewAda extends BaseAdapter {
         TextView state_tv;
         TextView like_num_tv;
         TextView join_num_tv;
-
         ImageView like_img;
         ImageView add_img;
 

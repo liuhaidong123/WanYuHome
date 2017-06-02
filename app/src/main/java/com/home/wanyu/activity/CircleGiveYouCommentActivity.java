@@ -54,7 +54,7 @@ public class CircleGiveYouCommentActivity extends MyActivity {
 
     RelativeLayout listempty;
     private int start=0;
-    private int limit=1;
+    private int limit=15;
     private PopupWindow pop;
     private int deletePos;
     private boolean isDelete=false;
@@ -156,21 +156,17 @@ public class CircleGiveYouCommentActivity extends MyActivity {
         initView();
         type=getIntent().getIntExtra("type",-1);
         getSerVerData();
-
     }
 
     @Override
     public void getSerVerData() {
         //获取消息
-        switch (type){
-            case -1://获取全部消息
                 getAllMessage(start,limit);
-                break;
-        }
     }
 
     private void initView() {
         listempty= (RelativeLayout) findViewById(R.id.listempty);
+        listempty.setVisibility(View.GONE);
         listMessage=new ArrayList<>();
         many_relative= (RelativeLayout) findViewById(R.id.many_relative);
         many_relative.setVisibility(View.GONE);

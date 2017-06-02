@@ -59,6 +59,20 @@ public class Money2Ada extends BaseAdapter {
         } else {
             holder = (Money2Holder) convertView.getTag();
         }
+        if (position==0){
+            holder.textView.setText("电费");
+            holder.textView_num.setText("2017001002");
+        }else if (position==1){
+            holder.textView.setText("水费");
+            holder.textView_num.setText("2017001003");
+        }else if (position==2){
+            holder.textView.setText("燃气费");
+            holder.textView_num.setText("2017001004");
+        }else if (position==3){
+            holder.textView.setText("物业费");
+            holder.textView_num.setText("2017001005");
+        }
+
         Picasso.with(mContext).load(imgList.get(position)).into(holder.imageView);
 
         return convertView;

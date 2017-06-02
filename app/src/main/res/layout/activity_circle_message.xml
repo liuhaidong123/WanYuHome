@@ -46,12 +46,12 @@
                 android:src="@mipmap/circle_news" />
 
             <ImageView
-                android:visibility="gone"
                 android:id="@+id/circle_news_img"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
-                android:src="@mipmap/circle_small_red" />
+                android:src="@mipmap/circle_small_red"
+                android:visibility="gone" />
         </FrameLayout>
 
 
@@ -192,11 +192,20 @@
         android:background="@color/white"
         android:visibility="gone">
 
-        <TextView
+        <ImageView
+            android:id="@+id/no_img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="抱歉,没有数据哦"
+            android:src="@mipmap/nostatus" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/no_img"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:text="@string/no_data"
             android:textColor="@color/bg_rect" />
     </RelativeLayout>
 

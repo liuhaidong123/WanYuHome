@@ -7,6 +7,8 @@ import java.util.List;
  */
 
 public class Result {
+
+    private ActivityEntity activityEntity;
     private List<UpVptelist> upVptelist;
 
     private List<Commentlist> commentlist;
@@ -38,6 +40,14 @@ public class Result {
     }
     public List<ActivityLoglist> getActivityLoglist(){
         return this.activityLoglist;
+    }
+
+    public ActivityEntity getActivityEntity() {
+        return activityEntity;
+    }
+
+    public void setActivityEntity(ActivityEntity activityEntity) {
+        this.activityEntity = activityEntity;
     }
 }
 

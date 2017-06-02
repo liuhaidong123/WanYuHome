@@ -25,6 +25,7 @@ import com.home.wanyu.HttpUtils.HttpTools;
 import com.home.wanyu.R;
 import com.home.wanyu.User.UserInfo;
 import com.home.wanyu.apater.HouseMsgListAda;
+import com.home.wanyu.bean.HouseFirstList.Result;
 import com.home.wanyu.bean.HouseFirstList.Root;
 import com.home.wanyu.bean.HouseFirstList.Rows;
 import com.home.wanyu.myUtils.ImgUitls;
@@ -40,7 +41,7 @@ public class HouseSearchAreaListActivity extends AppCompatActivity implements Vi
 
     private MyListView myListView;
     private HouseMsgListAda msgListAda;
-    private List<Rows> mList = new ArrayList<>();
+    private List<Result> mList = new ArrayList<>();
 
     private ImageView mPost_card;
 
@@ -61,20 +62,20 @@ public class HouseSearchAreaListActivity extends AppCompatActivity implements Vi
                     Root root = (Root) o;
                     mRefresh.setRefreshing(false);
                     MyDialog.stopDia();
-                    if (root != null && root.getRows() != null) {
+                    if (root != null && root.getResult() != null) {
                         if (flag == 1) {
-                            mList = root.getRows();
+                            mList = root.getResult();
                             msgListAda.setmList(mList);
                             msgListAda.notifyDataSetChanged();
                         } else {
-                            List<Rows> list = new ArrayList<>();
-                            list = root.getRows();
+                            List<Result> list = new ArrayList<>();
+                            list = root.getResult();
                             mList.addAll(list);
                             msgListAda.setmList(mList);
                             msgListAda.notifyDataSetChanged();
                         }
 
-                        if (root.getRows().size() >= 10) {
+                        if (root.getResult().size() >= 10) {
                             mMore_rl.setVisibility(View.VISIBLE);
                             mBar.setVisibility(View.INVISIBLE);
                         } else {
@@ -83,7 +84,7 @@ public class HouseSearchAreaListActivity extends AppCompatActivity implements Vi
                         }
 
                     } else {
-                        Toast.makeText(HouseSearchAreaListActivity.this, "房屋信息错误", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(HouseSearchAreaListActivity.this, "还没有数据哦", Toast.LENGTH_SHORT).show();
                     }
 
                 }

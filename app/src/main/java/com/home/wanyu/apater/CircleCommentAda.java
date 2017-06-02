@@ -64,6 +64,7 @@ public class CircleCommentAda extends BaseAdapter {
                     com.home.wanyu.bean.getCircleCommendResult.Root root = (com.home.wanyu.bean.getCircleCommendResult.Root) o;
 
                     if (root.getCode().equals("0")) {
+                        mEdit.setClickable(false);
                         mCommentNum.setText(Integer.valueOf(mCommentNum.getText().toString()) + 1 + "");
                         mEdit.setText("");
                         coverPersonalId = 0;
@@ -78,7 +79,7 @@ public class CircleCommentAda extends BaseAdapter {
         }
     };
 
-    public CircleCommentAda(final Context mContext, List<Comment> mCommentList, EditText mEdit, TextView mCommentNum, final long stateId) {
+    public CircleCommentAda(final Context mContext, List<Comment> mCommentList, final EditText mEdit, TextView mCommentNum, final long stateId) {
         this.mContext = mContext;
         this.mCommentList = mCommentList;
         this.mEdit = mEdit;
@@ -87,13 +88,14 @@ public class CircleCommentAda extends BaseAdapter {
         this.mInflater = LayoutInflater.from(this.mContext);
         mHttptools = HttpTools.getHttpToolsInstance();
         //发送按钮
-        mEdit.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        this.mEdit.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEND || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
                     if (getEditContent().equals("")) {
                         Toast.makeText(mContext, "请输入评论内容", Toast.LENGTH_SHORT).show();
                     } else {
+                        mEdit.setClickable(false);
                         Log.e("coverPersonalId=", coverPersonalId + "");
                         //提交评论接口
                         //  mHttptools.circleComment(mHandler, UserInfo.userToken, stateId, coverPersonalId, getEditContent());

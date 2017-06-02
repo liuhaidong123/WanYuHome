@@ -102,7 +102,7 @@ public class AddAddressActivity extends AppCompatActivity implements View.OnClic
                         mAreaAda.notifyDataSetChanged();
                     }
                 }
-            } else if (msg.what == 101) {//添加地址判断是否有业主或者添加的房间重复
+            } else if (msg.what == 101) {//添加地址
                 Object o = msg.obj;
                 if (o != null && o instanceof com.home.wanyu.bean.addAddressNoOwner.Root) {
                     com.home.wanyu.bean.addAddressNoOwner.Root root = (com.home.wanyu.bean.addAddressNoOwner.Root) o;
@@ -110,11 +110,11 @@ public class AddAddressActivity extends AppCompatActivity implements View.OnClic
                         Toast.makeText(AddAddressActivity.this, "添加地址成功", Toast.LENGTH_SHORT).show();
                         //跳转到生活缴费
                         if (getIntent().getIntExtra("order", -1) == 11) {
-                            //startActivity(new Intent(AddAddressActivity.this, LifeMoneyActivity2.class));
+                            startActivity(new Intent(AddAddressActivity.this, LifeMoneyActivity2.class));
                             finish();
                             //跳转到物业账单
                         } else if (getIntent().getIntExtra("order", -1) == 22) {
-                            //startActivity(new Intent(AddAddressActivity.this, OrderMessageActivity.class));
+                            startActivity(new Intent(AddAddressActivity.this, OrderMessageActivity.class));
                             finish();
                         } else {
                             finish();
@@ -144,7 +144,6 @@ public class AddAddressActivity extends AppCompatActivity implements View.OnClic
                Object o= msg.obj;
                 if (o!=null&& o instanceof  com.home.wanyu.bean.getAreaActivityLike.Root){
                     com.home.wanyu.bean.getAreaActivityLike.Root root = (com.home.wanyu.bean.getAreaActivityLike.Root) o;
-
                     if (root.getCode().equals("0")){
                         Toast.makeText(AddAddressActivity.this, "修改地址成功", Toast.LENGTH_SHORT).show();
                         finish();
@@ -270,7 +269,7 @@ public class AddAddressActivity extends AppCompatActivity implements View.OnClic
 
         } else if (id == mSubmit.getId()) {
             if (getCity().equals("") || getArea().equals("") || getName().equals("") || getPhone().equals("") || getLou().equals("") || getCeng().equals("") || getUnit().equals("") || getHourse().equals("")) {
-                Toast.makeText(this, "亲,请补全地址信息哦", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "亲,请填写正确的信息哦", Toast.LENGTH_SHORT).show();
 
             } else {
 

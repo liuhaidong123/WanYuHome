@@ -109,7 +109,7 @@ public class CirclePostActivity extends AppCompatActivity implements View.OnClic
                 Object o = msg.obj;
                 if (o != null && o instanceof Root) {
                     Root root = (Root) o;
-                    if (root.getResult()!=null){
+                    if (root.getResult() != null) {
                         mCircleAreaList = root.getResult();
                         mAreaAdapter = new CirclePopAreaAda(CirclePostActivity.this, mCircleAreaList);
                         mAreaListView.setAdapter(mAreaAdapter);
@@ -120,11 +120,11 @@ public class CirclePostActivity extends AppCompatActivity implements View.OnClic
                 Object o = msg.obj;
                 if (o != null && o instanceof com.home.wanyu.bean.getCirclePostCardResult.Root) {
                     com.home.wanyu.bean.getCirclePostCardResult.Root root = (com.home.wanyu.bean.getCirclePostCardResult.Root) o;
-                    if (root.getCode().equals("0")){
+                    if (root.getCode().equals("0")) {
                         MyDialog.stopDia();
                         Toast.makeText(CirclePostActivity.this, "发帖成功", Toast.LENGTH_SHORT).show();
                         finish();
-                    }else {
+                    } else {
                         MyDialog.stopDia();
                         Toast.makeText(CirclePostActivity.this, "发帖失败", Toast.LENGTH_SHORT).show();
                     }
@@ -337,44 +337,46 @@ public class CirclePostActivity extends AppCompatActivity implements View.OnClic
             showPopuWindowArea();
         } else if (id == mSend_card.getId()) {//发送
 
-            if (!getContent().equals("")) {
-                if (typeID != -1) {//类型
-                    if (areaID != -1) {//小区
-                        if (NetWorkMyUtils.isNetworkConnected(this)){
-                            mSend_card.setFocusable(false);
-                            MyDialog.showDialog(this);
-                            ajaxParams.put("RQid", String.valueOf(areaID));
-                            ajaxParams.put("categoryId", String.valueOf(typeID));
-                            ajaxParams.put("content", getContent());
-                            ajaxParams.put("visibleRange", String.valueOf(mLookBtn_flag));
+            if (!getContent().equals("") && typeID != -1 && areaID != -1 && NetWorkMyUtils.isNetworkConnected(this)) {
+//                if (typeID != -1) {//类型
+//                    if (areaID != -1) {//小区
+//                        if (NetWorkMyUtils.isNetworkConnected(this)){
+                mSend_card.setClickable(false);
+                MyDialog.showDialog(this);
+                ajaxParams.put("RQid", String.valueOf(areaID));
+                ajaxParams.put("categoryId", String.valueOf(typeID));
+                ajaxParams.put("content", getContent());
+                ajaxParams.put("visibleRange", String.valueOf(mLookBtn_flag));
 
-                            Log.e("RQid=",areaID+"");
-                            Log.e("categoryId=",typeID+"");
-                            Log.e("content=",getContent());
-                            Log.e("visibleRange=",mLookBtn_flag+"");
-                            for (int i = 0; i < mImgList.size(); i++) {
-                                try {
-                                    ajaxParams.put("图片" + i, transImage(mImgList.get(i), ImgUitls.getWith(this), ImgUitls.getHeight(this), 90, "图片" + i));
-                                } catch (FileNotFoundException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                            mHttptools.circlePostCard(mHandler, ajaxParams);
-                        }else {
-                            Toast.makeText(this, "请检查网络", Toast.LENGTH_SHORT).show();
-                        }
-
-
-                    } else {
-                        Toast.makeText(this, "请选择小区", Toast.LENGTH_SHORT).show();
+                Log.e("RQid=", areaID + "");
+                Log.e("categoryId=", typeID + "");
+                Log.e("content=", getContent());
+                Log.e("visibleRange=", mLookBtn_flag + "");
+                for (int i = 0; i < mImgList.size(); i++) {
+                    try {
+                        ajaxParams.put("图片" + i, transImage(mImgList.get(i), ImgUitls.getWith(this), ImgUitls.getHeight(this), 90, "图片" + i));
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
                     }
-
-                } else {
-                    Toast.makeText(this, "请选择类型", Toast.LENGTH_SHORT).show();
                 }
-
-            } else {
-                Toast.makeText(this, "请填写内容", Toast.LENGTH_SHORT).show();
+                mHttptools.circlePostCard(mHandler, ajaxParams);
+            }
+//            else {
+//                            Toast.makeText(this, "请检查网络", Toast.LENGTH_SHORT).show();
+//                        }
+//
+//
+//                    } else {
+//                        Toast.makeText(this, "请选择小区", Toast.LENGTH_SHORT).show();
+//                    }
+//
+//                } else {
+//                    Toast.makeText(this, "请选择类型", Toast.LENGTH_SHORT).show();
+//                }
+//
+//            }
+            else {
+                Toast.makeText(this, "请补全内容,类型,小区", Toast.LENGTH_SHORT).show();
             }
 
         }

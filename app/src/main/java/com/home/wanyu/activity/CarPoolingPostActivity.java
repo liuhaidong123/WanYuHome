@@ -154,7 +154,7 @@ public class CarPoolingPostActivity extends AppCompatActivity implements View.On
                 if (!(getShen().equals("")||getStartAddresss().equals("")||getEndAddresss().equals("")||getPhone().equals(""))){
                    // Toast.makeText(this,"内容正确",Toast.LENGTH_SHORT).show();
                     if (NetWorkMyUtils.isNetworkConnected(this)){
-                        mPost_btn.setFocusable(false);
+                        mPost_btn.setClickable(false);
                         MyDialog.showDialog(this);
                         AjaxParams ajaxParams=new AjaxParams();
                         ajaxParams.put("ctype",mFlag+"");

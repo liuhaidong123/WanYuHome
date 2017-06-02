@@ -58,10 +58,10 @@ public class CommunityCommentActivity extends AppCompatActivity implements View.
     private ImageView mBack;
     private LinearLayout mComment_ll, mLike_ll, mJoin_ll;
     private ImageView mLike_img, mJoin_img;
-
-    private Result result;
     private int over;
-    private long userId;
+    private long activityId;
+    private int allPersonNum;
+    private int joinNum;
     private RoundImageView mHead_img;
     private TextView mName, mtime, mState, mTitle, mTime_msg, mAddress, mPerson_num, mPhone, mContent;
     private TextView mDelete_btn;//删除按钮
@@ -110,15 +110,14 @@ public class CommunityCommentActivity extends AppCompatActivity implements View.
                     mJoinAda = new AreaActivityJoinAda(CommunityCommentActivity.this, mJoinList);
                     mJoinGridView.setAdapter(mJoinAda);
 
-
-                    mCommentAda = new AreaActivityCommentAda(CommunityCommentActivity.this, mCommentList, result.getId());
+                    mCommentAda = new AreaActivityCommentAda(CommunityCommentActivity.this, mCommentList, activityId);
                     mCommentListView.setAdapter(mCommentAda);
 
                     mImgStrList.clear();
                     //取出图片
                     for (int i = 0; i < mImgList.size(); i++) {
                         //判断自己曾经上传过几张图片
-                        if (mImgList.get(i).getPersonalId() == userId) {
+                        if (mImgList.get(i).getPersonalId() == UserInfo.personalId) {
                             if (mImgList.get(i).getPicture().equals("")) {
                                 imgNum = 2;//可以传2张
                             } else {
@@ -141,6 +140,35 @@ public class CommunityCommentActivity extends AppCompatActivity implements View.
                     }
                     mImgAda = new AreaActivityImgAda(CommunityCommentActivity.this, mImgStrList, mSize);
                     mImgGridView.setAdapter(mImgAda);
+
+
+                    if (root.getResult().getActivityEntity() != null) {
+                        Picasso.with(CommunityCommentActivity.this).load(UrlTools.BASE + root.getResult().getActivityEntity().getAvatar()).resize(ImgUitls.getWith(CommunityCommentActivity.this) / 3, ImgUitls.getWith(CommunityCommentActivity.this) / 3).error(R.mipmap.error_small).into(mHead_img);
+                        mName.setText(root.getResult().getActivityEntity().getUser_name());
+                        mtime.setText(root.getResult().getActivityEntity().getCreateTimeString());
+                        if (root.getResult().getActivityEntity().getOver() == 1) {
+                            over = 1;
+                            mState.setText("正在进行");
+                        } else if (root.getResult().getActivityEntity().getOver() == 2) {
+                            over = 2;
+                            mState.setText("活动结束");
+                        }
+                        mTitle.setText(root.getResult().getActivityEntity().getActivityTheme());
+                        mTime_msg.setText(root.getResult().getActivityEntity().getStarttimeString() + "至" + root.getResult().getActivityEntity().getEndtimeString());
+                        mAddress.setText(root.getResult().getActivityEntity().getActivityAddress());
+                        mPerson_num.setText(root.getResult().getActivityEntity().getActivityNumber() + "");
+                        mPhone.setText(root.getResult().getActivityEntity().getActivityTelephone() + "");
+                        mContent.setText(root.getResult().getActivityEntity().getActivityContent());
+                        allPersonNum = root.getResult().getActivityEntity().getActivityNumber();//总人数
+                        joinNum = root.getResult().getActivityEntity().getParticipateNumber();//实时参与人数
+
+                        if (root.getResult().getActivityEntity().getPersonalId() == UserInfo.personalId) {
+                            mDelete_btn.setVisibility(View.VISIBLE);
+                        } else {
+                            mDelete_btn.setVisibility(View.GONE);
+                        }
+
+                    }
                 }
             } else if (msg.what == 121) {//发布图片
                 Object o = msg.obj;
@@ -149,9 +177,9 @@ public class CommunityCommentActivity extends AppCompatActivity implements View.
 
                     if (root.getCode().equals("0")) {
                         Toast.makeText(CommunityCommentActivity.this, "上传活动图片成功", Toast.LENGTH_SHORT).show();
-                        if (result != null) {
+                        if (activityId != -1) {
                             //获取活动详情
-                            mHttptools.getAreaActivityMsg(mHandler, UserInfo.userToken, result.getId());
+                            mHttptools.getAreaActivityMsg(mHandler, UserInfo.userToken, activityId);
                         }
                     } else {
                         Toast.makeText(CommunityCommentActivity.this, "上传活动图片失败", Toast.LENGTH_SHORT).show();
@@ -164,42 +192,46 @@ public class CommunityCommentActivity extends AppCompatActivity implements View.
                     com.home.wanyu.bean.getAreaActivityLike.Root root = (com.home.wanyu.bean.getAreaActivityLike.Root) o;
                     if (root.getCode().equals("0")) {
                         Toast.makeText(CommunityCommentActivity.this, "点赞成功", Toast.LENGTH_SHORT).show();
-                        if (result != null) {
+                        if (activityId != -1) {
                             //获取活动详情
-                            mHttptools.getAreaActivityMsg(mHandler, UserInfo.userToken, result.getId());
+                            mHttptools.getAreaActivityMsg(mHandler, UserInfo.userToken, activityId);
                         }
                         mLike_img.setImageResource(R.mipmap.circle_like);
-                    }else {
+                    } else {
                         Toast.makeText(CommunityCommentActivity.this, "取消点赞", Toast.LENGTH_SHORT).show();
+                        if (activityId != -1) {
+                            //获取活动详情
+                            mHttptools.getAreaActivityMsg(mHandler, UserInfo.userToken, activityId);
+                        }
                         mLike_img.setImageResource(R.mipmap.circle_like_no);
                     }
                 }
 
-            }else if (msg.what == 123) {//加入
+            } else if (msg.what == 123) {//加入
                 Object o = msg.obj;
                 if (o != null && o instanceof com.home.wanyu.bean.getAreaActivityLike.Root) {
                     com.home.wanyu.bean.getAreaActivityLike.Root root = (com.home.wanyu.bean.getAreaActivityLike.Root) o;
                     if (root.getCode().equals("0")) {
                         Toast.makeText(CommunityCommentActivity.this, "参加活动成功", Toast.LENGTH_SHORT).show();
-                        if (result != null) {
+                        if (activityId != -1) {
                             //获取活动详情
-                            mHttptools.getAreaActivityMsg(mHandler, UserInfo.userToken, result.getId());
+                            mHttptools.getAreaActivityMsg(mHandler, UserInfo.userToken, activityId);
                         }
                         mJoin_img.setImageResource(R.mipmap.community_add);
-                    }else {
+                    } else {
                         Toast.makeText(CommunityCommentActivity.this, "您已参加活动", Toast.LENGTH_SHORT).show();
 
                     }
                 }
 
-            }else if (msg.what==125){//删除
+            } else if (msg.what == 125) {//删除
                 Object o = msg.obj;
                 if (o != null && o instanceof com.home.wanyu.bean.getAreaActivityLike.Root) {
                     com.home.wanyu.bean.getAreaActivityLike.Root root = (com.home.wanyu.bean.getAreaActivityLike.Root) o;
-                    if (root.getCode().equals("0")){
+                    if (root.getCode().equals("0")) {
                         Toast.makeText(CommunityCommentActivity.this, "删除成功", Toast.LENGTH_SHORT).show();
                         finish();
-                    }else {
+                    } else {
                         Toast.makeText(CommunityCommentActivity.this, "删除失败", Toast.LENGTH_SHORT).show();
                     }
 
@@ -217,11 +249,10 @@ public class CommunityCommentActivity extends AppCompatActivity implements View.
     }
 
     private void initView() {
-        result = (Result) getIntent().getSerializableExtra("bean");
-        over = getIntent().getIntExtra("over", -1);
-        userId = getIntent().getLongExtra("userID", -1);
-        mDelete_btn = (TextView) findViewById(R.id.u_delete_btn);
+        activityId = getIntent().getLongExtra("activityId", -1);
 
+        mDelete_btn = (TextView) findViewById(R.id.u_delete_btn);
+        mDelete_btn.setOnClickListener(this);
         mHead_img = (RoundImageView) findViewById(R.id.u_head_img);
         mName = (TextView) findViewById(R.id.u_name);
         mtime = (TextView) findViewById(R.id.u_post_time);
@@ -233,38 +264,13 @@ public class CommunityCommentActivity extends AppCompatActivity implements View.
         mPhone = (TextView) findViewById(R.id.phone_msg_v);
         mContent = (TextView) findViewById(R.id.content_msg_tv);
 
-        if (result != null) {
-            Picasso.with(this).load(UrlTools.BASE + result.getAvatar()).resize(ImgUitls.getWith(this) / 3, ImgUitls.getWith(this) / 3).error(R.mipmap.error_small).into(mHead_img);
-            mName.setText(result.getUser_name());
-            mtime.setText(result.getCreateTimeString());
-            if (over == 1) {
-                mState.setText("正在进行");
-            } else if (over == 2) {
-                mState.setText("活动结束");
-            }
-            mTitle.setText(result.getActivityTheme());
-            mTime_msg.setText(result.getStarttimeString() + "至" + result.getEndtimeString());
-            mAddress.setText(result.getActivityAddress());
-            mPerson_num.setText(result.getActivityNumber() + "");
-            mPhone.setText(result.getActivityTelephone() + "");
-            mContent.setText(result.getActivityContent());
-
-            if (userId == result.getPersonalId()) {
-
-                mDelete_btn.setOnClickListener(this);
-                mDelete_btn.setVisibility(View.VISIBLE);
-            } else {
-                mDelete_btn.setVisibility(View.GONE);
-            }
-
-        }
         //点赞GridView
         mLikeGridView = (MyGridView) findViewById(R.id.community_like_gridview);
         mLikeGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent=new Intent(CommunityCommentActivity.this,OtherPersonInfoActivity.class);
-                intent.putExtra("id",mLikeList.get(position).getPersonalId()+"");
+                Intent intent = new Intent(CommunityCommentActivity.this, OtherPersonInfoActivity.class);
+                intent.putExtra("id", mLikeList.get(position).getPersonalId() + "");
                 startActivity(intent);
             }
         });
@@ -406,12 +412,9 @@ public class CommunityCommentActivity extends AppCompatActivity implements View.
             for (int i = 0; i < list.size(); i++) {
                 mImgStrList.add(list.get(i));
             }
-//            mImgAda = new AreaActivityImgAda(this, mImgStrList, mSize);
-//            mImgGridView.setAdapter(mImgAda);
             AjaxParams ajaxParams = new AjaxParams();
             ajaxParams.put("token", UserInfo.userToken);
-            ajaxParams.put("activity_id", result.getId() + "");
-
+            ajaxParams.put("activity_id", activityId + "");
             if (list.size() != 0) {
                 for (int i = 0; i < list.size(); i++) {
                     try {
@@ -420,7 +423,7 @@ public class CommunityCommentActivity extends AppCompatActivity implements View.
                         e.printStackTrace();
                     }
                 }
-                ajaxParams.put("number",list.size()+"");
+                ajaxParams.put("number", list.size() + "");
                 mHttptools.AreaActivityPosImg(mHandler, ajaxParams);
             }
         }
@@ -496,24 +499,31 @@ public class CommunityCommentActivity extends AppCompatActivity implements View.
             Intent intent = new Intent(this, CarPoolingCommentActivity.class);
             intent.putExtra("flag", "activity");
             intent.putExtra("coverPersonalId", coverPersonalId);
-            intent.putExtra("Id", result.getId());
+            intent.putExtra("Id", activityId);
             intent.putExtra("hint", "说点什么");
             startActivity(intent);
         } else if (id == mLike_ll.getId()) {//点赞
-            if (result != null) {
-                mHttptools.getAreaActivityLike(mHandler, UserInfo.userToken, result.getId());
+            if (activityId != -1) {
+                mHttptools.getAreaActivityLike(mHandler, UserInfo.userToken, activityId);
             }
 
-        }else if (id==mJoin_ll.getId()){//参加
-            if (result != null) {
-                mHttptools.areaActivityJoin(mHandler, UserInfo.userToken, result.getId());
-            }
-        }else if (id==mDelete_btn.getId()){//删除
-            if (result!=null){
-                mHttptools.areaActivityDelete(mHandler,UserInfo.userToken,result.getId(),result.getPersonalId());
-                Log.e("result.getId()",result.getId()+"");
-                Log.e("result.getPersonalId()",result.getPersonalId()+"");
+        } else if (id == mJoin_ll.getId()) {//参加
+            if (activityId != -1) {
+                if (over == 2) {
+                    Toast.makeText(this, "此活动已经结束了", Toast.LENGTH_SHORT).show();
+                } else if (over == 1) {
+                    if (joinNum >= allPersonNum) {
+                        Toast.makeText(this, "此活动活动人数已满", Toast.LENGTH_SHORT).show();
+                    } else {
+                        mHttptools.areaActivityJoin(mHandler, UserInfo.userToken, activityId);
+                    }
 
+                }
+
+            }
+        } else if (id == mDelete_btn.getId()) {//删除
+            if (activityId != -1) {
+                mHttptools.areaActivityDelete(mHandler, UserInfo.userToken, activityId, UserInfo.personalId);
             }
 
         }
@@ -522,9 +532,9 @@ public class CommunityCommentActivity extends AppCompatActivity implements View.
     @Override
     protected void onResume() {
         super.onResume();
-        if (result != null) {
+        if (activityId != -1) {
             //获取活动详情
-            mHttptools.getAreaActivityMsg(mHandler, UserInfo.userToken, result.getId());
+            mHttptools.getAreaActivityMsg(mHandler, UserInfo.userToken, activityId);
         }
 
     }

@@ -89,21 +89,20 @@ public class HousekeeperFrgment extends Fragment implements ViewPager.OnPageChan
                 if (o != null && o instanceof Root) {
                     mHaveRoot = (Root) o;
                 }
-            }else if (msg.what==136){//获取未领取的快递
+            } else if (msg.what == 136) {//获取未领取的快递
                 Object o = msg.obj;
-                if (o!=null&&o instanceof com.home.wanyu.bean.Express.Root){
+                if (o != null && o instanceof com.home.wanyu.bean.Express.Root) {
                     com.home.wanyu.bean.Express.Root root = (com.home.wanyu.bean.Express.Root) o;
-                   if (root!=null&&root.getResult()!=null){
-                       if (root.getResult().size()==0){
-                           mExpress_msg.setText("您还没有未领取的快递");
-                       }else {
-                           mExpress_msg.setText("您还有"+root.getResult().size()+"个快递未领取");
-                       }
-                   }
+                    if (root != null && root.getResult() != null) {
+                        if (root.getResult().size() == 0) {
+                            mExpress_msg.setText("您还没有未领取的快递");
+                        } else {
+                            mExpress_msg.setText("您还有" + root.getResult().size() + "个快递未领取");
+                        }
+                    }
 
                 }
             }
-
 
 
         }
@@ -121,7 +120,7 @@ public class HousekeeperFrgment extends Fragment implements ViewPager.OnPageChan
 
     private void initHttp() {
         mHttptools = HttpTools.getHttpToolsInstance();
-        mHttptools.expressNOGet(mHandler,UserInfo.userToken);//获取未领取的快递
+        mHttptools.expressNOGet(mHandler, UserInfo.userToken);//获取未领取的快递
     }
 
     public void initView(View view) {
@@ -141,7 +140,9 @@ public class HousekeeperFrgment extends Fragment implements ViewPager.OnPageChan
         mScrollRelative.setFocusableInTouchMode(true);
         mScrollRelative.requestFocus();
         //刷新
+
         mRefresh = (SwipeRefreshLayout) view.findViewById(R.id.property_refresh);
+        mRefresh.setEnabled(false);
         mRefresh.setColorSchemeResources(R.color.bg_rect, R.color.colorAccent, R.color.result_points);
         mRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -149,32 +150,6 @@ public class HousekeeperFrgment extends Fragment implements ViewPager.OnPageChan
 
             }
         });
-//        //二级listview
-//        mList.add("食肉动物");
-//        mList.add("食草动物");
-//        mList.add("天上飞的");
-//        mList.add("地上爬的");
-//        mTwoList.add("老虎");
-//        mTwoList.add("狮子");
-//        mTwoList.add("大象");
-//        mTwoList.add("长劲鹿");
-//        mTwoList.add("白天鹅");
-//        mMyListview = (MyExpandableListview) view.findViewById(R.id.my_expandable);
-//        mMyxpandableAda = new MyExpandableAda(mList, mTwoList, getActivity());
-//        mMyListview.setAdapter(mMyxpandableAda);
-//        //默认展开二级菜单
-//        for (int i = 0; i < mMyxpandableAda.getGroupCount(); i++) {
-//            mMyListview.expandGroup(i);
-//        }
-//        //不能点击收缩
-//        mMyListview.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-//            @Override
-//            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-//                return true;
-//            }
-//        });
-//        //去掉箭头
-//        mMyListview.setGroupIndicator(null);
 
         //报事报修
         mRepair_ll = (LinearLayout) view.findViewById(R.id.property_repair);
@@ -204,8 +179,8 @@ public class HousekeeperFrgment extends Fragment implements ViewPager.OnPageChan
         mHouseMsg_ll.setOnClickListener(this);
 
         //快递通知
-        mExpress_msg= (TextView) view.findViewById(R.id.express_message);
-        mExpress_btn=(TextView) view.findViewById(R.id.express_look_btn);
+        mExpress_msg = (TextView) view.findViewById(R.id.express_message);
+        mExpress_btn = (TextView) view.findViewById(R.id.express_look_btn);
         mExpress_btn.setOnClickListener(this);
     }
 
@@ -297,21 +272,25 @@ public class HousekeeperFrgment extends Fragment implements ViewPager.OnPageChan
             startActivity(new Intent(getActivity(), RepairActivity.class));
         } else if (id == mOrder_ll.getId()) {//物业账单
             if (mHaveRoot != null && mHaveRoot.getCode().equals("-1")) {//没有地址，显示需要添加地址的页面
-                startActivity(new Intent(getActivity(), OrderActivity.class));
+                Intent intent = new Intent(getActivity(), OrderActivity.class);
+                intent.putExtra("order", 22);
+                startActivity(intent);
             } else if (mHaveRoot != null && mHaveRoot.getCode().equals("0")) {//有地址的话，直接显示物业账单信息
                 startActivity(new Intent(getActivity(), OrderMessageActivity.class));
             } else {
-                Toast.makeText(getContext(), "获取地址错误", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "请检查网络", Toast.LENGTH_SHORT).show();
             }
 
         } else if (id == mLife_money_ll.getId()) {//生活缴费
 
             if (mHaveRoot != null && mHaveRoot.getCode().equals("-1")) {//没有地址，显示需要添加地址的页面
-                startActivity(new Intent(getActivity(), OrderActivity.class));
+                Intent intent = new Intent(getActivity(), OrderActivity.class);
+                intent.putExtra("order", 11);
+                startActivity(intent);
             } else if (mHaveRoot != null && mHaveRoot.getCode().equals("0")) {//有地址的话，直接显示物业账单信息
                 startActivity(new Intent(getActivity(), LifeMoneyActivity2.class));
             } else {
-                Toast.makeText(getContext(), "获取地址错误", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "请检查网络", Toast.LENGTH_SHORT).show();
             }
 
         } else if (id == mExpress_ll.getId()) {//快递收发
@@ -324,7 +303,7 @@ public class HousekeeperFrgment extends Fragment implements ViewPager.OnPageChan
             startActivity(new Intent(getActivity(), HomeServiceActivity.class));
         } else if (id == mHouseMsg_ll.getId()) {//租房信息
             startActivity(new Intent(getActivity(), HouseMsgActivity.class));
-        }else if (id==mExpress_btn.getId()){//点击查看跳转到快递
+        } else if (id == mExpress_btn.getId()) {//点击查看跳转到快递
             startActivity(new Intent(getActivity(), ExpressActivity.class));
         }
 

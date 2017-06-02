@@ -136,10 +136,10 @@
     <string name="house_rent_huType"><font color="#00bfff">*</font>房屋户型</string>
     <string name="house_rent_m"><font color="#00bfff">*</font>房屋面积</string>
     <string name="house_rent_lou"><font color="#00bfff">*</font>楼&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;层</string>
-    <string name="house_rent_direction">&#160;&#160;朝&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;向</string>
-    <string name="house_rent_configure">&#160;&#160;房屋配置</string>
+    <string name="house_rent_direction"><font color="#00bfff">*</font>朝&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;向</string>
+    <string name="house_rent_configure"><font color="#00bfff">*</font>房屋配置</string>
     <string name="house_rent_money"><font color="#00bfff">*</font>租&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;金</string>
-    <string name="house_rent_add_img">&#160;&#160;添加照片</string>
+    <string name="house_rent_add_img"><font color="#00bfff">*</font>添加照片</string>
     <string name="house_rent_phone_person"><font color="#00bfff">*</font>联&#160;&#160;系&#160;&#160;人</string>
     <string name="house_rent_phone_num"><font color="#00bfff">*</font>联系电话</string>
     <string name="house_rent_submit">提交</string>
@@ -149,6 +149,7 @@
     <string name="house_wei">卫</string>
     <string name="house_m">㎡</string>
     <string name="network">没有网络了\n去检查一下网络吧！</string>
+    <string name="no_data">抱歉,没有数据哦!</string>
 
 
 

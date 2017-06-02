@@ -146,7 +146,7 @@ public class HousePostCardActivity extends AppCompatActivity implements View.OnC
                     com.home.wanyu.bean.HousePostNumber.PostNum  root= (com.home.wanyu.bean.HousePostNumber.PostNum ) o;
                     if (root.getCode().equals("0")){
                         postNum=root.getNumber();
-                        if (postNum==0){
+                        if (postNum==8){
                             mPostNum.setText("抱歉,您本月发布的的房源已经达到上限，请下个月发布");
                         }else {
                             mPostNum.setText("您本月可以发帖"+8+"条,"+"本月还可以免费发帖"+(8-postNum)+"条");
@@ -446,7 +446,7 @@ public class HousePostCardActivity extends AppCompatActivity implements View.OnC
         } else if (id == mSubmit_btn.getId()) {//提交
             if (postNum!=-1){
 
-                if (postNum==0){
+                if (postNum==8){
                     Toast.makeText(this,"抱歉,您本月发布的的房源已经达到上限，请下个月发布",Toast.LENGTH_SHORT).show();
                 }else {
                     if (mZuFlag==1){

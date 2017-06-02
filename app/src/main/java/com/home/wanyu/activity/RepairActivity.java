@@ -51,6 +51,7 @@ import com.home.wanyu.bean.repairType.Result;
 import com.home.wanyu.bean.repairType.Root;
 import com.home.wanyu.myUtils.ImgUitls;
 import com.home.wanyu.myUtils.MyDialog;
+import com.home.wanyu.myUtils.NetWorkMyUtils;
 import com.home.wanyu.myview.MyListView;
 
 import net.tsz.afinal.http.AjaxParams;
@@ -81,7 +82,7 @@ public class RepairActivity extends AppCompatActivity implements View.OnClickLis
     private TextView mRepair_tv, mRecord_tv;
     private ImageView mRepair_img, mRecord_img;
 
-    private RelativeLayout mRepair_category_rl, mRepair_message_rl;//我要报修的全部类型，我要报修填写的信息
+    private RelativeLayout mRepair_category_rl, mRepair_message_rl,mNoData_rl;//我要报修的全部类型，我要报修填写的信息
 
     private GridView mImg_gridview;
     private RepairAddImgAda mImgAdapter;
@@ -120,7 +121,7 @@ public class RepairActivity extends AppCompatActivity implements View.OnClickLis
     private AjaxParams ajaxParams;
     private int start = 0;
     private int limit = 10;
-    private int  moreFlag = -1;
+    private int moreFlag = -1;
     private RelativeLayout mMore_rl;
     private ProgressBar mBar;
     private HttpTools mhttptools;
@@ -132,35 +133,54 @@ public class RepairActivity extends AppCompatActivity implements View.OnClickLis
                 Object o = msg.obj;
                 if (o != null && o instanceof Root) {
                     Root root = (Root) o;
-                    mRepairList = root.getResult();
-                    mAdapter.setList(mRepairList);
-                    mAdapter.notifyDataSetChanged();
+                    if (root.getResult()!=null){
+                        mRepairList = root.getResult();
+                        mAdapter.setList(mRepairList);
+                        mAdapter.notifyDataSetChanged();
+                    }
                 }
             } else if (msg.what == 107) {//获取报修记录详情列表
                 Object o = msg.obj;
                 if (o != null && o instanceof com.home.wanyu.bean.RecordMsg.Root) {
                     com.home.wanyu.bean.RecordMsg.Root root = (com.home.wanyu.bean.RecordMsg.Root) o;
-                    if (moreFlag==2) {//加载跟多
+                    if (moreFlag == 2) {//加载跟多
                         List<com.home.wanyu.bean.RecordMsg.Result> list = new ArrayList<>();
-                        list = root.getResult();
-                        mRecordMsgList.addAll(list);
-                        mRecordListviewAda.setList(mRecordMsgList);
-                        mRecordListviewAda.notifyDataSetChanged();
-//                        if (root.getResult().size() <10) {
-//                            Toast.makeText(RepairActivity.this, "亲，到底了", Toast.LENGTH_SHORT).show();
-//                        }
-                    } else if (moreFlag==1){//下拉刷新
+                        if (root.getResult()!=null){
+                            list = root.getResult();
+                            mRecordMsgList.addAll(list);
+                            mRecordListviewAda.setList(mRecordMsgList);
+                            mRecordListviewAda.notifyDataSetChanged();
+                        }
+                    } else if (moreFlag == 1) {//下拉刷新
                         mRecord_refresh.setRefreshing(false);
-                        mRecordMsgList = root.getResult();
-                        mRecordListviewAda.setList(mRecordMsgList);
-                        mRecordListviewAda.notifyDataSetChanged();
-                    }else if (moreFlag==3){//点击报修记录类型
-                        mRecord_refresh.setRefreshing(false);
-                        mRecordMsgList = root.getResult();
-                        mRecordListviewAda.setList(mRecordMsgList);
-                        mRecordListviewAda.notifyDataSetChanged();
-                    }
+                        if (root.getResult()!=null){
+                            mRecordMsgList = root.getResult();
+                            if (mRecordMsgList.size()==0){
+                                mRecord_Listview.setVisibility(View.GONE);
+                                mNoData_rl.setVisibility(View.VISIBLE);
+                            }else {
+                                mNoData_rl.setVisibility(View.GONE);
+                                mRecord_Listview.setVisibility(View.VISIBLE);
+                                mRecordListviewAda.setList(mRecordMsgList);
+                                mRecordListviewAda.notifyDataSetChanged();
+                            }
 
+                        }
+                    } else if (moreFlag == 3) {//点击报修记录类型
+                        mRecord_refresh.setRefreshing(false);
+                        if (root.getResult()!=null){
+                            mRecordMsgList = root.getResult();
+                            if (mRecordMsgList.size()==0){
+                                mRecord_Listview.setVisibility(View.GONE);
+                                mNoData_rl.setVisibility(View.VISIBLE);
+                            }else {
+                                mNoData_rl.setVisibility(View.GONE);
+                                mRecord_Listview.setVisibility(View.VISIBLE);
+                                mRecordListviewAda.setList(mRecordMsgList);
+                                mRecordListviewAda.notifyDataSetChanged();
+                            }
+                        }
+                    }
 
 
                     if (root.getResult().size() < 10) {
@@ -173,20 +193,19 @@ public class RepairActivity extends AppCompatActivity implements View.OnClickLis
 
 
                 }
-            }else if (msg.what==201){
+            } else if (msg.what == 201) {
                 mRecordMsgList.clear();
                 mRecordListviewAda.setList(mRecordMsgList);
                 mRecordListviewAda.notifyDataSetChanged();
                 mRecord_refresh.setRefreshing(false);
                 Toast.makeText(RepairActivity.this, "数据错误", Toast.LENGTH_SHORT).show();
-            }
-
-            else if (msg.what == 106) {//提交报修信息
+            } else if (msg.what == 106) {//提交报修信息
                 Object o = msg.obj;
 
                 if (o != null && o instanceof com.home.wanyu.bean.repairSubmitType.Root) {
                     com.home.wanyu.bean.repairSubmitType.Root root = (com.home.wanyu.bean.repairSubmitType.Root) o;
                     if (((com.home.wanyu.bean.repairSubmitType.Root) o).getCode().equals("0")) {
+                        mSubmit_btn.setClickable(true);
                         MyDialog.stopDia();
                         Toast.makeText(RepairActivity.this, "提交信息成功", Toast.LENGTH_SHORT).show();
                         mName.setText("");
@@ -198,6 +217,7 @@ public class RepairActivity extends AppCompatActivity implements View.OnClickLis
                         mImgAdapter.notifyDataSetChanged();
                         mTime_tv.setText("请选择期望处理时间");
                     } else {
+                        mSubmit_btn.setClickable(true);
                         MyDialog.stopDia();
                         Toast.makeText(RepairActivity.this, "提交信息失败:" + root.getResult(), Toast.LENGTH_SHORT).show();
                     }
@@ -206,15 +226,31 @@ public class RepairActivity extends AppCompatActivity implements View.OnClickLis
         }
     };
 
+    private ImageView mNetWorkBack;
+    private TextView mNetWorkTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_repair);
-        mhttptools = HttpTools.getHttpToolsInstance();
-        mhttptools.getRepairType(mHandler);//获取报修类型
-        ajaxParams = new AjaxParams();
-        initView();
+        if (NetWorkMyUtils.isNetworkConnected(this)) {
+            setContentView(R.layout.activity_repair);
+            mhttptools = HttpTools.getHttpToolsInstance();
+            mhttptools.getRepairType(mHandler);//获取报修类型
+            ajaxParams = new AjaxParams();
+            initView();
+        } else {
+            setContentView(R.layout.no_network);
+            mNetWorkBack = (ImageView) findViewById(R.id.network_back);
+            mNetWorkBack.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
+            mNetWorkTitle = (TextView) findViewById(R.id.network_title_msg);
+            mNetWorkTitle.setText(R.string.property_repair);
+        }
+
     }
 
     public void initView() {
@@ -304,7 +340,7 @@ public class RepairActivity extends AppCompatActivity implements View.OnClickLis
         mRecordGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                moreFlag =3;
+                moreFlag = 3;
                 mRecord_refresh.setRefreshing(true);
                 mRecord_category_rl.setVisibility(View.GONE);
                 mRecord_refresh.setVisibility(View.VISIBLE);
@@ -317,11 +353,11 @@ public class RepairActivity extends AppCompatActivity implements View.OnClickLis
         mRecord_category_rl = (RelativeLayout) findViewById(R.id.all_record_category);
         mRecord_refresh = (SwipeRefreshLayout) findViewById(R.id.record_swipe_refresh);
         mRecord_refresh.setColorSchemeResources(R.color.bg_rect, R.color.colorAccent, R.color.result_points);
-       //刷新记录列表
+        //刷新记录列表
         mRecord_refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                moreFlag =1;
+                moreFlag = 1;
                 start = 0;
                 mhttptools.getRecordMsg(mHandler, UserInfo.userToken, mRecord_id, start, limit);
 
@@ -382,6 +418,8 @@ public class RepairActivity extends AppCompatActivity implements View.OnClickLis
         mCancle_time.setOnClickListener(this);
 
 
+        //报修记录没有数据时现实的布局
+        mNoData_rl= (RelativeLayout) findViewById(R.id.no_data_repair);
     }
 
     @Override
@@ -402,6 +440,7 @@ public class RepairActivity extends AppCompatActivity implements View.OnClickLis
             mRepair_message_rl.setVisibility(View.GONE);
             mRecord_category_rl.setVisibility(View.GONE);
             mRecord_refresh.setVisibility(View.GONE);
+            mNoData_rl.setVisibility(View.GONE);
         } else if (id == mRecord_ll.getId()) {//报修记录
             mRepair_ll.setBackgroundResource(R.color.white);
             mRepair_tv.setTextColor(ContextCompat.getColor(this, R.color.homeFragChangeColor));
@@ -415,6 +454,7 @@ public class RepairActivity extends AppCompatActivity implements View.OnClickLis
             mRepair_message_rl.setVisibility(View.GONE);
             mRecord_refresh.setVisibility(View.GONE);
             mRecord_category_rl.setVisibility(View.VISIBLE);
+            mNoData_rl.setVisibility(View.GONE);
 
         } else if (id == mSure.getId()) {//确定删除图片
             mImgList.remove(mPosition);
@@ -433,7 +473,7 @@ public class RepairActivity extends AppCompatActivity implements View.OnClickLis
         } else if (id == mSubmit_btn.getId()) {//提交报修详情
             if (checkStartEndTime(mTime_tv.getText().toString())) {
                 if (!getName().equals("") && !getPhone().equals("") && !getAddresss().equals("") && !getDetails().equals("")) {
-                    // ajaxParams.put("token", UserInfo.userToken);
+                    mSubmit_btn.setClickable(false);
                     MyDialog.showDialog(this);
                     ajaxParams.put("cname", getName());
                     ajaxParams.put("telephone", getPhone());
@@ -454,7 +494,7 @@ public class RepairActivity extends AppCompatActivity implements View.OnClickLis
                     Toast.makeText(this, "请补全报修信息", Toast.LENGTH_SHORT).show();
                 }
             } else {
-
+                Toast.makeText(this, "请选择正确的时间", Toast.LENGTH_SHORT).show();
             }
         } else if (id == mMore_rl.getId()) {//报修记录详情中加载更多
             start += 10;

@@ -224,7 +224,7 @@ public class CommunityPostActivity extends AppCompatActivity implements View.OnC
             if (checkStartEndTime(mStartYear+"-"+mStart_time.getText().toString()+":"+"00", mEndYear+"-"+mEnd_time.getText().toString()+":"+"00")) {
                 if (!(getActTitle().equals("") || getActAddress().equals("") || getActPersonNum().equals("") || getActPhone().equals("") || getActContent().equals(""))) {
                 if (NetWorkMyUtils.isNetworkConnected(this)){
-                    mPost_btn.setFocusable(false);
+                    mPost_btn.setClickable(false);
                     AjaxParams ajaxParams=new AjaxParams();
                     ajaxParams.put("activityTheme",getActTitle());
                     ajaxParams.put("activityContent",getActContent());

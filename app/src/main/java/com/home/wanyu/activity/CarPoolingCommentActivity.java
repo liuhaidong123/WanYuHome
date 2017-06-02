@@ -85,6 +85,7 @@ public class CarPoolingCommentActivity extends AppCompatActivity implements View
             finish();
         } else if (id == mPost_btn.getId()) {
             if (!getContent().equals("")) {
+                mPost_btn.setClickable(false);
                 if (getIntent().getStringExtra("flag").equals("activity")) {//社区活动传过来的评论
                     AjaxParams ajax=new AjaxParams();
                     ajax.put("token",UserInfo.userToken);
@@ -95,7 +96,7 @@ public class CarPoolingCommentActivity extends AppCompatActivity implements View
                     Log.e("coverPersonalId",getIntent().getLongExtra("coverPersonalId", -1)+"");
                     httptools.AreaActivityComment(mhandler,ajax);
 
-                } else if (getIntent().getStringExtra("flag").equals("carPooling")){//社区平车评论
+                } else if (getIntent().getStringExtra("flag").equals("carPooling")){//社区拼车评论
 
                     AjaxParams ajax=new AjaxParams();
                     ajax.put("token",UserInfo.userToken);

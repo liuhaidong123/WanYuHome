@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.home.wanyu.HttpUtils.UrlTools;
 import com.home.wanyu.R;
+import com.home.wanyu.bean.HouseFirstList.Result;
 import com.home.wanyu.bean.HouseFirstList.Rows;
 import com.home.wanyu.myUtils.ImgUitls;
 import com.home.wanyu.myUtils.TimeUtils;
@@ -27,17 +28,17 @@ import static android.media.CamcorderProfile.get;
 public class HouseMsgListAda extends BaseAdapter {
     private Context mContext;
     private LayoutInflater mInflater;
-    private List<Rows> mList = new ArrayList<>();
+    private List<Result> mList = new ArrayList<>();
 
 
-    public HouseMsgListAda(Context mContext,List<Rows> mList) {
+    public HouseMsgListAda(Context mContext,List<Result> mList) {
         this.mContext = mContext;
         this.mList=mList;
         this.mInflater = LayoutInflater.from(mContext);
     }
 
 
-    public void setmList(List<Rows> mList) {
+    public void setmList(List<Result> mList) {
         this.mList = mList;
     }
 

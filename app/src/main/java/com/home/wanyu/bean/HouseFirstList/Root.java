@@ -7,28 +7,20 @@ import java.util.List;
  */
 
 public class Root {
-    private int total;
+    private List<Result> result;
 
-    private List<Rows> rows;
+    private String code;
 
-    private List<String> colmodel;
-
-    public void setTotal(int total){
-        this.total = total;
+    public void setResult(List<Result> result){
+        this.result = result;
     }
-    public int getTotal(){
-        return this.total;
+    public List<Result> getResult(){
+        return this.result;
     }
-    public void setRows(List<Rows> rows){
-        this.rows = rows;
+    public void setCode(String code){
+        this.code = code;
     }
-    public List<Rows> getRows(){
-        return this.rows;
-    }
-    public void setColmodel(List<String> colmodel){
-        this.colmodel = colmodel;
-    }
-    public List<String> getColmodel(){
-        return this.colmodel;
+    public String getCode(){
+        return this.code;
     }
 }

@@ -7,7 +7,7 @@ package com.home.wanyu.Ip;
 public class Ip {
 //    http://192.168.1.55:8080/smarthome/mobileapi/scene/ findList.do?token=9DB2FD6FDD2F116CD47CE6C48B3047EE
     public static final String serverPath="http://192.168.1.55:8080/smarthome/mobileapi/";
-    public static final String imagePath="http://192.168.1.55:8080/smarthome/";
+    public static final String imagePath="http://192.168.1.55:8080/smarthome";
     public static final String pths="http://192.168.1.55:8080/smarthome/mobilepub";
 
 

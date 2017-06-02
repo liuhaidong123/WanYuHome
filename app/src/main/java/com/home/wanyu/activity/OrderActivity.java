@@ -34,8 +34,9 @@ public class OrderActivity extends AppCompatActivity implements View.OnClickList
             finish();
         }else if (id==mAddAddress_btn.getId()){
             Intent intent=new Intent(this,AddAddressActivity.class);
-            intent.putExtra("order",22);
+            intent.putExtra("order",getIntent().getIntExtra("order",-1));
             startActivity(intent);
+            finish();
         }
     }
 }

@@ -7,6 +7,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -47,6 +48,8 @@ public class LifeMoneyActivity2 extends AppCompatActivity implements View.OnClic
     private TextView mAddressCity_tv, mAddress_tv;
     private List<Result> mAddressList = new ArrayList<>();
     private Result result;
+    private long ID = -1;
+    private boolean isFlag = false;
     private HttpTools mHttptools;
     private Handler mHandler = new Handler() {
         @Override
@@ -58,12 +61,37 @@ public class LifeMoneyActivity2 extends AppCompatActivity implements View.OnClic
                     if (root.getResult() != null) {
                         mAddressList = root.getResult();
                         if (mAddressList.size() != 0) {
-                            mAddressCity_tv.setText(mAddressList.get(0).getCity());
-                            mAddress_tv.setText(mAddressList.get(0).getDetailAddress());
+                            if (ID != -1) {
+                                for (int i = 0; i < mAddressList.size(); i++) {
+                                    if (ID == mAddressList.get(i).getId()) {//修改地址以后，并没有选择修改后的地址，而是直接按下返回键（设置修改后的地址）
+                                        isFlag=true;
+                                        result=mAddressList.get(i);
+                                        mAddressCity_tv.setText(mAddressList.get(i).getCity());
+                                        mAddress_tv.setText(mAddressList.get(i).getDetailAddress());
+                                        break;
+                                    }
+                                }
+                                if (!isFlag){//删除地址以后，没有选择地址，而是直接按下返回键，（给他默认第一个地址）
+                                    ID=mAddressList.get(0).getId();
+                                    result=mAddressList.get(0);
+                                    mAddressCity_tv.setText(mAddressList.get(0).getCity());
+                                    mAddress_tv.setText(mAddressList.get(0).getDetailAddress());
+                                }
+                            }else {//第一次刚进来，默认第一个地址
+                                ID=mAddressList.get(0).getId();
+                                mAddressCity_tv.setText(mAddressList.get(0).getCity());
+                                mAddress_tv.setText(mAddressList.get(0).getDetailAddress());
+                            }
+
                         } else {
                             mAddressCity_tv.setText("未知城市");
                             mAddress_tv.setText("未知小区");
                         }
+                    } else {
+                        Intent intent = new Intent(LifeMoneyActivity2.this, AddAddressActivity.class);
+                        intent.putExtra("order", 11);
+                        startActivity(intent);
+                        finish();
                     }
                 }
             }
@@ -114,7 +142,7 @@ public class LifeMoneyActivity2 extends AppCompatActivity implements View.OnClic
                         if (result != null) {
                             intent.putExtra("bean", result);
                             //还需要交费类型,用户编号
-                           // intent.putExtra("type", "");
+                            // intent.putExtra("type", "");
                             // intent.putExtra("usernum", "");
                         } else {
                             Toast.makeText(LifeMoneyActivity2.this, "请选择小区", Toast.LENGTH_SHORT).show();
@@ -158,12 +186,12 @@ public class LifeMoneyActivity2 extends AppCompatActivity implements View.OnClic
             finish();
         } else if (id == mIntentAddress.getId()) {
             startActivityForResult(new Intent(this, OrderAddressActivity.class), 66);
-
         } else if (id == mCancle.getId()) {
             mAlert.dismiss();
         } else if (id == mUpdate.getId()) {//修改编号
             Intent intent = new Intent(this, MoneyNumActivity.class);
             intent.putExtra("update", 1);
+            intent.putExtra("bean", result);
             startActivity(intent);
             mAlert.dismiss();
         }
@@ -185,8 +213,16 @@ public class LifeMoneyActivity2 extends AppCompatActivity implements View.OnClic
         if (requestCode == 66 && resultCode == RESULT_OK) {
             flag = 2;
             result = (Result) data.getSerializableExtra("result");
-            mAddressCity_tv.setText(result.getCity());
-            mAddress_tv.setText(result.getDetailAddress());
+            if (result != null) {
+                mAddressCity_tv.setText(result.getCity());
+                mAddress_tv.setText(result.getDetailAddress());
+                ID=result.getId();
+            } else {////执行返回键或者返回按钮
+                isFlag=false;
+                mHttptools.haveUserAddress(mHandler, UserInfo.userToken);//获取地址接口
+            }
+            Log.e("回调onActivityResult", "money");
         }
     }
+
 }

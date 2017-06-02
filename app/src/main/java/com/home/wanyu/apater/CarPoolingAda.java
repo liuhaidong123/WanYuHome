@@ -192,8 +192,8 @@ public class CarPoolingAda extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, CarPoolingMsgActivity.class);
-                intent.putExtra("bean", (Result) mlist.get(position));
-                intent.putExtra("state", over);
+                intent.putExtra("carpoolingId", mlist.get(position).getId());
+               // intent.putExtra("state", over);
                 mContext.startActivity(intent);
             }
         });
@@ -234,7 +234,7 @@ public class CarPoolingAda extends BaseAdapter {
                     Toast.makeText(mContext, "亲，此拼车活动已结束了哦", Toast.LENGTH_SHORT).show();
                 } else {
                     if (mlist.get(position).isOrders()) {
-                        Toast.makeText(mContext, "亲，您已经接过此单子了哦", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, "亲，此单已经被接过了", Toast.LENGTH_SHORT).show();
                     } else {
                         httpTools.carPoolingOrder(handler, UserInfo.userToken, mlist.get(position).getId());
                     }

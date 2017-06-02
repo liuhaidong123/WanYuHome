@@ -7,9 +7,20 @@ import java.util.List;
  */
 
 public class Result {
+
+    private StateEntity stateEntity;
+
     private List<Comment> comment;
 
     private List<LikeNum> likeNum;
+
+    public StateEntity getStateEntity() {
+        return stateEntity;
+    }
+
+    public void setStateEntity(StateEntity stateEntity) {
+        this.stateEntity = stateEntity;
+    }
 
     public void setComment(List<Comment> comment){
         this.comment = comment;

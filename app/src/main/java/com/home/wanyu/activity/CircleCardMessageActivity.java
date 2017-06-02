@@ -25,6 +25,7 @@ import com.home.wanyu.User.UserInfo;
 import com.home.wanyu.apater.CIrcleExpandableAda;
 import com.home.wanyu.apater.CircleCommendLikeAda;
 import com.home.wanyu.apater.CircleCommentAda;
+import com.home.wanyu.apater.RecordListviewGridviewAda;
 import com.home.wanyu.bean.getCircleCardList.Result;
 import com.home.wanyu.bean.getCircleCommentMsg.Comment;
 import com.home.wanyu.bean.getCircleCommentMsg.LikeNum;
@@ -42,13 +43,14 @@ import java.util.List;
 public class CircleCardMessageActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ImageView mBack;
-    private  TextView mDelete;
+    private TextView mDelete;
     private MyListView mListView;
     private CircleCommentAda mAdapter;
     private List<Comment> mCommentList = new ArrayList<>();
 
-    private MyGridView mGridview;
+    private MyGridView mGridview, mImgGridView;
     private CircleCommendLikeAda mGridviewAda;
+    private RecordListviewGridviewAda mImgAdapter;
     private List<LikeNum> mLikeList = new ArrayList<>();
 
 
@@ -61,7 +63,7 @@ public class CircleCardMessageActivity extends AppCompatActivity implements View
     private int start = 0;
     private int limmit = 10;
     private long stateId = -1;
-    private long userid;
+    private long userid = -1;
     private HttpTools mHttptools;
     private Handler mHandler = new Handler() {
         @Override
@@ -88,18 +90,49 @@ public class CircleCardMessageActivity extends AppCompatActivity implements View
                 if (o != null && o instanceof com.home.wanyu.bean.getCircleCommentMsg.Root) {
                     com.home.wanyu.bean.getCircleCommentMsg.Root root = (com.home.wanyu.bean.getCircleCommentMsg.Root) o;
                     if (root.getCode().equals("0")) {
+
+                        Picasso.with(CircleCardMessageActivity.this).load(UrlTools.BASE + root.getResult().getStateEntity().getAvatar()).resize(ImgUitls.getWith(CircleCardMessageActivity.this) / 3, ImgUitls.getWith(CircleCardMessageActivity.this) / 3).error(R.mipmap.error_small).into(mHead);
+                        mName.setText(root.getResult().getStateEntity().getUserName());
+                        mArea.setText(root.getResult().getStateEntity().getRname());
+                        mType.setText(root.getResult().getStateEntity().getCname());
+                        mMsg.setText(root.getResult().getStateEntity().getContent());
+                        mTime.setText(root.getResult().getStateEntity().getCreateTimeString());
+                        mLikeNum.setText(root.getResult().getStateEntity().getLikeNum() + "");
+                        mCommentNum.setText(root.getResult().getStateEntity().getCommentNum() + "");
+
+                        if (root.getResult().getStateEntity().islike()) {
+                            Picasso.with(CircleCardMessageActivity.this).load(R.mipmap.circle_like).error(R.mipmap.error_small).into(mLike_img);
+                        } else {
+                            Picasso.with(CircleCardMessageActivity.this).load(R.mipmap.circle_like_no).error(R.mipmap.error_small).into(mLike_img);
+                        }
+
+                        if (UserInfo.personalId == root.getResult().getStateEntity().getPersonalId()) {
+                            mDelete.setVisibility(View.VISIBLE);
+                        } else {
+                            mDelete.setVisibility(View.GONE);
+                        }
+                        if (!root.getResult().getStateEntity().getPicture().equals("")) {
+                            String[] imgstr = root.getResult().getStateEntity().getPicture().split(";");
+                            mImgGridView.setAdapter(new RecordListviewGridviewAda(CircleCardMessageActivity.this, imgstr));
+                        } else {
+                            String[] imgstr = new String[0];
+                            mImgGridView.setAdapter(new RecordListviewGridviewAda(CircleCardMessageActivity.this, imgstr));
+                        }
+
+
                         mCommentList = root.getResult().getComment();
                         mLikeList = root.getResult().getLikeNum();
                         mAdapter.setmCommentList(mCommentList);
                         mAdapter.notifyDataSetChanged();
                         mGridviewAda.setList(mLikeList);
                         mGridviewAda.notifyDataSetChanged();
+
                     } else {
                         Toast.makeText(CircleCardMessageActivity.this, "无法获取评论列表", Toast.LENGTH_SHORT).show();
                     }
 
                 }
-            }else if (msg.what == 117) {//删除
+            } else if (msg.what == 117) {//删除
                 Object o = msg.obj;
                 if (o != null && o instanceof com.home.wanyu.bean.getCircleDeleteResult.Root) {
                     com.home.wanyu.bean.getCircleDeleteResult.Root root = (com.home.wanyu.bean.getCircleDeleteResult.Root) o;
@@ -120,32 +153,21 @@ public class CircleCardMessageActivity extends AppCompatActivity implements View
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_circle_card_message);
+        mHttptools = HttpTools.getHttpToolsInstance();
         initView();
     }
 
     private void initView() {
-        Result result = (Result) getIntent().getSerializableExtra("bean");
-        userid=getIntent().getLongExtra("userid",-1);
-        Log.e("最后userid=",userid+"");
-        if (result != null) {
-            Log.e("最后personailId=",result.getPersonalId()+"");
-            stateId = result.getId();
-            mHttptools = HttpTools.getHttpToolsInstance();
+        stateId = getIntent().getLongExtra("stateid", -1);
+        Log.e("最后stateId=", stateId + "");
+        if (stateId != -1) {
             mHttptools.getCircleCommentList(mHandler, UserInfo.userToken, stateId);//获取评论列表接口
         }
-
         mBack = (ImageView) findViewById(R.id.circle_card_msg_back);
         mBack.setOnClickListener(this);
 
-        mDelete= (TextView) findViewById(R.id.circle_card_msg_delete);
+        mDelete = (TextView) findViewById(R.id.circle_card_msg_delete);
         mDelete.setOnClickListener(this);
-        if (userid!=-1&&result!=null){
-            if (userid==result.getPersonalId()){
-                mDelete.setVisibility(View.VISIBLE);
-            }else {
-                mDelete.setVisibility(View.GONE);
-            }
-        }
 
         //发送按钮
         mEdit_content = (EditText) findViewById(R.id.edit);
@@ -160,29 +182,13 @@ public class CircleCardMessageActivity extends AppCompatActivity implements View
         mLikeNum = (TextView) findViewById(R.id.circle_like_num);
         mCommentNum = (TextView) findViewById(R.id.circle_card_commend_num);
         mLike_img = (ImageView) findViewById(R.id.circle_like_img);
-
-        Picasso.with(this).load(UrlTools.BASE + result.getAvatar()).resize(ImgUitls.getWith(this) / 3, ImgUitls.getWith(this) / 3).error(R.mipmap.error_small).into(mHead);
-        mName.setText(result.getUserName());
-        mArea.setText(result.getRname());
-        mType.setText(result.getCname());
-        mMsg.setText(result.getContent());
-        mTime.setText(result.getCreateTimeString());
-        mLikeNum.setText(result.getLikeNum() + "");
-        mCommentNum.setText(result.getCommentNum() + "");
-
-        if (result.islike()) {
-            Picasso.with(this).load(R.mipmap.circle_like).error(R.mipmap.error_small).into(mLike_img);
-        } else {
-            Picasso.with(this).load(R.mipmap.circle_like_no).error(R.mipmap.error_small).into(mLike_img);
-        }
         //点赞
         mLike_img.setOnClickListener(this);
 
 
-
         //【评论列表
         mListView = (MyListView) findViewById(R.id.comment_listview_circle);
-        mAdapter = new CircleCommentAda(this, mCommentList,mEdit_content,mCommentNum,stateId);
+        mAdapter = new CircleCommentAda(this, mCommentList, mEdit_content, mCommentNum, stateId);
         mListView.setAdapter(mAdapter);
 
         //点赞头像GridView
@@ -193,16 +199,13 @@ public class CircleCardMessageActivity extends AppCompatActivity implements View
         mGridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent=new Intent(CircleCardMessageActivity.this,OtherPersonInfoActivity.class);
-                intent.putExtra("id",mLikeList.get(position).getPersonalId()+"");
+                Intent intent = new Intent(CircleCardMessageActivity.this, OtherPersonInfoActivity.class);
+                intent.putExtra("id", mLikeList.get(position).getPersonalId() + "");
                 startActivity(intent);
-
             }
         });
 
-
-
-
+        mImgGridView = (MyGridView) findViewById(R.id.circle_gridview_friend);
 
     }
 
@@ -213,8 +216,8 @@ public class CircleCardMessageActivity extends AppCompatActivity implements View
             finish();
         } else if (id == mLike_img.getId()) {//点赞
             mHttptools.getCIrcleLikeResult(mHandler, UserInfo.userToken, stateId);
-        }else if (id == mDelete.getId()) {//删除
-            mHttptools.getCircleDeleteResult(mHandler,UserInfo.userToken,stateId);
+        } else if (id == mDelete.getId()) {//删除
+            mHttptools.getCircleDeleteResult(mHandler, UserInfo.userToken, stateId);
         }
     }
 

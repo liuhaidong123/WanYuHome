@@ -8,6 +8,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -20,6 +21,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.home.wanyu.HttpUtils.HttpTools;
 import com.home.wanyu.R;
@@ -72,7 +74,10 @@ public class OrderMessageActivity extends AppCompatActivity implements View.OnCl
     private TextView mAddressCity_tv, mAddress_tv;
     private Calendar mCalendar;
     private List<Result> mAddressList = new ArrayList<>();
+    private Result result;
     private HttpTools mHttptools;
+    private long ID = -1;
+    private boolean isFlag = false;
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -80,17 +85,46 @@ public class OrderMessageActivity extends AppCompatActivity implements View.OnCl
                 Object o = msg.obj;
                 if (o != null && o instanceof Root) {
                     Root root = (Root) o;
-                    if (root.getResult()!=null){
+                    if (root.getResult() != null) {
                         mAddressList = root.getResult();
                         if (mAddressList.size() != 0) {
-                            mAddressCity_tv.setText(mAddressList.get(0).getCity());
-                            mAddress_tv.setText(mAddressList.get(0).getDetailAddress());
-                            //根据年份，月份，地址查询业主的缴费情况
-                            mHttptools.getMoneyByYearMonthAddress(mHandler, UserInfo.userToken, mAddress_tv.getText().toString(), mYear_tv.getText().toString(), mMonth_tv.getText().toString());
+                            if (ID != -1) {//选择地址以后
+                                for (int i = 0; i < mAddressList.size(); i++) {
+                                    if (ID == mAddressList.get(i).getId()) {//修改地址以后，并没有选择修改后的地址，而是直接按下返回键（设置修改后的地址）
+                                        isFlag = true;
+                                        mAddressCity_tv.setText(mAddressList.get(i).getCity());
+                                        mAddress_tv.setText(mAddressList.get(i).getDetailAddress());
+                                        //根据年份，月份，地址查询业主的缴费情况
+                                        mHttptools.getMoneyByYearMonthAddress(mHandler, UserInfo.userToken, mAddress_tv.getText().toString(), mYear_tv.getText().toString(), mMonth_tv.getText().toString());
+                                        break;
+                                    }
+                                }
+
+                                if (!isFlag) {//删除地址以后，没有选择地址，而是直接按下返回键，（给他默认第一个地址）
+                                    ID = mAddressList.get(0).getId();
+                                    mAddressCity_tv.setText(mAddressList.get(0).getCity());
+                                    mAddress_tv.setText(mAddressList.get(0).getDetailAddress());
+                                    //根据年份，月份，地址查询业主的缴费情况
+                                    mHttptools.getMoneyByYearMonthAddress(mHandler, UserInfo.userToken, mAddress_tv.getText().toString(), mYear_tv.getText().toString(), mMonth_tv.getText().toString());
+                                }
+
+                            } else {//第一次刚进来，默认第一个地址
+                                ID = mAddressList.get(0).getId();
+                                mAddressCity_tv.setText(mAddressList.get(0).getCity());
+                                mAddress_tv.setText(mAddressList.get(0).getDetailAddress());
+                                //根据年份，月份，地址查询业主的缴费情况
+                                mHttptools.getMoneyByYearMonthAddress(mHandler, UserInfo.userToken, mAddress_tv.getText().toString(), mYear_tv.getText().toString(), mMonth_tv.getText().toString());
+                            }
+
                         } else {
                             mAddressCity_tv.setText("未知城市");
                             mAddress_tv.setText("未知小区");
                         }
+                    } else {//跳转到添加物业账单地址
+                        Intent intent = new Intent(OrderMessageActivity.this, AddAddressActivity.class);
+                        intent.putExtra("order", 22);
+                        startActivity(intent);
+                        finish();
                     }
 
                 }
@@ -247,8 +281,14 @@ public class OrderMessageActivity extends AppCompatActivity implements View.OnCl
             mMonthAlert.show();
             setAlertWidth(mMonthAlert, 1.5f);
         } else if (id == mOrder_address_rl.getId()) {//跳转到地址列表页面
-            Intent intent = new Intent(this, OrderAddressActivity.class);
-            startActivityForResult(intent, 123);
+            if (mAddressList.size() != 0) {
+                Intent intent = new Intent(this, OrderAddressActivity.class);
+                // intent.putExtra("ID",ID);
+                startActivityForResult(intent, 123);
+            } else {
+                Toast.makeText(this, "抱歉，无法获取地址", Toast.LENGTH_SHORT).show();
+            }
+
 
         } else if (id == mSearch_btn.getId()) {//查询账单
             MyDialog.showDialog(this);
@@ -275,13 +315,23 @@ public class OrderMessageActivity extends AppCompatActivity implements View.OnCl
         alert.getWindow().setAttributes(p);//设置生效
     }
 
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 123 && resultCode == RESULT_OK) {
-            Result result = (Result) data.getSerializableExtra("result");
-            mAddressCity_tv.setText(result.getCity());
-            mAddress_tv.setText(result.getDetailAddress());
+            result = (Result) data.getSerializableExtra("result");
+            if (result != null) {
+                mAddressCity_tv.setText(result.getCity());
+                mAddress_tv.setText(result.getDetailAddress());
+                ID = result.getId();
+            } else {//执行返回键或者返回按钮
+                isFlag=false;
+                mHttptools.haveUserAddress(mHandler, UserInfo.userToken);//获取地址接口
+            }
+            Log.e("回调onActivityResult", "wuye");
+
         }
     }
+
 }
