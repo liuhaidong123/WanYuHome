@@ -36,6 +36,7 @@ import butterknife.ButterKnife;
 public class OtherPersonCircleAdapter extends BaseAdapter{
     List<Bean_otherCircle.RowsBean>listCircle;
     private Context context;
+
     public OtherPersonCircleAdapter(List<Bean_otherCircle.RowsBean>listCircle,Context context){
         this.listCircle=listCircle;
         this.context=context;

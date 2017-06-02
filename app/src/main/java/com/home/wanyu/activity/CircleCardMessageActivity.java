@@ -83,7 +83,7 @@ public class CircleCardMessageActivity extends AppCompatActivity implements View
                         Picasso.with(CircleCardMessageActivity.this).load(R.mipmap.circle_like_no).error(R.mipmap.error_small).into(mLike_img);
                         mLikeNum.setText(((Integer.valueOf(mLikeNum.getText().toString()) - 1) + ""));
                         mHttptools.getCircleCommentList(mHandler, UserInfo.userToken, stateId);//获取评论列表接口
-                    }
+                        }
                 }
             } else if (msg.what == 115) {//获取评论列表
                 Object o = msg.obj;
@@ -130,7 +130,6 @@ public class CircleCardMessageActivity extends AppCompatActivity implements View
                     } else {
                         Toast.makeText(CircleCardMessageActivity.this, "无法获取评论列表", Toast.LENGTH_SHORT).show();
                     }
-
                 }
             } else if (msg.what == 117) {//删除
                 Object o = msg.obj;

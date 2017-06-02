@@ -55,17 +55,16 @@ public class MyCircleContactAdapterGridAdapter extends BaseAdapter{
         else {
             hodler= (ViewHodler) convertView.getTag();
         }
-        Log.i("图片url==",Ip.imagePath+li.get(position));
-        Picasso.with(context).load(Ip.imagePath+li.get(position)).error(R.mipmap.errorphoto).placeholder(R.mipmap.errorphoto).into(hodler.grid_image_a);
-        int width= WindowUtils.getWinowWidth(context)/5;
+//        Log.i("图片url==",Ip.imagePath+li.get(position));
+        int width= WindowUtils.getWinowWidth(context)/6;
         ViewGroup.LayoutParams params= hodler.grid_image_a.getLayoutParams();
-        params.width=width;
         params.height=width;
+        params.width=width;
         hodler.grid_image_a.setLayoutParams(params);
+        Picasso.with(context).load(Ip.imagePath+li.get(position)).error(R.mipmap.errorphoto).resize(width,width).placeholder(R.mipmap.errorphoto).into(hodler.grid_image_a);
         return convertView;
     }
     class ViewHodler{
         ImageView grid_image_a;
     }
-
 }

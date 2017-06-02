@@ -1,5 +1,6 @@
 package com.home.wanyu.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
@@ -160,8 +161,7 @@ public class CircleGiveYouCommentActivity extends MyActivity {
 
     @Override
     public void getSerVerData() {
-        //获取消息
-                getAllMessage(start,limit);
+        getAllMessage(start,limit);
     }
 
     private void initView() {
@@ -198,6 +198,42 @@ public class CircleGiveYouCommentActivity extends MyActivity {
                         mAdpater.notifyDataSetChanged();
                         setReadMessage(position);//设置已读
                     }
+//                |消息类型；0=公告，10=分享钥匙，11-30友邻圈消息，11=状态点赞，12=状态评论，31-50为社区活动消息，
+//                31=活动照片，32=活动评论，33=活动感兴趣，34=参加活动，51-70为拼车消息，51=拼车评论，
+//                52=司机接单，53=乘客加入，不传或传空就是查所有的
+                    int messageType=listMessage.get(position).getMsgType();
+                    Intent intent=new Intent();
+                    if (messageType>=11&&messageType<=30){//友邻圈消息
+                        intent.setClass(con,CircleCardMessageActivity.class);
+                        intent.putExtra("stateid",Long.parseLong(listMessage.get(position).getId()+""));
+                        startActivity(intent);
+                    }
+                else if (messageType>=31&&messageType<=50){//社区活动
+                        intent.setClass(con,CommunityCommentActivity.class);
+                        intent.putExtra("activityId",Long.parseLong(listMessage.get(position).getId()+""));
+                        startActivity(intent);
+                    }
+                else if(messageType>=51&&messageType<=70){//拼车消息
+                        if (messageType==51){//拼车评论
+                            intent.setClass(con,CarPoolingMsgActivity.class);
+                            intent.putExtra("carpoolingId", listMessage.get(position).getId());
+                            startActivity(intent);
+                        }
+                        else {
+                            intent.setClass(con,MessageCarpoolActivity.class);
+                            startActivity(intent);
+                        }
+                    }
+                else if (messageType==0){//公告
+                        mToast.Toast(con,"公告");
+                    }
+                else if (messageType==10){//分享钥匙
+                        mToast.Toast(con,"分享钥匙");
+                    }
+                else {
+                        mToast.Toast(con,"消息类型未知");
+                    }
+//                MessageCarpoolActivity
             }
         });
         mListview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -278,22 +314,8 @@ public class CircleGiveYouCommentActivity extends MyActivity {
                 break;
         }
     }
-
-    //获取消息http://192.168.1.55:8080/smarthome/mobileapi/message/findPage.do?token=9DB2FD6FDD2F116CD47CE6C48B3047EE
-//    分页查询消息列表接口
-//    http://192.168.1.55:8080/smarthome/mobileapi/message/findPage.do?token=9DB2FD6FDD2F116CD47CE6C48B3047EE&msgType=
-//    Method:GET
-//    参数列表:
-//            |参数名        |类型      |必需  |描述
-//    |-----        |----     |---- |----
-//            |token        |String   |Y    |令牌
-//    |start        |Integer  |N    |分页开始加载记录索引，从0开始
-//    |limit        |Integer  |N    |每页多少条数据
-//    |msgType      |Integer  |N    |消息类型；0=公告，10=分享钥匙，11-30友邻圈消息，11=状态点赞，12=状态评论，31-50为社区活动消息，
-// 31=活动照片，32=活动评论，33=活动感兴趣，34=参加活动，51-70为拼车消息，51=拼车评论，52=司机接单，53=乘客加入，不传或传空就是查所有的
-//    |msgTypeBegin |Integer  |N    |消息类型开始数字（查询大于等于此参数的记录）
-//            |msgTypeEnd   |Integer  |N    |消息类型结束数字（查询小于等于此参数的记录），开始和结束两个参数配合使用查询一个范围区间
     public void getAllMessage(int st,int limi) {
+        //-1全部类型的消息,0友邻圈，1社区活动，2社区拼车
         Map<String,String> mp=new HashMap<>();
         mp.put("token", UserInfo.userToken);
         mp.put("start",st+"");

@@ -114,16 +114,16 @@ public class MyCircleContactAdapter_a extends BaseAdapter{
         hodler.circle_commend_msg.setText(listCircle.get(position).getActivityContent());
         String time=listCircle.get(position).getCreateTimeString();//内容
 //        2017-05-17 16:10:54
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        long mils;
-        try {
-            mils=sdf.parse(listCircle.get(position).getCreateTimeString()).getTime();//毫秒
-        } catch (ParseException e) {
-            mils=0;
-            e.printStackTrace();
-        }
-        String data= DataUtils.getData(mils);
-        hodler.circle_time_tv.setText(data);
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        long mils;
+//        try {
+//            mils=sdf.parse(listCircle.get(position).getCreateTimeString()).getTime();//毫秒
+//        } catch (ParseException e) {
+//            mils=0;
+//            e.printStackTrace();
+//        }
+//        String data= DataUtils.getData(mils);
+        hodler.circle_time_tv.setText(listCircle.get(position).getCreateTimeString());
 
         hodler.circle_like_num.setText(listCircle.get(position).getLikeNum()+"");
         hodler.circle_commend_num.setText(listCircle.get(position).getParticipateNumber()+"人感兴趣");
