@@ -9,6 +9,7 @@ import android.text.Html;
 import android.view.View;
 import android.widget.TextView;
 
+import com.home.wanyu.JpushUtils.JPshAliasAndTags;
 import com.home.wanyu.R;
 import com.home.wanyu.User.UserInfo;
 
@@ -34,10 +35,12 @@ public class StartActivity extends AppCompatActivity {
                     break;
                 case 0:
                     if (UserInfo.isLogin(StartActivity.this)){//已经登录
+                        //激光注册标签
+                        JPshAliasAndTags.setAlias(StartActivity.this,UserInfo.userName);
                         startActivity(new Intent(StartActivity.this,MainActivity.class));
                     }
                     else {
-                        startActivity(new Intent(StartActivity.this,LoginAndRegisterActivity.class));
+                         startActivity(new Intent(StartActivity.this,LoginAndRegisterActivity.class));
                     }
 
                     finish();

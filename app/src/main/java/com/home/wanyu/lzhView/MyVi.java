@@ -6,7 +6,6 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.AttributeSet;
 import android.view.View;
-
 import com.home.wanyu.R;
 
 /**
@@ -21,11 +20,9 @@ public class MyVi extends View{
         paint.setColor(getResources().getColor(R.color.white));
         paint.setAntiAlias(true);
     }
-
     public MyVi(Context context) {
         super(context);
     }
-
     @Override
     protected void onDraw(Canvas canvas) {
 //        super.onDraw(canvas);

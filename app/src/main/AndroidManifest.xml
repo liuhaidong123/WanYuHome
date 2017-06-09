@@ -381,5 +381,4 @@
         <!-- ／／／／／／／／／／／／／／／／激光推送权限／／／／／／／／／／／／／／／／ -->
         <activity android:name=".activity.MessageCarpoolActivity"></activity>
     </application>
-
 </manifest>

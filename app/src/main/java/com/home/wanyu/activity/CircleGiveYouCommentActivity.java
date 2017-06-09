@@ -136,8 +136,7 @@ public class CircleGiveYouCommentActivity extends MyActivity {
                             }
                             else {
                                 mToast.Toast(con,b.getMessage());
-                            }
-
+                                }
                         }
                         else {
                             mToast.ToastFaild(con, ToastType.GSONEMPTY);
@@ -158,7 +157,6 @@ public class CircleGiveYouCommentActivity extends MyActivity {
         type=getIntent().getIntExtra("type",-1);
         getSerVerData();
     }
-
     @Override
     public void getSerVerData() {
         getAllMessage(start,limit);
@@ -241,7 +239,7 @@ public class CircleGiveYouCommentActivity extends MyActivity {
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                     deletePos =position;
                     showWindow(deletePos);
-                    return false;
+                    return true;
             }
         });
     }
@@ -259,7 +257,6 @@ public class CircleGiveYouCommentActivity extends MyActivity {
                 isDelete=false;
                 handler.sendEmptyMessage(0);
             }
-
             @Override
             public void onResponse(Response response) throws IOException {
                 isDelete=false;
@@ -269,10 +266,8 @@ public class CircleGiveYouCommentActivity extends MyActivity {
             }
         });
     }
-
-
     //删除消息http://192.168.1.55:8080/smarthome/mobileapi/message/delete.do?ids=1234,12345&token=9DB2FD6FDD2F116CD47CE6C48B3047EE
-//    Method:POST
+    //Method:POST
     private void deleteMessage(int position) {
         if (isDelete){
             mToast.Toast(con,"正在操作，请稍后");
