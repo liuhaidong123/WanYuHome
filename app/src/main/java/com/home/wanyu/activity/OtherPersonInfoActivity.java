@@ -78,7 +78,7 @@ public class OtherPersonInfoActivity extends Activity {
     private OtherPersonActivityAdapter adapter_a;//我的活动的view
 
     private int start=0;
-    private int limit=1;
+    private int limit=10;
     private String resStr;
     private Handler handler=new Handler(){
         @Override

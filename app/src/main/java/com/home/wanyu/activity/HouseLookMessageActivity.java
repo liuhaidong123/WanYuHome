@@ -207,7 +207,7 @@ public class HouseLookMessageActivity extends AppCompatActivity implements View.
             //预约
         } else if (id == mCall_btn.getId()) {
             if (callNum == -1) {
-                Toast.makeText(this, "无法预约错误", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "无法预约错误", Toast.LENGTH_SHORT).show();
             } else {
                 if (callNum == 0) {
                     Toast.makeText(this, "您本日已经没有查看房源机会，请明天联系房东", Toast.LENGTH_SHORT).show();

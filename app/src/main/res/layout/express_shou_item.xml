@@ -14,7 +14,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:src="@mipmap/sf" />
+            />
 
         <TextView
             android:id="@+id/express_tv"
@@ -23,7 +23,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@id/express_img"
-            android:text="顺丰快递"
+            android:text=""
             android:textColor="@color/titlecolor3"
             android:textSize="14sp" />
 

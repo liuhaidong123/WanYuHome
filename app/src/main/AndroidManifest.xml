@@ -84,10 +84,18 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
-        <activity android:name=".activity.RepairActivity" />
-        <activity android:name=".activity.SelectImgActivity" />
-        <activity android:name=".activity.OrderActivity" />
-        <activity android:name=".activity.AddAddressActivity" />
+        <activity android:name=".activity.RepairActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.SelectImgActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.OrderActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.AddAddressActivity"
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".activity.HomeDeviceAddActivity"
             android:launchMode="singleTop"
@@ -100,69 +108,184 @@
         <activity android:name=".zxing.app.PreferencesActivity" />
         <activity android:name=".zxing.app.CaptureActivity" />
         <!-- 二维码扫描 -->
-        <activity android:name=".activity.HomeDeviceSettingActivity" />
-        <activity android:name=".activity.HomeDeviceAddWifiSettingActivity" />
-        <activity android:name=".activity.HomeSenceAddSenceActivity" />
-        <activity android:name=".activity.OrderMessageActivity" />
-        <activity android:name=".activity.OrderAddressActivity" />
-        <activity android:name=".activity.LifeMoneyActivity" />
-        <activity android:name=".activity.LifeMoneyActivity2" />
-        <activity android:name=".activity.MoneyNumActivity" />
-        <activity android:name=".activity.MoneyInputSureActivity" />
-        <activity android:name=".activity.TestActivity" />
-        <activity android:name=".activity.CircleMessageActivity" />
-        <activity android:name=".activity.CirclePostActivity" />
-        <activity android:name=".activity.CircleCardMessageActivity" />
-        <activity android:name=".activity.CircleGiveYouCommentActivity" />
-        <activity android:name=".activity.CommunityMessageActivity" />
-        <activity android:name=".activity.CommunityPostActivity" />
-        <activity android:name=".activity.CommunityCommentActivity" />
-        <activity android:name=".activity.CarPoolingActivity" />
-        <activity android:name=".activity.CarPoolingPostActivity" />
-        <activity android:name=".activity.CarPoolingMsgActivity" />
-        <activity android:name=".activity.CarPoolingCommentActivity" />
-        <activity android:name=".activity.DeviceSettingLightActivity" />
-        <activity android:name=".activity.DeviceSettingSwitchActivity" />
-        <activity android:name=".activity.DeviceSettingCurtainActivity" />
-        <activity android:name=".activity.DeviceSettingAirConActivity" />
-        <activity android:name=".activity.DeviceSettingTvActivity" />
-        <activity android:name=".activity.DeviceSettingLockActivity" />
-        <activity android:name=".activity.HomeDeviceAddRoomActivity" />
-        <activity android:name=".activity.MyUserMsgEditorActivity" />
-        <activity android:name=".activity.HomeDeviceAdRoomActivity" />
-        <activity android:name=".activity.MyHouseActivity" />
-        <activity android:name=".activity.MyHouseInfoActivity" />
-        <activity android:name=".activity.MyHouseFamilyManagerActivity" />
-        <activity android:name=".activity.MyHouseFamilyInfoActivity" />
-        <activity android:name=".activity.MyHouseDeviceManagerActivity" />
-        <activity android:name=".activity.MyHouseFamilyAddActivity" />
-        <activity android:name=".activity.MyHouseFamilyEditor" />
-        <activity android:name=".activity.MyCircleContactActivity" />
-        <activity android:name=".activity.ExpressActivity" />
-        <activity android:name=".activity.CommercialActivity" />
-        <activity android:name=".activity.CommercialSearchAddressActivity" />
-        <activity android:name=".activity.CommercialMessageActivity" />
-        <activity android:name=".activity.DecorationActivity" />
-        <activity android:name=".activity.HomeServiceActivity" />
-        <activity android:name=".activity.HouseMsgActivity" />
-        <activity android:name=".activity.HouseSearchAddessAndAreaActivity" />
-        <activity android:name=".activity.HouseSearchAreaListActivity" />
-        <activity android:name=".activity.HouseLookMessageActivity" />
+        <activity android:name=".activity.HomeDeviceSettingActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.HomeDeviceAddWifiSettingActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.HomeSenceAddSenceActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.OrderMessageActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.OrderAddressActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.LifeMoneyActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.LifeMoneyActivity2"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.MoneyNumActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.MoneyInputSureActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.TestActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.CircleMessageActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.CirclePostActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.CircleCardMessageActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.CircleGiveYouCommentActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.CommunityMessageActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.CommunityPostActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.CommunityCommentActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.CarPoolingActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.CarPoolingPostActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.CarPoolingMsgActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.CarPoolingCommentActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.DeviceSettingLightActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.DeviceSettingSwitchActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.DeviceSettingCurtainActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.DeviceSettingAirConActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.DeviceSettingTvActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.DeviceSettingLockActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.HomeDeviceAddRoomActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.MyUserMsgEditorActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.HomeDeviceAdRoomActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.MyHouseActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.MyHouseInfoActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.MyHouseFamilyManagerActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.MyHouseFamilyInfoActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.MyHouseDeviceManagerActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.MyHouseFamilyAddActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.MyHouseFamilyEditor"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.MyCircleContactActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.ExpressActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.CommercialActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.CommercialSearchAddressActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.CommercialMessageActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.DecorationActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.HomeServiceActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.HouseMsgActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.HouseSearchAddessAndAreaActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.HouseSearchAreaListActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.HouseLookMessageActivity"
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".activity.HousePostCardActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".activity.MySettingActivity" />
-        <activity android:name=".activity.MySettingChangePhoneActivity" />
-        <activity android:name=".activity.MyAboutUsActivity" />
-        <activity android:name=".activity.OtherPersonInfoActivity" />
+        <activity android:name=".activity.MySettingActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.MySettingChangePhoneActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.MyAboutUsActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.OtherPersonInfoActivity"
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".activity.MyContactUs"
             android:label="@string/title_activity_my_contact_us"
             android:theme="@style/AppTheme" />
-        <activity android:name=".activity.MySettingChangePsdActivity" />
-        <activity android:name=".activity.LoginAndRegisterActivity" />
-        <activity android:name=".activity.DeviceSettingLockRecordActivity" />
-        <activity android:name=".activity.DeviceSettingLockChangePSDActivity"></activity>
+        <activity android:name=".activity.MySettingChangePsdActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.LoginAndRegisterActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.DeviceSettingLockRecordActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.DeviceSettingLockChangePSDActivity"
+            android:screenOrientation="portrait"
+            >
+
+        </activity>
 
         <!-- ／／／／／／／／／／／／／／／／激光推送／／／／／／／／／／／／／／／／ -->
         <!-- Rich push 核心功能 since 2.0.6 -->
@@ -254,7 +377,7 @@
             android:value="developer-default" />
         <meta-data
             android:name="JPUSH_APPKEY"
-            android:value="8970c6cd1148f7ce1a134575" /> <!-- </>值来自开发者平台取得的AppKey -->
+            android:value="6e3f7cdbf0e0ab9d5725a65f" /> <!-- </>值来自开发者平台取得的AppKey -->
         <!-- ／／／／／／／／／／／／／／／／激光推送权限／／／／／／／／／／／／／／／／ -->
         <activity android:name=".activity.MessageCarpoolActivity"></activity>
     </application>

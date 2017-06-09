@@ -6,7 +6,7 @@ package com.home.wanyu.HttpUtils;
 
 public class UrlTools {
 
-    public static final String BASE = "http://192.168.1.55:8080/smarthome";
+    public static final String BASE = "http://192.168.1.168:8080/smarthome";
     //判断有没有用户地址
     //http://192.168.1.55:8080/smarthome/mobileapi/family/findFamilyAddress.do?token=EC9CDB5177C01F016403DFAAEE3C1182
     public static final String HAVE_USER_ADDRESS = "/mobileapi/family/findFamilyAddress.do?";

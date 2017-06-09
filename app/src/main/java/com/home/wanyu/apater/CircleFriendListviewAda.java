@@ -4,12 +4,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +39,10 @@ import java.util.List;
 public class CircleFriendListviewAda extends BaseAdapter {
     private Context mContext;
     private LayoutInflater mInflater;
+    private  ViewPager mViewPager;
+    private ImgViewPager mAdapter;
+    private RelativeLayout mViewpaget_rl;
+    private  RelativeLayout m_All_rl;
     private List<Result> list = new ArrayList<>();
     private FriendHolder holder;
     private int mPosition;
@@ -65,16 +72,19 @@ public class CircleFriendListviewAda extends BaseAdapter {
         }
     };
 
-    public CircleFriendListviewAda(Context mContext, List<Result> list) {
+    public CircleFriendListviewAda(Context mContext, List<Result> list, ViewPager viewPager, RelativeLayout mviewpaget_rl,RelativeLayout m_all_rl) {
         this.list = list;
         this.mContext = mContext;
         this.mInflater = LayoutInflater.from(this.mContext);
+        this.mViewPager=viewPager;
+        this.mViewpaget_rl=mviewpaget_rl;
+        this.m_All_rl=m_all_rl;
         httpTools = HttpTools.getHttpToolsInstance();
     }
 
-    public void setList(List<Result> list,long userID) {
+    public void setList(List<Result> list, long userID) {
         this.list = list;
-        this.userID=userID;
+        this.userID = userID;
     }
 
     @Override
@@ -129,8 +139,20 @@ public class CircleFriendListviewAda extends BaseAdapter {
         }
 
         if (!list.get(position).getPicture().equals("")) {
-            String[] imgstr = list.get(position).getPicture().split(";");
+            final String[] imgstr = list.get(position).getPicture().split(";");
             holder.gridview.setAdapter(new RecordListviewGridviewAda(mContext, imgstr));
+            //点击显示图片
+            holder.gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    m_All_rl.setVisibility(View.GONE);
+                    mViewpaget_rl.setVisibility(View.VISIBLE);
+
+                    mAdapter=new ImgViewPager(mContext,imgstr);
+                    mViewPager.setAdapter(mAdapter);
+                    mViewPager.setCurrentItem(position);
+                }
+            });
         } else {
             String[] imgstr = new String[0];
             holder.gridview.setAdapter(new RecordListviewGridviewAda(mContext, imgstr));
@@ -144,7 +166,7 @@ public class CircleFriendListviewAda extends BaseAdapter {
             public void onClick(View v) {
                 mPosition = position;
                 holder.likeimg.setFocusable(true);
-                finalConvertView.setFocusable(false);
+                //finalConvertView.setFocusable(false);
                 httpTools.getCIrcleLikeResult(handler, UserInfo.userToken, list.get(position).getId());
             }
         });
@@ -155,15 +177,13 @@ public class CircleFriendListviewAda extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 mPosition = position;
-                holder.likeimg.setFocusable(false);
+                // holder.likeimg.setFocusable(false);
                 finalConvertView.setFocusable(true);
                 Intent intent = new Intent(mContext, CircleCardMessageActivity.class);
                 intent.putExtra("type", 1);
-               // intent.putExtra("userid",userID);
-                intent.putExtra("stateid",list.get(mPosition).getId());
-                //intent.putExtra("bean",list.get(mPosition));
+                intent.putExtra("stateid", list.get(mPosition).getId());
                 mContext.startActivity(intent);
-                Log.e("跳userid=",userID+"");
+                Log.e("跳userid=", userID + "");
             }
         });
 

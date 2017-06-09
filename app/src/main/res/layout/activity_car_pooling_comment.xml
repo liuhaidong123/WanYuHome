@@ -53,18 +53,15 @@
     </RelativeLayout>
 
     <EditText
-        android:background="@null"
         android:id="@+id/car_comment_msg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/order_msg_title"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
-        android:hint="你的评论或者你回复别人的评论"
-        android:textColorHint="@color/name_color"
+        android:background="@null"
+        android:hint=""
+        android:padding="10dp"
         android:textColor="@color/titlecolor3"
+        android:textColorHint="@color/name_color"
         android:textSize="14sp" />
 
 </RelativeLayout>

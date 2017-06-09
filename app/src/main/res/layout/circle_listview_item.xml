@@ -4,37 +4,36 @@
     android:layout_height="match_parent">
 
     <RelativeLayout
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-       android:background="@color/white"
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
 
         <ImageView
             android:id="@+id/circle_img"
-            android:layout_centerVertical="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/circle_friend"
-            />
+            android:layout_centerVertical="true"
+            android:scaleType="centerCrop" />
+
         <TextView
             android:id="@+id/textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:textColor="@color/title_color"
-            android:layout_toRightOf="@id/circle_img"
-            android:text="友邻圈"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            />
+            android:layout_toRightOf="@id/circle_img"
+            android:text=""
+            android:textColor="@color/title_color"
+            android:textSize="16sp" />
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:src="@mipmap/circle_small_back"
             android:layout_centerVertical="true"
-            />
+            android:src="@mipmap/circle_small_back" />
     </RelativeLayout>
 </RelativeLayout>

@@ -27,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:gravity="center"
-            android:text="商品名称XXX"
+            android:text=""
             android:textColor="@color/title_color"
             android:textSize="17sp" />
     </RelativeLayout>
@@ -38,7 +38,7 @@
         android:layout_height="168dp"
         android:layout_below="@id/order_msg_title"
         android:scaleType="centerCrop"
-        android:src="@mipmap/main_background4" />
+        />
 
     <RelativeLayout
         android:id="@+id/goods_msg_rl"
@@ -58,7 +58,7 @@
                 android:id="@+id/goods_msg_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="武大郎的炊饼"
+                android:text=""
                 android:textColor="@color/title_color"
                 android:textSize="15sp" />
 
@@ -70,7 +70,7 @@
                 android:layout_below="@id/goods_msg_name"
                 android:layout_marginTop="10dp"
                 android:numStars="5"
-                android:rating="1.5">
+                android:rating="0">
 
 
             </RatingBar>
@@ -82,7 +82,7 @@
                 android:layout_alignTop="@id/goods_msg_ratingBar"
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@+id/goods_msg_ratingBar"
-                android:text="人均:¥20/人"
+                android:text=""
                 android:textColor="@color/titlecolor3" />
         </RelativeLayout>
 
@@ -112,7 +112,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="5dp"
             android:layout_toRightOf="@id/goods_msg_address_img"
-            android:text="涿州市富康街32号"
+            android:text=""
             android:textColor="@color/titlecolor3"
             android:textSize="15sp" />
 

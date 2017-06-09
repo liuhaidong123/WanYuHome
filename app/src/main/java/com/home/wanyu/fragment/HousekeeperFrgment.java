@@ -86,6 +86,7 @@ public class HousekeeperFrgment extends Fragment implements ViewPager.OnPageChan
 
             if (msg.what == 100) {//判断有没有地址
                 Object o = msg.obj;
+                mRefresh.setRefreshing(false);
                 if (o != null && o instanceof Root) {
                     mHaveRoot = (Root) o;
                 }
@@ -95,7 +96,7 @@ public class HousekeeperFrgment extends Fragment implements ViewPager.OnPageChan
                     com.home.wanyu.bean.Express.Root root = (com.home.wanyu.bean.Express.Root) o;
                     if (root != null && root.getResult() != null) {
                         if (root.getResult().size() == 0) {
-                            mExpress_msg.setText("您还没有未领取的快递");
+                            mExpress_msg.setText("您还没有的快递");
                         } else {
                             mExpress_msg.setText("您还有" + root.getResult().size() + "个快递未领取");
                         }
@@ -142,12 +143,13 @@ public class HousekeeperFrgment extends Fragment implements ViewPager.OnPageChan
         //刷新
 
         mRefresh = (SwipeRefreshLayout) view.findViewById(R.id.property_refresh);
-        mRefresh.setEnabled(false);
+       // mRefresh.setEnabled(false);
         mRefresh.setColorSchemeResources(R.color.bg_rect, R.color.colorAccent, R.color.result_points);
         mRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-
+                mHttptools.haveUserAddress(mHandler, UserInfo.userToken);
+                mHttptools.expressNOGet(mHandler, UserInfo.userToken);
             }
         });
 
@@ -236,11 +238,11 @@ public class HousekeeperFrgment extends Fragment implements ViewPager.OnPageChan
     public void onPageScrollStateChanged(int state) {
         //手指开始滑动
         if (state == mViewpager.SCROLL_STATE_DRAGGING) {
-            mRefresh.setEnabled(false);
+           mRefresh.setEnabled(false);
             Log.e("手指开始滑动", "===");
             //手指松开后自动滑动
         } else if (state == mViewpager.SCROLL_STATE_SETTLING) {
-            mRefresh.setEnabled(true);
+            mRefresh.setEnabled(false);
             Log.e("手指松开后自动滑动", "===");
             //停在某一页
         } else {

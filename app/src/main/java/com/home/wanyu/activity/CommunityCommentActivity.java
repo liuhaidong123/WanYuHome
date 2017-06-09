@@ -13,6 +13,7 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,11 +21,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.home.wanyu.HttpUtils.HttpTools;
 import com.home.wanyu.HttpUtils.UrlTools;
+import com.home.wanyu.Ip.mToast;
 import com.home.wanyu.R;
 import com.home.wanyu.User.UserInfo;
 import com.home.wanyu.apater.AreaActivityCommentAda;
@@ -32,6 +35,7 @@ import com.home.wanyu.apater.AreaActivityImgAda;
 import com.home.wanyu.apater.AreaActivityJoinAda;
 import com.home.wanyu.apater.AreaActivityLikeAda;
 import com.home.wanyu.apater.HousePostImgAda;
+import com.home.wanyu.apater.ImgViewPager;
 import com.home.wanyu.bean.getAreaActivityList.Result;
 import com.home.wanyu.bean.getAreaActivityMsg.ActivityLoglist;
 import com.home.wanyu.bean.getAreaActivityMsg.Activitypicturelist;
@@ -89,86 +93,98 @@ public class CommunityCommentActivity extends AppCompatActivity implements View.
                 Object o = msg.obj;
                 if (o != null && o instanceof Root) {
                     Root root = (Root) o;
-                    if (root.getIslike()) {
-                        mLike_img.setImageResource(R.mipmap.circle_like);
-                    } else {
-                        mLike_img.setImageResource(R.mipmap.circle_like_no);
-                    }
+                    if (root!=null&&root.getResult()!=null&&root.getResult().getActivityEntity()!=null&&root.getResult().getActivityLoglist()!=null&&root.getResult().getActivitypicturelist()!=null&&root.getResult().getCommentlist()!=null&&root.getResult().getUpVptelist()!=null){
+                        if (root.getIslike()) {
+                            mLike_img.setImageResource(R.mipmap.circle_like);
+                        } else {
+                            mLike_img.setImageResource(R.mipmap.circle_like_no);
+                        }
 
-                    if (root.getJoined()) {
-                        mJoin_img.setImageResource(R.mipmap.community_add);
-                    } else {
-                        mJoin_img.setImageResource(R.mipmap.community_add_no);
-                    }
+                        if (root.getJoined()) {
+                            mJoin_img.setImageResource(R.mipmap.community_add);
+                        } else {
+                            mJoin_img.setImageResource(R.mipmap.community_add_no);
+                        }
+                        mLikeList = root.getResult().getUpVptelist();
+                        mJoinList = root.getResult().getActivityLoglist();
+                        mImgList = root.getResult().getActivitypicturelist();
+                        mCommentList = root.getResult().getCommentlist();
+                        mLikeAda = new AreaActivityLikeAda(CommunityCommentActivity.this, mLikeList);
+                        mLikeGridView.setAdapter(mLikeAda);
+                        mJoinAda = new AreaActivityJoinAda(CommunityCommentActivity.this, mJoinList);
+                        mJoinGridView.setAdapter(mJoinAda);
 
-                    mLikeList = root.getResult().getUpVptelist();
-                    mJoinList = root.getResult().getActivityLoglist();
-                    mImgList = root.getResult().getActivitypicturelist();
-                    mCommentList = root.getResult().getCommentlist();
-                    mLikeAda = new AreaActivityLikeAda(CommunityCommentActivity.this, mLikeList);
-                    mLikeGridView.setAdapter(mLikeAda);
-                    mJoinAda = new AreaActivityJoinAda(CommunityCommentActivity.this, mJoinList);
-                    mJoinGridView.setAdapter(mJoinAda);
+                        mCommentAda = new AreaActivityCommentAda(CommunityCommentActivity.this, mCommentList, activityId);
+                        mCommentListView.setAdapter(mCommentAda);
 
-                    mCommentAda = new AreaActivityCommentAda(CommunityCommentActivity.this, mCommentList, activityId);
-                    mCommentListView.setAdapter(mCommentAda);
-
-                    mImgStrList.clear();
-                    //取出图片
-                    for (int i = 0; i < mImgList.size(); i++) {
-                        //判断自己曾经上传过几张图片
-                        if (mImgList.get(i).getPersonalId() == UserInfo.personalId) {
-                            if (mImgList.get(i).getPicture().equals("")) {
-                                imgNum = 2;//可以传2张
-                            } else {
-                                if (mImgList.get(i).getPicture().split(";").length == 1) {
-                                    imgNum = 1; //可以传1张
-                                } else if (mImgList.get(i).getPicture().split(";").length == 2) {
-                                    imgNum = 0; //不可以传图片
+                        mImgStrList.clear();
+                        //取出图片
+                        for (int i = 0; i < mImgList.size(); i++) {
+                            //判断自己曾经上传过几张图片
+                            if (mImgList.get(i).getPersonalId() == UserInfo.personalId) {
+                                if (mImgList.get(i).getPicture().equals("")) {
+                                    imgNum = 2;//可以传2张
+                                } else {
+                                    if (mImgList.get(i).getPicture().split(";").length == 1) {
+                                        imgNum = 1; //可以传1张
+                                    } else if (mImgList.get(i).getPicture().split(";").length == 2) {
+                                        imgNum = 0; //不可以传图片
+                                    }
                                 }
                             }
-                        }
-                        //获取所有用户上传过的图片
-                        if (!mImgList.get(i).getPicture().equals("")) {
-                            String[] str = mImgList.get(i).getPicture().split(";");
-                            for (int j = 0; j < str.length; j++) {
-                                mImgStrList.add(str[j]);
+                            //获取所有用户上传过的图片
+                            if (!mImgList.get(i).getPicture().equals("")) {
+
+                                String[] str = mImgList.get(i).getPicture().split(";");
+                                for (int j = 0; j < str.length; j++) {
+                                    mImgStrList.add(str[j]);
+                                }
                             }
+
+                            mSize = mImgStrList.size();
                         }
 
-                        mSize = mImgStrList.size();
+                        imgstr=new String[mImgStrList.size()];
+                        for (int k=0;k<mImgStrList.size();k++){
+                            imgstr[k]=mImgStrList.get(k);
+                        }
+
+                        mImgAda = new AreaActivityImgAda(CommunityCommentActivity.this, mImgStrList, mSize);
+                        mImgGridView.setAdapter(mImgAda);
+
+
+                        if (root.getResult().getActivityEntity() != null) {
+                            Picasso.with(CommunityCommentActivity.this).load(UrlTools.BASE + root.getResult().getActivityEntity().getAvatar()).resize(ImgUitls.getWith(CommunityCommentActivity.this) / 3, ImgUitls.getWith(CommunityCommentActivity.this) / 3).error(R.mipmap.error_small).into(mHead_img);
+                            mName.setText(root.getResult().getActivityEntity().getUser_name());
+                            mtime.setText(root.getResult().getActivityEntity().getCreateTimeString());
+                            if (root.getResult().getActivityEntity().getOver() == 1) {
+                                over = 1;
+                                mState.setText("正在进行");
+                            } else if (root.getResult().getActivityEntity().getOver() == 2) {
+                                over = 2;
+                                mState.setText("活动结束");
+                            }
+                            mTitle.setText(root.getResult().getActivityEntity().getActivityTheme());
+                            mTime_msg.setText(root.getResult().getActivityEntity().getStarttimeString() + "至" + root.getResult().getActivityEntity().getEndtimeString());
+                            mAddress.setText(root.getResult().getActivityEntity().getActivityAddress());
+                            mPerson_num.setText(root.getResult().getActivityEntity().getActivityNumber() + "");
+                            mPhone.setText(root.getResult().getActivityEntity().getActivityTelephone() + "");
+                            mContent.setText(root.getResult().getActivityEntity().getActivityContent());
+                            allPersonNum = root.getResult().getActivityEntity().getActivityNumber();//总人数
+                            joinNum = root.getResult().getActivityEntity().getParticipateNumber();//实时参与人数
+
+                            if (root.getResult().getActivityEntity().getPersonalId() == UserInfo.personalId) {
+                                mDelete_btn.setVisibility(View.VISIBLE);
+                            } else {
+                                mDelete_btn.setVisibility(View.GONE);
+                            }
+
+                        }
+                    }else {
+                        mNoData.setVisibility(View.VISIBLE);
+                        Toast.makeText(CommunityCommentActivity.this,"作者已删除",Toast.LENGTH_SHORT).show();
                     }
-                    mImgAda = new AreaActivityImgAda(CommunityCommentActivity.this, mImgStrList, mSize);
-                    mImgGridView.setAdapter(mImgAda);
 
-
-                    if (root.getResult().getActivityEntity() != null) {
-                        Picasso.with(CommunityCommentActivity.this).load(UrlTools.BASE + root.getResult().getActivityEntity().getAvatar()).resize(ImgUitls.getWith(CommunityCommentActivity.this) / 3, ImgUitls.getWith(CommunityCommentActivity.this) / 3).error(R.mipmap.error_small).into(mHead_img);
-                        mName.setText(root.getResult().getActivityEntity().getUser_name());
-                        mtime.setText(root.getResult().getActivityEntity().getCreateTimeString());
-                        if (root.getResult().getActivityEntity().getOver() == 1) {
-                            over = 1;
-                            mState.setText("正在进行");
-                        } else if (root.getResult().getActivityEntity().getOver() == 2) {
-                            over = 2;
-                            mState.setText("活动结束");
-                        }
-                        mTitle.setText(root.getResult().getActivityEntity().getActivityTheme());
-                        mTime_msg.setText(root.getResult().getActivityEntity().getStarttimeString() + "至" + root.getResult().getActivityEntity().getEndtimeString());
-                        mAddress.setText(root.getResult().getActivityEntity().getActivityAddress());
-                        mPerson_num.setText(root.getResult().getActivityEntity().getActivityNumber() + "");
-                        mPhone.setText(root.getResult().getActivityEntity().getActivityTelephone() + "");
-                        mContent.setText(root.getResult().getActivityEntity().getActivityContent());
-                        allPersonNum = root.getResult().getActivityEntity().getActivityNumber();//总人数
-                        joinNum = root.getResult().getActivityEntity().getParticipateNumber();//实时参与人数
-
-                        if (root.getResult().getActivityEntity().getPersonalId() == UserInfo.personalId) {
-                            mDelete_btn.setVisibility(View.VISIBLE);
-                        } else {
-                            mDelete_btn.setVisibility(View.GONE);
-                        }
-
-                    }
                 }
             } else if (msg.what == 121) {//发布图片
                 Object o = msg.obj;
@@ -240,6 +256,12 @@ public class CommunityCommentActivity extends AppCompatActivity implements View.
         }
     };
 
+    private RelativeLayout mImgViewPager_rl, m_all_rl;
+    private ViewPager mImgViewPager;
+    private TextView mImg_Cancle_btn;
+    private ImgViewPager mAdapter;
+    private String[] imgstr;
+    private RelativeLayout mNoData;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -249,6 +271,8 @@ public class CommunityCommentActivity extends AppCompatActivity implements View.
     }
 
     private void initView() {
+
+        mNoData= (RelativeLayout) findViewById(R.id.no_data_rl);
         activityId = getIntent().getLongExtra("activityId", -1);
 
         mDelete_btn = (TextView) findViewById(R.id.u_delete_btn);
@@ -294,7 +318,7 @@ public class CommunityCommentActivity extends AppCompatActivity implements View.
                 } else {
                     if (mImgStrList.size() == position) {
                         if (mImgStrList.size() == 20) {
-                            Toast.makeText(CommunityCommentActivity.this, "亲，最多20张图片哦", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(CommunityCommentActivity.this, "亲，此活动图片已满", Toast.LENGTH_SHORT).show();
                         } else {
                             if (imgNum == 0) {
                                 Toast.makeText(CommunityCommentActivity.this, "亲，您已经添加过2张图片了，不能再次添加了哦", Toast.LENGTH_SHORT).show();
@@ -316,6 +340,12 @@ public class CommunityCommentActivity extends AppCompatActivity implements View.
                             }
 
                         }
+                    } else {
+                        m_all_rl.setVisibility(View.GONE);
+                        mImgViewPager_rl.setVisibility(View.VISIBLE);
+                        mAdapter = new ImgViewPager(CommunityCommentActivity.this, imgstr);
+                        mImgViewPager.setAdapter(mAdapter);
+                        mImgViewPager.setCurrentItem(position);
                     }
 
 
@@ -334,6 +364,15 @@ public class CommunityCommentActivity extends AppCompatActivity implements View.
         mJoin_ll.setOnClickListener(this);
         mLike_img = (ImageView) findViewById(R.id.like_img);
         mJoin_img = (ImageView) findViewById(R.id.join_img);
+
+
+        //点击GridView中显示图片
+        m_all_rl = (RelativeLayout) findViewById(R.id.m_all_rl);
+        mImgViewPager_rl = (RelativeLayout) findViewById(R.id.img_viewpager_rl);
+        mImgViewPager = (ViewPager) findViewById(R.id.img_viewpager);
+        mImg_Cancle_btn = (TextView) findViewById(R.id.img_cancle);
+        mImg_Cancle_btn.setOnClickListener(this);
+
     }
 
     private final int REQUEST_CODE_ASK_READ_PHONE = 123;
@@ -526,6 +565,9 @@ public class CommunityCommentActivity extends AppCompatActivity implements View.
                 mHttptools.areaActivityDelete(mHandler, UserInfo.userToken, activityId, UserInfo.personalId);
             }
 
+        } else if (id == mImg_Cancle_btn.getId()) {//隐藏viewpager
+            m_all_rl.setVisibility(View.VISIBLE);
+            mImgViewPager_rl.setVisibility(View.GONE);
         }
     }
 

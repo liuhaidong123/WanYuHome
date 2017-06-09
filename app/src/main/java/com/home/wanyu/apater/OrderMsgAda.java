@@ -73,23 +73,23 @@ public class OrderMsgAda extends BaseAdapter {
         holder.tv_allMoney.setText("合计缴费:" + list.get(position).getMoneySum() + "元");
         //如果每个月费用的总数为0
         if (list.get(position).getMoneySum() == 0) {
-            holder.tv_water.setText("水费7");
+            holder.tv_water.setText("水费");
             holder.tv_water_money.setText("0元");
             holder.tv_ele.setText("电费");
             holder.tv_ele_money.setText("0元");
-            holder.tv_shao.setText("燃气费9");
+            holder.tv_shao.setText("燃气费");
             holder.tv_shao_money.setText("0元");
         } else {
             List<Items> list1 = list.get(position).getItems();
             for (int i = 0; i < list1.size(); i++) {
                 if (list1.get(i).getPaymentItemId() == 1) {
-                    holder.tv_water.setText("水费7");
+                    holder.tv_water.setText("水费");
                     holder.tv_water_money.setText(list1.get(i).getMoney() + "元");
                 } else if (list1.get(i).getPaymentItemId() == 2) {
                     holder.tv_ele.setText("电费");
                     holder.tv_ele_money.setText(list1.get(i).getMoney() + "元");
                 } else {
-                    holder.tv_shao.setText("燃气费9");
+                    holder.tv_shao.setText("燃气费");
                     holder.tv_shao_money.setText(list1.get(i).getMoney() + "元");
                 }
             }

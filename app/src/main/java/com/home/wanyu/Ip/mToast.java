@@ -19,7 +19,7 @@ public class mToast {
     public static void ToastFaild(Context context,ToastType type){
         switch (type){
             case FAILD://网络异常
-                Toast.makeText(context,"网络异常",Toast.LENGTH_SHORT).show();
+               Toast.makeText(context,"网络异常",Toast.LENGTH_SHORT).show();
                 break;
             case GSONEMPTY://数据为空，服务器返回数据为空
                 Toast.makeText(context,"查询不到数据",Toast.LENGTH_SHORT).show();

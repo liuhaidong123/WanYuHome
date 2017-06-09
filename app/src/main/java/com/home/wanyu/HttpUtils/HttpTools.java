@@ -12,6 +12,7 @@ import net.tsz.afinal.FinalHttp;
 import net.tsz.afinal.http.AjaxCallBack;
 import net.tsz.afinal.http.AjaxParams;
 
+import java.io.File;
 import java.util.Map;
 
 /**
@@ -42,6 +43,7 @@ public class HttpTools {
     //判断有没有用户的地址
     public void haveUserAddress(final Handler handler, String token) {
         String url = UrlTools.BASE + UrlTools.HAVE_USER_ADDRESS + "token=" + token;
+        //OkHttpManager.getInstance().getMethod(url,handler);
         mFinalHttp.get(url, new AjaxCallBack<String>() {
             @Override
             public void onStart() {
@@ -83,6 +85,7 @@ public class HttpTools {
     //添加用户地址
     public void addUserAddress(final Handler handler, Map<String, String> map) {
         String url = UrlTools.BASE + UrlTools.ADD_USER_ADDRESS;
+       // OkHttpManager.getInstance().postMethod(url,"物业账单添加用户地址哦",map,handler,1010);
         mFinalHttp.post(url, new AjaxParams(map), new AjaxCallBack<String>() {
             @Override
             public void onStart() {
@@ -584,10 +587,12 @@ public class HttpTools {
     }
 
 
-    //学术圈发帖
-    public void circlePostCard(final Handler handler, AjaxParams ajaxParams) {
+    //友邻圈发帖
+    public void circlePostCard(final Handler handler, AjaxParams ajaxParams, Map<String,String>map, File[] files) {
+
 
         String url = UrlTools.BASE + UrlTools.CIRCLE_POST_CARD;
+      //  OkHttpManager.getInstance().postFileMethod(url,"友邻圈发布接口哦",map,files,handler,1222);
         mFinalHttp.addHeader("Cookie", "token=" + UserInfo.userToken);
         mFinalHttp.post(url, ajaxParams, new AjaxCallBack<String>() {
 

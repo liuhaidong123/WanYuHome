@@ -8,7 +8,6 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.home.wanyu.R;
-import com.home.wanyu.bean.areaList.Result;
 import com.home.wanyu.bean.expressList.Rows;
 
 import java.util.ArrayList;
@@ -20,18 +19,18 @@ import java.util.List;
 
 public class ExpressMsgAda extends BaseAdapter {
 
-    private List<Rows> mExpressList=new ArrayList<>();
+    private List<com.home.wanyu.bean.expressList.Result> mExpressList=new ArrayList<>();
     private Context mContext;
     private LayoutInflater mInflater;
 
 
-    public ExpressMsgAda(Context mContext,List<Rows> mExpressList) {
+    public ExpressMsgAda(Context mContext,List<com.home.wanyu.bean.expressList.Result> mExpressList) {
         this.mContext = mContext;
         this.mExpressList=mExpressList;
         this.mInflater = LayoutInflater.from(mContext);
     }
 
-    public void setmExpressList(List<Rows> mExpressList) {
+    public void setmExpressList(List<com.home.wanyu.bean.expressList.Result> mExpressList) {
         this.mExpressList = mExpressList;
     }
 

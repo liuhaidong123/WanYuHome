@@ -55,7 +55,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CirclePostActivity extends AppCompatActivity implements View.OnClickListener {
     private ImageView mBack;
@@ -341,6 +343,9 @@ public class CirclePostActivity extends AppCompatActivity implements View.OnClic
 //                if (typeID != -1) {//类型
 //                    if (areaID != -1) {//小区
 //                        if (NetWorkMyUtils.isNetworkConnected(this)){
+
+                Map<String,String> map=new HashMap<>();
+                File[] files=new File[mImgList.size()];
                 mSend_card.setClickable(false);
                 MyDialog.showDialog(this);
                 ajaxParams.put("RQid", String.valueOf(areaID));
@@ -348,18 +353,24 @@ public class CirclePostActivity extends AppCompatActivity implements View.OnClic
                 ajaxParams.put("content", getContent());
                 ajaxParams.put("visibleRange", String.valueOf(mLookBtn_flag));
 
+                map.put("RQid", String.valueOf(areaID));
+                map.put("categoryId", String.valueOf(typeID));
+                map.put("content", getContent());
+                map.put("visibleRange", String.valueOf(mLookBtn_flag));
                 Log.e("RQid=", areaID + "");
                 Log.e("categoryId=", typeID + "");
                 Log.e("content=", getContent());
                 Log.e("visibleRange=", mLookBtn_flag + "");
                 for (int i = 0; i < mImgList.size(); i++) {
                     try {
+
+                        files[i]=transImage(mImgList.get(i), ImgUitls.getWith(this), ImgUitls.getHeight(this), 90, "图片" + i);
                         ajaxParams.put("图片" + i, transImage(mImgList.get(i), ImgUitls.getWith(this), ImgUitls.getHeight(this), 90, "图片" + i));
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
                 }
-                mHttptools.circlePostCard(mHandler, ajaxParams);
+                mHttptools.circlePostCard(mHandler, ajaxParams,map,files);
             }
 //            else {
 //                            Toast.makeText(this, "请检查网络", Toast.LENGTH_SHORT).show();
@@ -484,11 +495,14 @@ public class CirclePostActivity extends AppCompatActivity implements View.OnClic
             if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {//可写
                 //保存
                 file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), fileName + ".jpg");
-                Log.e("图片名称：", fileName + ".jpg");
+                Log.e("图片名称：", file.getName());
                 Log.e("图片文件夹名称：", Environment.DIRECTORY_PICTURES);
 
             } else {
                 file = new File(getFilesDir(), fileName + ".jpg");
+                Log.e("图片名称：", fileName + ".jpg");
+                Log.e("图片文件夹名称：", getFilesDir().toString());
+
             }
             BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
             if (resizeBitmap.compress(Bitmap.CompressFormat.JPEG, quality, bos)) {
@@ -501,7 +515,7 @@ public class CirclePostActivity extends AppCompatActivity implements View.OnClic
             if (!resizeBitmap.isRecycled()) {
                 resizeBitmap.recycle();
             }
-            Log.i("--file-大小----", file.length() / 1024 + "");
+            Log.e("--file-大小----", file.length() / 1024 + "");
             return file;
         } catch (FileNotFoundException e) {
             e.printStackTrace();

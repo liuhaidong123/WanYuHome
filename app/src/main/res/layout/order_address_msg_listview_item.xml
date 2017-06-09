@@ -13,7 +13,7 @@
         android:maxLines="1"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:text="河北名流一品小区3号楼3单元3层306"
+        android:text=""
         android:textColor="@color/title_color"
         android:textSize="14sp" />
 </RelativeLayout>

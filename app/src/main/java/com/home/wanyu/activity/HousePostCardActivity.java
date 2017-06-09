@@ -163,6 +163,8 @@ public class HousePostCardActivity extends AppCompatActivity implements View.OnC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         setContentView(R.layout.activity_house_post_card);
         mhttptools=HttpTools.getHttpToolsInstance();
         mhttptools.housePostNumber(handler, UserInfo.userToken);//获取发布房源的总数
@@ -424,7 +426,7 @@ public class HousePostCardActivity extends AppCompatActivity implements View.OnC
             mDirectionPop.dismiss();
             mDirectionPosition = 0;
         } else if (id == R.id.sure_btn) {//确定卧室，朝向，租金弹框
-            mDirectionPop.dismiss();
+
             if (checkFlag == 1) {
                 mWo_name.setText(mWoList.get(mDirectionPosition));
             } else if (checkFlag == 2) {
@@ -432,7 +434,7 @@ public class HousePostCardActivity extends AppCompatActivity implements View.OnC
             } else if (checkFlag == 3) {
                 mPay_money_tv.setText(mMoneyList.get(mDirectionPosition));
             }
-
+            mDirectionPop.dismiss();
         } else if (id == mSelect_city_rl.getId()) {//城市弹框
             showCityPop();
         } else if (id == R.id.sure_city_btn) {//确定城市
@@ -639,6 +641,7 @@ public class HousePostCardActivity extends AppCompatActivity implements View.OnC
                 WindowManager.LayoutParams params = getWindow().getAttributes();
                 params.alpha = 1f;
                 getWindow().setAttributes(params);
+                mDirectionPosition = 0;
             }
         });
     }
@@ -687,7 +690,7 @@ public class HousePostCardActivity extends AppCompatActivity implements View.OnC
         mCityPop.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
         mCityPop.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
         mCityPop.setFocusable(true);//如果有交互需要设置焦点为true
-        mCityPop.setOutsideTouchable(true);//设置内容外可以点击
+        mCityPop.setOutsideTouchable(false);//设置内容外可以点击
 
         // 设置背景，否则点击内容外，关闭弹窗失效
         mCityPop.setBackgroundDrawable(getResources().getDrawable(R.color.pop_bg));
@@ -703,8 +706,11 @@ public class HousePostCardActivity extends AppCompatActivity implements View.OnC
                 WindowManager.LayoutParams params = getWindow().getAttributes();
                 params.alpha = 1f;
                 getWindow().setAttributes(params);
+                mBigCityPosition = 0;
+                mSmallCityPosition = 0;
             }
         });
+
     }
 
     private List<String> listCitys;//所有市级

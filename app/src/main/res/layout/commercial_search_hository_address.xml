@@ -11,7 +11,7 @@
         android:background="@color/white"
         android:gravity="center_vertical"
         android:paddingLeft="10dp"
-        android:text="名流一品"
+        android:text=""
         android:maxLines="1"
         android:ellipsize="end"
         android:textColor="@color/titlecolor3"

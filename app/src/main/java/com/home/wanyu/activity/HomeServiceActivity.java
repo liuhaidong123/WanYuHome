@@ -23,6 +23,7 @@ import com.home.wanyu.bean.homeService.BusinessEntity;
 import com.home.wanyu.bean.homeService.Menulist;
 import com.home.wanyu.bean.homeService.Root;
 import com.home.wanyu.myUtils.ImgUitls;
+import com.home.wanyu.myUtils.NetWorkMyUtils;
 import com.home.wanyu.myview.MyListView;
 import com.squareup.picasso.Picasso;
 
@@ -40,7 +41,7 @@ public class HomeServiceActivity extends AppCompatActivity implements View.OnCli
     private RatingBar mRatingBar;
     private TextView mPrice, mAddress,HomeService_name;
     private Button mAsk;
-    private String telephone;
+    private String telephone="";
     private HttpTools mHttptools;
     private RelativeLayout mMore_ll;
     private ProgressBar mBAr;
@@ -104,13 +105,30 @@ public class HomeServiceActivity extends AppCompatActivity implements View.OnCli
         }
     };
 
+
+    private ImageView mNetWorkBack;
+    private TextView mNetWorkTitle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_service);
-        mHttptools=HttpTools.getHttpToolsInstance();
-        mHttptools.homeService(mHandler, UserInfo.userToken,11);
-        initView();
+        if (NetWorkMyUtils.isNetworkConnected(this)) {
+            setContentView(R.layout.activity_home_service);
+            mHttptools=HttpTools.getHttpToolsInstance();
+            mHttptools.homeService(mHandler, UserInfo.userToken,11);
+            initView();
+        }else {
+            setContentView(R.layout.no_network);
+            mNetWorkBack = (ImageView) findViewById(R.id.network_back);
+            mNetWorkBack.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
+            mNetWorkTitle = (TextView) findViewById(R.id.network_title_msg);
+            mNetWorkTitle.setText(R.string.property_home_service);
+        }
+
     }
 
     private void initView() {

@@ -40,6 +40,8 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.home.wanyu.R.id.have_data_rl;
+
 public class CircleCardMessageActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ImageView mBack;
@@ -89,7 +91,7 @@ public class CircleCardMessageActivity extends AppCompatActivity implements View
                 Object o = msg.obj;
                 if (o != null && o instanceof com.home.wanyu.bean.getCircleCommentMsg.Root) {
                     com.home.wanyu.bean.getCircleCommentMsg.Root root = (com.home.wanyu.bean.getCircleCommentMsg.Root) o;
-                    if (root.getCode().equals("0")) {
+                    if (root.getCode().equals("0")&&root.getResult().getStateEntity()!=null) {
 
                         Picasso.with(CircleCardMessageActivity.this).load(UrlTools.BASE + root.getResult().getStateEntity().getAvatar()).resize(ImgUitls.getWith(CircleCardMessageActivity.this) / 3, ImgUitls.getWith(CircleCardMessageActivity.this) / 3).error(R.mipmap.error_small).into(mHead);
                         mName.setText(root.getResult().getStateEntity().getUserName());
@@ -128,7 +130,8 @@ public class CircleCardMessageActivity extends AppCompatActivity implements View
                         mGridviewAda.notifyDataSetChanged();
 
                     } else {
-                        Toast.makeText(CircleCardMessageActivity.this, "无法获取评论列表", Toast.LENGTH_SHORT).show();
+                        mNOData.setVisibility(View.VISIBLE);
+                        Toast.makeText(CircleCardMessageActivity.this, "作者已删除", Toast.LENGTH_SHORT).show();
                     }
                 }
             } else if (msg.what == 117) {//删除
@@ -148,6 +151,7 @@ public class CircleCardMessageActivity extends AppCompatActivity implements View
         }
     };
 
+    private RelativeLayout mHaveData,mNOData;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -157,6 +161,8 @@ public class CircleCardMessageActivity extends AppCompatActivity implements View
     }
 
     private void initView() {
+        mHaveData= (RelativeLayout) findViewById(R.id.have_data_rl);
+       mNOData= (RelativeLayout) findViewById(R.id.no_data_rl);
         stateId = getIntent().getLongExtra("stateid", -1);
         Log.e("最后stateId=", stateId + "");
         if (stateId != -1) {

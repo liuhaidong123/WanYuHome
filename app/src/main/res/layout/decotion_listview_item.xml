@@ -15,7 +15,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:scaleType="centerCrop"
-            android:src="@mipmap/main_background4" />
+            />
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="套餐一全包精装"
+                android:text=""
                 android:textColor="@color/titlecolor3"
                 android:textSize="15sp" />
 
@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/decoretion_name"
                 android:layout_marginTop="10dp"
-                android:text="¥888元/㎡"
+                android:text=""
                 android:textColor="@color/bg_rect"
                 android:textSize="15sp" />
         </RelativeLayout>

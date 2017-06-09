@@ -125,7 +125,7 @@ public class CarPoolingAda extends BaseAdapter {
             holder.chenke_rl = (RelativeLayout) convertView.findViewById(R.id.car_end_chen_rl);
             holder.chen_comment = (TextView) convertView.findViewById(R.id.car_jie_comment_num);
             holder.chen_state = (TextView) convertView.findViewById(R.id.car_chen_state_tv);
-            holder.person_num = (TextView) convertView.findViewById(R.id.car_chen_state_tv);
+            holder.person_num = (TextView) convertView.findViewById(R.id.car_person_msg);
             convertView.setTag(holder);
         } else {
             holder = (CarHolder) convertView.getTag();
@@ -137,7 +137,7 @@ public class CarPoolingAda extends BaseAdapter {
         holder.start_time.setText(mlist.get(position).getDepartureTimeString());
         holder.start_address.setText(mlist.get(position).getDeparturePlace());
         holder.end_address.setText(mlist.get(position).getEnd());
-        holder.person_num.setText(mlist.get(position).getCnumber()+"");
+        holder.person_num.setText(mlist.get(position).getCnumber()+"人");
 
 
         if (mlist.get(position).getCtype() == 1) {//乘客
@@ -145,7 +145,6 @@ public class CarPoolingAda extends BaseAdapter {
             holder.chenke_rl.setVisibility(View.VISIBLE);
             holder.siji_rl.setVisibility(View.GONE);
             holder.chen_comment.setText(mlist.get(position).getComment() + "");
-
             if (over == 1) {
                 holder.chen_state.setText("正在进行");
                 //是否接单

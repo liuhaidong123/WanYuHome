@@ -13,6 +13,7 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -82,11 +83,15 @@ public class RepairActivity extends AppCompatActivity implements View.OnClickLis
     private TextView mRepair_tv, mRecord_tv;
     private ImageView mRepair_img, mRecord_img;
 
-    private RelativeLayout mRepair_category_rl, mRepair_message_rl,mNoData_rl;//我要报修的全部类型，我要报修填写的信息
+    private RelativeLayout mRepair_category_rl, mRepair_message_rl;//我要报修的全部类型，我要报修填写的信息
 
     private GridView mImg_gridview;
     private RepairAddImgAda mImgAdapter;
     private ArrayList<String> mImgList = new ArrayList<>();
+
+    private RelativeLayout mImgViewPager_rl,m_all_rl;
+    private ViewPager mImgViewPager;
+    private TextView mImg_Cancle_btn;
 
     private AlertDialog.Builder builder;
     private AlertDialog mAlert;
@@ -157,9 +162,10 @@ public class RepairActivity extends AppCompatActivity implements View.OnClickLis
                             mRecordMsgList = root.getResult();
                             if (mRecordMsgList.size()==0){
                                 mRecord_Listview.setVisibility(View.GONE);
-                                mNoData_rl.setVisibility(View.VISIBLE);
+                            //    mNoData_rl.setVisibility(View.VISIBLE);
+                                Toast.makeText(RepairActivity.this,"抱歉,没有数据哦",Toast.LENGTH_SHORT).show();
                             }else {
-                                mNoData_rl.setVisibility(View.GONE);
+                            //    mNoData_rl.setVisibility(View.GONE);
                                 mRecord_Listview.setVisibility(View.VISIBLE);
                                 mRecordListviewAda.setList(mRecordMsgList);
                                 mRecordListviewAda.notifyDataSetChanged();
@@ -172,9 +178,10 @@ public class RepairActivity extends AppCompatActivity implements View.OnClickLis
                             mRecordMsgList = root.getResult();
                             if (mRecordMsgList.size()==0){
                                 mRecord_Listview.setVisibility(View.GONE);
-                                mNoData_rl.setVisibility(View.VISIBLE);
+                                Toast.makeText(RepairActivity.this,"抱歉,没有数据哦",Toast.LENGTH_SHORT).show();
+                              //  mNoData_rl.setVisibility(View.VISIBLE);
                             }else {
-                                mNoData_rl.setVisibility(View.GONE);
+                              //  mNoData_rl.setVisibility(View.GONE);
                                 mRecord_Listview.setVisibility(View.VISIBLE);
                                 mRecordListviewAda.setList(mRecordMsgList);
                                 mRecordListviewAda.notifyDataSetChanged();
@@ -363,10 +370,7 @@ public class RepairActivity extends AppCompatActivity implements View.OnClickLis
 
             }
         });
-        //报修记录详情中的listview
-        mRecord_Listview = (MyListView) findViewById(R.id.record_listview);
-        mRecordListviewAda = new RecordListviewAda(this, mRecordMsgList);
-        mRecord_Listview.setAdapter(mRecordListviewAda);
+
 
         //报修记录加载更多
         mMore_rl = (RelativeLayout) findViewById(R.id.more_relative);
@@ -419,7 +423,19 @@ public class RepairActivity extends AppCompatActivity implements View.OnClickLis
 
 
         //报修记录没有数据时现实的布局
-        mNoData_rl= (RelativeLayout) findViewById(R.id.no_data_repair);
+      //  mNoData_rl= (RelativeLayout) findViewById(R.id.no_data_repair);
+
+        //点击GridView中显示图片
+        m_all_rl= (RelativeLayout) findViewById(R.id.m_all_rl);
+        mImgViewPager_rl = (RelativeLayout) findViewById(R.id.img_viewpager_rl);
+        mImgViewPager= (ViewPager) findViewById(R.id.img_viewpager);
+        mImg_Cancle_btn= (TextView) findViewById(R.id.img_cancle);
+        mImg_Cancle_btn.setOnClickListener(this);
+
+        //报修记录详情中的listview
+        mRecord_Listview = (MyListView) findViewById(R.id.record_listview);
+        mRecordListviewAda = new RecordListviewAda(this, mRecordMsgList,mImgViewPager,  mImgViewPager_rl,m_all_rl,mMore_rl);
+        mRecord_Listview.setAdapter(mRecordListviewAda);
     }
 
     @Override
@@ -440,7 +456,7 @@ public class RepairActivity extends AppCompatActivity implements View.OnClickLis
             mRepair_message_rl.setVisibility(View.GONE);
             mRecord_category_rl.setVisibility(View.GONE);
             mRecord_refresh.setVisibility(View.GONE);
-            mNoData_rl.setVisibility(View.GONE);
+            //mNoData_rl.setVisibility(View.GONE);
         } else if (id == mRecord_ll.getId()) {//报修记录
             mRepair_ll.setBackgroundResource(R.color.white);
             mRepair_tv.setTextColor(ContextCompat.getColor(this, R.color.homeFragChangeColor));
@@ -454,7 +470,7 @@ public class RepairActivity extends AppCompatActivity implements View.OnClickLis
             mRepair_message_rl.setVisibility(View.GONE);
             mRecord_refresh.setVisibility(View.GONE);
             mRecord_category_rl.setVisibility(View.VISIBLE);
-            mNoData_rl.setVisibility(View.GONE);
+           // mNoData_rl.setVisibility(View.GONE);
 
         } else if (id == mSure.getId()) {//确定删除图片
             mImgList.remove(mPosition);
@@ -494,13 +510,16 @@ public class RepairActivity extends AppCompatActivity implements View.OnClickLis
                     Toast.makeText(this, "请补全报修信息", Toast.LENGTH_SHORT).show();
                 }
             } else {
-                Toast.makeText(this, "请选择正确的时间", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "请选择正确的时间", Toast.LENGTH_SHORT).show();
             }
         } else if (id == mMore_rl.getId()) {//报修记录详情中加载更多
             start += 10;
             moreFlag = 2;//代表加载更多
             mBar.setVisibility(View.VISIBLE);
             mhttptools.getRecordMsg(mHandler, UserInfo.userToken, mRecord_id, start, limit);
+        }else if (id==mImg_Cancle_btn.getId()){//隐藏viewpager
+            //m_all_rl.setVisibility(View.VISIBLE);
+            mImgViewPager_rl.setVisibility(View.GONE);
         }
     }
 
@@ -710,7 +729,7 @@ public class RepairActivity extends AppCompatActivity implements View.OnClickLis
             Date endDate = dateformat.parse(endtime);
 
             if (endDate.getTime() - System.currentTimeMillis() > 0) {
-                Toast.makeText(this, "时间正确", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "时间正确", Toast.LENGTH_SHORT).show();
                 return true;
             }
             Toast.makeText(this, "时间错误", Toast.LENGTH_SHORT).show();

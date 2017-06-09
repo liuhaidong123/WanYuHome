@@ -77,7 +77,7 @@
                 android:id="@+id/money2_msg_pro"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="河北"
+                android:text=""
                 android:textColor="@color/titlecolor3"
                 android:textSize="17sp" />
 
@@ -89,7 +89,7 @@
                 android:layout_marginTop="5dp"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="名流一品3号楼3单元306"
+                android:text=""
                 android:textColor="@color/titlecolor3" />
         </RelativeLayout>
 

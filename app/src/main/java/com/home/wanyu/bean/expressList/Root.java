@@ -13,6 +13,16 @@ public class Root {
 
     private List<String> colmodel;
 
+    private List<Result> result;
+
+    public List<Result> getResult() {
+        return result;
+    }
+
+    public void setResult(List<Result> result) {
+        this.result = result;
+    }
+
     public void setTotal(int total){
         this.total = total;
     }

@@ -46,7 +46,7 @@
             android:layout_height="40dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:src="@mipmap/main_background4" />
+            />
 
         <TextView
             android:id="@+id/car_msg_name"
@@ -55,7 +55,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@id/car_msg_head_img"
-            android:text="刘海东"
+            android:text=""
             android:textColor="@color/title_color"
             android:textSize="14sp" />
 
@@ -67,7 +67,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
-            android:text="已结束"
+            android:text=""
             android:textColor="@color/bg_rect"
             android:textSize="14sp" />
 
@@ -78,7 +78,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
             android:layout_toLeftOf="@id/car_msg_state"
-            android:text="2015-5-6 09:09"
+            android:text=""
             android:textColor="@color/name_color"
             android:textSize="14sp" />
     </RelativeLayout>
@@ -118,7 +118,7 @@
                 android:layout_toRightOf="@id/car_shen"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="老司机/乘客"
+                android:text=""
                 android:textColor="@color/titlecolor3"
                 android:textSize="14sp" />
         </RelativeLayout>
@@ -149,7 +149,7 @@
                 android:layout_toRightOf="@id/car_time_tv"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="2015-5-5 6:00"
+                android:text=""
                 android:textColor="@color/titlecolor3"
                 android:textSize="14sp" />
         </RelativeLayout>
@@ -180,7 +180,7 @@
                 android:layout_toRightOf="@id/car_start_address_tv"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="名流一品"
+                android:text=""
                 android:textColor="@color/titlecolor3"
                 android:textSize="14sp" />
         </RelativeLayout>
@@ -212,12 +212,14 @@
                 android:layout_toRightOf="@id/car_end_address_tv"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="风景区公园"
+                android:text=""
                 android:textColor="@color/titlecolor3"
                 android:textSize="14sp" />
         </RelativeLayout>
 
         <ScrollView
+            android:visibility="gone"
+            android:id="@+id/my_scroll_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/car_end_address_rl"
@@ -391,7 +393,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:text="1人参加"
+                android:text=""
                 android:textColor="@color/title_color"
                 android:textSize="14sp" />
         </LinearLayout>

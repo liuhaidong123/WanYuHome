@@ -19,7 +19,7 @@
                 android:layout_height="40dp"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
-                android:src="@mipmap/main_background4" />
+                />
 
             <TextView
                 android:id="@+id/car_name"
@@ -28,7 +28,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@id/car_head"
-                android:text="刘海东"
+                android:text=""
                 android:textColor="@color/title_color"
                 android:textSize="14sp" />
 
@@ -40,7 +40,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:text="2015-5-5 6:00"
+                android:text=""
                 android:textColor="@color/color9"
                 android:textSize="14sp" />
 
@@ -79,7 +79,7 @@
                     android:layout_toRightOf="@id/car_shen"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:text="老司机"
+                    android:text=""
                     android:textColor="@color/titlecolor3"
                     android:textSize="14sp" />
             </RelativeLayout>
@@ -110,7 +110,7 @@
                     android:layout_toRightOf="@id/car_time_tv"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:text="2015-5-5 6:00"
+                    android:text=""
                     android:textColor="@color/titlecolor3"
                     android:textSize="14sp" />
             </RelativeLayout>
@@ -141,7 +141,7 @@
                     android:layout_toRightOf="@id/car_start_address_tv"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:text="名流一品"
+                    android:text=""
                     android:textColor="@color/titlecolor3"
                     android:textSize="14sp" />
             </RelativeLayout>
@@ -173,7 +173,7 @@
                     android:layout_toRightOf="@id/car_end_address_tv"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:text="风景区公园"
+                    android:text=""
                     android:textColor="@color/titlecolor3"
                     android:textSize="14sp" />
             </RelativeLayout>
@@ -206,7 +206,7 @@
                     android:layout_toRightOf="@id/car_person_tv"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:text="88人"
+                    android:text=""
                     android:textColor="@color/titlecolor3"
                     android:textSize="14sp" />
             </RelativeLayout>
@@ -226,7 +226,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
-                    android:text="正在进行"
+                    android:text=""
                     android:textColor="@color/bg_rect"
                     android:textSize="14sp" />
 
@@ -264,7 +264,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="17dp"
                     android:layout_toLeftOf="@+id/car_join_img"
-                    android:text="25"
+                    android:text=""
                     android:textColor="@color/name_color"
                     android:textSize="14sp" />
 
@@ -296,7 +296,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
-                    android:text="正在进行"
+                    android:text=""
                     android:textColor="@color/bg_rect"
                     android:textSize="14sp" />
 
@@ -321,7 +321,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="14dp"
                     android:layout_toLeftOf="@+id/car_chen_jie_btn"
-                    android:text="25"
+                    android:text=""
                     android:textColor="@color/name_color"
                     android:textSize="14sp" />
 

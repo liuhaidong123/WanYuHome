@@ -40,7 +40,7 @@ public class CommunicationFragment extends Fragment {
     private ListView mListview;
     private CircleAdapter mAdapter;
     private List<CircleBean> mList = new ArrayList<>();
-    private List<Result> mCircleAreaList = new ArrayList<>();
+    private List<Result> mCircleAreaList ;
     private HttpTools mHttptools;
     private Handler mHandler = new Handler() {
         @Override
@@ -51,6 +51,7 @@ public class CommunicationFragment extends Fragment {
                 if (o != null && o instanceof Root) {
                     Root root = (Root) o;
                     if (root.getResult() != null) {
+                        mCircleAreaList = new ArrayList<>();
                         mCircleAreaList = root.getResult();
                     }
 
@@ -77,13 +78,8 @@ public class CommunicationFragment extends Fragment {
         mListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (mCircleAreaList.size() == 0) {
-                    Toast.makeText(getContext(), "请添加小区地址", Toast.LENGTH_SHORT).show();
-                    //跳转到添加小区页面
-                    Intent intent = new Intent(getContext(), MyHouseInfoActivity.class);
-                    startActivity(intent);
+                if (mCircleAreaList == null) {
 
-                } else {
                     //友邻圈
                     if (position == 0) {
                         Intent intent = new Intent(getActivity(), CircleMessageActivity.class);
@@ -95,6 +91,28 @@ public class CommunicationFragment extends Fragment {
                         Intent intent = new Intent(getActivity(), CarPoolingActivity.class);
                         startActivity(intent);
                     }
+
+                } else {
+
+                    if (mCircleAreaList.size()==0){
+                        Toast.makeText(getContext(), "请添加小区地址", Toast.LENGTH_SHORT).show();
+                        //跳转到添加小区页面
+                        Intent intent = new Intent(getContext(), MyHouseInfoActivity.class);
+                        startActivity(intent);
+                    }else {
+                        //友邻圈
+                        if (position == 0) {
+                            Intent intent = new Intent(getActivity(), CircleMessageActivity.class);
+                            startActivity(intent);
+                        } else if (position == 1) {//社区活动
+                            Intent intent = new Intent(getActivity(), CommunityMessageActivity.class);
+                            startActivity(intent);
+                        } else {//社区拼车
+                            Intent intent = new Intent(getActivity(), CarPoolingActivity.class);
+                            startActivity(intent);
+                        }
+                    }
+
                 }
             }
         });

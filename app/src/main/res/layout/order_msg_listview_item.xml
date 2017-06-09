@@ -20,7 +20,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
-                android:text="2017-5"
+                android:text=""
                 android:textColor="@color/titlecolor3"
                 android:textSize="13sp" />
 
@@ -31,7 +31,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
-                android:text="合计缴费:180.00元"
+                android:text=""
                 android:textColor="@color/titlecolor3"
                 android:textSize="13sp" />
         </RelativeLayout>
@@ -50,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
-                android:text="水费"
+                android:text=""
                 android:textColor="@color/titlecolor3"
                 android:textSize="13sp" />
 
@@ -61,7 +61,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
-                android:text="60.00元"
+                android:text=""
                 android:textColor="@color/titlecolor3"
                 android:textSize="13sp" />
         </RelativeLayout>
@@ -80,7 +80,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
-                android:text="电费"
+                android:text=""
                 android:textColor="@color/titlecolor3"
                 android:textSize="13sp" />
 
@@ -91,7 +91,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
-                android:text="60.00元"
+                android:text=""
                 android:textColor="@color/titlecolor3"
                 android:textSize="13sp" />
         </RelativeLayout>
@@ -110,7 +110,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
-                android:text="燃气费"
+                android:text=""
                 android:textColor="@color/titlecolor3"
                 android:textSize="13sp" />
 
@@ -121,7 +121,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
-                android:text="60.00元"
+                android:text=""
                 android:textColor="@color/titlecolor3"
                 android:textSize="13sp" />
         </RelativeLayout>

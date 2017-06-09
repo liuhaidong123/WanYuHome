@@ -150,6 +150,7 @@
     <string name="house_m">㎡</string>
     <string name="network">没有网络了\n去检查一下网络吧！</string>
     <string name="no_data">抱歉,没有数据哦!</string>
+    <string name="no_data_author">抱歉,作者已删除!</string>
 
 
     <string-array name="homeSceneString">

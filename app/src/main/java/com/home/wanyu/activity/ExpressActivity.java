@@ -1,12 +1,11 @@
 package com.home.wanyu.activity;
 
-import android.media.Image;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -14,17 +13,17 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.home.wanyu.HttpUtils.HttpTools;
 import com.home.wanyu.R;
 import com.home.wanyu.User.UserInfo;
 import com.home.wanyu.apater.ExpressFaAda;
 import com.home.wanyu.apater.ExpressMsgAda;
-import com.home.wanyu.bean.Express.ExpressBean;
 import com.home.wanyu.bean.expressList.Result;
 import com.home.wanyu.bean.expressList.Root;
 import com.home.wanyu.bean.expressList.Rows;
-import com.home.wanyu.myUtils.ImgUitls;
+import com.home.wanyu.myUtils.NetWorkMyUtils;
 import com.home.wanyu.myview.MyListView;
 
 import java.util.ArrayList;
@@ -37,7 +36,7 @@ public class ExpressActivity extends AppCompatActivity implements View.OnClickLi
     private TextView mShou_tv, mFa_tv, mPrompt;
     private MyListView mExpressMsgListview;
     private ExpressMsgAda mMsgAdapter;
-    private List<Rows> mExpressList = new ArrayList<>();
+    private List<com.home.wanyu.bean.expressList.Result> mExpressList = new ArrayList<>();
 
     private SwipeRefreshLayout mrefresh;
     private RelativeLayout mRefresh_rl;
@@ -60,22 +59,28 @@ public class ExpressActivity extends AppCompatActivity implements View.OnClickLi
                 if (o != null && o instanceof Root) {
                     mrefresh.setRefreshing(false);
                     Root root = (Root) o;
-                    if (root.getRows() != null) {
+                    if (root.getResult() != null) {
 
                         if (flag == 1) {
-                            mExpressList = root.getRows();
-                            mMsgAdapter.setmExpressList(mExpressList);
-                            mMsgAdapter.notifyDataSetChanged();
+                            if (root.getResult().size()==0){
+                                Toast.makeText(ExpressActivity.this,"抱歉,您还没有快递哦!",Toast.LENGTH_SHORT).show();
+                            }else {
+                              //  mNo_data_rl.setVisibility(View.GONE);
+                                mExpressList = root.getResult();
+                                mMsgAdapter.setmExpressList(mExpressList);
+                                mMsgAdapter.notifyDataSetChanged();
+                            }
+
                         } else {
-                            List<Rows> list = new ArrayList<>();
-                            list = root.getRows();
+                            List<Result> list = new ArrayList<>();
+                            list = root.getResult();
                             mExpressList.addAll(list);
                             mMsgAdapter.setmExpressList(mExpressList);
                             mMsgAdapter.notifyDataSetChanged();
 
                         }
 
-                        if (root.getRows().size() == 10) {
+                        if (root.getResult().size() == 10) {
                             mMore_rl.setVisibility(View.VISIBLE);
                             mbar.setVisibility(View.INVISIBLE);
                         } else {
@@ -100,14 +105,31 @@ public class ExpressActivity extends AppCompatActivity implements View.OnClickLi
         }
     };
 
+    private RelativeLayout mNo_data_rl;
+    private ImageView mNetWorkBack;
+    private TextView mNetWorkTitle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_express);
-        httpTools = HttpTools.getHttpToolsInstance();
-        httpTools.expressAllList(handler, UserInfo.userToken, start, limit);//获取所有快递数据
-        httpTools.expressCompanyMsg(handler, UserInfo.userToken);//获取快递公司
-        initView();
+        if (NetWorkMyUtils.isNetworkConnected(this)) {
+            setContentView(R.layout.activity_express);
+            httpTools = HttpTools.getHttpToolsInstance();
+            httpTools.expressAllList(handler, UserInfo.userToken, start, limit);//获取所有快递数据
+            httpTools.expressCompanyMsg(handler, UserInfo.userToken);//获取快递公司
+            initView();
+        }else {
+            setContentView(R.layout.no_network);
+            mNetWorkBack = (ImageView) findViewById(R.id.network_back);
+            mNetWorkBack.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
+            mNetWorkTitle = (TextView) findViewById(R.id.network_title_msg);
+            mNetWorkTitle.setText(R.string.property_express);
+        }
+
     }
 
     private void initView() {
@@ -146,6 +168,9 @@ public class ExpressActivity extends AppCompatActivity implements View.OnClickLi
         mMore_rl = (RelativeLayout) findViewById(R.id.express_many_relative);
         mMore_rl.setOnClickListener(this);
         mbar = (ProgressBar) findViewById(R.id.express_pbLocate);
+
+        //没有数据
+      //  mNo_data_rl= (RelativeLayout) findViewById(R.id.no_data_express);
     }
 
     @Override
@@ -164,6 +189,7 @@ public class ExpressActivity extends AppCompatActivity implements View.OnClickLi
             mFaListview.setVisibility(View.GONE);
             mrefresh.setVisibility(View.VISIBLE);
             mPrompt.setVisibility(View.VISIBLE);
+          //  mNo_data_rl.setVisibility(View.GONE);
 
         } else if (id == mFa_ll.getId()) {//显示快递公司
             mShou_ll.setBackgroundResource(R.color.white);
@@ -176,6 +202,7 @@ public class ExpressActivity extends AppCompatActivity implements View.OnClickLi
             mrefresh.setRefreshing(false);
             mrefresh.setVisibility(View.GONE);
             mPrompt.setVisibility(View.GONE);
+         //   mNo_data_rl.setVisibility(View.GONE);
         } else if (id == mMore_rl.getId()) {
             flag = 2;
             start += 10;

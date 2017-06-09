@@ -44,7 +44,7 @@ public class CommercialMessageActivity extends AppCompatActivity implements View
     private RelativeLayout mMore_ll;
     private ProgressBar mBAr;
     private ImageView mXia;
-    private String telephone;
+    private String telephone="";
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -145,7 +145,7 @@ public class CommercialMessageActivity extends AppCompatActivity implements View
         if (id == mback.getId()) {
             finish();
         } else if (id == mImg_phone.getId()) {
-            if (!telephone.equals("")) {
+            if (!"".equals(telephone)) {
                 Intent intent = new Intent(Intent.ACTION_DIAL);
                 Uri data = Uri.parse("tel:" + telephone);
                 intent.setData(data);

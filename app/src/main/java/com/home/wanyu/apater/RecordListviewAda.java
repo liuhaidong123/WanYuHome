@@ -3,10 +3,12 @@ package com.home.wanyu.apater;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -31,6 +33,11 @@ import java.util.List;
 public class RecordListviewAda extends BaseAdapter {
     private Context mContext;
     private LayoutInflater mInflater;
+    private ViewPager mViewPager;
+    private ImgViewPager mAdapter;
+    private RelativeLayout mViewpaget_rl;
+    private  RelativeLayout m_All_rl;
+    private  RelativeLayout mMore_rl;
     private List<Result> list = new ArrayList<>();
     private HttpTools httpTools;
     private int mState = -1;
@@ -54,8 +61,16 @@ public class RecordListviewAda extends BaseAdapter {
                 Object o = msg.obj;
                 if (o != null && o instanceof com.home.wanyu.bean.RecordMsg.Root) {
                     com.home.wanyu.bean.RecordMsg.Root root = (com.home.wanyu.bean.RecordMsg.Root) o;
-                    list = root.getResult();
-                    notifyDataSetChanged();
+                    if (root.getResult()!=null){
+                        list = root.getResult();
+                        notifyDataSetChanged();
+                        if (root.getResult().size()<10){
+                            mMore_rl.setVisibility(View.GONE);
+                        }else {
+                            mMore_rl.setVisibility(View.VISIBLE);
+                        }
+                    }
+
                 }
             } else if (msg.what == 201) {//后台数据有问题
                 list.clear();
@@ -65,9 +80,13 @@ public class RecordListviewAda extends BaseAdapter {
         }
     };
 
-    public RecordListviewAda(Context mContext, List<Result> list) {
+    public RecordListviewAda(Context mContext, List<Result> list, ViewPager viewPager, RelativeLayout mviewpaget_rl,RelativeLayout m_all_rl,RelativeLayout mMore_rl) {
         this.mContext = mContext;
         this.list = list;
+        this.mViewPager=viewPager;
+        this.mViewpaget_rl=mviewpaget_rl;
+        this.m_All_rl=m_all_rl;
+        this.mMore_rl=mMore_rl;
         this.mInflater = LayoutInflater.from(this.mContext);
         httpTools = HttpTools.getHttpToolsInstance();
     }
@@ -173,10 +192,23 @@ public class RecordListviewAda extends BaseAdapter {
         holder.tv_msg.setText(list.get(position).getDetails());
 
         if (!list.get(position).getPicture().equals("")) {
-            String[] imgstr = list.get(position).getPicture().split(";");
+            final String[] imgstr = list.get(position).getPicture().split(";");
             Log.e("图片数组长度", imgstr.length + "");
             Log.e("第一个图片", imgstr[0] + "");
             holder.gridView.setAdapter(new RecordListviewGridviewAda(mContext, imgstr));
+            //点击显示图片
+            holder.gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                   // m_All_rl.setVisibility(View.GONE);
+                    mViewpaget_rl.setVisibility(View.VISIBLE);
+
+                    mAdapter=new ImgViewPager(mContext,imgstr);
+                    mViewPager.setAdapter(mAdapter);
+                    mViewPager.setCurrentItem(position);
+                }
+            });
+
         } else {
             String[] imgstr = new String[0];
             holder.gridView.setAdapter(new RecordListviewGridviewAda(mContext, imgstr));

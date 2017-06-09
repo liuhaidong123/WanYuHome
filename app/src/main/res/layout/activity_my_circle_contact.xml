@@ -27,17 +27,16 @@
                 android:id="@+id/my_circle_progresslayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="10dp"
-                    android:background="@color/homefragmentFgbac"
-                    android:layout_alignParentTop="true"
-                    android:id="@+id/ge"/>
+                <!--<TextView-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="10dp"-->
+                    <!--android:background="@color/homefragmentFgbac"-->
+                    <!--android:layout_alignParentTop="true"-->
+                    <!--android:id="@+id/ge"/>-->
                 <LinearLayout
                     android:paddingBottom="10dp"
                     android:paddingTop="10dp"
                     android:layout_centerInParent="true"
-                    android:layout_below="@+id/ge"
                     android:orientation="horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">

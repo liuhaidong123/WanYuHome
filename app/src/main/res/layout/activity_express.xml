@@ -163,7 +163,6 @@
         </android.support.v4.widget.SwipeRefreshLayout>
     </RelativeLayout>
 
-
     <ListView
         android:id="@+id/fa_listview"
         android:layout_width="match_parent"
@@ -176,4 +175,32 @@
         android:visibility="gone">
 
     </ListView>
+
+    <RelativeLayout
+        android:id="@+id/no_data_express"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/express_prompt"
+        android:layout_margin="5dp"
+        android:background="@color/white"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/no_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/nostatus" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/no_img"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:text="抱歉,您还没有快递哦!"
+            android:textColor="@color/bg_rect"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
 </RelativeLayout>

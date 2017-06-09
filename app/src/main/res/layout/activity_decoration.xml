@@ -37,7 +37,7 @@
         android:layout_height="168dp"
         android:layout_below="@id/order_msg_title"
         android:scaleType="centerCrop"
-        android:src="@mipmap/main_background4" />
+         />
 
     <RelativeLayout
         android:id="@+id/decoration_msg_rl"
@@ -57,7 +57,7 @@
                 android:id="@+id/decoration_msg_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="一站装修"
+                android:text=""
                 android:textColor="@color/title_color"
                 android:textSize="15sp" />
 
@@ -69,7 +69,7 @@
                 android:layout_below="@id/decoration_msg_name"
                 android:layout_marginTop="10dp"
                 android:numStars="5"
-                android:rating="1.5">
+                android:rating="0">
 
 
             </RatingBar>
@@ -81,7 +81,7 @@
                 android:layout_alignTop="@id/decoration_msg_ratingBar"
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@id/decoration_msg_ratingBar"
-                android:text="均价:¥20元/㎡"
+                android:text=""
                 android:textColor="@color/titlecolor3" />
         </RelativeLayout>
 
@@ -111,7 +111,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="5dp"
             android:layout_toRightOf="@id/goods_msg_address_img"
-            android:text="涿州市富康街32号"
+            android:text=""
             android:textColor="@color/titlecolor3"
             android:textSize="15sp" />
 
@@ -155,6 +155,7 @@
 
 
             <RelativeLayout
+                android:visibility="gone"
                 android:id="@+id/commercial_goods_more_rl"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"

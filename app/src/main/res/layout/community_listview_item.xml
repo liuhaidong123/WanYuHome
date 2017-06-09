@@ -19,7 +19,7 @@
                 android:layout_height="40dp"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
-                android:src="@mipmap/main_background4" />
+                />
 
             <TextView
                 android:id="@+id/community_name"
@@ -28,7 +28,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@id/community_head_img"
-                android:text="刘海东"
+                android:text=""
                 android:textColor="@color/titlecolor3"
                 android:textSize="14sp" />
 
@@ -40,7 +40,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
-                android:text="2017年05月05 06:30"
+                android:text=""
                 android:textColor="@color/color9"
                 android:textSize="14sp" />
         </RelativeLayout>
@@ -57,7 +57,7 @@
                 android:id="@+id/community_ming"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="烧烤聚会"
+                android:text=""
                 android:textColor="@color/titlecolor3"
                 android:textSize="15sp" />
 
@@ -78,7 +78,7 @@
                 android:layout_below="@id/community_ming"
                 android:layout_toRightOf="@id/community_activity_tv"
                 android:layout_marginTop="10dp"
-                android:text="2015年5月5日 16:30-2015年5月5日 22:30"
+                android:text=""
                 android:textColor="@color/titlecolor3"
                 android:textSize="14sp" />
 
@@ -100,7 +100,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/community_activity_time"
                 android:layout_marginTop="10dp"
-                android:text="风景区公园"
+                android:text=""
                 android:textColor="@color/titlecolor3"
                 android:textSize="14sp" />
 
@@ -121,7 +121,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/community_address"
                 android:layout_marginTop="10dp"
-                android:text="3人"
+                android:text=""
                 android:textColor="@color/titlecolor3"
                 android:textSize="14sp" />
         </RelativeLayout>
@@ -138,7 +138,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
-                android:text="正在进行"
+                android:text=""
                 android:textColor="@color/bg_rect"
                 android:textSize="14sp" />
 
@@ -158,7 +158,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@id/community_like_img"
-                android:text="1人感兴趣"
+                android:text=""
                 android:textColor="@color/color9"
                 android:textSize="14sp" />
 
@@ -169,7 +169,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
-                android:text="1人参加"
+                android:text=""
                 android:textColor="@color/color9"
                 android:textSize="14sp" />
 

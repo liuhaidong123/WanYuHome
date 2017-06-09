@@ -198,7 +198,12 @@ public class CommunityListViewAda extends BaseAdapter {
                 if (over == 2) {
                     Toast.makeText(mContext, "此活动已结束", Toast.LENGTH_SHORT).show();
                 } else {
-                    httpTools.areaActivityJoin(handler, UserInfo.userToken, mList.get(position).getId());
+                    if (mList.get(position).getParticipateNumber()>=mList.get(position).getActivityNumber()){
+                        Toast.makeText(mContext, "抱歉,活动人数已满", Toast.LENGTH_SHORT).show();
+                    }else {
+                        httpTools.areaActivityJoin(handler, UserInfo.userToken, mList.get(position).getId());
+                    }
+
                 }
             }
         });

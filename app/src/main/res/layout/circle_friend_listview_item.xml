@@ -22,7 +22,8 @@
                 android:id="@+id/circle_head_img"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@mipmap/main_background4" />
+                android:scaleType="centerCrop"
+                />
 
             <TextView
                 android:id="@+id/circle_name_tv"
@@ -33,7 +34,7 @@
                 android:layout_toRightOf="@id/circle_head_img"
                 android:ellipsize="end"
                 android:maxLength="10"
-                android:text="刘海东"
+                android:text=""
                 android:textColor="@color/title_color"
                 android:textSize="15sp" />
 
@@ -47,7 +48,7 @@
                 android:ellipsize="end"
                 android:maxLength="20"
                 android:maxLines="1"
-                android:text="名流一品23456754323432234521234567543234567543213456432345643222222"
+                android:text=""
                 android:textColor="@color/name_color"
                 android:textSize="10sp" />
         </RelativeLayout>
@@ -58,7 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/circle_title1"
             android:layout_marginLeft="50dp"
-            android:text="居家"
+            android:text=""
             android:textColor="@color/title_color"
             android:textSize="14sp" />
 
@@ -71,7 +72,7 @@
             android:layout_marginTop="7dp"
             android:ellipsize="end"
             android:maxLines="20"
-            android:text="你的生活你的生活你的生活你的生活你的生活你的生活你的生活你的生活你的生活你的生活" />
+            android:text="" />
 
         <com.home.wanyu.myview.MyGridView
             android:id="@+id/circle_gridview_friend"
@@ -98,7 +99,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:text="1小时前"
+                android:text=""
                 android:textColor="@color/color9"
                 android:textSize="10sp" />
 
@@ -108,7 +109,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:text="2"
+                android:text=""
                 android:textColor="@color/color9"
                 android:textSize="14sp" />
 
@@ -128,7 +129,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="15dp"
                 android:layout_toLeftOf="@id/circle_commend_img"
-                android:text="5"
+                android:text=""
                 android:textColor="@color/color9"
                 android:textSize="14sp" />
 

@@ -445,7 +445,7 @@
                         android:ellipsize="end"
                         android:maxLength="15"
                         android:maxLines="1"
-                        android:text="您今天上午9：00上门维修"
+                        android:text="您今天上午9:00上门维修"
                         android:textColor="@color/title_color"
                         android:textSize="13sp" />
 

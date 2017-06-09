@@ -8,13 +8,16 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -35,13 +38,15 @@ import com.home.wanyu.apater.CircleSelectAreaAlertAda;
 import com.home.wanyu.bean.getCircleArea.Result;
 import com.home.wanyu.bean.getCircleArea.Root;
 import com.home.wanyu.bean.getCircleCardList.StateList;
+import com.home.wanyu.myUtils.ImgUitls;
 import com.home.wanyu.myUtils.NetWorkMyUtils;
 import com.home.wanyu.myview.MyListView;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CircleMessageActivity extends AppCompatActivity implements View.OnClickListener {
+public class CircleMessageActivity extends AppCompatActivity implements View.OnClickListener, View.OnTouchListener {
     private ImageView mback;
     private ImageView mMsg_img;
     private ImageView mRed_img;
@@ -61,7 +66,9 @@ public class CircleMessageActivity extends AppCompatActivity implements View.OnC
     private CircleFriendListviewAda mFriendAda;
     private List<com.home.wanyu.bean.getCircleCardList.Result> mCardList = new ArrayList<>();
     private ImageView mPost_img;
-
+    private RelativeLayout mImgViewPager_rl,m_all_rl;
+    private ViewPager mImgViewPager;
+    private TextView mImg_Cancle_btn;
     private AlertDialog.Builder mYearBuilder;
     private AlertDialog mYearAlert;
     private View mAreaView;
@@ -192,6 +199,9 @@ public class CircleMessageActivity extends AppCompatActivity implements View.OnC
                                 mBar.setVisibility(View.INVISIBLE);
                             }
 
+                        } else {
+                            mMore_rl.setVisibility(View.GONE);
+                            mBar.setVisibility(View.INVISIBLE);
                         }
                     }
 
@@ -288,6 +298,7 @@ public class CircleMessageActivity extends AppCompatActivity implements View.OnC
 
                 if (mTitleList != null && mTitleList.size() != 0 && mCircleAreaList != null) {
                     mListview.setVisibility(View.GONE);
+                    mMore_rl.setVisibility(View.GONE);
                     check = 1;
                     for (int i = 0; i < mTitleList.size(); i++) {
                         if (mTitleGridviewAda.getItem(position) == mTitleList.get(i)) {
@@ -308,14 +319,11 @@ public class CircleMessageActivity extends AppCompatActivity implements View.OnC
             }
         });
 
-        //帖子列表listview
-        mListview = (MyListView) findViewById(R.id.circle_listview);
-        mFriendAda = new CircleFriendListviewAda(this, mCardList);
-        mListview.setAdapter(mFriendAda);
 
         //发帖
         mPost_img = (ImageView) findViewById(R.id.circle_post_img);
         mPost_img.setOnClickListener(this);
+
 
         //消息
         mMsg_img = (ImageView) findViewById(R.id.circle_small_red_img);
@@ -350,6 +358,18 @@ public class CircleMessageActivity extends AppCompatActivity implements View.OnC
         });
 
         mNO_data_rl = (RelativeLayout) findViewById(R.id.no_data_rl);
+
+        //点击GridView中显示图片
+        m_all_rl= (RelativeLayout) findViewById(R.id.m_all_rl);
+        mImgViewPager_rl = (RelativeLayout) findViewById(R.id.img_viewpager_rl);
+        mImgViewPager= (ViewPager) findViewById(R.id.img_viewpager);
+        mImg_Cancle_btn= (TextView) findViewById(R.id.img_cancle);
+        mImg_Cancle_btn.setOnClickListener(this);
+
+        //帖子列表listview
+        mListview = (MyListView) findViewById(R.id.circle_listview);
+        mFriendAda = new CircleFriendListviewAda(this, mCardList,mImgViewPager,mImgViewPager_rl,m_all_rl);
+        mListview.setAdapter(mFriendAda);
     }
 
     @Override
@@ -357,6 +377,7 @@ public class CircleMessageActivity extends AppCompatActivity implements View.OnC
         int id = v.getId();
         //点击我的小区
         if (id == mMyArea_ll.getId()) {
+            mMore_rl.setVisibility(View.GONE);
             mListview.setVisibility(View.GONE);
             myOrOtherID = 1;
             check = 1;
@@ -372,6 +393,7 @@ public class CircleMessageActivity extends AppCompatActivity implements View.OnC
             //点击其他小区
         } else if (id == mOtherArea_ll.getId()) {
             mListview.setVisibility(View.GONE);
+            mMore_rl.setVisibility(View.GONE);
             myOrOtherID = 2;
             check = 1;
             mMyArea_ll.setBackgroundResource(R.color.white);
@@ -397,6 +419,9 @@ public class CircleMessageActivity extends AppCompatActivity implements View.OnC
             start += 10;
             mBar.setVisibility(View.VISIBLE);
             mHttptools.getCircleCardList(mHandler, UserInfo.userToken, areaID, myOrOtherID, start, limmit, typeID);
+        }else if (id==mImg_Cancle_btn.getId()){//隐藏viewpager
+            m_all_rl.setVisibility(View.VISIBLE);
+            mImgViewPager_rl.setVisibility(View.GONE);
         }
 
     }
@@ -421,5 +446,40 @@ public class CircleMessageActivity extends AppCompatActivity implements View.OnC
         }
     }
 
+    private int lastX, lastY;
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        //获取到手指处的横坐标和纵坐标
+        int x = (int) event.getX();
+        int y = (int) event.getY();
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                lastX = x;
+                lastY = y;
+                break;
+            case MotionEvent.ACTION_MOVE:
+                //计算移动的距离
+                int offX = x - lastX;
+                int offY = y - lastY;
+                //调用layout方法来重新放置它的位置
+                mPost_img.layout(mPost_img.getLeft() + offX, mPost_img.getTop() + offY,
+                        mPost_img.getRight() + offX, mPost_img.getBottom() + offY);
+              break;
+            case MotionEvent.ACTION_UP:
+                int offX1 = x - lastX;
+                int offY1 = y - lastY;
+                if (Math.abs(offX1)<50|Math.abs(offY1)<50){
+                    return false;
+                }else {
+                    return true;
+                }
+
+        }
+        return false;
+    }
 
 }
+
+
+

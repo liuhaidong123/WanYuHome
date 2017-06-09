@@ -33,6 +33,7 @@ import com.home.wanyu.bean.HouseFirstList.Result;
 import com.home.wanyu.bean.HouseFirstList.Root;
 import com.home.wanyu.bean.HouseFirstList.Rows;
 import com.home.wanyu.myUtils.MyDialog;
+import com.home.wanyu.myUtils.NetWorkMyUtils;
 import com.home.wanyu.myview.MyListView;
 
 import java.util.ArrayList;
@@ -102,15 +103,31 @@ public class HouseMsgActivity extends AppCompatActivity implements View.OnClickL
     //声明AMapLocationClientOption对象
     public AMapLocationClientOption mLocationOption = null;
 
+    private ImageView mNetWorkBack;
+    private TextView mNetWorkTitle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_house_msg);
-        mHttptools = HttpTools.getHttpToolsInstance();
-        //初始化定位
-        initLocation();
-        init();//授权定位
-        initView();
+        if (NetWorkMyUtils.isNetworkConnected(this)) {
+            setContentView(R.layout.activity_house_msg);
+            mHttptools = HttpTools.getHttpToolsInstance();
+            //初始化定位
+            initLocation();
+            init();//授权定位
+            initView();
+        }else {
+            setContentView(R.layout.no_network);
+            mNetWorkBack = (ImageView) findViewById(R.id.network_back);
+            mNetWorkBack.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
+            mNetWorkTitle = (TextView) findViewById(R.id.network_title_msg);
+            mNetWorkTitle.setText("租房信息");
+        }
+
     }
 
     private void initView() {

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,13 +31,14 @@ import java.util.List;
 
 public class CarPoolingMsgActivity extends AppCompatActivity implements View.OnClickListener {
     private ImageView mback;
+    private ScrollView mScroll_View;
     private LinearLayout mCar_msg_comment_ll;
     private TextView mName, mDate, mState, mShen, mStart_time, mStart_address, mEnd_address, mJoin_num;
     private RoundImageView mHead;
     private LinearLayout mCommemt_ll, mJieDan_ll, mJoin_ll;
     private ImageView mJoin_img;
     private int over;
-    private long carpoolingId ;
+    private long carpoolingId;
     private CarpoolingEntity mCarpoolingEntity;
     private com.home.wanyu.bean.carPoolingMsg.Result result;
     private MyListView myListView;
@@ -52,14 +54,21 @@ public class CarPoolingMsgActivity extends AppCompatActivity implements View.OnC
                 Object o = msg.obj;
                 if (o != null && o instanceof Root) {
                     Root root = (Root) o;
-                    if (root.getResult()!=null&&root.getResult().getCommentlist()!=null){
-                        result=root.getResult();
-                        mCommentList = root.getResult().getCommentlist();
-                        mAdapter.setmCommentList(mCommentList, carpoolingId);
-                        mAdapter.notifyDataSetChanged();
+                    if (root.getResult() != null && root.getResult().getCommentlist() != null) {
+                        result = root.getResult();
 
-                        if (root.getResult().getCarpoolingEntity()!=null){
-                            mCarpoolingEntity=root.getResult().getCarpoolingEntity();
+                        mCommentList = root.getResult().getCommentlist();
+                        if (mCommentList.size() != 0) {//
+                            mScroll_View.setVisibility(View.VISIBLE);
+                            mAdapter.setmCommentList(mCommentList, carpoolingId);
+                            mAdapter.notifyDataSetChanged();
+                        } else {
+                            mScroll_View.setVisibility(View.GONE);
+                        }
+
+
+                        if (root.getResult().getCarpoolingEntity() != null) {
+                            mCarpoolingEntity = root.getResult().getCarpoolingEntity();
                             Picasso.with(CarPoolingMsgActivity.this).load(UrlTools.BASE + root.getResult().getCarpoolingEntity().getAvatar()).resize(ImgUitls.getWith(CarPoolingMsgActivity.this) / 3, ImgUitls.getWith(CarPoolingMsgActivity.this) / 3).error(R.mipmap.error_small).into(mHead);
                             mName.setText(root.getResult().getCarpoolingEntity().getUser_name());
                             mDate.setText(root.getResult().getCarpoolingEntity().getCreateTimeString());
@@ -68,10 +77,10 @@ public class CarPoolingMsgActivity extends AppCompatActivity implements View.OnC
                             mEnd_address.setText(root.getResult().getCarpoolingEntity().getEnd());
 
                             if (root.getResult().getCarpoolingEntity().getOver() == 1) {
-                                over=1;
+                                over = 1;
                                 mState.setText("正在进行");
                             } else if (root.getResult().getCarpoolingEntity().getOver() == 2) {
-                                over=2;
+                                over = 2;
                                 mState.setText("已结束");
                             } else {
                                 mState.setText("");
@@ -111,7 +120,7 @@ public class CarPoolingMsgActivity extends AppCompatActivity implements View.OnC
                     com.home.wanyu.bean.getAreaActivityComment.Root root = (com.home.wanyu.bean.getAreaActivityComment.Root) o;
                     if (root.getCode().equals("0")) {
                         Toast.makeText(CarPoolingMsgActivity.this, "加入拼车成功", Toast.LENGTH_SHORT).show();
-                        if (result!=null){
+                        if (result != null) {
                             result.setIsLike(true);
                             mCarpoolingEntity.setParticipateNumber(mCarpoolingEntity.getParticipateNumber() + 1);
                             mJoin_num.setText(mCarpoolingEntity.getParticipateNumber() + "人参加");
@@ -127,13 +136,13 @@ public class CarPoolingMsgActivity extends AppCompatActivity implements View.OnC
                         Toast.makeText(CarPoolingMsgActivity.this, "亲，您已经加入此拼车，不能重复加入了哦", Toast.LENGTH_SHORT).show();
                     }
                 }
-            }else if (msg.what == 131) {//接单
+            } else if (msg.what == 131) {//接单
                 Object o = msg.obj;
                 if (o != null && o instanceof com.home.wanyu.bean.getAreaActivityComment.Root) {
                     com.home.wanyu.bean.getAreaActivityComment.Root root = (com.home.wanyu.bean.getAreaActivityComment.Root) o;
                     if (root.getCode().equals("0")) {
                         Toast.makeText(CarPoolingMsgActivity.this, "接单成功", Toast.LENGTH_SHORT).show();
-                        if (mCarpoolingEntity!=null){
+                        if (mCarpoolingEntity != null) {
                             mCarpoolingEntity.setOrders(true);
                             if (mCarpoolingEntity.isOrders()) {
                                 mJieDan_ll.setBackgroundResource(R.color.repair_line);
@@ -157,13 +166,15 @@ public class CarPoolingMsgActivity extends AppCompatActivity implements View.OnC
         setContentView(R.layout.activity_car_pooling_msg);
         mHttptools = HttpTools.getHttpToolsInstance();
         //拼车ID
-        carpoolingId=getIntent().getLongExtra("carpoolingId",-1);
+        carpoolingId = getIntent().getLongExtra("carpoolingId", -1);
         initView();
     }
 
     private void initView() {
         mback = (ImageView) findViewById(R.id.car_msg_back);
         mback.setOnClickListener(this);
+
+        mScroll_View = (ScrollView) findViewById(R.id.my_scroll_view);
 
         myListView = (MyListView) findViewById(R.id.car_msg_commend_listview);
         mAdapter = new CarPoolingCommentAda(this, mCommentList);
@@ -224,15 +235,19 @@ public class CarPoolingMsgActivity extends AppCompatActivity implements View.OnC
                     }
                 }
             }
-        }else if (id==mJieDan_ll.getId()){//接单
+        } else if (id == mJieDan_ll.getId()) {//接单
             if (over == 2) {
                 Toast.makeText(this, "亲，此拼车活动已结束了哦", Toast.LENGTH_SHORT).show();
             } else {
-                if (mCarpoolingEntity!=null){
+                if (mCarpoolingEntity != null) {
                     if (mCarpoolingEntity.isOrders()) {
-                        Toast.makeText(this, "亲，您已经接过此单子了哦", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "亲，此单子已经被接过了哦", Toast.LENGTH_SHORT).show();
                     } else {
-                        mHttptools.carPoolingOrder(mHandler, UserInfo.userToken, carpoolingId);
+//                        if (mCarpoolingEntity.getPersonalId() == UserInfo.personalId) {
+//
+//                        } else {
+                            mHttptools.carPoolingOrder(mHandler, UserInfo.userToken, carpoolingId);
+                       // }
                     }
                 }
 

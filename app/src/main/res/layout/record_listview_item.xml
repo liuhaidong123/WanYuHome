@@ -20,7 +20,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
-                android:src="@mipmap/repair_water" />
+                />
 
             <TextView
                 android:id="@+id/record_categoty"
@@ -29,7 +29,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@+id/record_img"
-                android:text="水电维修"
+                android:text=""
                 android:textColor="@color/homeFragChangeColor"
                 android:textSize="14sp" />
 
@@ -40,7 +40,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@+id/record_categoty"
-                android:text="期望处理时间:2017—5—2 13:00"
+                android:text=""
                 android:textColor="@color/name_color"
                 android:textSize="12sp" />
 
@@ -51,7 +51,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
-                android:text="待维修"
+                android:text=""
                 android:textColor="@color/repair_color"
                 android:textSize="12sp" />
         </RelativeLayout>
@@ -72,7 +72,7 @@
             android:ellipsize="end"
             android:maxLines="2"
             android:padding="10dp"
-            android:text="百度文库是百度发布的供网友在线分享文档的平台。百度文库的文档由百度用户上传，需要经过百度的审核才能发布，百度自身不编辑或修改用户上传的文档内容。网友可以在线阅读和下载这些文档。百度文库的文档包括教学资料、考试题库、专业资料、公文写作、法律文件等多个领域的资料。百度用户上传文档可以得到一定的积分，"
+            android:text=""
             android:textColor="@color/name_color"
             android:textSize="13sp" />
 

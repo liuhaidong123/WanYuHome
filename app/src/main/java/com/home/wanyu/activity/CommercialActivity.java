@@ -32,6 +32,7 @@ import com.home.wanyu.apater.CommercialAda;
 import com.home.wanyu.bean.shoppingList.Result;
 import com.home.wanyu.bean.shoppingList.Root;
 import com.home.wanyu.myUtils.MyDialog;
+import com.home.wanyu.myUtils.NetWorkMyUtils;
 import com.home.wanyu.myview.MyListView;
 
 import java.util.ArrayList;
@@ -84,6 +85,9 @@ public class CommercialActivity extends AppCompatActivity implements View.OnClic
                             mMore_rl.setVisibility(View.VISIBLE);
                             mBar.setVisibility(View.INVISIBLE);
                         } else {
+                            if (root.getResult().size()==0){
+                                Toast.makeText(CommercialActivity.this,"抱歉，该小区没有商户",Toast.LENGTH_SHORT).show();
+                            }
                             mMore_rl.setVisibility(View.GONE);
                             mBar.setVisibility(View.INVISIBLE);
                         }
@@ -100,15 +104,33 @@ public class CommercialActivity extends AppCompatActivity implements View.OnClic
     private static double lat;
     private static double lng;
 
+    private ImageView mNetWorkBack;
+    private TextView mNetWorkTitle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_commercial);
-        mHttptools = HttpTools.getHttpToolsInstance();
-        //初始化定位
-        initLocation();
-        init();//授权定位
-        initView();
+        if (NetWorkMyUtils.isNetworkConnected(this)) {
+            setContentView(R.layout.activity_commercial);
+            mHttptools = HttpTools.getHttpToolsInstance();
+            //初始化定位
+            initLocation();
+            init();//授权定位
+            initView();
+        } else {
+            setContentView(R.layout.no_network);
+            mNetWorkBack = (ImageView) findViewById(R.id.network_back);
+            mNetWorkBack.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
+            mNetWorkTitle = (TextView) findViewById(R.id.network_title_msg);
+            mNetWorkTitle.setText(R.string.property_commercial);
+        }
+
+
     }
 
     private void initView() {

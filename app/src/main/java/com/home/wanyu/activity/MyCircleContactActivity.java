@@ -52,7 +52,7 @@ public class MyCircleContactActivity extends MyActivity implements View.OnClickL
     private int SelectPos=0;//当前选择的项目（0我的圈子，1我的活动）
     public static int state=0;//0未编辑状态，1编辑状态
     private String[]Submit={"编辑","完成"};
-
+    private Boolean isDeleteAll;
     @BindView(R.id.activity_my_circle_contact_listview)ListView activity_my_circle_contact_listview;//listview
     @BindView(R.id.activity_my_circle_contact_layout)RelativeLayout activity_my_circle_contact_layout;//删除的layout
     @BindView(R.id.activity_my_circle_contact_bottom_selectAll)ImageView activity_my_circle_contact_bottom_selectAll;//全选／取消全选的阿牛
@@ -64,7 +64,7 @@ public class MyCircleContactActivity extends MyActivity implements View.OnClickL
     private boolean isLoading=false;//是否正在请求数据
 
     private int start=0;//圈子,活动
-    private int limit=2;
+    private int limit=10;
     private String resStr;
 
     private List<Bean_QZ.RowsBean>listQZ;//圈子数据源
@@ -81,6 +81,7 @@ public class MyCircleContactActivity extends MyActivity implements View.OnClickL
             super.handleMessage(msg);
             switch (msg.what){
                 case 0:
+                    isDeleteAll=false;
                     ShowErrorView(DEFAULTRESID);
                     mToast.ToastFaild(con, ToastType.FAILD);
                     break;
@@ -134,6 +135,11 @@ public class MyCircleContactActivity extends MyActivity implements View.OnClickL
                     }
                     if (lt!=null&&lt.size()>0){
                         listQZ.removeAll(lt);
+                        if (isDeleteAll){
+                            state=0;//编辑状态
+                            circle_my_user_info_submmit.setText(Submit[state]);
+                            activity_my_circle_contact_layout.setVisibility(View.VISIBLE);
+                        }
                         adapter_QZ.notifyDataSetChanged();
                     }
                     if (listQZ!=null&& listQZ.size()>0){
@@ -191,6 +197,11 @@ public class MyCircleContactActivity extends MyActivity implements View.OnClickL
                     }
                     if (lit!=null&&lit.size()>0){
                         listAC.removeAll(lit);
+                        if (isDeleteAll){
+                            state=0;//编辑状态
+                            circle_my_user_info_submmit.setText(Submit[state]);
+                            activity_my_circle_contact_layout.setVisibility(View.VISIBLE);
+                        }
                         adpter_AC.notifyDataSetChanged();
                         }
                     if (listAC!=null&& listAC.size()>0){
@@ -418,6 +429,7 @@ public void cli(View vi){
 //            |token        |String   |Y    |令牌
 //    |ids          |String   |Y    |发状态编号,可以传一个或多个编号，编号之间用英文半角的逗号“,”分隔。
     public void deleteQZdata(){
+        isDeleteAll=true;
         if (listQZ!=null&&listQZ.size()>0){
             Map<String,String>mp=new HashMap<>();
             mp.put("token", UserInfo.userToken);
@@ -425,6 +437,9 @@ public void cli(View vi){
             for (int i=0;i<listQZ.size();i++){
                     if (listQZ.get(i).isSele()){
                         ids+=(listQZ.get(i).getId()+",");
+                    }
+                else {
+                        isDeleteAll=false;
                     }
             }
             if (!"".equals(ids)){
@@ -483,13 +498,18 @@ public void cli(View vi){
 //            |token        |String   |Y    |令牌
 //    |ids          |String   |Y    |社区活动编号,可以传一个或多个编号，编号之间用英文半角的逗号“,”分
     public void deleteACdata(){
+        isDeleteAll=true;
         if (listAC!=null&&listAC.size()>0){
             Map<String,String>mp=new HashMap<>();
             mp.put("token", UserInfo.userToken);
             String ids="";
+
             for (int i=0;i<listAC.size();i++){
                 if (listAC.get(i).isSele()){
                     ids+=(listAC.get(i).getId()+",");
+                }
+                else {
+                    isDeleteAll=false;
                 }
             }
             if (!"".equals(ids)){
@@ -517,5 +537,12 @@ public void cli(View vi){
         else {
             Log.e("删除圈子--","deleteQZdata()-----圈子数据源为空或者数据源没有数据");
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        state=0;
+        circle_my_user_info_submmit.setText("编辑");
     }
 }

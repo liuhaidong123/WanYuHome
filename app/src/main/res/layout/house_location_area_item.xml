@@ -15,7 +15,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:scaleType="centerCrop"
-            android:src="@mipmap/main_background4" />
+            />
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="2"
-                android:text="涿州名流一品 一室一厅 48平米 押一付一 南北"
+                android:text=""
                 android:textColor="@color/titlecolor3"
                 android:textSize="15sp" />
 
@@ -43,7 +43,7 @@
                 android:layout_marginTop="4dp"
                 android:background="@drawable/house_type_bg"
                 android:gravity="center"
-                android:text="合租"
+                android:text=""
                 android:textColor="@color/house_type"
                 android:textSize="14sp" />
 
@@ -53,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/house_type_tv"
                 android:layout_marginTop="4dp"
-                android:text="1600元/月"
+                android:text=""
                 android:textColor="@color/bg_rect"
                 android:textSize="15sp" />
 
@@ -64,7 +64,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_below="@id/house_type_tv"
                 android:layout_marginTop="4dp"
-                android:text="1天前"
+                android:text=""
                 android:textColor="@color/color9"
                 android:textSize="12sp" />
         </RelativeLayout>

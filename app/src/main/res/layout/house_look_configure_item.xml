@@ -12,7 +12,7 @@
             android:id="@+id/look_img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/television" />
+            />
 
         <TextView
             android:id="@+id/look_name"
@@ -21,7 +21,7 @@
             android:layout_marginLeft="5dp"
             android:layout_toRightOf="@id/look_img"
             android:gravity="center"
-            android:text="电视"
+            android:text=""
             android:textColor="@color/titlecolor3"
             android:textSize="15sp" />
     </RelativeLayout>

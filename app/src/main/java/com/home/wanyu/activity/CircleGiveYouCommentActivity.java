@@ -205,18 +205,18 @@ public class CircleGiveYouCommentActivity extends MyActivity {
                     Intent intent=new Intent();
                     if (messageType>=11&&messageType<=30){//友邻圈消息
                         intent.setClass(con,CircleCardMessageActivity.class);
-                        intent.putExtra("stateid",Long.parseLong(listMessage.get(position).getId()+""));
+                        intent.putExtra("stateid",Long.parseLong(listMessage.get(position).getReferId()+""));
                         startActivity(intent);
                     }
                 else if (messageType>=31&&messageType<=50){//社区活动
                         intent.setClass(con,CommunityCommentActivity.class);
-                        intent.putExtra("activityId",Long.parseLong(listMessage.get(position).getId()+""));
+                        intent.putExtra("activityId",Long.parseLong(listMessage.get(position).getReferId()+""));
                         startActivity(intent);
                     }
                 else if(messageType>=51&&messageType<=70){//拼车消息
                         if (messageType==51){//拼车评论
                             intent.setClass(con,CarPoolingMsgActivity.class);
-                            intent.putExtra("carpoolingId", listMessage.get(position).getId());
+                            intent.putExtra("carpoolingId", listMessage.get(position).getReferId());
                             startActivity(intent);
                         }
                         else {
@@ -341,6 +341,7 @@ public class CircleGiveYouCommentActivity extends MyActivity {
 //                mp.put("msgType","");
                 break;
         }
+        Log.i("ip---",Ip.serverPath+Ip.interface_get_Message);
         okhttp.getCall(Ip.serverPath+Ip.interface_get_Message,mp,okhttp.OK_GET).enqueue(new Callback() {
             @Override
             public void onFailure(Request request, IOException e) {
