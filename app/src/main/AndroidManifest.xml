@@ -254,9 +254,8 @@
             android:value="developer-default" />
         <meta-data
             android:name="JPUSH_APPKEY"
-            android:value="8970c6cd1148f7ce1a134575" /> <!-- </>值来自开发者平台取得的AppKey -->
+            android:value="6e3f7cdbf0e0ab9d5725a65f" /> <!-- </>值来自开发者平台取得的AppKey -->
         <!-- ／／／／／／／／／／／／／／／／激光推送权限／／／／／／／／／／／／／／／／ -->
         <activity android:name=".activity.MessageCarpoolActivity"></activity>
     </application>
-
 </manifest>

@@ -21,6 +21,7 @@ import com.home.wanyu.Ip.Ip;
 import com.home.wanyu.Ip.ToastType;
 import com.home.wanyu.Ip.mGson;
 import com.home.wanyu.Ip.mToast;
+import com.home.wanyu.JpushUtils.JPshAliasAndTags;
 import com.home.wanyu.OkhttpUtils.okhttp;
 import com.home.wanyu.R;
 import com.home.wanyu.User.UserInfo;
@@ -167,6 +168,8 @@ public class LoginFragment extends Fragment{
                         if (login!=null){
                         if ("0".equals(login.getCode())){
                             UserInfo.savaLogin(tele,login.getToken(),login.getPersonalId(),getActivity());
+                            //激光注册标签
+                            JPshAliasAndTags.setAlias(getActivity(),UserInfo.userName);
                             startActivity(new Intent(getActivity(), MainActivity.class));
                             mToast.Toast(getActivity(),"登录成功");
                             getActivity().finish();

@@ -68,7 +68,6 @@ public class OtherPersonInfoActivity extends Activity {
     private final int ACTIVITY=1;//活动
     private final int CIRCLE=0;//圈子
 
-
     private List<Bean_otherCircle.RowsBean> listCircle;//圈子的数据源
     private  List<Bean_otherActivity.RowsBean> listActi;//活动数据源
     private String[]data={"2017-3-21 12:12:40","2017-5-10 14:52:33","2016-5-16 17:00:00","2017-5-16 16:00:00"};//发布时间
@@ -78,7 +77,7 @@ public class OtherPersonInfoActivity extends Activity {
     private OtherPersonActivityAdapter adapter_a;//我的活动的view
 
     private int start=0;
-    private int limit=1;
+    private int limit=10;
     private String resStr;
     private Handler handler=new Handler(){
         @Override
@@ -289,7 +288,6 @@ public class OtherPersonInfoActivity extends Activity {
             public void onFailure(Request request, IOException e) {
                 handler.sendEmptyMessage(0);
             }
-
             @Override
             public void onResponse(Response response) throws IOException {
                 resStr=response.body().string();

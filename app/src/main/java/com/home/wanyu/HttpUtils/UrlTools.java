@@ -6,13 +6,12 @@ package com.home.wanyu.HttpUtils;
 
 public class UrlTools {
 
-    public static final String BASE = "http://192.168.1.55:8080/smarthome";
+    public static final String BASE = "http://192.168.1.168:8080/smarthome";
     //判断有没有用户地址
     //http://192.168.1.55:8080/smarthome/mobileapi/family/findFamilyAddress.do?token=EC9CDB5177C01F016403DFAAEE3C1182
     public static final String HAVE_USER_ADDRESS = "/mobileapi/family/findFamilyAddress.do?";
     //添加用户地址
     public static final String ADD_USER_ADDRESS = "/mobileapi/family/addAddress.do?";
-
     //获取城市列表
     //http://192.168.1.55:8080/smarthome/mobilepub/baseArea/findList.do
     public static final String GET_CITY_LIST = "/mobilepub/baseArea/findList.do";

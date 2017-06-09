@@ -474,14 +474,13 @@ public void cli(View vi){
             }
         });
     }
-
     //删除我的活动http://192.168.1.55:8080/smarthome/mobileapi/activity/delete.do?ids=1234,12345&token=9DB2FD6FDD2F116CD47CE6C48B3047EE
-//    Method:POST
-//    参数列表:
-//            |参数名        |类型      |必需  |描述
-//    |-----        |----     |---- |----
-//            |token        |String   |Y    |令牌
-//    |ids          |String   |Y    |社区活动编号,可以传一个或多个编号，编号之间用英文半角的逗号“,”分
+    //Method:POST
+    //参数列表:
+    // |参数名        |类型      |必需  |描述
+    // |-----        |----     |---- |----
+    //|token        |String   |Y    |令牌
+    //|ids          |String   |Y    |社区活动编号,可以传一个或多个编号，编号之间用英文半角的逗号“,”分
     public void deleteACdata(){
         if (listAC!=null&&listAC.size()>0){
             Map<String,String>mp=new HashMap<>();
@@ -500,7 +499,6 @@ public void cli(View vi){
                     public void onFailure(Request request, IOException e) {
                         handler.sendEmptyMessage(0);
                     }
-
                     @Override
                     public void onResponse(Response response) throws IOException {
                         resStr=response.body().string();
@@ -512,10 +510,15 @@ public void cli(View vi){
             else {
                 mToast.Toast(con,"您还没有选择要删除的圈子");
             }
-
         }
         else {
             Log.e("删除圈子--","deleteQZdata()-----圈子数据源为空或者数据源没有数据");
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        state=0;
     }
 }

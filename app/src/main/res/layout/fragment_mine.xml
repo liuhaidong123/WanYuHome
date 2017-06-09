@@ -140,6 +140,7 @@
 
                 <!--我的订单-->
                 <RelativeLayout
+                    android:visibility="gone"
                     android:id="@+id/fragment_mine_layout_myorder"
                     android:layout_width="0dp"
                     android:layout_weight="1"
@@ -165,6 +166,7 @@
 
                 <!--我的收藏-->
                 <RelativeLayout
+                    android:visibility="gone"
                     android:id="@+id/fragment_mine_layout_mystore"
                     android:layout_width="0dp"
                     android:layout_weight="1"
@@ -190,6 +192,7 @@
             </LinearLayout>
             <!--我的收货地址-->
             <RelativeLayout
+                android:visibility="gone"
                 android:id="@+id/fragment_mine_layout_myaddress"
                 android:background="@color/white"
                 android:layout_marginTop="10dp"
