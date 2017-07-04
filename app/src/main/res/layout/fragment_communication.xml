@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@color/bg_color"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/f5f5f5">
+
+    <TextView
+        android:id="@+id/status_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/white" />
 
     <RelativeLayout
         android:id="@+id/circle_title"
         android:layout_width="match_parent"
         android:layout_height="45dp"
+        android:layout_below="@id/status_view"
         android:background="@color/white">
 
 
@@ -17,23 +24,21 @@
             android:gravity="center"
             android:text="@string/circle_title"
             android:textColor="@color/title_color"
-            android:textSize="17sp" />
+            android:textSize="18sp"
+            android:textStyle="bold" />
     </RelativeLayout>
 
-    <View
-        android:id="@+id/line_view"
-        android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:layout_below="@id/circle_title"
-        android:background="@color/bg_color" />
 
     <ListView
         android:id="@+id/circle_listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/line_view"
-        android:divider="@color/bg_color"
-        android:dividerHeight="5dp"
+        android:layout_below="@id/circle_title"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="15dp"
+        android:divider="@color/f5f5f5"
+        android:dividerHeight="15dp"
         android:scrollbars="none">
 
     </ListView>

@@ -94,6 +94,8 @@ public class CommunityCommentActivity extends AppCompatActivity implements View.
                 if (o != null && o instanceof Root) {
                     Root root = (Root) o;
                     if (root!=null&&root.getResult()!=null&&root.getResult().getActivityEntity()!=null&&root.getResult().getActivityLoglist()!=null&&root.getResult().getActivitypicturelist()!=null&&root.getResult().getCommentlist()!=null&&root.getResult().getUpVptelist()!=null){
+                        mNoData.setVisibility(View.GONE);
+                        mAll_rl.setVisibility(View.VISIBLE);
                         if (root.getIslike()) {
                             mLike_img.setImageResource(R.mipmap.circle_like);
                         } else {
@@ -182,6 +184,7 @@ public class CommunityCommentActivity extends AppCompatActivity implements View.
                         }
                     }else {
                         mNoData.setVisibility(View.VISIBLE);
+                        mAll_rl.setVisibility(View.GONE);
                         Toast.makeText(CommunityCommentActivity.this,"作者已删除",Toast.LENGTH_SHORT).show();
                     }
 
@@ -261,7 +264,8 @@ public class CommunityCommentActivity extends AppCompatActivity implements View.
     private TextView mImg_Cancle_btn;
     private ImgViewPager mAdapter;
     private String[] imgstr;
-    private RelativeLayout mNoData;
+
+    private RelativeLayout mNoData,mAll_rl;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -273,6 +277,8 @@ public class CommunityCommentActivity extends AppCompatActivity implements View.
     private void initView() {
 
         mNoData= (RelativeLayout) findViewById(R.id.no_data_rl);
+        mAll_rl= (RelativeLayout) findViewById(R.id.all_rl);
+
         activityId = getIntent().getLongExtra("activityId", -1);
 
         mDelete_btn = (TextView) findViewById(R.id.u_delete_btn);

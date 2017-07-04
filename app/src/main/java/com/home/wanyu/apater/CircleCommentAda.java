@@ -68,7 +68,7 @@ public class CircleCommentAda extends BaseAdapter {
                         mCommentNum.setText(Integer.valueOf(mCommentNum.getText().toString()) + 1 + "");
                         mEdit.setText("");
                         coverPersonalId = 0;
-                        Toast.makeText(mContext, root.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, "评论成功", Toast.LENGTH_SHORT).show();
                         mHttptools.getCircleCommentList(mHandler, UserInfo.userToken, stateId);//获取评论列表接口
 
                     } else {

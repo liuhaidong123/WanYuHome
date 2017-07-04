@@ -1,6 +1,8 @@
 package com.home.wanyu.apater;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,10 @@ import android.widget.ImageView;
 import com.home.wanyu.HttpUtils.UrlTools;
 import com.home.wanyu.R;
 import com.home.wanyu.myUtils.ImgUitls;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.assist.ImageLoadingListener;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -19,12 +25,12 @@ import com.squareup.picasso.Picasso;
 public class RecordListviewGridviewAda extends BaseAdapter {
     private Context mContext;
     private LayoutInflater mInflater;
-
     private String [] strimg;
+
     public RecordListviewGridviewAda(Context mContext,String [] strimg) {
         this.mContext = mContext;
-        this.strimg=strimg;
-        this.mInflater=LayoutInflater.from(mContext);
+        this.strimg = strimg;
+        this.mInflater = LayoutInflater.from(mContext);
     }
 
     public void setStrimg(String[] strimg) {
@@ -58,7 +64,7 @@ public class RecordListviewGridviewAda extends BaseAdapter {
             holder= (LGHolder) convertView.getTag();
         }
 
-        Picasso.with(mContext).load(UrlTools.BASE+strimg[position]).error(R.mipmap.error_small).resize(ImgUitls.getWith(mContext)/3,ImgUitls.getWith(mContext)/3).into(holder.imageView);
+       Picasso.with(mContext).load(UrlTools.BASE+strimg[position]).error(R.mipmap.error_small).resize(ImgUitls.getWith(mContext)/3,ImgUitls.getWith(mContext)/3).into(holder.imageView);
         return convertView;
     }
 

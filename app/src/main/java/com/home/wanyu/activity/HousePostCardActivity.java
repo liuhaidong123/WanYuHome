@@ -438,8 +438,8 @@ public class HousePostCardActivity extends AppCompatActivity implements View.OnC
         } else if (id == mSelect_city_rl.getId()) {//城市弹框
             showCityPop();
         } else if (id == R.id.sure_city_btn) {//确定城市
-            mCityPop.dismiss();
             mCity_name.setText(mapAreas.get(listCitys.get(mBigCityPosition)).get(mSmallCityPosition));
+            mCityPop.dismiss();
 
         } else if (id == R.id.cancle_city_btn) {//取消城市
             mCityPop.dismiss();
@@ -706,8 +706,6 @@ public class HousePostCardActivity extends AppCompatActivity implements View.OnC
                 WindowManager.LayoutParams params = getWindow().getAttributes();
                 params.alpha = 1f;
                 getWindow().setAttributes(params);
-                mBigCityPosition = 0;
-                mSmallCityPosition = 0;
             }
         });
 

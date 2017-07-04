@@ -11,6 +11,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -18,12 +19,16 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.home.wanyu.HttpUtils.HttpTools;
+import com.home.wanyu.HttpUtils.OkHttpManager;
+import com.home.wanyu.HttpUtils.UrlTools;
 import com.home.wanyu.R;
 import com.home.wanyu.User.UserInfo;
 import com.home.wanyu.apater.AlertAreaAda;
@@ -48,40 +53,41 @@ public class OrderMessageActivity extends AppCompatActivity implements View.OnCl
     private LinearLayout mYear_ll, mMonth_ll;
     private TextView mYear_tv, mMonth_tv;
     private TextView mNian_tv, mYue_tv;
-
+    private View mYear_view_line, mMonth_view_line;
 
     private ImageView mYear_img, mMonth_img;
     private MyListView mListview;
     private OrderMsgAda mAdapter;
     private List<ItemsYear> mList = new ArrayList<>();
 
-
-    private AlertDialog.Builder mYearBuilder;
-    private AlertDialog mYearAlert;
     private View mYearView;
     private ListView mYearListview;
     private OrderYearAda mYearAda;
     private List<String> mYearList = new ArrayList<>();
 
-
-    private AlertDialog.Builder mMonthBuilder;
-    private AlertDialog mMonthAlert;
     private View mMonthView;
     private OrderMonthAda mMonthAda;
     private List<String> mMonthList = new ArrayList<>();
-    private GridView mMonthListview;
+    private ListView mMonthListview;
 
+
+    private PopupWindow mYearPopupWindow;
+    private PopupWindow mMonthPopupWindow;
     private TextView mAddressCity_tv, mAddress_tv;
     private Calendar mCalendar;
     private List<Result> mAddressList = new ArrayList<>();
     private Result result;
     private HttpTools mHttptools;
+    // private OkHttpManager okHttpManager;
+    // private Gson mGson;
     private long ID = -1;
     private boolean isFlag = false;
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             if (msg.what == 100) {//获取地址
+                // String str = (String) msg.obj;
+                //Object o = mGson.fromJson(str, Root.class);
                 Object o = msg.obj;
                 if (o != null && o instanceof Root) {
                     Root root = (Root) o;
@@ -147,6 +153,9 @@ public class OrderMessageActivity extends AppCompatActivity implements View.OnCl
         setContentView(R.layout.activity_order_message);
         mHttptools = HttpTools.getHttpToolsInstance();
         mHttptools.haveUserAddress(mHandler, UserInfo.userToken);//获取地址接口
+        //mGson = new Gson();
+        //okHttpManager = OkHttpManager.getInstance();
+        //okHttpManager.getMethod(UrlTools.BASE + UrlTools.HAVE_USER_ADDRESS + "token=" + UserInfo.userToken, "获取物业账单地址", mHandler, 100);
         initView();
     }
 
@@ -168,12 +177,11 @@ public class OrderMessageActivity extends AppCompatActivity implements View.OnCl
         mYear_ll.setOnClickListener(this);
         mYear_tv = (TextView) findViewById(R.id.order_year_tv);
         mNian_tv = (TextView) findViewById(R.id.order_nian_tv);
+        mYear_view_line = findViewById(R.id.year_view_line);
 
 
         mYear_img = (ImageView) findViewById(R.id.order_year_img);
         //年份弹框
-        mYearBuilder = new AlertDialog.Builder(this);
-        mYearAlert = mYearBuilder.create();
         mYearView = LayoutInflater.from(this).inflate(R.layout.order_year_item, null);
         mYearListview = (ListView) mYearView.findViewById(R.id.city_alert_listview);
         //选择城市
@@ -181,19 +189,20 @@ public class OrderMessageActivity extends AppCompatActivity implements View.OnCl
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 mYear_tv.setText(mYearAda.getItem(position).toString());
-                mYearAlert.dismiss();
+                mYearPopupWindow.dismiss();
+                // mYearAlert.dismiss();
             }
         });
 
         mCalendar = Calendar.getInstance();
         int year = mCalendar.get(Calendar.YEAR);
         int month = mCalendar.get(Calendar.MONTH) + 1;
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 3; i++) {
             mYearList.add(year - i + "");
         }
         mYearAda = new OrderYearAda(this, mYearList);
         mYearListview.setAdapter(mYearAda);
-        mYearAlert.setView(mYearView);
+
 
 
         //月份
@@ -202,12 +211,10 @@ public class OrderMessageActivity extends AppCompatActivity implements View.OnCl
         mMonth_tv = (TextView) findViewById(R.id.order_month_tv);
         mYue_tv = (TextView) findViewById(R.id.order_yue_tv);
         mMonth_img = (ImageView) findViewById(R.id.order_month_img);
+        mMonth_view_line = findViewById(R.id.month_view_line);
         //月份弹框
-        //小区弹框
-        mMonthBuilder = new AlertDialog.Builder(this);
-        mMonthAlert = mMonthBuilder.create();
         mMonthView = LayoutInflater.from(this).inflate(R.layout.order_month_item, null);
-        mMonthListview = (GridView) mMonthView.findViewById(R.id.area_alert_listview);
+        mMonthListview = (ListView) mMonthView.findViewById(R.id.area_alert_listview);
 
         for (int i = 0; i < 13; i++) {
             if (i == 0) {
@@ -219,13 +226,12 @@ public class OrderMessageActivity extends AppCompatActivity implements View.OnCl
 
         mMonthAda = new OrderMonthAda(this, mMonthList);
         mMonthListview.setAdapter(mMonthAda);
-        mMonthAlert.setView(mMonthView);
         //选择小区
         mMonthListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 mMonth_tv.setText(mMonthAda.getItem(position).toString());
-                mMonthAlert.dismiss();
+                mMonthPopupWindow.dismiss();
             }
         });
 
@@ -255,35 +261,32 @@ public class OrderMessageActivity extends AppCompatActivity implements View.OnCl
         if (id == mBack.getId()) {
             finish();
         } else if (id == mYear_ll.getId()) {//选择年份
-            mYear_ll.setBackgroundResource(R.color.bg_rect);
-            mYear_tv.setTextColor(ContextCompat.getColor(this, R.color.white));
-            mNian_tv.setTextColor(ContextCompat.getColor(this, R.color.white));
-            mYear_img.setImageResource(R.mipmap.bottom_back_white);
+            mYear_tv.setTextColor(ContextCompat.getColor(this, R.color.eac6));
+            mNian_tv.setTextColor(ContextCompat.getColor(this, R.color.eac6));
+            mYear_img.setImageResource(R.mipmap.order_click_down_blue);
+            mYear_view_line.setBackgroundColor(ContextCompat.getColor(this, R.color.c2a5));
 
-            mMonth_ll.setBackgroundResource(R.color.white);
             mMonth_tv.setTextColor(ContextCompat.getColor(this, R.color.title_color));
             mYue_tv.setTextColor(ContextCompat.getColor(this, R.color.title_color));
             mMonth_img.setImageResource(R.mipmap.bottom_back);
+            mMonth_view_line.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
 
-            mYearAlert.show();
-            setAlertWidth(mYearAlert, 2);
+            showPopuWindowYear();
         } else if (id == mMonth_ll.getId()) {//选择月份
-            mYear_ll.setBackgroundResource(R.color.white);
             mYear_tv.setTextColor(ContextCompat.getColor(this, R.color.title_color));
             mNian_tv.setTextColor(ContextCompat.getColor(this, R.color.title_color));
             mYear_img.setImageResource(R.mipmap.bottom_back);
+            mYear_view_line.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
 
-            mMonth_ll.setBackgroundResource(R.color.bg_rect);
-            mMonth_tv.setTextColor(ContextCompat.getColor(this, R.color.white));
-            mYue_tv.setTextColor(ContextCompat.getColor(this, R.color.white));
-            mMonth_img.setImageResource(R.mipmap.bottom_back_white);
-
-            mMonthAlert.show();
-            setAlertWidth(mMonthAlert, 1.5f);
+            mMonth_tv.setTextColor(ContextCompat.getColor(this, R.color.eac6));
+            mYue_tv.setTextColor(ContextCompat.getColor(this, R.color.eac6));
+            mMonth_img.setImageResource(R.mipmap.order_click_down_blue);
+            mMonth_view_line.setBackgroundColor(ContextCompat.getColor(this, R.color.c2a5));
+            showPopuWindowMonth();
         } else if (id == mOrder_address_rl.getId()) {//跳转到地址列表页面
             if (mAddressList.size() != 0) {
                 Intent intent = new Intent(this, OrderAddressActivity.class);
-                // intent.putExtra("ID",ID);
+                intent.putExtra("addressId",ID);
                 startActivityForResult(intent, 123);
             } else {
                 Toast.makeText(this, "抱歉，无法获取地址", Toast.LENGTH_SHORT).show();
@@ -305,16 +308,6 @@ public class OrderMessageActivity extends AppCompatActivity implements View.OnCl
         }
     }
 
-    //设置alert宽度
-    public void setAlertWidth(AlertDialog alert, float a) {
-        DisplayMetrics dm = new DisplayMetrics();
-        WindowManager m = getWindowManager();
-        m.getDefaultDisplay().getMetrics(dm);
-        android.view.WindowManager.LayoutParams p = alert.getWindow().getAttributes();  //获取对话框当前的参数值
-        p.width = (int) (dm.widthPixels / a);
-        alert.getWindow().setAttributes(p);//设置生效
-    }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -326,12 +319,75 @@ public class OrderMessageActivity extends AppCompatActivity implements View.OnCl
                 mAddress_tv.setText(result.getDetailAddress());
                 ID = result.getId();
             } else {//执行返回键或者返回按钮
-                isFlag=false;
+                isFlag = false;
                 mHttptools.haveUserAddress(mHandler, UserInfo.userToken);//获取地址接口
+                //okHttpManager.getMethod(UrlTools.BASE + UrlTools.HAVE_USER_ADDRESS + "token=" + UserInfo.userToken, "获取物业账单地址", mHandler, 100);
             }
             Log.e("回调onActivityResult", "wuye");
 
         }
+    }
+
+
+    //年份popuwindow显示
+
+    private void showPopuWindowYear() {
+        //设置透明度
+        WindowManager.LayoutParams params = getWindow().getAttributes();
+        params.alpha = 0.5f;
+        getWindow().setAttributes(params);
+
+        mYearPopupWindow = new PopupWindow(mYearView);
+        //设置弹框的款，高
+        mYearPopupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+        //宽度为他的相对容器的高度
+        mYearPopupWindow.setWidth(mYear_ll.getWidth());
+        mYearPopupWindow.setFocusable(true);//如果有交互需要设置焦点为true
+        mYearPopupWindow.setOutsideTouchable(true);//设置内容外可以点击
+
+        // 设置背景，否则点击内容外，关闭弹窗失效
+        mYearPopupWindow.setBackgroundDrawable(getResources().getDrawable(R.color.pop_bg));
+        mYearPopupWindow.setAnimationStyle(R.style.popup2_anim);
+        //相对于父控件的位置
+        mYearPopupWindow.showAsDropDown(mYear_ll, 0, 0);
+        //当弹框销毁时，将透明度初始化，否则弹框销毁后，所依附的activity页面背景将会改变
+        mYearPopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                WindowManager.LayoutParams params = getWindow().getAttributes();
+                params.alpha = 1f;
+                getWindow().setAttributes(params);
+            }
+        });
+    }
+
+    //月份popuwindow显示
+    private void showPopuWindowMonth() {
+        //设置透明度
+        WindowManager.LayoutParams params = getWindow().getAttributes();
+        params.alpha = 0.5f;
+        getWindow().setAttributes(params);
+        mMonthPopupWindow = new PopupWindow(mMonthView);
+        //设置弹框的款，高
+        mMonthPopupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+        //他相对容器的宽度
+        mMonthPopupWindow.setWidth(mMonth_ll.getWidth());
+        mMonthPopupWindow.setFocusable(true);//如果有交互需要设置焦点为true
+        mMonthPopupWindow.setOutsideTouchable(true);//设置内容外可以点击
+        // 设置背景，否则点击内容外，关闭弹窗失效
+        mMonthPopupWindow.setBackgroundDrawable(getResources().getDrawable(R.color.pop_bg));
+        mMonthPopupWindow.setAnimationStyle(R.style.popup2_anim);
+        //相对于父控件的位置
+        mMonthPopupWindow.showAsDropDown(mMonth_ll, 0, 0);
+        //当弹框销毁时，将透明度初始化，否则弹框销毁后，所依附的activity页面背景将会改变
+        mMonthPopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                WindowManager.LayoutParams params = getWindow().getAttributes();
+                params.alpha = 1f;
+                getWindow().setAttributes(params);
+            }
+        });
     }
 
 }

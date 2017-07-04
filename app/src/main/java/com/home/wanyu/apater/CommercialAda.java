@@ -70,7 +70,7 @@ public class CommercialAda extends BaseAdapter {
 
         Picasso.with(mContext).load(UrlTools.BASE + mList.get(position).getPicture()).resize(ImgUitls.getWith(mContext) / 4, ImgUitls.getWith(mContext) / 4).error(R.mipmap.error_small).into(holder.imageView);
         holder.name.setText(mList.get(position).getBusinessName());
-        holder.price.setText("人均：¥" + mList.get(position).getAverage() + "/人");
+        holder.price.setText("人均：¥" + mList.get(position).getAverage() + "元/人");
         holder.km.setText(mList.get(position).getDistance() + "m");
         holder.ratingBar.setRating(mList.get(position).getStar());
         return convertView;

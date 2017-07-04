@@ -9,7 +9,7 @@
     <string name="property_commercial">小区商户</string>
     <string name="property_home_service">家政服务</string>
     <string name="property_home_message">租房信息</string>
-    <string name="property_decoration">装修服务</string>
+    <string name="property_decoration">装修</string>
     <string name="circle_title">圈子</string>
     <string name="i_will">我要报修</string>
     <string name="i_record">报修记录</string>
@@ -20,6 +20,9 @@
 
     <string name="order_message">您还没有小区信息</string>
     <string name="add_address">添加地址</string>
+    <string name="order_edit_address">编辑</string>
+    <string name="order_delete_address">删除</string>
+    <string name="order_sure_delete_address">确定删除地址?</string>
 
     <string name="add_city">城&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;市</string>
     <string name="add_area">小&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;区</string>

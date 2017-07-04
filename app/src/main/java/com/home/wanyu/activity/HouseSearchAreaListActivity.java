@@ -67,6 +67,9 @@ public class HouseSearchAreaListActivity extends AppCompatActivity implements Vi
                             mList = root.getResult();
                             msgListAda.setmList(mList);
                             msgListAda.notifyDataSetChanged();
+                            if (root.getResult().size()==0){
+                                Toast.makeText(HouseSearchAreaListActivity.this, "抱歉,该小区没有房屋信息哦", Toast.LENGTH_SHORT).show();
+                            }
                         } else {
                             List<Result> list = new ArrayList<>();
                             list = root.getResult();
@@ -79,8 +82,8 @@ public class HouseSearchAreaListActivity extends AppCompatActivity implements Vi
                             mMore_rl.setVisibility(View.VISIBLE);
                             mBar.setVisibility(View.INVISIBLE);
                         } else {
-                            mMore_rl.setVisibility(View.GONE);
-                            mBar.setVisibility(View.INVISIBLE);
+                                mMore_rl.setVisibility(View.GONE);
+                                mBar.setVisibility(View.INVISIBLE);
                         }
 
                     } else {

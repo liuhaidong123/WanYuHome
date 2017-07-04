@@ -6,6 +6,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,10 +21,10 @@ import cn.jpush.android.api.JPushInterface;
 public class MyApplication extends Application{
     public static Activity activityCurrent;
     private static List<Activity> list;
-
     @Override
     public void onCreate() {
         super.onCreate();
+
         if (Build.VERSION.SDK_INT >= 14) {//4.0以上
             list = new ArrayList<>();
             if (Build.VERSION.SDK_INT >= 14) {//4.0以上

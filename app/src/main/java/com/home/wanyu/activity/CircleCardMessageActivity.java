@@ -92,7 +92,8 @@ public class CircleCardMessageActivity extends AppCompatActivity implements View
                 if (o != null && o instanceof com.home.wanyu.bean.getCircleCommentMsg.Root) {
                     com.home.wanyu.bean.getCircleCommentMsg.Root root = (com.home.wanyu.bean.getCircleCommentMsg.Root) o;
                     if (root.getCode().equals("0")&&root.getResult().getStateEntity()!=null) {
-
+                        mHaveData.setVisibility(View.VISIBLE);
+                        mNOData.setVisibility(View.GONE);
                         Picasso.with(CircleCardMessageActivity.this).load(UrlTools.BASE + root.getResult().getStateEntity().getAvatar()).resize(ImgUitls.getWith(CircleCardMessageActivity.this) / 3, ImgUitls.getWith(CircleCardMessageActivity.this) / 3).error(R.mipmap.error_small).into(mHead);
                         mName.setText(root.getResult().getStateEntity().getUserName());
                         mArea.setText(root.getResult().getStateEntity().getRname());
@@ -130,6 +131,7 @@ public class CircleCardMessageActivity extends AppCompatActivity implements View
                         mGridviewAda.notifyDataSetChanged();
 
                     } else {
+                        mHaveData.setVisibility(View.GONE);
                         mNOData.setVisibility(View.VISIBLE);
                         Toast.makeText(CircleCardMessageActivity.this, "作者已删除", Toast.LENGTH_SHORT).show();
                     }

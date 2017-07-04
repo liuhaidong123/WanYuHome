@@ -1772,7 +1772,7 @@ public class HttpTools {
             @Override
             public void onSuccess(String s) {
                 super.onSuccess(s);
-                Log.i("onSuccess", "租房首页列表" + s);
+                Log.e("onSuccess", "租房首页列表" + s);
                 try {
                     Message message = new Message();
                     com.home.wanyu.bean.HouseFirstList.Root root = mGson.fromJson(s, com.home.wanyu.bean.HouseFirstList.Root.class);

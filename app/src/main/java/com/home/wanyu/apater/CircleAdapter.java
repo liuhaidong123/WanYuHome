@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.home.wanyu.R;
@@ -28,7 +29,7 @@ public class CircleAdapter extends BaseAdapter {
         this.mList = mList;
         this.mContext = mContext;
         this.mInflater = LayoutInflater.from(this.mContext);
-}
+    }
 
     @Override
     public int getCount() {
@@ -51,20 +52,20 @@ public class CircleAdapter extends BaseAdapter {
         if (convertView == null) {
             circleHolder = new CircleHolder();
             convertView = mInflater.inflate(R.layout.circle_listview_item, null);
-            circleHolder.imageView = (ImageView) convertView.findViewById(R.id.circle_img);
+            circleHolder.bg_rl = (RelativeLayout) convertView.findViewById(R.id.circle_bg_rl);
             circleHolder.textView = (TextView) convertView.findViewById(R.id.textview);
             convertView.setTag(circleHolder);
         } else {
             circleHolder = (CircleHolder) convertView.getTag();
         }
-        Picasso.with(mContext).load(mList.get(position).getImg()).into(circleHolder.imageView);
+        circleHolder.bg_rl.setBackgroundResource(mList.get(position).getImg());
         circleHolder.textView.setText(mList.get(position).getName());
 
         return convertView;
     }
 
     class CircleHolder {
-        ImageView imageView;
+        RelativeLayout bg_rl;
         TextView textView;
     }
 }

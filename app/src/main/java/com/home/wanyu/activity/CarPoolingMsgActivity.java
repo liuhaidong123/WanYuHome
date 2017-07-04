@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,8 +56,10 @@ public class CarPoolingMsgActivity extends AppCompatActivity implements View.OnC
                 if (o != null && o instanceof Root) {
                     Root root = (Root) o;
                     if (root.getResult() != null && root.getResult().getCommentlist() != null) {
-                        result = root.getResult();
+                        mAll_rl.setVisibility(View.VISIBLE);
+                        mNoData_rl.setVisibility(View.GONE);
 
+                        result = root.getResult();
                         mCommentList = root.getResult().getCommentlist();
                         if (mCommentList.size() != 0) {//
                             mScroll_View.setVisibility(View.VISIBLE);
@@ -111,6 +114,9 @@ public class CarPoolingMsgActivity extends AppCompatActivity implements View.OnC
 
                             }
                         }
+                    }else {
+                        mAll_rl.setVisibility(View.GONE);
+                        mNoData_rl.setVisibility(View.VISIBLE);
                     }
 
                 }
@@ -160,17 +166,22 @@ public class CarPoolingMsgActivity extends AppCompatActivity implements View.OnC
         }
     };
 
+    private RelativeLayout mAll_rl,mNoData_rl;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_car_pooling_msg);
         mHttptools = HttpTools.getHttpToolsInstance();
-        //拼车ID
+        //拼车ID carpoolingId
         carpoolingId = getIntent().getLongExtra("carpoolingId", -1);
         initView();
     }
 
     private void initView() {
+        mAll_rl= (RelativeLayout) findViewById(R.id.all_rl);
+        mNoData_rl= (RelativeLayout) findViewById(R.id.no_data_rl);
+
         mback = (ImageView) findViewById(R.id.car_msg_back);
         mback.setOnClickListener(this);
 

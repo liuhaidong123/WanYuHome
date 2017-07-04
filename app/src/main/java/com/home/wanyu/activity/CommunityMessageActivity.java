@@ -159,7 +159,7 @@ public class CommunityMessageActivity extends AppCompatActivity implements View.
         mPost_img = (ImageView) findViewById(R.id.community_post_activity);
         mPost_img.setOnClickListener(this);
 
-//正在进行，活动结束
+        //正在进行，活动结束
         mMy_start_ll = (LinearLayout) findViewById(R.id.community_now_ll);
         mMy_start_ll.setOnClickListener(this);
         mMy_end_ll = (LinearLayout) findViewById(R.id.community_ago_ll);
@@ -167,11 +167,11 @@ public class CommunityMessageActivity extends AppCompatActivity implements View.
         mStart_tv = (TextView) findViewById(R.id.order_year_tv);
         mEnd_tv = (TextView) findViewById(R.id.order_month_tv);
 
-//消息
+        //消息
         mMsg = (ImageView) findViewById(R.id.community_news_img);
         mMsg.setOnClickListener(this);
         mRed_img = (ImageView) findViewById(R.id.red_img);
-//下拉刷新
+       //下拉刷新
         mRefresh = (SwipeRefreshLayout) findViewById(R.id.community_refresh_layout);
         mRefresh.setRefreshing(true);
         mRefresh.setColorSchemeResources(R.color.bg_rect, R.color.colorAccent, R.color.result_points);
@@ -183,11 +183,11 @@ public class CommunityMessageActivity extends AppCompatActivity implements View.
                 mHttptools.getAreaActivityList(mHandler, UserInfo.userToken, over, start, limit);//获取活动列表
             }
         });
-//加载更多
+        //加载更多
         mMore_rl = (RelativeLayout) findViewById(R.id.many_relative);
         mMore_rl.setOnClickListener(this);
         mBar = (ProgressBar) findViewById(R.id.pbLocate);
-//没有数据显示的页面
+       //没有数据显示的页面
         mNOData_rl = (RelativeLayout) findViewById(R.id.no_data_rl);
     }
 
@@ -200,13 +200,16 @@ public class CommunityMessageActivity extends AppCompatActivity implements View.
             startActivity(new Intent(this, CommunityPostActivity.class));
             //正在进行，
         } else if (id == mMy_start_ll.getId()) {
+            mMore_rl.setVisibility(View.GONE);
             over = 1;
             if (mNowList.size() == 0) {
+                mMore_rl.setVisibility(View.GONE);
                 myListView.setVisibility(View.GONE);
                 mRefresh.setRefreshing(true);
                 start = 0;
                 mHttptools.getAreaActivityList(mHandler, UserInfo.userToken, over, start, limit);//获取活动列表
             } else {
+                mRefresh.setRefreshing(false);
                 mAdapter.setmList(mNowList, over, userId);
                 mAdapter.notifyDataSetChanged();
                 if (mNowList.size() % 10 == 0) {
@@ -231,6 +234,8 @@ public class CommunityMessageActivity extends AppCompatActivity implements View.
                 start = 0;
                 mHttptools.getAreaActivityList(mHandler, UserInfo.userToken, over, start, limit);//获取活动列表
             } else {
+                mRefresh.setRefreshing(false);
+                myListView.setVisibility(View.VISIBLE);
                 mAdapter.setmList(mEndList, over, userId);
                 mAdapter.notifyDataSetChanged();
                 if (mEndList.size() % 10 == 0) {

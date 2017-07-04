@@ -4,7 +4,7 @@
     android:id="@+id/activity_order_address"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/homefragmentFgbac"
+    android:background="@color/f5f5f5"
     tools:context="com.home.wanyu.activity.OrderAddressActivity">
 
     <RelativeLayout
@@ -26,9 +26,10 @@
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:gravity="center"
-            android:text="@string/property_order"
+            android:text="地址管理"
             android:textColor="@color/title_color"
-            android:textSize="17sp" />
+            android:textSize="17sp"
+            android:textStyle="bold" />
     </RelativeLayout>
 
     <ListView
@@ -37,9 +38,11 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/add_address_submit"
         android:layout_below="@+id/order_msg_title"
-        android:layout_marginTop="1dp"
-        android:divider="@color/homefragmentFgbac"
-        android:dividerHeight="1dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="15dp"
+        android:divider="@color/f5f5f5"
+        android:dividerHeight="15dp"
         android:scrollbars="none">
 
     </ListView>

@@ -214,7 +214,7 @@ public class CircleGiveYouCommentActivity extends MyActivity {
                 else if(messageType>=51&&messageType<=70){//拼车消息
                         if (messageType==51){//拼车评论
                             intent.setClass(con,CarPoolingMsgActivity.class);
-                            intent.putExtra("carpoolingId", listMessage.get(position).getReferId());
+                            intent.putExtra("carpoolingId",Long.parseLong(listMessage.get(position).getReferId()+""));
                             startActivity(intent);
                         }
                         else {

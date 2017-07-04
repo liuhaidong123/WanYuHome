@@ -44,6 +44,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:visibility="gone"
         android:background="@color/white"
         android:id="@+id/have_data_rl"
         android:layout_width="match_parent"
@@ -135,7 +136,8 @@
                 android:layout_below="@id/circle_card_commend_msg"
                 android:layout_marginLeft="50dp"
                 android:layout_marginTop="10dp"
-                android:horizontalSpacing="14sp"
+                android:horizontalSpacing="14dp"
+                android:verticalSpacing="7dp"
                 android:numColumns="4"
                 android:scrollbars="none">
 
@@ -325,6 +327,12 @@
         android:layout_margin="5dp"
         android:background="@color/white"
         android:visibility="gone">
+        <View
+            android:id="@+id/line2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/bg_color" />
+
 
         <ImageView
             android:id="@+id/no_img"

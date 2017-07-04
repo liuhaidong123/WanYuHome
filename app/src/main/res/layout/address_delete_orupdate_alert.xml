@@ -5,35 +5,65 @@
     android:background="@color/white">
 
     <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="100dp"
+        android:layout_width="match_parent"
+        android:layout_height="119.5dp"
         android:layout_centerInParent="true"
-        android:background="@color/white"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+        android:background="@drawable/order_delete_alert"
+       >
 
         <TextView
-            android:id="@+id/update"
-            android:layout_width="74dp"
-            android:layout_height="45dp"
-            android:layout_centerVertical="true"
-            android:background="#ecebeb"
+            android:id="@+id/order_delete_prompt"
+            android:layout_width="match_parent"
+            android:layout_height="73dp"
             android:gravity="center"
-            android:text="修改"
-            android:textColor="@color/title_color"
+            android:text="@string/order_sure_delete_address"
+            android:textColor="#666666"
             android:textSize="15sp" />
 
-        <TextView
-            android:id="@+id/delete"
-            android:layout_width="74dp"
-            android:layout_height="45dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
-            android:layout_toRightOf="@+id/update"
-            android:background="#fc4a4a"
-            android:gravity="center"
-            android:text="删除"
-            android:textColor="@color/white"
-            android:textSize="15sp" />
+
+        <View
+            android:id="@+id/order_line"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_below="@id/order_delete_prompt"
+            android:background="@color/e5e5e5" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:layout_below="@id/order_line">
+
+            <TextView
+                android:id="@+id/update"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="取消"
+                android:textColor="#666666"
+                android:textSize="18sp" />
+
+            <View
+                android:layout_width="0.5dp"
+                android:layout_height="match_parent"
+                android:background="@color/e5e5e5" />
+
+            <TextView
+                android:id="@+id/delete"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@+id/update"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="确定"
+                android:textColor="@color/eac6"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
     </RelativeLayout>
 </RelativeLayout>

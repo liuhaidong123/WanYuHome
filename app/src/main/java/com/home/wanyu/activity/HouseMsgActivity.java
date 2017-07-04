@@ -73,6 +73,9 @@ public class HouseMsgActivity extends AppCompatActivity implements View.OnClickL
                             mList = root.getResult();
                             msgListAda.setmList(mList);
                             msgListAda.notifyDataSetChanged();
+                            if (root.getResult().size() == 0) {
+                                Toast.makeText(HouseMsgActivity.this, "抱歉，该城市还没有房屋信息哦", Toast.LENGTH_SHORT).show();
+                            }
                         } else {
                             List<Result> list = new ArrayList<>();
                             list = root.getResult();
@@ -85,8 +88,11 @@ public class HouseMsgActivity extends AppCompatActivity implements View.OnClickL
                             mMore_rl.setVisibility(View.VISIBLE);
                             mBar.setVisibility(View.INVISIBLE);
                         } else {
+
                             mMore_rl.setVisibility(View.GONE);
                             mBar.setVisibility(View.INVISIBLE);
+
+
                         }
 
                     } else {
@@ -105,6 +111,7 @@ public class HouseMsgActivity extends AppCompatActivity implements View.OnClickL
 
     private ImageView mNetWorkBack;
     private TextView mNetWorkTitle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,7 +122,7 @@ public class HouseMsgActivity extends AppCompatActivity implements View.OnClickL
             initLocation();
             init();//授权定位
             initView();
-        }else {
+        } else {
             setContentView(R.layout.no_network);
             mNetWorkBack = (ImageView) findViewById(R.id.network_back);
             mNetWorkBack.setOnClickListener(new View.OnClickListener() {

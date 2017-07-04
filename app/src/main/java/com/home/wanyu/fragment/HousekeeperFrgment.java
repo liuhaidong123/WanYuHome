@@ -1,6 +1,8 @@
 package com.home.wanyu.fragment;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -12,6 +14,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -34,9 +39,16 @@ import com.home.wanyu.activity.OrderActivity;
 import com.home.wanyu.activity.OrderMessageActivity;
 import com.home.wanyu.activity.RepairActivity;
 import com.home.wanyu.apater.MyExpandableAda;
+import com.home.wanyu.apater.MyGridViewAda;
 import com.home.wanyu.apater.PropertyViewPagerAda;
+import com.home.wanyu.bean.MyGridBean;
 import com.home.wanyu.bean.haveAddress.Root;
 import com.home.wanyu.myview.MyExpandableListview;
+import com.home.wanyu.myview.MyGridView;
+import com.jude.rollviewpager.OnItemClickListener;
+import com.jude.rollviewpager.RollPagerView;
+import com.jude.rollviewpager.adapter.LoopPagerAdapter;
+import com.jude.rollviewpager.hintview.ColorPointHintView;
 
 import java.util.ArrayList;
 import java.util.IdentityHashMap;
@@ -49,23 +61,12 @@ import butterknife.Unbinder;
  * Created by wanyu on 2017/5/2.
  */
 //物业管家
-public class HousekeeperFrgment extends Fragment implements ViewPager.OnPageChangeListener, View.OnClickListener {
-    private ViewPager mViewpager;
-    private LinearLayout mViewgroup;
-    private List<Integer> mAdList = new ArrayList<>();
-    private PropertyViewPagerAda mAdAdapter;
-    private ImageView[] mImgArr;
+public class HousekeeperFrgment extends Fragment implements  View.OnClickListener {
 
-//    private MyExpandableListview mMyListview;
-//    private MyExpandableAda mMyxpandableAda;
-//    private List<String> mList = new ArrayList<>();
-//    private List<String> mTwoList = new ArrayList<>();
+    private RollPagerView mRollPagerView;
 
     private SwipeRefreshLayout mRefresh;
     private RelativeLayout mScrollRelative;
-
-    private TextView mExpress_msg;
-    private TextView mExpress_btn;
 
     private LinearLayout mRepair_ll;
     private LinearLayout mOrder_ll;
@@ -90,50 +91,52 @@ public class HousekeeperFrgment extends Fragment implements ViewPager.OnPageChan
                 if (o != null && o instanceof Root) {
                     mHaveRoot = (Root) o;
                 }
-            } else if (msg.what == 136) {//获取未领取的快递
-                Object o = msg.obj;
-                if (o != null && o instanceof com.home.wanyu.bean.Express.Root) {
-                    com.home.wanyu.bean.Express.Root root = (com.home.wanyu.bean.Express.Root) o;
-                    if (root != null && root.getResult() != null) {
-                        if (root.getResult().size() == 0) {
-                            mExpress_msg.setText("您还没有的快递");
-                        } else {
-                            mExpress_msg.setText("您还有" + root.getResult().size() + "个快递未领取");
-                        }
-                    }
-
-                }
             }
 
 
         }
     };
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window =  getActivity(). getWindow();
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
+                    | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(Color.TRANSPARENT);
+            window.setNavigationBarColor(Color.TRANSPARENT);
+        }
+
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View vi = inflater.inflate(R.layout.fragment_housekeeper, null, false);
-        initHttp();
+        mHttptools = HttpTools.getHttpToolsInstance();
         initView(vi);
-        initAdSmallIcon();
         return vi;
     }
 
-    private void initHttp() {
-        mHttptools = HttpTools.getHttpToolsInstance();
-        mHttptools.expressNOGet(mHandler, UserInfo.userToken);//获取未领取的快递
-    }
-
     public void initView(View view) {
-        //广告轮播
-        mViewpager = (ViewPager) view.findViewById(R.id.viewpager_property);
-        mViewgroup = (LinearLayout) view.findViewById(R.id.viewGroup);
-        mAdList.add(R.mipmap.main_background4);
-        mAdList.add(R.mipmap.main_background5);
-        mAdList.add(R.mipmap.main_background6);
-        mAdAdapter = new PropertyViewPagerAda(getActivity(), mAdList);
-        mViewpager.setAdapter(mAdAdapter);
-        mViewpager.setCurrentItem(0);
+        mRollPagerView = (RollPagerView) view.findViewById(R.id.my_pagerview);
+        mRollPagerView.setPlayDelay(3000);
+        mRollPagerView.setAnimationDurtion(500);
+        mRollPagerView.setAdapter(new RollAdapter(mRollPagerView));
+        //设置指示器（顺序依次）
+        mRollPagerView.setHintView(new ColorPointHintView(this.getActivity(), Color.BLACK, Color.WHITE));
+        mRollPagerView.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Toast.makeText(getActivity(), "下标：" + position, Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
         //将scrollview定位到顶部
         mScrollRelative = (RelativeLayout) view.findViewById(R.id.scroll_rl);
@@ -143,13 +146,11 @@ public class HousekeeperFrgment extends Fragment implements ViewPager.OnPageChan
         //刷新
 
         mRefresh = (SwipeRefreshLayout) view.findViewById(R.id.property_refresh);
-       // mRefresh.setEnabled(false);
         mRefresh.setColorSchemeResources(R.color.bg_rect, R.color.colorAccent, R.color.result_points);
         mRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 mHttptools.haveUserAddress(mHandler, UserInfo.userToken);
-                mHttptools.expressNOGet(mHandler, UserInfo.userToken);
             }
         });
 
@@ -169,102 +170,19 @@ public class HousekeeperFrgment extends Fragment implements ViewPager.OnPageChan
         //小区商户
         mCommercial_ll = (LinearLayout) view.findViewById(R.id.property_commercial);
         mCommercial_ll.setOnClickListener(this);
-//装修
+        //装修
         mDecoration_ll = (LinearLayout) view.findViewById(R.id.property_decoration);
         mDecoration_ll.setOnClickListener(this);
-//家政服务
+        //家政服务
         mHomeService_ll = (LinearLayout) view.findViewById(R.id.property_home_srevice);
         mHomeService_ll.setOnClickListener(this);
 
         //租房信息
         mHouseMsg_ll = (LinearLayout) view.findViewById(R.id.property_home_message);
         mHouseMsg_ll.setOnClickListener(this);
-
-        //快递通知
-        mExpress_msg = (TextView) view.findViewById(R.id.express_message);
-        mExpress_btn = (TextView) view.findViewById(R.id.express_look_btn);
-        mExpress_btn.setOnClickListener(this);
-    }
-
-    /**
-     * 初始化广告下的小图标
-     */
-    public void initAdSmallIcon() {
-        if (mAdList.size() != 0) {
-            Log.e("======", mAdList.size() + "");
-            mImgArr = new ImageView[mAdList.size()];
-            for (int i = 0; i < mAdList.size(); i++) {
-                ImageView imageView = new ImageView(this.getActivity());
-                //小圆点的布局
-                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                layoutParams.setMarginEnd(8);
-                imageView.setLayoutParams(layoutParams);
-                mImgArr[i] = imageView;
-                //当轮播的图片为一张时，不用设置小圆圈
-                if (mAdList.size() == 1) {
-                    break;
-                }
-                //默认第一页为白色的小圆圈(前提必须是轮播的图片大于1张)
-                if (i == 0) {
-                    imageView.setBackgroundResource(R.mipmap.select);
-                } else {
-                    imageView.setBackgroundResource(R.mipmap.select_no);
-                }
-                //将每一个小圆点添加到容器中
-                mViewgroup.addView(imageView);
-
-            }
-            //滑动监听
-            if (mAdList.size() > 1) {
-                mViewpager.addOnPageChangeListener(this);
-            }
-        }
     }
 
 
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-    }
-
-    //停在某一页的时候
-    @Override
-    public void onPageSelected(int position) {
-        setImageBackground(position);
-    }
-
-    //滑动状态改变
-    @Override
-    public void onPageScrollStateChanged(int state) {
-        //手指开始滑动
-        if (state == mViewpager.SCROLL_STATE_DRAGGING) {
-           mRefresh.setEnabled(false);
-            Log.e("手指开始滑动", "===");
-            //手指松开后自动滑动
-        } else if (state == mViewpager.SCROLL_STATE_SETTLING) {
-            mRefresh.setEnabled(false);
-            Log.e("手指松开后自动滑动", "===");
-            //停在某一页
-        } else {
-            mRefresh.setEnabled(true);
-            Log.e("停在某一页", "===");
-        }
-    }
-
-    /**
-     * 停在某一页时，变换小圆点
-     *
-     * @param selectItems
-     */
-    private void setImageBackground(int selectItems) {
-        for (int i = 0; i < mImgArr.length; i++) {
-            if (i == selectItems) {
-                mImgArr[i].setBackgroundResource(R.mipmap.select);
-            } else {
-                mImgArr[i].setBackgroundResource(R.mipmap.select_no);
-            }
-        }
-    }
 
     @Override
     public void onClick(View v) {
@@ -305,8 +223,33 @@ public class HousekeeperFrgment extends Fragment implements ViewPager.OnPageChan
             startActivity(new Intent(getActivity(), HomeServiceActivity.class));
         } else if (id == mHouseMsg_ll.getId()) {//租房信息
             startActivity(new Intent(getActivity(), HouseMsgActivity.class));
-        } else if (id == mExpress_btn.getId()) {//点击查看跳转到快递
-            startActivity(new Intent(getActivity(), ExpressActivity.class));
+        }
+
+    }
+
+    /**
+     * 广告适配器
+     */
+    class RollAdapter extends LoopPagerAdapter {
+        private int[] imgs = {R.mipmap.banner};
+
+        public RollAdapter(RollPagerView viewPager) {
+            super(viewPager);
+        }
+
+
+        @Override
+        public View getView(ViewGroup container, int position) {
+            ImageView view = new ImageView(container.getContext());
+            view.setImageResource(imgs[position]);
+            view.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            return view;
+        }
+
+        @Override
+        public int getRealCount() {
+            return imgs.length;
         }
 
     }
@@ -315,5 +258,14 @@ public class HousekeeperFrgment extends Fragment implements ViewPager.OnPageChan
     public void onResume() {
         super.onResume();
         mHttptools.haveUserAddress(mHandler, UserInfo.userToken);
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mRollPagerView.pause();
+        mRollPagerView.resume();
+        mRollPagerView.isPlaying();
     }
 }
