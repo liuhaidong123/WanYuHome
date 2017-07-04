@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_selected="false"
-        android:drawable="@mipmap/realestatemanagement"></item>
+        android:drawable="@mipmap/realestatemanagementq"></item>
     <item android:state_selected="true"
-        android:drawable="@mipmap/realestatemanagement_selected"></item>
+        android:drawable="@mipmap/realestatemanagementselectedq"></item>
 </selector>

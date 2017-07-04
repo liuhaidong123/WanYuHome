@@ -31,7 +31,7 @@ public class MyImageView extends ImageView{
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(getResources().getColor(R.color.test1));
             int width=canvas.getWidth();
-            canvas.drawCircle(width/2+width/5,10,10,paint);
+            canvas.drawCircle(getWidth()/2,getHeight()/2,getWidth()/2,paint);
         }
 
     }

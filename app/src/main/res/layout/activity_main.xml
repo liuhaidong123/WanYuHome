@@ -9,21 +9,22 @@
         android:id="@+id/main_top_frament"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/main_fg"
-        android:background="@color/white"></RelativeLayout>
-    <TextView
-        android:id="@+id/main_fg"
         android:layout_above="@+id/main_bottomlayout"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#f2f2f2"/>
+        android:background="@color/white">
+    </RelativeLayout>
+    <!--<TextView-->
+        <!--android:id="@+id/main_fg"-->
+        <!--android:layout_above="@+id/main_bottomlayout"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="1dp"-->
+        <!--android:background="#f2f2f2"/>-->
     <!--底部的view-->
     <LinearLayout
         android:id="@+id/main_bottomlayout"
         android:layout_width="match_parent"
-        android:layout_height="69dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="@color/mainBottomBackground"
+        android:background="#363840"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true">
         <!--家-->
@@ -35,6 +36,7 @@
             android:layout_weight="1"
             android:clickable="true">
             <ImageView
+                android:layout_marginTop="12dp"
                 android:scaleType="centerCrop"
                 android:id="@+id/main_bottomlayout_home_image"
                 android:layout_centerHorizontal="true"
@@ -49,7 +51,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="家"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="5dp"
                 android:textColor="@drawable/mainbotttomtextcolorselect"
                 android:id="@+id/main_bottomlayout_home_text"/>
         </RelativeLayout>
@@ -63,6 +66,7 @@
             android:layout_weight="1"
             android:clickable="true">
             <ImageView
+                android:layout_marginTop="12dp"
                 android:scaleType="centerCrop"
                 android:id="@+id/main_bottomlayout_Property_image"
                 android:layout_centerHorizontal="true"
@@ -76,7 +80,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="物业管家"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="5dp"
                 android:textColor="@drawable/mainbotttomtextcolorselect"
                 android:id="@+id/main_bottomlayout_Property_text"
                 android:layout_below="@+id/main_bottomlayout_Property_image"
@@ -93,6 +98,7 @@
             android:layout_weight="1"
             android:clickable="true">
             <ImageView
+                android:layout_marginTop="12dp"
                 android:scaleType="centerCrop"
                 android:id="@+id/main_bottomlayout_Communication_image"
                 android:layout_centerHorizontal="true"
@@ -107,7 +113,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="圈子"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="5dp"
                 android:textColor="@drawable/mainbotttomtextcolorselect"
                 android:id="@+id/main_bottomlayout_Communication_text"/>
         </RelativeLayout>
@@ -122,6 +129,7 @@
             android:layout_weight="1"
             android:clickable="true">
             <ImageView
+                android:layout_marginTop="12dp"
                 android:scaleType="centerCrop"
                 android:id="@+id/main_bottomlayout_Mine_image"
                 android:layout_centerHorizontal="true"
@@ -136,7 +144,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="个人"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="5dp"
                 android:textColor="@drawable/mainbotttomtextcolorselect"
                 android:id="@+id/main_bottomlayout_Mine_text"/>
         </RelativeLayout>

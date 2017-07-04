@@ -107,9 +107,7 @@ public class CarPoolingCommentActivity extends AppCompatActivity implements View
                     Log.e("carpoolingId",getIntent().getLongExtra("Id", -1)+"");
                     Log.e("coverPersonalId",getIntent().getLongExtra("coverPersonalId", -1)+"");
                     httptools.carPoolingComment(mhandler,ajax);
-
                 }
-
 
             } else {
                 Toast.makeText(this, "请输入评论内容", Toast.LENGTH_SHORT).show();

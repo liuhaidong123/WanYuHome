@@ -45,4 +45,8 @@
 
     <dimen name="switchWid">20dp</dimen>
     <dimen name="textSize">12sp</dimen>
+
+
+    <dimen name="homeTextSelectLarge">24sp</dimen>
+    <dimen name="homeTextSelectNormal">16sp</dimen>
 </resources>

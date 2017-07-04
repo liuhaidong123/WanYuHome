@@ -15,6 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -24,8 +25,35 @@
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
                 android:paddingBottom="25dp">
+
+                <!--情景图标-->
+                <RelativeLayout
+                    android:id="@+id/home_sence_scene_rela_icon"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_centerVertical="true"
+                        android:id="@+id/home_sence_icon_rela_textv"
+                        android:textSize="@dimen/textSize14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/titlecolor3"
+                        android:text="图 片 选 择"/>
+                    <ImageView
+                        android:src="@mipmap/addq"
+                        android:layout_marginLeft="15dp"
+                        android:layout_centerVertical="true"
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:layout_toRightOf="@+id/home_sence_icon_rela_textv"/>
+                </RelativeLayout>
+
+
+
                 <!--情景名称-->
                 <RelativeLayout
+                    android:layout_marginTop="20dp"
+                    android:layout_below="@+id/home_sence_scene_rela_icon"
                     android:id="@+id/home_sence_scene_rela_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -57,7 +85,7 @@
 
                 <!--启动条件-->
                 <RelativeLayout
-                    android:layout_marginTop="25dp"
+                    android:layout_marginTop="20dp"
                     android:layout_below="@+id/home_sence_scene_rela_name"
                     android:id="@+id/home_sence_scene_rela_condition"
                     android:layout_width="match_parent"
@@ -105,6 +133,7 @@
                     </RelativeLayout>
                 </RelativeLayout>
             </RelativeLayout>
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp">
@@ -124,18 +153,22 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-                <com.home.wanyu.myview.MyListView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                <com.home.wanyu.myview.MyGridView
                     android:scrollbars="none"
-                    android:dividerHeight="1dp"
-                    android:divider="#e9e9e9"
+                    android:numColumns="2"
+                    android:verticalSpacing="5dp"
+                    android:paddingRight="20dp"
+                    android:paddingLeft="20dp"
+                    android:horizontalSpacing="7dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_above="@+id/home_sence_bottomlayout"
-                    android:background="@color/white"
+                    android:background="#00aaeeaa"
                     android:id="@+id/home_sence_listview">
-                </com.home.wanyu.myview.MyListView>
+                </com.home.wanyu.myview.MyGridView>
 
                 <LinearLayout
+                    android:visibility="gone"
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
                     android:orientation="vertical"
@@ -147,6 +180,7 @@
                         <!--android:layout_height="1dp"-->
                         <!--android:background="#e9e9e9"/>-->
                     <RelativeLayout
+                        android:visibility="gone"
                         android:id="@+id/activity_homeSceneSetting_rela_add"
                         android:layout_width="match_parent"
                         android:layout_height="50dp">
@@ -171,6 +205,7 @@
                 </LinearLayout>
 
                 <RelativeLayout
+                    android:visibility="gone"
                     android:layout_gravity="bottom"
                     android:layout_alignParentBottom="true"
                     android:id="@+id/home_sence_bottomlayout"

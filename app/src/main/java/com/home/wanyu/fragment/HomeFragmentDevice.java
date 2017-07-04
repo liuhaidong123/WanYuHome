@@ -36,10 +36,9 @@ private Unbinder unbinder;
     ViewPager fragment_home_device_viewpager;
     @BindView(R.id.fragment_home_device_tablayout)
     TabLayout fragment_home_device_tablayout;
-//    @BindArray(R.array.homeDeviceString) String[]Sence;
+//  @BindArray(R.array.homeDeviceString) String[]Sence;
     private ArrayList<String>listTable;//获取到的标题个数
     private ArrayList<HomeFragmentDevicePager> listFragment;
-
     private ArrayList<Bean_SceneAndRoom.RoomListBean>listRoom;//设备数据源
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -91,8 +90,6 @@ private Unbinder unbinder;
             unbinder.unbind();
         }
     }
-
-
 
     class MyAdapter extends FragmentStatePagerAdapter {
 

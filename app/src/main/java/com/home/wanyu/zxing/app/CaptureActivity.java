@@ -225,7 +225,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
         if (CameraManager.get()!=null){
             CameraManager.get().closeDriver();
         }
-
     }
 
     @Override
