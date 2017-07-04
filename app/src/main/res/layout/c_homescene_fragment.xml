@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/c_homescene_info"
+        android:layout_width="match_parent"
+        android:textSize="@dimen/textSize13"
+        android:textColor="@color/white"
+        android:text="@string/homesceceInfo"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_below="@+id/c_homescene_info"
+        android:id="@+id/c_homescene_btnAdd"
+        android:layout_width="60dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:background="@drawable/c_home_btn"
+        android:textSize="@dimen/textSize13"
+        android:textColor="@drawable/c_home_textcolor_blackred"
+        android:text="添加"/>
+
+
+
+
+
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_below="@+id/c_homescene_btnAdd"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+       >
+        <!--//用于管理可折叠ToolBar容器-->
+        <android.support.design.widget.AppBarLayout
+            app:elevation="0dp"
+            android:overScrollMode="never"
+            android:background="#00ffeeaa"
+            android:layout_width="match_parent"
+            android:layout_height="160dp">
+            <!-- 展示的布局标题距离左边14dp-->
+            <!--//可折叠的ToolBar容器-->
+            <android.support.design.widget.CollapsingToolbarLayout
+                android:layout_width="match_parent"
+                android:layout_height="185dp"
+                android:id="@+id/collapsing"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                >
+                <android.support.v7.widget.Toolbar
+                    app:layout_collapseMode="pin"
+                    android:scrollbars="none"
+                    android:layout_width="match_parent"
+                    android:layout_height="?android:attr/actionBarSize"
+                    >
+                </android.support.v7.widget.Toolbar>
+            </android.support.design.widget.CollapsingToolbarLayout>
+        </android.support.design.widget.AppBarLayout>
+        <android.support.v4.widget.NestedScrollView
+            android:scrollbars="none"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:layout_width="match_parent"
+            android:fillViewport="true"
+            android:layout_height="match_parent">
+            <com.home.wanyu.myview.MyGridView
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:scrollbars="none"
+                android:numColumns="2"
+                android:verticalSpacing="5dp"
+                android:horizontalSpacing="7dp"
+                android:id="@+id/c_homescene_gridView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            </com.home.wanyu.myview.MyGridView>
+        </android.support.v4.widget.NestedScrollView>
+    </android.support.design.widget.CoordinatorLayout>
+</RelativeLayout>

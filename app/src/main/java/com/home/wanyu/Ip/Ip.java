@@ -166,6 +166,4 @@ public class Ip {
     //退出登录:http://localhost:8080/smarthome/mobilepub/personal/Exitlogin.do?token=ACDCE729BCE6FABC50881A867CAFC1BC
     public static final String interface_ClearLogin="/personal/Exitlogin.do?";
 
-
-
 }

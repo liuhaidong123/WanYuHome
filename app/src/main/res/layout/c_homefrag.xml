@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:fitsSystemWindows="true"
+    android:background="@mipmap/homebackground"
+    android:clipToPadding="false"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:background="@color/homefragmentBac"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:id="@+id/c_homefrag_toplayout"
+            android:layout_width="match_parent"
+            android:layout_height="44dp">
+            <TextView
+                android:id="@+id/c_homefrag_select_edit"
+                android:gravity="center"
+                android:background="@drawable/c_home_btn"
+                android:text="编辑"
+                android:textSize="13sp"
+                android:textColor="@drawable/c_home_textcolor_blackred"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:layout_width="60dp"
+                android:layout_height="25dp" />
+        </RelativeLayout>
+        <LinearLayout
+            android:id="@+id/c_homefrag_select_top"
+            android:layout_below="@+id/c_homefrag_toplayout"
+            android:paddingTop="10dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingBottom="10dp"
+            android:orientation="horizontal"
+            android:layout_marginBottom="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/c_homefrag_select_scene"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:gravity="bottom"
+                android:textColor="@color/white"
+                android:text="我的情景"
+                />
+
+            <TextView
+                android:id="@+id/c_homefrag_select_change"
+                android:layout_gravity="bottom"
+                android:gravity="bottom"
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:text="／"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+            <TextView
+                android:id="@+id/c_homefrag_select_deice"
+                android:layout_gravity="bottom"
+                android:gravity="bottom"
+                android:textColor="@color/white"
+                android:text="我的设备"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <RelativeLayout
+            android:paddingRight="15dp"
+            android:paddingLeft="15dp"
+            android:layout_below="@+id/c_homefrag_select_top"
+            android:id="@+id/c_homefrag_select_fraglayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </RelativeLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

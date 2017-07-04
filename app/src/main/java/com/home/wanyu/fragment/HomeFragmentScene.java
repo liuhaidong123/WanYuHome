@@ -92,10 +92,9 @@ public class HomeFragmentScene extends Fragment implements HomeFragment.HomeData
 
         }
         else {
-            Log.e("0000000000","9999999");
+            Log.e(getActivity().getClass().getSimpleName(),"tablayout数据不正确");
             return;
             }
-
     }
     @Override
     public void onDestroy() {
@@ -118,10 +117,6 @@ public class HomeFragmentScene extends Fragment implements HomeFragment.HomeData
             }
         }
     }
-
-
-
-
 
 
     class MyAdapter extends FragmentStatePagerAdapter {

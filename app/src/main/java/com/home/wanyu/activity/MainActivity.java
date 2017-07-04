@@ -1,12 +1,16 @@
 package com.home.wanyu.activity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -17,6 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.home.wanyu.bean.MainBottomControl;
+import com.home.wanyu.fragment.C_HomeFragment;
+import com.home.wanyu.fragment.C_MineFragment;
 import com.home.wanyu.fragment.CommunicationFragment;
 import com.home.wanyu.fragment.HomeFragment;
 import com.home.wanyu.fragment.HousekeeperFrgment;
@@ -47,13 +53,18 @@ public class MainActivity extends FragmentActivity {
 
     private FragmentManager manager;
     private ArrayList<MainBottomControl> listControl;
-    private HomeFragment mHomeFragment;//家
+//    private HomeFragment mHomeFragment;//家
+    C_HomeFragment mHomeFragment;
     private HousekeeperFrgment mHousekeeperFrgment;//物业管家
     private CommunicationFragment mCommunicationFragment;//圈子
-    private MineFragment mMineFragment;//个人
+    private C_MineFragment mMineFragment;//个人
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            // 设置状态栏透明
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        }
         setContentView(R.layout.activity_main);
         unbinder=ButterKnife.bind(MainActivity.this);
         initData();
@@ -64,10 +75,10 @@ public class MainActivity extends FragmentActivity {
     //初始化fragment
     private void initFragment() {
         manager=getSupportFragmentManager();
-        mHomeFragment=new HomeFragment();
+        mHomeFragment=new C_HomeFragment();
         mHousekeeperFrgment=new HousekeeperFrgment();
         mCommunicationFragment=new CommunicationFragment();
-        mMineFragment=new MineFragment();
+        mMineFragment=new C_MineFragment();
         mFragment=mHomeFragment;
         FragmentTransaction transaction=manager.beginTransaction();
         transaction.add(R.id.main_top_frament,mHomeFragment);

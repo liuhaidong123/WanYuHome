@@ -13,9 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.home.wanyu.zxing.decode;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -33,10 +31,6 @@ import com.home.wanyu.zxing.camera.CameraManager;
 import com.home.wanyu.zxing.view.ViewfinderResultPointCallback;
 
 import java.util.Vector;
-
-
-
-
 /**
  * This class handles all the messaging which comprises the state machine for
  * activity_qrcode_capture_layout.

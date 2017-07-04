@@ -34,14 +34,15 @@ public class StartActivity extends AppCompatActivity {
                     start_textV.setText(Html.fromHtml("<font color=\'#858585\'>剩余 </font><font color=\'#f02387\'>"+time+"</font><font color='#858585'>s</font>"));
                     break;
                 case 0:
-                    if (UserInfo.isLogin(StartActivity.this)){//已经登录
-                        //激光注册标签
-                        JPshAliasAndTags.setAlias(StartActivity.this,UserInfo.userName);
-                        startActivity(new Intent(StartActivity.this,MainActivity.class));
-                    }
-                    else {
-                         startActivity(new Intent(StartActivity.this,LoginAndRegisterActivity.class));
-                    }
+                    startActivity(new Intent(StartActivity.this,MainActivity.class));
+//                    if (UserInfo.isLogin(StartActivity.this)){//已经登录
+//                        //激光注册标签
+//                        JPshAliasAndTags.setAlias(StartActivity.this,UserInfo.userName);
+//                        startActivity(new Intent(StartActivity.this,MainActivity.class));
+//                    }
+//                    else {
+//                         startActivity(new Intent(StartActivity.this,LoginAndRegisterActivity.class));
+//                    }
 
                     finish();
                     break;

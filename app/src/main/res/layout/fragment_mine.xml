@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:background="#f1f1f1"
+    android:fitsSystemWindows="true"
+    android:clipToPadding="false"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <ScrollView
+        android:background="@color/homefragmentFgColor"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="none"
@@ -16,79 +18,48 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
             <RelativeLayout
-                android:background="@color/white"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/titleHeight"
-                >
-                <ImageView
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:layout_centerVertical="true"
-                    android:id="@+id/fragment_mine_image_settings"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/settings"/>
-
-                <com.home.wanyu.lzhUtils.MyImageView
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:id="@+id/fragment_mine_image_msg"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/news"
-                    android:layout_alignTop="@+id/fragment_mine_image_settings"
-                    android:layout_alignParentEnd="true" />
-            </RelativeLayout>
-            <RelativeLayout
                 android:id="@+id/fragment_mine_image_userEditor"
-                android:background="#c0eefd"
                 android:layout_width="match_parent"
-                android:layout_height="120dp">
-                <com.home.wanyu.myview.RoundImageView
-                    android:id="@+id/fragment_mine_image_userphoto"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="15dp"
-                    android:scaleType="fitCenter"
-                    android:src="@mipmap/userdefault"
-                    android:layout_width="65dp"
-                    android:layout_height="65dp" />
-                <TextView
-                    android:id="@+id/fragment_mine_image_username"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:textColor="@color/color6a"
-                    android:textSize="@dimen/textSize14"
-                    android:text="LIM"
-                    android:layout_toRightOf="@+id/fragment_mine_image_userphoto"/>
-                <ImageView
-                    android:layout_toRightOf="@+id/fragment_mine_image_username"
-                    android:layout_marginLeft="5dp"
-                    android:paddingTop="2dp"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/fragment_mine_sex"
-                    android:id="@+id/fragment_mine_image_usersex"
-                    android:layout_width="15dp"
-                    android:layout_height="15dp" />
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/fragment_mine_image_usersex"
-                    android:src="@mipmap/compile"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingTop="10dp"
-                    android:layout_toRightOf="@+id/fragment_mine_image_usersex"
-                    android:id="@+id/fragment_mine_image_userEdit"/>
-            </RelativeLayout>
+                android:layout_height="200dp">
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@mipmap/homebackground"
+                        android:scaleType="centerCrop"/>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <com.home.wanyu.myview.RoundImageView
+                            android:layout_marginTop="30dp"
+                            android:layout_centerHorizontal="true"
+                            android:id="@+id/fragment_mine_image_userphoto"
+                            android:scaleType="fitCenter"
+                            android:src="@mipmap/userdefault"
+                            android:layout_width="75dp"
+                            android:layout_height="75dp" />
+                        <TextView
+                            android:id="@+id/fragment_mine_image_userName"
+                            android:layout_below="@+id/fragment_mine_image_userphoto"
+                            android:layout_marginTop="10dp"
+                            android:textSize="@dimen/textSize14"
+                            android:textColor="@color/white"
+                            android:text="LIM"
+                            android:layout_centerHorizontal="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                    </RelativeLayout>
 
+                </FrameLayout>
+            </RelativeLayout>
             <LinearLayout
-                android:layout_marginTop="10dp"
+
                 android:background="@color/white"
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
-                android:layout_height="100dp">
+                android:layout_height="110dp">
                 <!--家-->
                 <RelativeLayout
                     android:id="@+id/fragment_mine_layout_myhome"
@@ -96,22 +67,27 @@
                     android:layout_weight="1"
                     android:layout_gravity="center"
                     android:layout_height="wrap_content">
-                    <ImageView
-                        android:layout_centerHorizontal="true"
-                        android:id="@+id/fragment_mine_layout_myhome_image"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/myhome"/>
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="我的家"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="25dp"
+                        android:layout_marginBottom="25dp"
                         android:textSize="@dimen/textSize12"
                         android:textColor="@color/color6a"
                         android:layout_centerHorizontal="true"
                         android:id="@+id/fragment_mine_layout_myhome_textview"
                         android:layout_below="@+id/fragment_mine_layout_myhome_image"/>
+
+                    <ImageView
+                        android:layout_marginTop="25dp"
+                        android:id="@+id/fragment_mine_layout_myhome_image"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@mipmap/myhomeq"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true" />
                 </RelativeLayout>
                 <!--我的圈子-->
                 <RelativeLayout
@@ -121,16 +97,18 @@
                     android:layout_gravity="center"
                     android:layout_height="wrap_content">
                     <ImageView
+                        android:layout_marginTop="25dp"
                         android:layout_centerHorizontal="true"
                         android:id="@+id/fragment_mine_layout_mycircle_image"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/mycircle"/>
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@mipmap/mycircleq"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="我的圈子"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="25dp"
+                        android:layout_marginBottom="25dp"
                         android:textSize="@dimen/textSize12"
                         android:textColor="@color/color6a"
                         android:layout_centerHorizontal="true"
@@ -138,57 +116,76 @@
                         android:layout_below="@+id/fragment_mine_layout_mycircle_image"/>
                 </RelativeLayout>
 
-                <!--我的订单-->
+                <!--我的活动-->
                 <RelativeLayout
-                    android:visibility="gone"
-                    android:id="@+id/fragment_mine_layout_myorder"
+                    android:id="@+id/fragment_mine_layout_myActivity"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_gravity="center"
                     android:layout_height="wrap_content">
                     <ImageView
                         android:layout_centerHorizontal="true"
-                        android:id="@+id/fragment_mine_layout_myorder_image"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/myorder"/>
+                        android:id="@+id/fragment_mine_layout_myActivity_image"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginTop="25dp"
+                        android:layout_alignParentTop="true"
+                        android:src="@mipmap/myactivitiesq"/>
                     <TextView
+                        android:layout_marginBottom="25dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="我的订单"
-                        android:layout_marginTop="20dp"
+                        android:text="我的活动"
+                        android:layout_marginTop="25dp"
                         android:textSize="@dimen/textSize12"
                         android:textColor="@color/color6a"
                         android:layout_centerHorizontal="true"
-                        android:id="@+id/fragment_mine_layout_myorder_textview"
-                        android:layout_below="@+id/fragment_mine_layout_myorder_image"/>
+                        android:id="@+id/fragment_mine_layout_myActivity_textview"
+                        android:layout_below="@+id/fragment_mine_layout_myActivity_image"/>
                 </RelativeLayout>
 
-                <!--我的收藏-->
+                <!--我的消息-->
                 <RelativeLayout
-                    android:visibility="gone"
-                    android:id="@+id/fragment_mine_layout_mystore"
+                    android:id="@+id/fragment_mine_layout_myMessage"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_gravity="center"
                     android:layout_height="wrap_content">
-                    <ImageView
+                    <FrameLayout
+                        android:layout_marginTop="20dp"
                         android:layout_centerHorizontal="true"
-                        android:id="@+id/fragment_mine_layout_mystore_image"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/collect"/>
+                        android:id="@+id/mess"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp">
+                        <ImageView
+                            android:layout_marginTop="5dp"
+                            android:layout_centerHorizontal="true"
+                            android:id="@+id/fragment_mine_layout_myMessage_image"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@mipmap/newsq"/>
+                        <com.home.wanyu.lzhUtils.MyImageView
+                            android:layout_marginTop="3dp"
+                            android:layout_marginRight="2dp"
+                            android:id="@+id/fragment_mine_layout_myMessage_info"
+                            android:layout_gravity="right|top"
+                            android:layout_width="6dp"
+                            android:layout_height="6dp" />
+                    </FrameLayout>
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="我的收藏"
-                        android:layout_marginTop="20dp"
+                        android:text="我的消息"
+                        android:layout_marginTop="25dp"
+                        android:layout_marginBottom="25dp"
                         android:textSize="@dimen/textSize12"
                         android:textColor="@color/color6a"
                         android:layout_centerHorizontal="true"
-                        android:id="@+id/fragment_mine_layout_mystore_textview"
-                        android:layout_below="@+id/fragment_mine_layout_mystore_image"/>
+                        android:id="@+id/fragment_mine_layout_myMessage_textview"
+                        android:layout_below="@+id/mess"/>
                 </RelativeLayout>
+
             </LinearLayout>
             <!--我的收货地址-->
             <RelativeLayout
@@ -223,20 +220,53 @@
                     android:src="@mipmap/more2"/>
             </RelativeLayout>
 
-            <!--关于宇家-->
+            <!--设置-->
             <RelativeLayout
-                android:id="@+id/fragment_mine_layout_about"
+                android:id="@+id/fragment_mine_layout_setting"
                 android:background="@color/white"
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="60dp">
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/about"
+                    android:layout_width="11dp"
+                    android:layout_height="11dp"
+                    android:scaleType="fitCenter"
+                    android:src="@mipmap/settingsq"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="15dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginRight="20dp"
+                    android:id="@+id/fragment_mine_layout_setting_image"/>
+                <TextView
+                    android:textColor="@color/color6a"
+                    android:textSize="@dimen/textSize14"
+                    android:text="设置"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/fragment_mine_layout_setting_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:layout_alignParentRight="true"
+                    android:src="@mipmap/more2"/>
+            </RelativeLayout>
+            <!--关于宇家-->
+            <RelativeLayout
+                android:id="@+id/fragment_mine_layout_about"
+                android:background="@color/white"
+                android:layout_marginTop="1dp"
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+                <ImageView
+                    android:layout_width="11dp"
+                    android:layout_height="11dp"
+                    android:scaleType="fitCenter"
+                    android:src="@mipmap/aboutq"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="20dp"
                     android:id="@+id/fragment_mine_layout_about_image"/>
                 <TextView
                     android:textColor="@color/color6a"
@@ -255,8 +285,6 @@
                     android:src="@mipmap/more2"/>
             </RelativeLayout>
 
-
-
             <!--意见反馈-->
             <RelativeLayout
                 android:id="@+id/fragment_mine_layout_contacts"
@@ -265,12 +293,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp">
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/opinion"
+                    android:layout_width="11dp"
+                    android:layout_height="11dp"
+                    android:scaleType="fitCenter"
+                    android:src="@mipmap/opinionq"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="15dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginRight="20dp"
                     android:id="@+id/fragment_mine_layout_contacts_image"/>
                 <TextView
                     android:textColor="@color/color6a"

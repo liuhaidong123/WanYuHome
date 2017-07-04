@@ -46,7 +46,7 @@ public class SwitchButton extends View {
     public SwitchButton(Context context, AttributeSet attrs) {
         super(context, attrs);
         TypedArray typedArray=context.obtainStyledAttributes(attrs, R.styleable.switchBtn);
-        state=typedArray.getBoolean(R.styleable.switchBtn_sta,true);
+        state=typedArray.getBoolean(R.styleable.switchBtn_sta,false);
         textColor=typedArray.getColor(R.styleable.switchBtn_switch_textColor, getResources().getColor(R.color.switchTextColor));
         switchColorFalse=typedArray.getColor(R.styleable.switchBtn_switch_false, getResources().getColor(R.color.switchFalseColor));
         switchColorTrue=typedArray.getColor(R.styleable.switchBtn_switch_true,getResources().getColor(R.color.switchTrueColor));

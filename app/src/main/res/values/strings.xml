@@ -304,4 +304,6 @@
 
     <string name="carpool">TINE您好，司机张接收了您从名流一品小区到风景公园的拼车。请您尽快与司机进行沟通。</string>
     <string name="carpool_phone">电话：17743516302</string>
+    <string name="homesceceInfo">添加我的常用情景，创建我的智能家庭</string>
+    <string name="homedeviceInfo">添加我的设备，创建我的智能家庭</string>
 </resources>

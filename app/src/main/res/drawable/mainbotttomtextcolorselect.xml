@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 <item android:state_selected="true"
-    android:color="@color/mainBottomTextSelectColor"></item>
+    android:color="@color/mainBottomTrue"></item>
     <item android:state_selected="false"
-        android:color="@color/mainBottomTextUnSelectColor"></item>
+        android:color="@color/mainBottomFalse"></item>
+
+    <!--<color name="mainBottomFalse">#73747a</color>-->
+    <!--<color name="mainBottomTrue">#363840</color>-->
 </selector>

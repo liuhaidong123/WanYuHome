@@ -110,12 +110,20 @@
     //用到的颜色值属性
     <color name="switchballColor">#fefffe</color>
     <color name="switchTextColor">#fefffe</color>
-    <color name="switchFalseColor">#b1b7b1</color>
-    <color name="switchTrueColor">#00bfff</color>
+    <color name="switchFalseColor">#8e9096</color>
+    <color name="switchTrueColor">#0ddcbc</color>
     <color name="al">#00000000</color>
     <color name="al2">#79e4e7e4</color>
     <color name="loginregiter_unselect">#9ae8e8</color>
     <color name="loginregiter_select">#4dbfcd</color>
     <color name="login_start">#38d5d5</color>
     <color name="login_end">#1ab3e3</color>
+
+    <color name="homefragmentBac">#4d323232</color>
+
+    <color name="homeSceneGridSelect">#ffffff</color>
+    <color name="homeSceneGridUnSelect">#b2ffffff</color>
+
+    <color name="mainBottomFalse">#73747a</color>
+    <color name="mainBottomTrue">#00eac6</color>
 </resources>

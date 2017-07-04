@@ -390,10 +390,8 @@ public void cli(View vi){
                 myText.setText("正在加载。。。");
                 break;
         }
-
     }
-
-    //获取我的圈子信息http://192.168.1.55:8080/smarthome/mobileapi/state/findPage.do?token=9DB2FD6FDD2F116CD47CE6C48B3047EE
+//获取我的圈子信息http://192.168.1.55:8080/smarthome/mobileapi/state/findPage.do?token=9DB2FD6FDD2F116CD47CE6C48B3047EE
 //    Method:GET
 //    参数列表:
 //            |参数名        |类型      |必需  |描述
@@ -420,7 +418,6 @@ public void cli(View vi){
             }
         });
     }
-
 //    http://192.168.1.55:8080/smarthome/mobileapi/state/delete.do?ids=1234,12345&token=9DB2FD6FDD2F116CD47CE6C48B3047EE
 //    Method:POST
 //    参数列表:
@@ -455,7 +452,7 @@ public void cli(View vi){
                     public void onResponse(Response response) throws IOException {
                         resStr=response.body().string();
                         Log.i("删除我的圈子--",resStr);
-                        handler.sendEmptyMessage(2);
+                        handler.sendEmptyMessage(2);handler.sendEmptyMessage(2);
                     }
                 });
             }
@@ -468,9 +465,8 @@ public void cli(View vi){
             Log.e("删除圈子--","deleteQZdata()-----圈子数据源为空或者数据源没有数据");
         }
     }
-
-//    http://192.168.1.55:8080/smarthome/mobileapi/activity/findPage.do?token=9DB2FD6FDD2F116CD47CE6C48B3047EE
-    //获取我的活动
+//http://192.168.1.55:8080/smarthome/mobileapi/activity/findPage.do?token=9DB2FD6FDD2F116CD47CE6C48B3047EE
+//获取我的活动
     public void getACdata(int st,int limi){
         Map<String,String>mp=new HashMap<>();
         mp.put("token", UserInfo.userToken);
@@ -489,8 +485,7 @@ public void cli(View vi){
             }
         });
     }
-
-    //删除我的活动http://192.168.1.55:8080/smarthome/mobileapi/activity/delete.do?ids=1234,12345&token=9DB2FD6FDD2F116CD47CE6C48B3047EE
+//删除我的活动http://192.168.1.55:8080/smarthome/mobileapi/activity/delete.do?ids=1234,12345&token=9DB2FD6FDD2F116CD47CE6C48B3047EE
 //    Method:POST
 //    参数列表:
 //            |参数名        |类型      |必需  |描述

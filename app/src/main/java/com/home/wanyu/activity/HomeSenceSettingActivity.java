@@ -1,5 +1,4 @@
 package com.home.wanyu.activity;
-
 import android.content.Intent;
 import android.database.sqlite.SQLiteException;
 import android.graphics.Color;
@@ -46,6 +45,7 @@ import com.home.wanyu.lzhView.wheelView.MyWheelAdapter;
 import com.home.wanyu.lzhView.wheelView.MyWheelViewAdapterArray;
 import com.home.wanyu.lzhView.wheelView.OnWheelChangedListener;
 import com.home.wanyu.lzhView.wheelView.WheelView;
+import com.home.wanyu.myview.MyGridView;
 import com.home.wanyu.myview.MyListView;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.Request;
@@ -65,7 +65,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-
 /**
  * Created by wanyu on 2017/5/4.
  */
@@ -75,7 +74,6 @@ import butterknife.Unbinder;
 public class HomeSenceSettingActivity extends MyActivity{
     private TextView my_user_info_submmit;
     private TextView myActivity_title;
-
     private int deleteId;
     private PopupWindow popX;
     private    PopupWindow popW;
@@ -83,7 +81,7 @@ public class HomeSenceSettingActivity extends MyActivity{
     private String SenceId;//情景的id
     @BindView(R.id.home_sence_scene_rela_eidtext) EditText home_sence_scene_rela_eidtext;//
     @BindView(R.id.home_sence_scene_rela_condition_imageselect)ImageView home_sence_scene_rela_condition_imageselect;
-    @BindView(R.id.home_sence_listview)MyListView home_sence_listview;
+    @BindView(R.id.home_sence_listview)MyGridView home_sence_listview;
     @BindView(R.id.home_sence_scene_rela_condition_textv_name)TextView home_sence_scene_rela_condition_textv_name;//显示启动方式
     private PopupWindow pop;
     private List<Bean_getSceneData.EquipmentListBean> list;
@@ -175,7 +173,7 @@ public class HomeSenceSettingActivity extends MyActivity{
                             }
                         }
                         else {
-                            mToast.ToastFaild(con,ToastType.GSONEMPTY);
+                            mToast.Toast(con,"操作失败");
                         }
                     }
                     catch (Exception e){
@@ -214,11 +212,12 @@ public class HomeSenceSettingActivity extends MyActivity{
         initTitleView(R.layout.activity_my_user_title);
         myActivity_title= (TextView) findViewById(R.id.myActivity_title);
         my_user_info_submmit= (TextView) findViewById(R.id.my_user_info_submmit);
-        my_user_info_submmit.setText("删除");
+        my_user_info_submmit.setText("确定");
 
         initChildView(R.layout.activity_home_sence_setting);
         unbinder=ButterKnife.bind(this,ChildView);
         myActivity_title.setText(getIntent().getStringExtra("name"));
+        myActivity_title.setTextColor(getResources().getColor(R.color.color6a));
         SenceId=getIntent().getStringExtra("id");
 
         ShowChildView(DEFAULTRESID);
@@ -254,7 +253,13 @@ public class HomeSenceSettingActivity extends MyActivity{
         home_sence_listview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                showWindow(position);
+                if (position!=adapter.getCount()-1){
+                    showWindow(position);
+                }
+                else {
+//                    addDevice();
+                    mToast.Toast(con,""+position);
+                    }
                 return false;
             }
         });
@@ -264,7 +269,8 @@ public class HomeSenceSettingActivity extends MyActivity{
         String name=getIntent().getStringExtra("name");
         home_sence_scene_rela_eidtext.setText(name);
     }
-    @OnClick({R.id.home_sence_scene_rela_condition_relaLayout,R.id.activity_homeSceneSetting_rela_add,R.id.home_sence_bottomSubmit})
+    @OnClick({R.id.home_sence_scene_rela_condition_relaLayout,R.id.activity_homeSceneSetting_rela_add,R.id.home_sence_bottomSubmit
+    ,R.id.home_sence_scene_rela_icon})
     public void click(View vi){
         switch (vi.getId()){
             case R.id.home_sence_scene_rela_condition_relaLayout://弹出设置选项框
@@ -287,10 +293,13 @@ public class HomeSenceSettingActivity extends MyActivity{
                 startActivityForResult(intent,100);
                 break;
             case R.id.home_sence_bottomSubmit://提交修改的情景
-                if (sceneData==null){
-                    return;
-                }
-                sendSceneSetting();
+//                if (sceneData==null){
+//                    return;
+//                }
+//                sendSceneSetting();
+                break;
+            case R.id.home_sence_scene_rela_icon://选择图标
+                mToast.Toast(con,"选择图标");
                 break;
             }
         }
@@ -318,6 +327,22 @@ public class HomeSenceSettingActivity extends MyActivity{
         });
     }
 
+    //添加设备
+    public void addDevice(){
+        Intent intent=new Intent();
+        intent.putExtra("type","sceneAdd");
+        Bundle bundle=new Bundle();
+        ArrayList<String>listName=new ArrayList<>();
+        if (list!=null&&list.size()>0){
+            for (int i=0;i<list.size();i++){
+                listName.add(list.get(i).getName());
+            }
+        }
+        bundle.putSerializable("data",listName);
+        intent.putExtra("data",bundle);
+        intent.setClass(con,MyHouseDeviceManagerActivity.class);
+        startActivityForResult(intent,100);
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -335,6 +360,8 @@ public class HomeSenceSettingActivity extends MyActivity{
     //初始化网络请求
     @Override
     public void getSerVerData() {
+
+//        SenceId="1";//测试用，需删除（7-3号）
         if (!"".equals(SenceId)&&!TextUtils.isEmpty(SenceId)){
             HashMap<String,String>map=new HashMap<>();
             map.put("id",SenceId);map.put("token", UserInfo.userToken);
@@ -344,7 +371,6 @@ public class HomeSenceSettingActivity extends MyActivity{
             Log.e("HomeSenceSettingAct-","请求情景失败，情景Id为空");
         }
     }
-    //提交情景设置http://192.168.1.55:8080/smarthome/mobileapi/scene/save.do?id=123&token=9DB2FD6FDD2F116CD47CE6C48B3047EE
     public void sendSceneSetting(){
         if (sceneData==null){//没有请求到当前情景的信息
             return;
@@ -553,7 +579,6 @@ public class HomeSenceSettingActivity extends MyActivity{
         currentTimeHour=0;
         currentTimeMinus=0;
         popW=new PopupWindow();
-        popW = new PopupWindow();
         View v = LayoutInflater.from(con).inflate(R.layout.pop_homesencesetting_data, null);
         final TextView pop_data_submit= (TextView) v.findViewById(R.id.pop_data_submit);
         //提交设置
@@ -725,9 +750,12 @@ public class HomeSenceSettingActivity extends MyActivity{
             }
         });
     }
-
-    //删除房间的按钮
+    //保存房间的按钮
     public void Submit(View vi){
-        deleteScene();
+//        deleteScene();
+        if (sceneData==null){
+            return;
+        }
+        sendSceneSetting();
     }
 }
