@@ -1,5 +1,6 @@
 package com.home.wanyu.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,6 +14,7 @@ import com.home.wanyu.R;
 import com.home.wanyu.adapter.C_HomeDeviceGridAdapter;
 import com.home.wanyu.adapter.C_HomeSceneGridAdapter;
 import com.home.wanyu.myview.MyGridView;
+import com.home.wanyu.zxing.app.CaptureActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -45,7 +47,8 @@ public class C_HomeDeviceFragment extends Fragment{
     void click(View vi){
         switch (vi.getId()){
             case R.id.c_homedevice_btnAdd://添加房间
-
+                //添加设备，暂定
+                startActivity(new Intent(getActivity(),CaptureActivity.class));
                 break;
             case R.id.c_homedevice_relaMore://切换房间
                 break;

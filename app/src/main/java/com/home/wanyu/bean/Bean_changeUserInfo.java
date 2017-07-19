@@ -14,6 +14,15 @@ public class Bean_changeUserInfo {
     private String result;
     private String code;
 
+    public String getMessage() {
+        return Message;
+    }
+
+    public void setMessage(String message) {
+        Message = message;
+    }
+
+    private String Message;
     public String getResult() {
         return result;
     }

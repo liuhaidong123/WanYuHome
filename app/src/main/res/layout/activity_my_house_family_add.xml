@@ -6,11 +6,14 @@
     android:layout_height="match_parent"
     android:background="@color/homefragmentFgColor"
     tools:context="com.home.wanyu.activity.MyHouseFamilyAddActivity">
+
     <RelativeLayout
+        android:layout_marginTop="1dp"
         android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="1dp">
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true">
         <com.home.wanyu.myview.RoundImageView
             android:id="@+id/activity_my_house_family_add_image"
             android:layout_width="40dp"

@@ -1,5 +1,6 @@
 package com.home.wanyu.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.home.wanyu.Ip.mToast;
 import com.home.wanyu.R;
+import com.home.wanyu.activity.C_HomeSceneAddActivity;
 import com.home.wanyu.adapter.C_HomeSceneGridAdapter;
 import com.home.wanyu.myview.MyGridView;
 
@@ -47,7 +49,7 @@ public class C_HomeSceneFragment extends Fragment {
     @OnClick(R.id.c_homescene_btnAdd)
     public void click(View vi){
         if (vi!=null){
-            mToast.Toast(getActivity(),"添加情景");
+            startActivity(new Intent(getActivity(), C_HomeSceneAddActivity.class));
         }
     }
 

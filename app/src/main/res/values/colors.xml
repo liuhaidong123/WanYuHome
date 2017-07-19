@@ -118,4 +118,9 @@
 
     <color name="mainBottomFalse">#73747a</color>
     <color name="mainBottomTrue">#00eac6</color>
+    <color name="themColor">#00eac6</color>
+    <color name="themColorDink">#01d2b2</color>
+    <color name="C5">#c5c5c5</color>
+    <color name="red">#f10615</color>
+    <color name="reddink">#dc0513</color>
 </resources>

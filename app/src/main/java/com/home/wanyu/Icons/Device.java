@@ -11,8 +11,9 @@ public enum Device {
 //    3=电视
 //    4=窗帘
 //    5=空调
-//    6=门锁
-    NONE,SWITCH,LIGHT,TV,CURTAIN,AC,LOCK;
+//    6=音响
+    //7门锁
+    NONE,SWITCH,LIGHT,TV,CURTAIN,AC,SOUND,LOCK;
 
     public static Device getDevice(int device){
         switch (device){
@@ -29,6 +30,8 @@ public enum Device {
             case 5:
                 return AC;
             case 6:
+                return SOUND;
+            case 7:
                 return LOCK;
             default:
                 return NONE;

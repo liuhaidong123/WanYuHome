@@ -53,10 +53,6 @@ public class HomeSceneSettingListAdapter extends BaseAdapter{
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHodler viewHodler;
-//        if (position==getCount()-1){//最后一个
-//            View view=LayoutInflater.from(context).inflate(R.layout.c_homegrid_item,null);
-//            return view;
-//        }
         if (convertView==null){
             convertView= LayoutInflater.from(context).inflate(R.layout.c_homedevice_grid_item,null);
             viewHodler=new ViewHodler(convertView);
@@ -66,18 +62,6 @@ public class HomeSceneSettingListAdapter extends BaseAdapter{
             viewHodler= (ViewHodler) convertView.getTag();
             }
 
-//        viewHodler.c_homescene_gridViewItem_switch.setOnSw(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                int pos= (int) buttonView.getTag();
-//                if (isChecked){
-//                    list.get(pos).setToState(0);
-//                }
-//                else {
-//                    list.get(pos).setToState(1);
-//                }
-//            }
-//        });
         if (position!=getCount()-1){//不是添加选项
             if (list.get(position).getIconId()>=0&&list.get(position).getIconId()<=icon.mIconId[icon.mIconId.length-1]){
                 viewHodler.c_homescene_gridViewItem_image.setImageResource(icon.mIconRes[list.get(position).getIconId()]);
@@ -126,10 +110,6 @@ public class HomeSceneSettingListAdapter extends BaseAdapter{
         @BindView(R.id.c_homescene_gridViewItem_layout)RelativeLayout c_homescene_gridViewItem_layout;
         @BindView(R.id.c_homescene_gridViewItem_switch)SwitchButton c_homescene_gridViewItem_switch;//设备开关按钮
 
-
-//        ImageView activity_homeSceneSetting_listitem_rela_image;
-//        TextView activity_homeSceneSetting_listitem_rela_textSetting;
-//        SwitchCompat activity_homeSceneSetting_listitem_rela_switch;
     }
 
 }

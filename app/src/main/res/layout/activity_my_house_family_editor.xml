@@ -264,7 +264,7 @@
             android:text="确定添加"
             android:id="@+id/activity_my_house_family_editor_submit"
             android:layout_centerInParent="true"
-            android:background="@drawable/activity_homescene_setting_submit"
+            android:background="@drawable/familyadd"
             android:textColor="@color/white"
             android:layout_width="190dp"
             android:gravity="center"

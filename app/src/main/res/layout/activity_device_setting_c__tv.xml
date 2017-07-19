@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_device_setting_c__tv"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#363840"
+    tools:context="com.home.wanyu.activity.DeviceSettingC_TVActivity">
+    <include
+        android:id="@+id/toplayout"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        layout="@layout/activity_titleinclude_btn">
+    </include>
+    <FrameLayout
+        android:layout_below="@+id/toplayout"
+        android:layout_centerHorizontal="true"
+        android:layout_width="335dp"
+        android:layout_height="335dp">
+        <ImageView
+            android:scaleType="fitXY"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@mipmap/tve"
+            android:id="@+id/imageView3" />
+        <ImageView
+                android:src="@mipmap/lefte"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="80dp"
+                android:id="@+id/tv_setting_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:layout_gravity="center_vertical|right"
+                android:layout_alignParentRight="true"
+                android:src="@mipmap/righte"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="80dp"
+                android:id="@+id/tv_setting_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="80dp"
+                android:src="@mipmap/adde"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:id="@+id/tv_setting_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        <ImageView
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="80dp"
+            android:src="@mipmap/minuse"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:id="@+id/tv_setting_minus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+    </FrameLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_marginBottom="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <!--静音-->
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+            <ImageView
+                android:layout_centerHorizontal="true"
+                android:id="@+id/image_Voice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/c_tvsetting_voice"/>
+            <TextView
+                android:id="@+id/textv_voice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="静音"
+                android:layout_marginTop="10dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/image_Voice"
+                android:textSize="@dimen/textSize12"
+                android:textColor="@color/white"/>
+        </RelativeLayout>
+
+        <!--关闭-->
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+            <ImageView
+                android:layout_centerHorizontal="true"
+                android:id="@+id/image_Close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/powere"/>
+            <TextView
+                android:id="@+id/textv_close"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="关闭"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/image_Close"
+                android:textSize="@dimen/textSize12"
+                android:textColor="@color/white"/>
+        </RelativeLayout>
+
+    <!--定时-->
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+            <ImageView
+                android:layout_centerHorizontal="true"
+                android:id="@+id/image_timing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/timinge"/>
+            <TextView
+                android:id="@+id/textv_timing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00:00"
+                android:layout_marginTop="10dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/image_timing"
+                android:textSize="@dimen/textSize12"
+                android:textColor="@color/white"/>
+        </RelativeLayout>
+    </LinearLayout>
+</RelativeLayout>

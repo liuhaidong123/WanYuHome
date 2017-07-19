@@ -1,5 +1,6 @@
 package com.home.wanyu.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,10 +9,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import com.home.wanyu.C_Utils.CHomeFragmentUtils;
+import com.home.wanyu.C_View.CHomeFragmentUtils;
 import com.home.wanyu.Ip.mToast;
 import com.home.wanyu.R;
 import com.home.wanyu.ViewSettingUtils.TextViewSetting;
+import com.home.wanyu.activity.C_HomeRoomSettingActivity;
+import com.home.wanyu.activity.C_HomeSceneAddActivity;
+import com.home.wanyu.activity.DeviceSettingC_AirConActivity;
+import com.home.wanyu.activity.DeviceSettingC_TVActivity;
 import com.home.wanyu.mEmeu.HomeSelect;
 
 import butterknife.BindView;
@@ -58,7 +63,7 @@ public class C_HomeFragment extends Fragment implements CHomeFragmentUtils.iCHom
         TextViewSetting.ChangeTextSie(c_homefrag_select_scene,c_homefrag_select_deice,select);
     }
 
-    @OnClick({R.id.c_homefrag_select_scene,R.id.c_homefrag_select_deice,R.id.c_homefrag_select_edit})
+    @OnClick({R.id.c_homefrag_select_scene,R.id.c_homefrag_select_deice,R.id.c_homefrag_select_edit,R.id.textv_test})
     public void click(View v){
         switch (v.getId()){
             case R.id.c_homefrag_select_scene://不做处理
@@ -80,15 +85,17 @@ public class C_HomeFragment extends Fragment implements CHomeFragmentUtils.iCHom
                 if (chomeUtils==null){
                     chomeUtils=new CHomeFragmentUtils(this);
                     }
-
                 switch (select){
                     case SCENE://情景编辑
                         chomeUtils.ShowSceneSettingWindow();
                         break;
                     case DEVICE://设备编辑
-
+                    getActivity().startActivity(new Intent(getActivity(), C_HomeRoomSettingActivity.class));
                         break;
                 }
+                break;
+            case R.id.textv_test:
+                startActivity(new Intent(getActivity(), DeviceSettingC_TVActivity.class));
                 break;
         }
     }
@@ -105,7 +112,8 @@ public class C_HomeFragment extends Fragment implements CHomeFragmentUtils.iCHom
     public void addSceneOrDevice() {
         switch (select){
             case SCENE://添加情景
-                mToast.Toast(getActivity(),"添加情景");
+//                mToast.Toast(getActivity(),"添加情景");
+                startActivity(new Intent(getActivity(), C_HomeSceneAddActivity.class));
                 break;
             case DEVICE://添加房间
                 mToast.Toast(getActivity(),"添加房间");

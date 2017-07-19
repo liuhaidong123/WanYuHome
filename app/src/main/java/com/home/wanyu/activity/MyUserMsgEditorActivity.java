@@ -81,7 +81,7 @@ public class MyUserMsgEditorActivity extends MyActivity {
                                 finish();
                             }
                             else {
-                                mToast.Toast(con,changeUserInfo.getResult());
+                                mToast.Toast(con,changeUserInfo.getMessage());
                             }
                         }
                         else {

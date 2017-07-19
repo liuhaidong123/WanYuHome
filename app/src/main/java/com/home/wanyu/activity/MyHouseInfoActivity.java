@@ -97,20 +97,6 @@ public class MyHouseInfoActivity extends MyActivity {
     private PopupWindow popupW;
     private TextView activity_address_title;
     //三级列表
-//    private WheelView my_address_pop_wheelV_Provice,my_address_pop_wheelV_City,my_address_pop_wheelV_Areas;
-//    private List<Map<String,String>> mProvince;//省
-//    private List<Map<String,String>>listCity;
-//    private List<Map<String,String>>listArea;
-//    private String provice;
-//    private String city;
-//    private int currentPro,currentCity,currentArea;
-//    private MyProAdapter adapterPro,adapterCity,adapterAres;
-//    private Map<String,List<Map<String,String>>> mCity;
-//    private Map<String,List<Map<String,String>>>mArea;
-//    private String selectAddress;//被选中等address（省市县）
-//    private String pro,cit,area;
-//    private String selectPostCode;//被选中的postCode（三级集合）
-//    private String codeP,codeC,codeA;//被选中的省市县三级的code
     //三级列表
     private String resultStr;
 

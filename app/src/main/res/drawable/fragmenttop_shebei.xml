@@ -4,10 +4,10 @@
         <shape>
             <corners android:bottomRightRadius="5dp"
                 android:topRightRadius="5dp"></corners>
-            <solid android:color="@color/mainBottomTextSelectColor">
+            <solid android:color="@color/themColor">
             </solid>
             <stroke android:width="2dp"
-                android:color="@color/mainBottomTextSelectColor"></stroke>
+                android:color="@color/themColor"></stroke>
         </shape>
     </item>
     <item android:state_selected="false">
@@ -16,7 +16,7 @@
                 android:bottomRightRadius="5dp"></corners>
             <solid android:color="@color/white"></solid>
             <stroke android:width="2dp"
-                android:color="@color/mainBottomTextSelectColor"></stroke>
+                android:color="@color/themColor"></stroke>
         </shape>
     </item>
 </selector>
