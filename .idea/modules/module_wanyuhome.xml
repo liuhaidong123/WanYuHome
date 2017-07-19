@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_wanyuhome" default="compile.module.wanyuhome">
+  <dirname property="module.wanyuhome.basedir" file="${ant.file.module_wanyuhome}"/>
+  
+  <property name="module.jdk.home.wanyuhome" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.wanyuhome" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.wanyuhome" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.wanyuhome" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="wanyuhome.output.dir" value="${module.wanyuhome.basedir}/../../build/classes/main"/>
+  <property name="wanyuhome.testoutput.dir" value="${module.wanyuhome.basedir}/../../build/classes/test"/>
+  
+  <path id="wanyuhome.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="wanyuhome.module.production.classpath">
+    <path refid="${module.jdk.classpath.wanyuhome}"/>
+  </path>
+  
+  <path id="wanyuhome.runtime.production.module.classpath">
+    <pathelement location="${wanyuhome.output.dir}"/>
+  </path>
+  
+  <path id="wanyuhome.module.classpath">
+    <path refid="${module.jdk.classpath.wanyuhome}"/>
+    <pathelement location="${wanyuhome.output.dir}"/>
+  </path>
+  
+  <path id="wanyuhome.runtime.module.classpath">
+    <pathelement location="${wanyuhome.testoutput.dir}"/>
+    <pathelement location="${wanyuhome.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.wanyuhome">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.wanyuhome">
+    <patternset refid="excluded.from.module.wanyuhome"/>
+  </patternset>
+  
+  
+  <target name="compile.module.wanyuhome" depends="compile.module.wanyuhome.production,compile.module.wanyuhome.tests" description="Compile module WanYuHome"/>
+  
+  <target name="compile.module.wanyuhome.production" depends="register.custom.compilers" description="Compile module WanYuHome; production classes"/>
+  
+  <target name="compile.module.wanyuhome.tests" depends="register.custom.compilers,compile.module.wanyuhome.production" description="compile module WanYuHome; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.wanyuhome" description="cleanup module">
+    <delete dir="${wanyuhome.output.dir}"/>
+    <delete dir="${wanyuhome.testoutput.dir}"/>
+  </target>
+</project>

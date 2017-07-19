@@ -7,17 +7,17 @@
         android:id="@+id/title_rl"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:background="@color/white">
+        android:background="@color/e7e7e7">
 
         <TextView
             android:id="@+id/cancle_city_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="50dp"
-            android:padding="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:text="取消"
-            android:textColor="@color/name_color"
+            android:textColor="@color/eac6"
             android:textSize="15sp" />
 
         <TextView
@@ -26,17 +26,12 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="50dp"
-            android:padding="10dp"
-            android:text="确定"
-            android:textColor="@color/bg_rect"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="@string/complete"
+            android:textColor="@color/eac6"
             android:textSize="15sp" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_alignParentBottom="true"
-            android:background="@color/bg_color" />
     </RelativeLayout>
 
     <LinearLayout
@@ -60,4 +55,5 @@
             android:layout_weight="1"
             android:background="@color/white" />
     </LinearLayout>
+
 </RelativeLayout>

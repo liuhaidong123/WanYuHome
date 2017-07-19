@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.home.wanyu.HttpUtils.HttpTools;
 import com.home.wanyu.R;
@@ -40,7 +41,7 @@ public class CommunityMessageActivity extends AppCompatActivity implements View.
 
     private ImageView mPost_img;
     private LinearLayout mMy_start_ll, mMy_end_ll;
-    private TextView mStart_tv, mEnd_tv;
+    private TextView mStart_tv, mEnd_tv,mStart_line,mEnd_line;
 
     private ImageView mMsg;//消息
     private ImageView mRed_img;
@@ -101,6 +102,10 @@ public class CommunityMessageActivity extends AppCompatActivity implements View.
                         } else {
                             mMore_rl.setVisibility(View.VISIBLE);
                             mBar.setVisibility(View.INVISIBLE);
+                        }
+
+                        if (list.size()==0){
+                            Toast.makeText(CommunityMessageActivity.this,"抱歉,无活动了!",Toast.LENGTH_SHORT).show();
                         }
                     }
 
@@ -166,7 +171,8 @@ public class CommunityMessageActivity extends AppCompatActivity implements View.
         mMy_end_ll.setOnClickListener(this);
         mStart_tv = (TextView) findViewById(R.id.order_year_tv);
         mEnd_tv = (TextView) findViewById(R.id.order_month_tv);
-
+        mStart_line = (TextView) findViewById(R.id.community_line_now);
+        mEnd_line = (TextView) findViewById(R.id.community_line_end);
         //消息
         mMsg = (ImageView) findViewById(R.id.community_news_img);
         mMsg.setOnClickListener(this);
@@ -221,10 +227,12 @@ public class CommunityMessageActivity extends AppCompatActivity implements View.
                 }
             }
 
-            mMy_start_ll.setBackgroundResource(R.color.bg_rect);
-            mStart_tv.setTextColor(ContextCompat.getColor(this, R.color.white));
-            mMy_end_ll.setBackgroundResource(R.color.white);
-            mEnd_tv.setTextColor(ContextCompat.getColor(this, R.color.title_color));
+            //mMy_start_ll.setBackgroundResource(R.color.bg_rect);
+            mStart_tv.setTextColor(ContextCompat.getColor(this, R.color.eac6));
+            mStart_line.setBackgroundResource(R.color.c2a5);
+           // mMy_end_ll.setBackgroundResource(R.color.white);
+            mEnd_tv.setTextColor(ContextCompat.getColor(this, R.color.white));
+            mEnd_line.setBackgroundResource(R.color.circle_bg);
             //活动结束
         } else if (id == mMy_end_ll.getId()) {
             over = 2;
@@ -247,10 +255,12 @@ public class CommunityMessageActivity extends AppCompatActivity implements View.
                 }
             }
 
-            mMy_start_ll.setBackgroundResource(R.color.white);
-            mStart_tv.setTextColor(ContextCompat.getColor(this, R.color.title_color));
-            mMy_end_ll.setBackgroundResource(R.color.bg_rect);
-            mEnd_tv.setTextColor(ContextCompat.getColor(this, R.color.white));
+           // mMy_start_ll.setBackgroundResource(R.color.white);
+            mStart_tv.setTextColor(ContextCompat.getColor(this, R.color.white));
+            mStart_line.setBackgroundResource(R.color.circle_bg);
+           // mMy_end_ll.setBackgroundResource(R.color.bg_rect);
+            mEnd_line.setBackgroundResource(R.color.c2a5);
+            mEnd_tv.setTextColor(ContextCompat.getColor(this, R.color.eac6));
         } else if (id == mMsg.getId()) {//消息
             Intent intent = new Intent(this, CircleGiveYouCommentActivity.class);
             intent.putExtra("type", 1);

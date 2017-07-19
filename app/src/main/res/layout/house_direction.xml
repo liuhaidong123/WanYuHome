@@ -29,7 +29,7 @@
             android:layout_marginRight="50dp"
             android:padding="10dp"
             android:text="确定"
-            android:textColor="@color/bg_rect"
+            android:textColor="@color/eac6"
             android:textSize="15sp" />
 
         <View

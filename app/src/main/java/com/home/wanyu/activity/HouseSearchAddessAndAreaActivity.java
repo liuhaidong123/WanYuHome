@@ -55,7 +55,7 @@ public class HouseSearchAddessAndAreaActivity extends AppCompatActivity implemen
     private SQLiteDatabase mAreaSqliteDB;
     private int mType;
     private String mCity;
-
+    private String mCode;
     private ListView mSearch_ListView;
     private HouseSearchCityAda mCityAda;
     private HouseSearchAreaAda mAreaAda;
@@ -123,6 +123,7 @@ public class HouseSearchAddessAndAreaActivity extends AppCompatActivity implemen
 
     private void initView() {
         mType = getIntent().getIntExtra("type", -1);
+        mCode=getIntent().getStringExtra("code");
         mCancle_btn = (TextView) findViewById(R.id.search_cancle);
         mCancle_btn.setOnClickListener(this);
 
@@ -162,7 +163,8 @@ public class HouseSearchAddessAndAreaActivity extends AppCompatActivity implemen
                 } else if (mType == 2) {//搜索小区
                     mCity = getIntent().getStringExtra("city");
                     mEdit.setText(mAreaList.get(position).getAddress());
-                    mHttptools.getHouseAreaByCity(handler, getContent(), mCity);//根据城市搜索 小区
+                   // mHttptools.getHouseAreaByCity(handler, getContent(), mCity);//根据城市搜索 小区
+                    mHttptools.getHouseAreaByCity(handler, getContent(), "涿州市");
                 }
 
 
@@ -273,6 +275,7 @@ public class HouseSearchAddessAndAreaActivity extends AppCompatActivity implemen
                 } else {//点击搜索到小区
                     Intent intent = new Intent(HouseSearchAddessAndAreaActivity.this, HouseSearchAreaListActivity.class);
                     intent.putExtra("city", mCity);
+                    intent.putExtra("code",mCode);
                     intent.putExtra("searchArea", mSearchAreaList.get(position).getRname());
                     startActivity(intent);
                     finish();

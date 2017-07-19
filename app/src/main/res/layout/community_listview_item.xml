@@ -10,7 +10,7 @@
         <RelativeLayout
             android:id="@+id/title"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="61dp"
             android:background="@color/white">
 
             <com.home.wanyu.myview.RoundImageView
@@ -30,7 +30,7 @@
                 android:layout_toRightOf="@id/community_head_img"
                 android:text=""
                 android:textColor="@color/titlecolor3"
-                android:textSize="14sp" />
+                android:textSize="15sp" />
 
 
             <TextView
@@ -45,12 +45,20 @@
                 android:textSize="14sp" />
         </RelativeLayout>
 
+        <View
+            android:id="@+id/line_c_1"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_below="@id/title"
+            android:background="@color/e5e5e5"
+            />
+
         <RelativeLayout
             android:id="@+id/content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/title"
-            android:background="@color/bg_color"
+            android:layout_below="@id/line_c_1"
+            android:background="@color/white"
             android:padding="10dp">
 
             <TextView
@@ -68,7 +76,7 @@
                 android:layout_below="@id/community_ming"
                 android:layout_marginTop="10dp"
                 android:text="时间  "
-                android:textColor="#666666"
+                android:textColor="@color/color9"
                 android:textSize="14sp" />
 
             <TextView
@@ -89,7 +97,7 @@
                 android:layout_below="@id/community_activity_time"
                 android:layout_marginTop="10dp"
                 android:text="地点  "
-                android:textColor="#666666"
+                android:textColor="@color/color9"
                 android:textSize="14sp" />
 
 
@@ -111,7 +119,7 @@
                 android:layout_below="@id/community_address"
                 android:layout_marginTop="10dp"
                 android:text="人数  "
-                android:textColor="#666666"
+                android:textColor="@color/color9"
                 android:textSize="14sp" />
 
             <TextView
@@ -126,10 +134,18 @@
                 android:textSize="14sp" />
         </RelativeLayout>
 
+        <View
+            android:id="@+id/line_c_2"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/e5e5e5"
+            android:layout_below="@id/content"
+            />
+
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="37dp"
-            android:layout_below="@id/content"
+            android:layout_height="45dp"
+            android:layout_below="@id/line_c_2"
             android:background="@color/white">
 
             <TextView
@@ -139,7 +155,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
                 android:text=""
-                android:textColor="@color/bg_rect"
+                android:textColor="@color/eac6"
                 android:textSize="14sp" />
 
             <ImageView
@@ -184,4 +200,5 @@
         </RelativeLayout>
 
     </RelativeLayout>
+
 </RelativeLayout>

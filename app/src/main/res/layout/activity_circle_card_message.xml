@@ -16,7 +16,7 @@
         <ImageView
             android:id="@+id/circle_card_msg_back"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_centerVertical="true"
             android:paddingLeft="10dp"
             android:paddingRight="20dp"
@@ -28,7 +28,8 @@
             android:gravity="center"
             android:text="@string/circle_msg_title"
             android:textColor="@color/title_color"
-            android:textSize="17sp" />
+            android:textSize="17sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/circle_card_msg_delete"
@@ -41,32 +42,32 @@
             android:textColor="@color/title_color"
             android:textSize="15sp"
             android:visibility="gone" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:visibility="gone"
-        android:background="@color/white"
-        android:id="@+id/have_data_rl"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/circle_card_msg_title">
 
         <View
             android:id="@+id/line"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/bg_color" />
+            android:layout_alignParentBottom="true"
+            android:background="@color/e5e5e5" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/have_data_rl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/circle_card_msg_title"
+        android:background="@color/white"
+        android:visibility="gone">
 
         <RelativeLayout
             android:id="@+id/circle_head_rl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/line"
             android:background="@color/white"
             android:paddingBottom="15dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:paddingTop="10dp">
+            android:paddingTop="20dp">
 
             <RelativeLayout
                 android:id="@+id/circle_title1"
@@ -75,10 +76,9 @@
 
                 <com.home.wanyu.myview.RoundImageView
                     android:id="@+id/circle_card_head_img"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:scaleType="centerCrop"
-                   />
+                    android:layout_width="41dp"
+                    android:layout_height="41dp"
+                    android:scaleType="centerCrop" />
 
                 <TextView
                     android:id="@+id/circle_card_name_tv"
@@ -98,48 +98,50 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginTop="25dp"
                     android:ellipsize="end"
                     android:maxLength="20"
                     android:maxLines="1"
                     android:text=""
                     android:textColor="@color/name_color"
-                    android:textSize="10sp" />
+                    android:textSize="12sp" />
             </RelativeLayout>
 
             <TextView
                 android:id="@+id/circle_card_type_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/circle_title1"
-                android:layout_marginLeft="50dp"
+                android:layout_below="@id/circle_title1"
+                android:layout_marginLeft="51dp"
                 android:text=""
                 android:textColor="@color/title_color"
-                android:textSize="14sp" />
+                android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/circle_card_commend_msg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/circle_card_type_tv"
-                android:layout_marginLeft="50dp"
-                android:layout_marginTop="7dp"
+                android:layout_marginLeft="51dp"
+                android:layout_marginTop="15dp"
                 android:ellipsize="end"
                 android:maxLines="20"
-                android:text="" />
+                android:text=""
+                android:textColor="@color/title_color"
+                android:textSize="15sp" />
 
             <com.home.wanyu.myview.MyGridView
                 android:id="@+id/circle_gridview_friend"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/circle_card_commend_msg"
-                android:layout_marginLeft="50dp"
-                android:layout_marginTop="10dp"
-                android:horizontalSpacing="14dp"
-                android:verticalSpacing="7dp"
-                android:numColumns="4"
-                android:scrollbars="none">
+                android:layout_marginLeft="51dp"
+                android:layout_marginTop="15dp"
+                android:horizontalSpacing="10dp"
+                android:numColumns="3"
+                android:scrollbars="none"
+                android:verticalSpacing="7dp">
 
             </com.home.wanyu.myview.MyGridView>
 
@@ -147,8 +149,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/circle_gridview_friend"
-                android:layout_marginLeft="50dp"
-                android:layout_marginTop="19dp">
+                android:layout_marginLeft="51dp"
+                android:layout_marginTop="15dp">
 
                 <TextView
                     android:id="@+id/circle_card_time_tv"
@@ -157,7 +159,7 @@
                     android:layout_centerVertical="true"
                     android:text=""
                     android:textColor="@color/color9"
-                    android:textSize="10sp" />
+                    android:textSize="12sp" />
 
                 <TextView
                     android:id="@+id/circle_card_commend_num"
@@ -183,7 +185,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="15dp"
+                    android:layout_marginRight="10dp"
                     android:layout_toLeftOf="@id/circle_card_commend_img"
                     android:text=""
                     android:textColor="@color/color9"
@@ -205,13 +207,14 @@
         <ScrollView
             android:id="@+id/scroll_rl"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_above="@+id/card_comment_box"
             android:layout_below="@id/circle_head_rl"
-            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="61dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
-            android:background="@color/bg_color"
+            android:background="@color/f9f9f9"
             android:scrollbars="none">
 
             <RelativeLayout
@@ -222,8 +225,8 @@
                     android:id="@+id/blue_like"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="27dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
                     android:src="@mipmap/circle_blue_like" />
 
 
@@ -231,12 +234,13 @@
                     android:id="@+id/circle_card_gridview"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_below="@id/blue_like"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
                     android:layout_toRightOf="@id/blue_like"
                     android:horizontalSpacing="5dp"
-                    android:numColumns="7"
+                    android:numColumns="6"
                     android:verticalSpacing="5dp">
 
                 </com.home.wanyu.myview.MyGridView>
@@ -245,68 +249,70 @@
                 <View
                     android:id="@+id/line_f"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="0.5dp"
                     android:layout_below="@id/circle_card_gridview"
-                    android:layout_marginTop="5dp"
-                    android:background="@color/repair_line" />
+                    android:layout_marginTop="15dp"
+                    android:background="@color/ededed" />
 
 
-                <ImageView
-                    android:id="@+id/blue_msg"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/line_f"
-                    android:layout_marginLeft="27dp"
-                    android:layout_marginTop="5dp"
-                    android:src="@mipmap/circle_blue_msg" />
+                <!--<ImageView-->
+                <!--android:id="@+id/blue_msg"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_below="@id/line_f"-->
+                <!--android:layout_marginLeft="27dp"-->
+                <!--android:layout_marginTop="5dp"-->
+                <!--android:src="@mipmap/circle_blue_msg" />-->
 
                 <com.home.wanyu.myview.MyListView
                     android:id="@+id/comment_listview_circle"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_below="@id/blue_msg"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_toRightOf="@id/blue_msg"
-                    android:divider="@color/bg_color"
-                    android:dividerHeight="5dp"
+                    android:layout_below="@id/line_f"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="15dp"
+                    android:divider="@color/f9f9f9"
+                    android:dividerHeight="15dp"
                     android:scrollbars="none">
 
                 </com.home.wanyu.myview.MyListView>
             </RelativeLayout>
         </ScrollView>
 
-        <RelativeLayout
+        <LinearLayout
             android:id="@id/card_comment_box"
             android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:layout_alignParentBottom="true">
+            android:layout_height="49dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/comment"
+            android:visibility="gone">
 
             <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_centerVertical="true"
+                android:layout_width="0dp"
+                android:layout_height="36dp"
+                android:layout_gravity="center_vertical"
                 android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
+                android:layout_weight="1"
                 android:background="@drawable/comment_bg">
 
-                <ImageView
-                    android:id="@+id/writing_img"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:src="@mipmap/writing" />
+                <!--<ImageView-->
+                <!--android:id="@+id/writing_img"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_centerVertical="true"-->
+                <!--android:layout_marginLeft="10dp"-->
+                <!--android:src="@mipmap/writing" />-->
 
                 <EditText
                     android:id="@+id/edit"
                     android:layout_width="match_parent"
-                    android:layout_height="45dp"
+                    android:layout_height="match_parent"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@id/writing_img"
                     android:background="@null"
-                    android:hint="@string/comment_hint"
+                    android:hint="@string/comment_tv"
                     android:imeOptions="actionSend"
                     android:inputType="text"
                     android:maxLength="500"
@@ -316,7 +322,21 @@
                     android:textSize="15sp" />
             </RelativeLayout>
 
-        </RelativeLayout>
+            <TextView
+                android:id="@+id/comment_send_btn"
+                android:layout_width="49dp"
+                android:layout_height="26dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="7dp"
+                android:layout_marginRight="15dp"
+                android:background="@color/circle_bg"
+                android:gravity="center"
+                android:text="@string/comment_send"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+
     </RelativeLayout>
 
     <RelativeLayout
@@ -327,6 +347,7 @@
         android:layout_margin="5dp"
         android:background="@color/white"
         android:visibility="gone">
+
         <View
             android:id="@+id/line2"
             android:layout_width="match_parent"
@@ -348,7 +369,8 @@
             android:layout_centerInParent="true"
             android:layout_marginTop="10dp"
             android:text="@string/no_data_author"
-            android:textColor="@color/bg_rect" />
+            android:textColor="@color/eac6"
+            android:textStyle="italic" />
     </RelativeLayout>
 
 </RelativeLayout>

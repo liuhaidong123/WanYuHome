@@ -5,13 +5,13 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/white">
 
         <RelativeLayout
             android:id="@+id/car_title_rl"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:background="@color/white">
+            android:layout_height="61dp">
 
             <com.home.wanyu.myview.RoundImageView
                 android:id="@+id/car_head"
@@ -19,7 +19,7 @@
                 android:layout_height="40dp"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
-                />
+                android:scaleType="centerCrop" />
 
             <TextView
                 android:id="@+id/car_name"
@@ -30,7 +30,7 @@
                 android:layout_toRightOf="@id/car_head"
                 android:text=""
                 android:textColor="@color/title_color"
-                android:textSize="14sp" />
+                android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/car_time"
@@ -46,13 +46,19 @@
 
         </RelativeLayout>
 
+        <View
+            android:id="@+id/car_line_1"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_below="@id/car_title_rl"
+            android:background="@color/e5e5e5" />
+
         <RelativeLayout
 
             android:id="@+id/car_content_rl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/car_title_rl"
-            android:background="@color/bg_color">
+            android:layout_below="@id/car_line_1">
 
             <RelativeLayout
                 android:id="@+id/car_shen_rl"
@@ -60,7 +66,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginTop="25dp">
+                android:layout_marginTop="15dp">
 
                 <TextView
 
@@ -91,7 +97,7 @@
                 android:layout_below="@id/car_shen_rl"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="15dp">
 
                 <TextView
 
@@ -122,7 +128,7 @@
                 android:layout_below="@id/car_time_rl"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="15dp">
 
                 <TextView
 
@@ -151,10 +157,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/car_start_address_rl"
-
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="15dp">
 
                 <TextView
 
@@ -178,16 +183,15 @@
                     android:textSize="14sp" />
             </RelativeLayout>
 
-
             <RelativeLayout
                 android:id="@+id/car_person_num_rl"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/car_end_address_rl"
-                android:layout_marginBottom="25dp"
+                android:layout_marginBottom="15dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="15dp">
 
                 <TextView
 
@@ -211,12 +215,19 @@
                     android:textSize="14sp" />
             </RelativeLayout>
 
+            <View
+                android:id="@+id/car_line_2"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_below="@id/car_person_num_rl"
+                android:background="@color/e5e5e5" />
+
             <RelativeLayout
 
                 android:id="@+id/car_end_rl"
                 android:layout_width="match_parent"
-                android:layout_height="36dp"
-                android:layout_below="@id/car_person_num_rl"
+                android:layout_height="45dp"
+                android:layout_below="@id/car_line_2"
                 android:background="@color/white">
 
                 <TextView
@@ -227,9 +238,8 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
                     android:text=""
-                    android:textColor="@color/bg_rect"
+                    android:textColor="@color/eac6"
                     android:textSize="14sp" />
-
 
 
                 <TextView
@@ -249,9 +259,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:paddingRight="10dp"
-                    android:paddingLeft="10dp"
                     android:layout_toLeftOf="@id/car_join_num"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
                     android:src="@mipmap/community_add_no"
 
                     />
@@ -283,11 +293,10 @@
             <RelativeLayout
                 android:id="@+id/car_end_chen_rl"
                 android:layout_width="match_parent"
-                android:layout_height="36dp"
-                android:layout_below="@id/car_person_num_rl"
+                android:layout_height="45dp"
+                android:layout_below="@id/car_line_2"
                 android:background="@color/white"
-                android:visibility="gone"
-               >
+                android:visibility="gone">
 
                 <TextView
 
@@ -297,13 +306,13 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
                     android:text=""
-                    android:textColor="@color/bg_rect"
+                    android:textColor="@color/eac6"
                     android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/car_chen_jie_btn"
-                    android:layout_width="79dp"
-                    android:layout_height="25dp"
+                    android:layout_width="80dp"
+                    android:layout_height="33dp"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"
@@ -311,7 +320,7 @@
                     android:gravity="center"
                     android:text="@string/car_jie"
                     android:textColor="@color/white"
-                    android:textSize="14sp" />
+                    android:textSize="15sp" />
 
 
                 <TextView

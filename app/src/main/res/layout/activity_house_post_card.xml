@@ -27,6 +27,7 @@
             android:layout_height="45dp"
             android:gravity="center"
             android:text="@string/house_post"
+            android:textStyle="bold"
             android:textColor="@color/title_color"
             android:textSize="17sp" />
     </RelativeLayout>
@@ -41,7 +42,7 @@
         android:gravity="center_vertical"
         android:paddingLeft="10dp"
         android:text=""
-        android:textColor="@color/bg_rect"
+        android:textColor="@color/eac6"
         android:textSize="14sp" />
 
     <ScrollView
@@ -823,9 +824,9 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginBottom="40dp"
                     android:layout_marginTop="40dp"
-                    android:background="@drawable/repair_submit_bg"
+                    android:background="@drawable/order_select_btn"
                     android:text="@string/house_rent_submit"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/eac6" />
             </RelativeLayout>
 
         </RelativeLayout>

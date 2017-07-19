@@ -60,7 +60,7 @@ public class AreaActivityImgAda extends BaseAdapter {
         if (convertView==null){
 
             holder=new ImgHolder();
-            convertView=mInflater.inflate(R.layout.house_post_img_item,null);
+            convertView=mInflater.inflate(R.layout.community_camera_img,null);
             holder.imageView= (ImageView) convertView.findViewById(R.id.house_post_img);
             convertView.setTag(holder);
         }else {
@@ -68,17 +68,19 @@ public class AreaActivityImgAda extends BaseAdapter {
         }
 
         if (mList.size()==0){
-            Picasso.with(mContext).load(R.mipmap.house_add_photo).into(holder.imageView);
+            holder.imageView.setImageResource(R.mipmap.house_add_photo);
+            //Picasso.with(mContext).load(R.mipmap.house_add_photo).into(holder.imageView);
         }else {
             if (position == mList.size()) {
-                Picasso.with(mContext).load(R.mipmap.house_add_photo).into(holder.imageView);
+                holder.imageView.setImageResource(R.mipmap.house_add_photo);
+               // Picasso.with(mContext).load(R.mipmap.house_add_photo).into(holder.imageView);
             }else {
-                if (position>=listSize){
-                    it.sephiroth.android.library.picasso.Picasso.with(mContext).load(mList.get(position)).centerCrop().resize(ImgUitls.getWith(mContext) / 6,
-                       ImgUitls.getWith(mContext) / 6).error(R.mipmap.error_small).into(holder.imageView);
-                }else {
-                    Picasso.with(mContext).load(UrlTools.BASE+mList.get(position)).resize(ImgUitls.getWith(mContext)/5,ImgUitls.getWith(mContext)/5).error(R.mipmap.error_small).into(holder.imageView);
-                }
+//                if (position>=listSize){
+//                    it.sephiroth.android.library.picasso.Picasso.with(mContext).load(mList.get(position)).centerCrop().resize(ImgUitls.getWith(mContext) / 6,
+//                       ImgUitls.getWith(mContext) / 6).error(R.mipmap.error_small).into(holder.imageView);
+//                }else {
+                   Picasso.with(mContext).load(UrlTools.BASE+mList.get(position)).resize(ImgUitls.getWith(mContext)/5,ImgUitls.getWith(mContext)/5).error(R.mipmap.error_small).into(holder.imageView);
+              //  }
 
             }
         }

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_house_search_addess_and_area2"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context="com.home.wanyu.activity.HouseSearchAddessAndAreaActivity2">
+
+    <RelativeLayout
+        android:id="@+id/city_title"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/address_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:paddingLeft="10dp"
+            android:paddingRight="20dp"
+            android:src="@mipmap/property_back" />
+
+        <TextView
+            android:id="@+id/title_address"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:gravity="center"
+            android:text="@string/select_city_title"
+            android:textColor="@color/title_color"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/e5e5e5" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/city_tv"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_below="@id/city_title"
+        android:background="@color/f5f5f5"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:text="@string/location_tv"
+        android:textColor="@color/color9"
+        android:textSize="12sp" />
+
+    <View
+        android:id="@+id/line_1"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@id/city_tv"
+        android:background="@color/e5e5e5" />
+
+    <RelativeLayout
+        android:id="@+id/rl_2"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_below="@id/line_1">
+
+        <TextView
+            android:paddingLeft="10dp"
+            android:id="@+id/location_city_msg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text=""
+            android:textColor="@color/titlecolor3"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:src="@mipmap/map" />
+
+        <View
+            android:id="@+id/line_2"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/e5e5e5" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/all_city_tv"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_below="@id/rl_2"
+        android:background="@color/f5f5f5"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:text="@string/all_city"
+        android:textColor="@color/color9"
+        android:textSize="12sp" />
+
+    <View
+        android:id="@+id/line_3"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@id/all_city_tv"
+        android:background="@color/e5e5e5" />
+
+    <TextView
+        android:id="@+id/beijin_city_tv"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_below="@id/line_3"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:text="北京市"
+        android:textColor="@color/titlecolor3"
+        android:textSize="15sp" />
+
+    <View
+        android:id="@+id/line_4"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@id/beijin_city_tv"
+        android:background="@color/e5e5e5" />
+
+    <TextView
+        android:id="@+id/baoding_city_tv"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_below="@id/line_4"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:text="保定市"
+        android:textColor="@color/titlecolor3"
+        android:textSize="15sp" />
+
+    <View
+        android:id="@+id/line_5"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@id/baoding_city_tv"
+        android:background="@color/e5e5e5" />
+
+</RelativeLayout>

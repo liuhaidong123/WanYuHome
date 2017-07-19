@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/title_rl"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/e7e7e7">
+
+        <TextView
+            android:id="@+id/cancle_area_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="取消"
+            android:textColor="@color/eac6"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/sure_area_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="@string/complete"
+            android:textColor="@color/eac6"
+            android:textSize="15sp" />
+
+    </RelativeLayout>
+
+    <com.home.wanyu.lzhView.wheelView.WheelView
+        android:id="@+id/area_wheelview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title_rl"
+        android:background="@color/white" />
+</RelativeLayout>

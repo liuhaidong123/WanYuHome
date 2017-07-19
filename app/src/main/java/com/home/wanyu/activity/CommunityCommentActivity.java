@@ -1,12 +1,14 @@
 package com.home.wanyu.activity;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
@@ -15,10 +17,17 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -27,16 +36,12 @@ import android.widget.Toast;
 
 import com.home.wanyu.HttpUtils.HttpTools;
 import com.home.wanyu.HttpUtils.UrlTools;
-import com.home.wanyu.Ip.mToast;
 import com.home.wanyu.R;
 import com.home.wanyu.User.UserInfo;
-import com.home.wanyu.apater.AreaActivityCommentAda;
 import com.home.wanyu.apater.AreaActivityImgAda;
 import com.home.wanyu.apater.AreaActivityJoinAda;
 import com.home.wanyu.apater.AreaActivityLikeAda;
-import com.home.wanyu.apater.HousePostImgAda;
 import com.home.wanyu.apater.ImgViewPager;
-import com.home.wanyu.bean.getAreaActivityList.Result;
 import com.home.wanyu.bean.getAreaActivityMsg.ActivityLoglist;
 import com.home.wanyu.bean.getAreaActivityMsg.Activitypicturelist;
 import com.home.wanyu.bean.getAreaActivityMsg.Commentlist;
@@ -64,6 +69,7 @@ public class CommunityCommentActivity extends AppCompatActivity implements View.
     private ImageView mLike_img, mJoin_img;
     private int over;
     private long activityId;
+    private long coverPersonalId = 0;
     private int allPersonNum;
     private int joinNum;
     private RoundImageView mHead_img;
@@ -93,7 +99,7 @@ public class CommunityCommentActivity extends AppCompatActivity implements View.
                 Object o = msg.obj;
                 if (o != null && o instanceof Root) {
                     Root root = (Root) o;
-                    if (root!=null&&root.getResult()!=null&&root.getResult().getActivityEntity()!=null&&root.getResult().getActivityLoglist()!=null&&root.getResult().getActivitypicturelist()!=null&&root.getResult().getCommentlist()!=null&&root.getResult().getUpVptelist()!=null){
+                    if (root != null && root.getResult() != null && root.getResult().getActivityEntity() != null && root.getResult().getActivityLoglist() != null && root.getResult().getActivitypicturelist() != null && root.getResult().getCommentlist() != null && root.getResult().getUpVptelist() != null) {
                         mNoData.setVisibility(View.GONE);
                         mAll_rl.setVisibility(View.VISIBLE);
                         if (root.getIslike()) {
@@ -116,7 +122,7 @@ public class CommunityCommentActivity extends AppCompatActivity implements View.
                         mJoinAda = new AreaActivityJoinAda(CommunityCommentActivity.this, mJoinList);
                         mJoinGridView.setAdapter(mJoinAda);
 
-                        mCommentAda = new AreaActivityCommentAda(CommunityCommentActivity.this, mCommentList, activityId);
+                        mCommentAda = new AreaActivityCommentAda(mCommentList, CommunityCommentActivity.this);
                         mCommentListView.setAdapter(mCommentAda);
 
                         mImgStrList.clear();
@@ -146,9 +152,9 @@ public class CommunityCommentActivity extends AppCompatActivity implements View.
                             mSize = mImgStrList.size();
                         }
 
-                        imgstr=new String[mImgStrList.size()];
-                        for (int k=0;k<mImgStrList.size();k++){
-                            imgstr[k]=mImgStrList.get(k);
+                        imgstr = new String[mImgStrList.size()];
+                        for (int k = 0; k < mImgStrList.size(); k++) {
+                            imgstr[k] = mImgStrList.get(k);
                         }
 
                         mImgAda = new AreaActivityImgAda(CommunityCommentActivity.this, mImgStrList, mSize);
@@ -182,10 +188,10 @@ public class CommunityCommentActivity extends AppCompatActivity implements View.
                             }
 
                         }
-                    }else {
+                    } else {
                         mNoData.setVisibility(View.VISIBLE);
                         mAll_rl.setVisibility(View.GONE);
-                        Toast.makeText(CommunityCommentActivity.this,"作者已删除",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CommunityCommentActivity.this, "作者已删除", Toast.LENGTH_SHORT).show();
                     }
 
                 }
@@ -210,14 +216,12 @@ public class CommunityCommentActivity extends AppCompatActivity implements View.
                 if (o != null && o instanceof com.home.wanyu.bean.getAreaActivityLike.Root) {
                     com.home.wanyu.bean.getAreaActivityLike.Root root = (com.home.wanyu.bean.getAreaActivityLike.Root) o;
                     if (root.getCode().equals("0")) {
-                        Toast.makeText(CommunityCommentActivity.this, "点赞成功", Toast.LENGTH_SHORT).show();
                         if (activityId != -1) {
                             //获取活动详情
                             mHttptools.getAreaActivityMsg(mHandler, UserInfo.userToken, activityId);
                         }
                         mLike_img.setImageResource(R.mipmap.circle_like);
                     } else {
-                        Toast.makeText(CommunityCommentActivity.this, "取消点赞", Toast.LENGTH_SHORT).show();
                         if (activityId != -1) {
                             //获取活动详情
                             mHttptools.getAreaActivityMsg(mHandler, UserInfo.userToken, activityId);
@@ -255,6 +259,22 @@ public class CommunityCommentActivity extends AppCompatActivity implements View.
                     }
 
                 }
+            } else if (msg.what == 122) {//社区活动评论
+                Object o = msg.obj;
+                if (o != null && o instanceof com.home.wanyu.bean.getAreaActivityComment.Root) {
+                    com.home.wanyu.bean.getAreaActivityComment.Root root = (com.home.wanyu.bean.getAreaActivityComment.Root) o;
+                    if (root.getCode().equals("0")) {
+                        Toast.makeText(CommunityCommentActivity.this, "评论成功", Toast.LENGTH_SHORT).show();
+                        mComment_all_ll.setVisibility(View.VISIBLE);
+                        mEdit_ll.setVisibility(View.GONE);
+                        if (activityId != -1) {
+                            //获取活动详情
+                            mHttptools.getAreaActivityMsg(mHandler, UserInfo.userToken, activityId);
+                        }
+                    } else {
+                        Toast.makeText(CommunityCommentActivity.this, "评论失败", Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
         }
     };
@@ -265,7 +285,12 @@ public class CommunityCommentActivity extends AppCompatActivity implements View.
     private ImgViewPager mAdapter;
     private String[] imgstr;
 
-    private RelativeLayout mNoData,mAll_rl;
+    private RelativeLayout mNoData, mAll_rl;
+
+    private LinearLayout mComment_all_ll, mEdit_ll;
+    private EditText mEdit_content;
+    private TextView mComment_Send_btn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -275,12 +300,53 @@ public class CommunityCommentActivity extends AppCompatActivity implements View.
     }
 
     private void initView() {
+        //软键盘发送按钮
+        mEdit_content = (EditText) findViewById(R.id.edit);
+        //发送按钮
+        mEdit_content.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEND || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
+                    if (getContent().equals("")) {
+                        Toast.makeText(CommunityCommentActivity.this, "请输入评论内容", Toast.LENGTH_SHORT).show();
+                    } else {
+                        AjaxParams ajax = new AjaxParams();
+                        ajax.put("token", UserInfo.userToken);
+                        ajax.put("ActivityId", activityId + "");
+                        ajax.put("coverPersonalId", coverPersonalId + "");
+                        ajax.put("content", getContent());
 
-        mNoData= (RelativeLayout) findViewById(R.id.no_data_rl);
-        mAll_rl= (RelativeLayout) findViewById(R.id.all_rl);
+                        Log.e("coverPersonalId", coverPersonalId + "");
+                        Log.e("ActivityId", activityId + "");
+                        mHttptools.AreaActivityComment(mHandler, ajax);
+                        mEdit_content.setText("");
+                        mEdit_content.setHint("评论...");
+                        coverPersonalId = 0;
+                        //隐藏软键盘
+                        ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE)).toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+                    }
+                    return true;
+                }
+                return false;
+            }
+
+        });
+        //新增的发送按钮
+        mComment_Send_btn = (TextView) findViewById(R.id.comment_send_btn);
+        mComment_Send_btn.setOnClickListener(this);
+        //底部评论按钮全部布局（包括评论按钮、兴趣按钮、参加按钮）
+        mComment_all_ll = (LinearLayout) findViewById(R.id.community_all_bottom_ll);
+        //输入评论内容布局(输入框和发送按钮)
+        mEdit_ll = (LinearLayout) findViewById(R.id.card_comment_box);
+
+        mNoData = (RelativeLayout) findViewById(R.id.no_data_rl);
+        mAll_rl = (RelativeLayout) findViewById(R.id.all_rl);
 
         activityId = getIntent().getLongExtra("activityId", -1);
-
+        if (activityId != -1) {
+            //获取活动详情
+            mHttptools.getAreaActivityMsg(mHandler, UserInfo.userToken, activityId);
+        }
         mDelete_btn = (TextView) findViewById(R.id.u_delete_btn);
         mDelete_btn.setOnClickListener(this);
         mHead_img = (RoundImageView) findViewById(R.id.u_head_img);
@@ -308,16 +374,12 @@ public class CommunityCommentActivity extends AppCompatActivity implements View.
         mJoinGridView = (MyGridView) findViewById(R.id.community_join_gridview);
         //添加图片GridView
         mImgGridView = (MyGridView) findViewById(R.id.activity_img_gridview);
-
         //评论listview
         mCommentListView = (MyListView) findViewById(R.id.community_commend_listview);
-
         //选择上传图片
         mImgGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-
                 if (mImgStrList.size() == 0) {
                     //跳转相册或拍照
                     init(imgNum);
@@ -371,7 +433,6 @@ public class CommunityCommentActivity extends AppCompatActivity implements View.
         mLike_img = (ImageView) findViewById(R.id.like_img);
         mJoin_img = (ImageView) findViewById(R.id.join_img);
 
-
         //点击GridView中显示图片
         m_all_rl = (RelativeLayout) findViewById(R.id.m_all_rl);
         mImgViewPager_rl = (RelativeLayout) findViewById(R.id.img_viewpager_rl);
@@ -379,6 +440,18 @@ public class CommunityCommentActivity extends AppCompatActivity implements View.
         mImg_Cancle_btn = (TextView) findViewById(R.id.img_cancle);
         mImg_Cancle_btn.setOnClickListener(this);
 
+    }
+
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                mComment_all_ll.setVisibility(View.VISIBLE);
+                mEdit_ll.setVisibility(View.GONE);
+                break;
+        }
+        return true;
     }
 
     private final int REQUEST_CODE_ASK_READ_PHONE = 123;
@@ -454,9 +527,6 @@ public class CommunityCommentActivity extends AppCompatActivity implements View.
                 imgNum = 2;
             }
 
-            for (int i = 0; i < list.size(); i++) {
-                mImgStrList.add(list.get(i));
-            }
             AjaxParams ajaxParams = new AjaxParams();
             ajaxParams.put("token", UserInfo.userToken);
             ajaxParams.put("activity_id", activityId + "");
@@ -472,6 +542,13 @@ public class CommunityCommentActivity extends AppCompatActivity implements View.
                 mHttptools.AreaActivityPosImg(mHandler, ajaxParams);
             }
         }
+
+//        else if (requestCode == 101 && resultCode == RESULT_OK) {//评论结束后
+//            if (activityId != -1) {
+//                //获取活动详情
+//                mHttptools.getAreaActivityMsg(mHandler, UserInfo.userToken, activityId);
+//            }
+//        }
 
     }
 
@@ -533,20 +610,35 @@ public class CommunityCommentActivity extends AppCompatActivity implements View.
         }
     }
 
-    private long coverPersonalId = 0;
 
     @Override
     public void onClick(View v) {
         int id = v.getId();
         if (id == mBack.getId()) {
             finish();
-        } else if (id == mComment_ll.getId()) {
-            Intent intent = new Intent(this, CarPoolingCommentActivity.class);
-            intent.putExtra("flag", "activity");
-            intent.putExtra("coverPersonalId", coverPersonalId);
-            intent.putExtra("Id", activityId);
-            intent.putExtra("hint", "说点什么");
-            startActivity(intent);
+        } else if (id == mComment_ll.getId()) {//评论
+            mComment_all_ll.setVisibility(View.GONE);
+            mEdit_ll.setVisibility(View.VISIBLE);
+
+        } else if (id == mComment_Send_btn.getId()) {
+            if (getContent().equals("")) {
+                Toast.makeText(this, "请输入评论内容", Toast.LENGTH_SHORT).show();
+            } else {
+                AjaxParams ajax = new AjaxParams();
+                ajax.put("token", UserInfo.userToken);
+                ajax.put("ActivityId", activityId + "");
+                ajax.put("coverPersonalId", coverPersonalId + "");
+                ajax.put("content", getContent());
+
+                Log.e("coverPersonalId", coverPersonalId + "");
+                Log.e("ActivityId", activityId + "");
+                mHttptools.AreaActivityComment(mHandler, ajax);
+                mEdit_content.setText("");
+                mEdit_content.setHint("评论...");
+                coverPersonalId = 0;
+                ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE)).toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+
+            }
         } else if (id == mLike_ll.getId()) {//点赞
             if (activityId != -1) {
                 mHttptools.getAreaActivityLike(mHandler, UserInfo.userToken, activityId);
@@ -577,13 +669,121 @@ public class CommunityCommentActivity extends AppCompatActivity implements View.
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (activityId != -1) {
-            //获取活动详情
-            mHttptools.getAreaActivityMsg(mHandler, UserInfo.userToken, activityId);
+    /**
+     * 输入评论内容
+     *
+     * @return
+     */
+    public String getContent() {
+        if (mEdit_content.getText().toString().trim().equals("")) {
+            return "";
+        }
+        return mEdit_content.getText().toString().trim();
+    }
+
+    /**
+     * 评论适配器
+     */
+    class AreaActivityCommentAda extends BaseAdapter {
+        private Context mContext;
+        private LayoutInflater mInflater;
+        private List<Commentlist> list = new ArrayList<>();
+        private MyAreaHolder holder;
+
+        public AreaActivityCommentAda(List<Commentlist> list, Context mContext) {
+            this.list = list;
+            this.mContext = mContext;
+            this.mInflater = LayoutInflater.from(this.mContext);
         }
 
+        public void setList(List<Commentlist> list) {
+            this.list = list;
+        }
+
+        @Override
+        public int getCount() {
+            return list.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return list.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(final int position, View convertView, ViewGroup parent) {
+            if (convertView == null) {
+                holder = new MyAreaHolder();
+                convertView = mInflater.inflate(R.layout.circle_commend_in_item, null);
+                holder.name1 = (TextView) convertView.findViewById(R.id.in_name_tv_one);
+                holder.name2 = (TextView) convertView.findViewById(R.id.in_name_tv_two);
+                holder.huifu = (TextView) convertView.findViewById(R.id.in_huifu);
+                holder.msg = (TextView) convertView.findViewById(R.id.in_name_commend_msg);
+                convertView.setTag(holder);
+            } else {
+                holder = (MyAreaHolder) convertView.getTag();
+            }
+            //只是当前用户评论的
+            if (list.get(position).getCoverPersonalId() == 0) {
+                holder.name1.setText(list.get(position).getUserName());//张三评论：
+                holder.name2.setVisibility(View.GONE);
+                holder.huifu.setVisibility(View.GONE);
+                holder.msg.setText(":" + list.get(position).getContent());//你是个小猫咪
+
+
+                //当前用户回复回复某个人
+            } else {
+                holder.name1.setText(list.get(position).getUserName());//张三
+                holder.name2.setVisibility(View.VISIBLE);
+                holder.huifu.setVisibility(View.VISIBLE);//回复
+                holder.name2.setText(list.get(position).getCoverPersonalName());//李四
+                holder.msg.setText(":" + list.get(position).getContent());//我很好
+
+            }
+            holder.name1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mComment_all_ll.setVisibility(View.GONE);
+                    mEdit_ll.setVisibility(View.VISIBLE);
+                    if (list.get(position).getPersonalId() == UserInfo.personalId) {
+                        coverPersonalId = 0;
+                        mEdit_content.setHint("说点什么");
+                    } else {
+                        coverPersonalId = list.get(position).getPersonalId();
+                        mEdit_content.setHint("回复" + list.get(position).getUserName());
+                    }
+                }
+            });
+
+            holder.name2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mComment_all_ll.setVisibility(View.GONE);
+                    mEdit_ll.setVisibility(View.VISIBLE);
+                    if (list.get(position).getCoverPersonalId() == UserInfo.personalId) {
+                        coverPersonalId = 0;
+                        mEdit_content.setHint("说点什么");
+                    } else {
+                        coverPersonalId = list.get(position).getCoverPersonalId();
+                        mEdit_content.setHint("回复" + list.get(position).getCoverPersonalName());
+                    }
+                }
+            });
+
+            return convertView;
+        }
+
+
+        class MyAreaHolder {
+            TextView name1;
+            TextView name2;
+            TextView huifu;
+            TextView msg;
+        }
     }
 }

@@ -2,49 +2,33 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_rect"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:orientation="horizontal">
-
-        <DatePicker
-           android:calendarViewShown="false"
-            android:datePickerMode="spinner"
-            android:id="@+id/community_date_picker"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="3">
-
-        </DatePicker>
-
-        <TimePicker
-            android:timePickerMode="spinner"
-            android:id="@+id/community_time_picker"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2">
-
-        </TimePicker>
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="45dp">
+        android:layout_height="52dp"
+        android:gravity="center">
 
         <TextView
             android:id="@+id/community_time_cancle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"
+            android:gravity="left"
+            android:paddingLeft="10dp"
             android:text="取消"
-            android:textColor="@color/white"
+            android:textColor="@color/titlecolor3"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="上门时间"
+            android:textColor="@color/titlecolor3"
             android:textSize="18sp" />
 
         <TextView
@@ -52,9 +36,43 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"
+            android:gravity="right"
+            android:paddingRight="10dp"
             android:text="确定"
-            android:textColor="@color/white"
+            android:textColor="@color/eac6"
             android:textSize="18sp" />
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/eeeeee" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:orientation="horizontal">
+
+        <DatePicker
+            android:id="@+id/community_date_picker"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:calendarViewShown="false"
+            android:datePickerMode="spinner">
+
+        </DatePicker>
+
+        <TimePicker
+            android:id="@+id/community_time_picker"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:timePickerMode="spinner">
+
+        </TimePicker>
+
+    </LinearLayout>
+
+
 </LinearLayout>

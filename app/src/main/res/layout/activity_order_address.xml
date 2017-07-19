@@ -30,33 +30,35 @@
             android:textColor="@color/title_color"
             android:textSize="17sp"
             android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/order_add_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="@string/add"
+            android:textColor="@color/eac6"
+            android:textSize="14sp" />
+
     </RelativeLayout>
 
     <ListView
         android:id="@+id/order_address_listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/add_address_submit"
         android:layout_below="@+id/order_msg_title"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
         android:divider="@color/f5f5f5"
         android:dividerHeight="15dp"
         android:scrollbars="none">
 
     </ListView>
 
-    <Button
-        android:id="@id/add_address_submit"
-        android:layout_width="325dp"
-        android:layout_height="45dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="40dp"
-        android:layout_marginTop="40dp"
-        android:background="@drawable/repair_submit_bg"
-        android:text="@string/add_address"
-        android:textColor="@color/white"
-        android:textSize="15sp" />
 </RelativeLayout>

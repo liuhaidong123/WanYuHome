@@ -241,8 +241,8 @@
 
     <Button
         android:id="@id/add_submit"
-        android:layout_width="325dp"
-        android:layout_height="45dp"
+        android:layout_width="335dp"
+        android:layout_height="42dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="40dp"

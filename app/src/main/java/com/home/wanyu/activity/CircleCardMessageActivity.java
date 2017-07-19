@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -76,22 +77,22 @@ public class CircleCardMessageActivity extends AppCompatActivity implements View
                 if (o != null && o instanceof Root) {
                     Root root = (Root) o;
                     if (root.getCode().equals("0")) {
-                        Toast.makeText(CircleCardMessageActivity.this, "点赞成功", Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(CircleCardMessageActivity.this, "点赞成功", Toast.LENGTH_SHORT).show();
                         Picasso.with(CircleCardMessageActivity.this).load(R.mipmap.circle_like).error(R.mipmap.error_small).into(mLike_img);
                         mLikeNum.setText(((Integer.valueOf(mLikeNum.getText().toString()) + 1) + ""));
                         mHttptools.getCircleCommentList(mHandler, UserInfo.userToken, stateId);//获取评论列表接口
                     } else {
-                        Toast.makeText(CircleCardMessageActivity.this, "撤销点赞", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(CircleCardMessageActivity.this, "撤销点赞", Toast.LENGTH_SHORT).show();
                         Picasso.with(CircleCardMessageActivity.this).load(R.mipmap.circle_like_no).error(R.mipmap.error_small).into(mLike_img);
                         mLikeNum.setText(((Integer.valueOf(mLikeNum.getText().toString()) - 1) + ""));
                         mHttptools.getCircleCommentList(mHandler, UserInfo.userToken, stateId);//获取评论列表接口
-                        }
+                    }
                 }
             } else if (msg.what == 115) {//获取评论列表
                 Object o = msg.obj;
                 if (o != null && o instanceof com.home.wanyu.bean.getCircleCommentMsg.Root) {
                     com.home.wanyu.bean.getCircleCommentMsg.Root root = (com.home.wanyu.bean.getCircleCommentMsg.Root) o;
-                    if (root.getCode().equals("0")&&root.getResult().getStateEntity()!=null) {
+                    if (root.getCode().equals("0") && root.getResult().getStateEntity() != null) {
                         mHaveData.setVisibility(View.VISIBLE);
                         mNOData.setVisibility(View.GONE);
                         Picasso.with(CircleCardMessageActivity.this).load(UrlTools.BASE + root.getResult().getStateEntity().getAvatar()).resize(ImgUitls.getWith(CircleCardMessageActivity.this) / 3, ImgUitls.getWith(CircleCardMessageActivity.this) / 3).error(R.mipmap.error_small).into(mHead);
@@ -153,7 +154,10 @@ public class CircleCardMessageActivity extends AppCompatActivity implements View
         }
     };
 
-    private RelativeLayout mHaveData,mNOData;
+    private RelativeLayout mHaveData, mNOData;
+    private TextView mComment_Send_btn;
+    private LinearLayout card_comment_box;
+    private ImageView circle_card_commend_img;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -163,8 +167,8 @@ public class CircleCardMessageActivity extends AppCompatActivity implements View
     }
 
     private void initView() {
-        mHaveData= (RelativeLayout) findViewById(R.id.have_data_rl);
-       mNOData= (RelativeLayout) findViewById(R.id.no_data_rl);
+        mHaveData = (RelativeLayout) findViewById(R.id.have_data_rl);
+        mNOData = (RelativeLayout) findViewById(R.id.no_data_rl);
         stateId = getIntent().getLongExtra("stateid", -1);
         Log.e("最后stateId=", stateId + "");
         if (stateId != -1) {
@@ -176,10 +180,15 @@ public class CircleCardMessageActivity extends AppCompatActivity implements View
         mDelete = (TextView) findViewById(R.id.circle_card_msg_delete);
         mDelete.setOnClickListener(this);
 
-        //发送按钮
+        //软键盘发送按钮
         mEdit_content = (EditText) findViewById(R.id.edit);
-
-
+        //新增的发送按钮
+        mComment_Send_btn= (TextView) findViewById(R.id.comment_send_btn);
+        //评论布局
+        card_comment_box= (LinearLayout) findViewById(R.id.card_comment_box);
+        //点击这个显示评论布局
+        circle_card_commend_img= (ImageView) findViewById(R.id.circle_card_commend_img);
+        circle_card_commend_img.setOnClickListener(this);
         mHead = (RoundImageView) findViewById(R.id.circle_card_head_img);
         mName = (TextView) findViewById(R.id.circle_card_name_tv);
         mArea = (TextView) findViewById(R.id.circle_card_area_tv);
@@ -195,7 +204,7 @@ public class CircleCardMessageActivity extends AppCompatActivity implements View
 
         //【评论列表
         mListView = (MyListView) findViewById(R.id.comment_listview_circle);
-        mAdapter = new CircleCommentAda(this, mCommentList, mEdit_content, mCommentNum, stateId);
+        mAdapter = new CircleCommentAda(this, mCommentList, mEdit_content,mComment_Send_btn, mCommentNum, stateId,card_comment_box);
         mListView.setAdapter(mAdapter);
 
         //点赞头像GridView
@@ -225,6 +234,8 @@ public class CircleCardMessageActivity extends AppCompatActivity implements View
             mHttptools.getCIrcleLikeResult(mHandler, UserInfo.userToken, stateId);
         } else if (id == mDelete.getId()) {//删除
             mHttptools.getCircleDeleteResult(mHandler, UserInfo.userToken, stateId);
+        }else if (id==circle_card_commend_img.getId()){
+            card_comment_box.setVisibility(View.VISIBLE);
         }
     }
 

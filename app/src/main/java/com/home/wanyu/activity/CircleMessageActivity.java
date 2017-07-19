@@ -52,7 +52,7 @@ public class CircleMessageActivity extends AppCompatActivity implements View.OnC
     private ImageView mRed_img;
 
     private LinearLayout mMyArea_ll, mOtherArea_ll;
-    private TextView mMyArea_tv, mOther_tv;
+    private TextView mMyArea_tv, mOther_tv,mMy_line,mOther_line;
 
     private SwipeRefreshLayout mSwipe_refresh;
     private RelativeLayout mMore_rl;
@@ -280,13 +280,14 @@ public class CircleMessageActivity extends AppCompatActivity implements View.OnC
 
         //我的小区
         mMyArea_ll = (LinearLayout) findViewById(R.id.circle_my_ll);
+        mMyArea_ll.setOnClickListener(this);
+        mMyArea_tv = (TextView) findViewById(R.id.circle_my_tv);
+        mMy_line=(TextView) findViewById(R.id.my_line);
         //其他小区
         mOtherArea_ll = (LinearLayout) findViewById(R.id.circle_other_ll);
-        mMyArea_ll.setOnClickListener(this);
         mOtherArea_ll.setOnClickListener(this);
-        mMyArea_tv = (TextView) findViewById(R.id.circle_my_tv);
         mOther_tv = (TextView) findViewById(R.id.circle_other_tv);
-
+        mOther_line=(TextView) findViewById(R.id.other_line);
         //头部标题列表
         mTitleGridview = (GridView) findViewById(R.id.circle_gridview);
         mTitleGridviewAda = new CircleGridViewAda(this, mTitleList);
@@ -321,7 +322,7 @@ public class CircleMessageActivity extends AppCompatActivity implements View.OnC
 
 
         //发帖
-        mPost_img = (ImageView) findViewById(R.id.circle_post_img);
+        mPost_img = (ImageView) findViewById(R.id.edit_post_img);
         mPost_img.setOnClickListener(this);
 
 
@@ -386,26 +387,26 @@ public class CircleMessageActivity extends AppCompatActivity implements View.OnC
                 mHttptools.getCircleCardList(mHandler, UserInfo.userToken, areaID, myOrOtherID, start, limmit, typeID);
             }
 
-            mMyArea_ll.setBackgroundResource(R.color.bg_rect);
-            mMyArea_tv.setTextColor(ContextCompat.getColor(this, R.color.white));
-            mOtherArea_ll.setBackgroundResource(R.color.white);
-            mOther_tv.setTextColor(ContextCompat.getColor(this, R.color.title_color));
+            mMyArea_tv.setTextColor(ContextCompat.getColor(this, R.color.eac6));
+            mMy_line.setBackgroundResource(R.color.eac6);
+            mOther_tv.setTextColor(ContextCompat.getColor(this, R.color.white));
+            mOther_line.setBackgroundResource(R.color.circle_bg);
             //点击其他小区
         } else if (id == mOtherArea_ll.getId()) {
             mListview.setVisibility(View.GONE);
             mMore_rl.setVisibility(View.GONE);
             myOrOtherID = 2;
             check = 1;
-            mMyArea_ll.setBackgroundResource(R.color.white);
-            mMyArea_tv.setTextColor(ContextCompat.getColor(this, R.color.title_color));
-            mOtherArea_ll.setBackgroundResource(R.color.bg_rect);
-            mOther_tv.setTextColor(ContextCompat.getColor(this, R.color.white));
             //获取指定列表友邻圈帖子列表
             if (mTitleList != null && mTitleList.size() != 0 && mCircleAreaList != null && mCircleAreaList.size() != 0) {
                 start = 0;
                 mSwipe_refresh.setRefreshing(true);
                 mHttptools.getCircleCardList(mHandler, UserInfo.userToken, areaID, myOrOtherID, start, limmit, typeID);
             }
+            mMyArea_tv.setTextColor(ContextCompat.getColor(this, R.color.white));
+            mMy_line.setBackgroundResource(R.color.circle_bg);
+            mOther_tv.setTextColor(ContextCompat.getColor(this, R.color.eac6));
+            mOther_line.setBackgroundResource(R.color.eac6);
         } else if (id == mPost_img.getId()) {//发帖
             startActivity(new Intent(this, CirclePostActivity.class));
         } else if (id == mMsg_img.getId()) {//跳转消息页面

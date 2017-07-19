@@ -136,7 +136,7 @@ public class CommunityListViewAda extends BaseAdapter {
         holder.name_tv.setText(mList.get(position).getUser_name());
         holder.time_tv.setText(mList.get(position).getCreateTimeString());
         holder.title_tv.setText(mList.get(position).getActivityTheme());
-        holder.time_msg_tv.setText(mList.get(position).getStarttimeString() + "至" + mList.get(position).getEndtimeString());
+        holder.time_msg_tv.setText(mList.get(position).getStarttimeString() + "-" + mList.get(position).getEndtimeString());
         holder.address_tv.setText(mList.get(position).getActivityAddress());
         holder.person_tv.setText(mList.get(position).getActivityNumber() + "人");
         if (over == 1) {

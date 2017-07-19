@@ -158,14 +158,9 @@ public class HouseMsgActivity extends AppCompatActivity implements View.OnClickL
         mLocation_search_address_rl.setOnClickListener(this);
         location_tv = (TextView) findViewById(R.id.location_msg);
 
-
-        //搜索小区名称
-        mLocation_search_area_rl = (RelativeLayout) findViewById(R.id.input_area_name);
+        mLocation_search_area_rl= (RelativeLayout) findViewById(R.id.input_area_name);
         mLocation_search_area_rl.setOnClickListener(this);
 
-        //发帖
-        mPost_Card = (ImageView) findViewById(R.id.house_post_card);
-        mPost_Card.setOnClickListener(this);
 
         mRefresh = (SwipeRefreshLayout) findViewById(R.id.house_location_area_refresh);
         mRefresh.setRefreshing(true);
@@ -300,6 +295,7 @@ public class HouseMsgActivity extends AppCompatActivity implements View.OnClickL
     }
 
     public static final int REQUEST_CODE_ASK_READ_PHONE = 123;
+
 
     public void init() {
         //sdk版本>=23时，

@@ -4,7 +4,7 @@
     android:id="@+id/activity_post_community"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_color"
+    android:background="@color/f5f5f5"
     tools:context="com.home.wanyu.activity.CommunityPostActivity">
 
     <RelativeLayout
@@ -26,7 +26,8 @@
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:gravity="center"
-            android:text="@string/acti"
+            android:text="@string/acti_2"
+            android:textStyle="bold"
             android:textColor="@color/title_color"
             android:textSize="17sp" />
 
@@ -38,7 +39,7 @@
             android:layout_centerVertical="true"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:text="@string/community_post_tv"
+            android:text="@string/comment_send"
             android:textColor="@color/titlecolor3"
             android:textSize="15sp" />
     </RelativeLayout>
@@ -48,7 +49,7 @@
         android:layout_width="match_parent"
         android:layout_height="81dp"
         android:layout_below="@+id/order_msg_title"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:background="@color/white">
 
         <LinearLayout
@@ -109,12 +110,18 @@
         android:textColor="@color/homeFragTopTextColor"
         android:textSize="14sp" />
 
+    <View
+        android:layout_below="@id/prompt"
+        android:id="@+id/line_p_1"
+        android:background="@color/e5e5e5"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"/>
+
     <RelativeLayout
         android:id="@+id/community_title_rl"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_below="@id/prompt"
-        android:layout_marginTop="1dp"
+        android:layout_below="@id/line_p_1"
         android:background="@color/white">
 
         <TextView
@@ -141,12 +148,18 @@
             android:textSize="14sp" />
     </RelativeLayout>
 
+    <View
+        android:layout_below="@id/community_title_rl"
+        android:id="@+id/line_p_2"
+        android:background="@color/e5e5e5"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"/>
+
     <RelativeLayout
         android:id="@+id/community_address_rl"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_below="@id/community_title_rl"
-        android:layout_marginTop="1dp"
+        android:layout_below="@id/line_p_2"
         android:background="@color/white">
 
         <TextView
@@ -173,12 +186,18 @@
             android:textSize="14sp" />
     </RelativeLayout>
 
+    <View
+        android:layout_below="@id/community_address_rl"
+        android:id="@+id/line_p_3"
+        android:background="@color/e5e5e5"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"/>
+
     <RelativeLayout
         android:id="@+id/community_person_num_rl"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_below="@id/community_address_rl"
-        android:layout_marginTop="1dp"
+        android:layout_below="@id/line_p_3"
         android:background="@color/white">
 
         <TextView
@@ -187,6 +206,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
+
             android:text="@string/community_person_num"
             android:textColor="@color/name_color"
             android:textSize="14sp" />
@@ -201,18 +221,25 @@
             android:background="@null"
             android:inputType="number"
             android:paddingLeft="10dp"
+            android:maxLength="3"
             android:textColor="@color/titlecolor3"
             android:textSize="14sp" />
 
 
     </RelativeLayout>
 
+    <View
+        android:layout_below="@id/community_person_num_rl"
+        android:id="@+id/line_p_4"
+        android:background="@color/e5e5e5"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"/>
+
     <RelativeLayout
         android:id="@+id/community_phone_rl"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_below="@id/community_person_num_rl"
-        android:layout_marginTop="1dp"
+        android:layout_below="@id/line_p_4"
         android:background="@color/white">
 
         <TextView
@@ -242,12 +269,18 @@
 
     </RelativeLayout>
 
+    <View
+        android:layout_below="@id/community_phone_rl"
+        android:id="@+id/line_p_5"
+        android:background="@color/e5e5e5"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"/>
+
     <RelativeLayout
         android:id="@+id/community_content_rl"
         android:layout_width="match_parent"
         android:layout_height="120dp"
-        android:layout_below="@id/community_phone_rl"
-        android:layout_marginTop="1dp"
+        android:layout_below="@id/line_p_5"
         android:background="@color/white">
 
 
@@ -259,44 +292,50 @@
             android:layout_marginTop="10dp"
             android:background="@null"
             android:hint="@string/community_content"
-            android:paddingLeft="10dp"
+            android:maxLength="500"
             android:textColor="@color/titlecolor3"
             android:textSize="14sp" />
 
 
     </RelativeLayout>
 
-    <!--<RelativeLayout-->
-        <!--android:id="@+id/community_other_area_rl"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="50dp"-->
-        <!--android:layout_below="@id/community_content_rl"-->
-        <!--android:layout_marginTop="1dp"-->
-        <!--android:background="@color/white">-->
+    <View
+        android:layout_below="@id/community_content_rl"
+        android:id="@+id/line_p_6"
+        android:background="@color/e5e5e5"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"/>
+
+    <RelativeLayout
+        android:id="@+id/community_other_area_rl"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/line_p_6"
+        android:background="@color/white">
 
 
-        <!--<ImageView-->
-            <!--android:id="@+id/community_on_off_btn"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_alignParentRight="true"-->
-            <!--android:layout_centerVertical="true"-->
-            <!--android:layout_marginRight="10dp"-->
-            <!--android:src="@mipmap/circle_button_off" />-->
+        <ImageView
+            android:id="@+id/community_on_off_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:src="@mipmap/circle_button_off" />
 
 
-        <!--<TextView-->
-            <!--android:id="@+id/other_tv"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_centerVertical="true"-->
-            <!--android:layout_marginLeft="10dp"-->
-            <!--android:layout_marginRight="10dp"-->
-            <!--android:layout_toLeftOf="@id/community_on_off_btn"-->
-            <!--android:text="@string/circle_post_other_area"-->
-            <!--android:textColor="@color/titlecolor3"-->
-            <!--android:textSize="14sp" />-->
+        <TextView
+            android:id="@+id/other_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@id/community_on_off_btn"
+            android:text="@string/circle_post_other_area"
+            android:textColor="@color/titlecolor3"
+            android:textSize="12sp" />
 
-    <!--</RelativeLayout>-->
+    </RelativeLayout>
 
 </RelativeLayout>

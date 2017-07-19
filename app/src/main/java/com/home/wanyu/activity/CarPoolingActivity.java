@@ -29,13 +29,12 @@ import java.util.List;
 
 public class CarPoolingActivity extends AppCompatActivity implements View.OnClickListener {
     private ImageView mBack, mMsg, mCar_post_img, mRed_img;
-    ;
     private MyListView mListview;
     private CarPoolingAda mAdapter;
     private List<Result> mNowlist = new ArrayList<>();
     private List<Result> mEndlist = new ArrayList<>();
     private LinearLayout mCar_Now_ll, mCar_End_ll;
-    private TextView mCar_now_tv, mCar_end_tv;
+    private TextView mCar_now_tv, mCar_end_tv, mCar_now_line, mCar_end_line;
     private SwipeRefreshLayout mrefresh;
     private RelativeLayout mMore_rl;
     private ProgressBar mBar;
@@ -55,7 +54,7 @@ public class CarPoolingActivity extends AppCompatActivity implements View.OnClic
                 Object o = msg.obj;
                 if (o != null && o instanceof Root) {
                     Root root = (Root) o;
-                    if (root.getResult()!=null){
+                    if (root.getResult() != null) {
 
                         if (over == 1) {//正在进行
                             if (flag == 1) {//刷新
@@ -161,7 +160,7 @@ public class CarPoolingActivity extends AppCompatActivity implements View.OnClic
         mMore_rl.setOnClickListener(this);
         mBar = (ProgressBar) findViewById(R.id.pbLocate);
 
-//发帖
+        //发帖
         mCar_post_img = (ImageView) findViewById(R.id.car_post_activity);
         mCar_post_img.setOnClickListener(this);
         //消息
@@ -175,8 +174,10 @@ public class CarPoolingActivity extends AppCompatActivity implements View.OnClic
         mCar_End_ll.setOnClickListener(this);
         mCar_now_tv = (TextView) findViewById(R.id.car_jin_tv);
         mCar_end_tv = (TextView) findViewById(R.id.car_end_tv);
+        mCar_now_line = (TextView) findViewById(R.id.carpooling_line_now);
+        mCar_end_line = (TextView) findViewById(R.id.carpooling_line_end);
 
-//adapter
+       //adapter
         mListview = (MyListView) findViewById(R.id.car_listview);
         mAdapter = new CarPoolingAda(this, mNowlist);
         mListview.setAdapter(mAdapter);
@@ -192,6 +193,8 @@ public class CarPoolingActivity extends AppCompatActivity implements View.OnClic
             in.putExtra("type", 2);
             startActivity(in);
         } else if (id == mCar_Now_ll.getId()) {//正在进行背景，文字
+            mBar.setVisibility(View.INVISIBLE);
+            mMore_rl.setVisibility(View.GONE);
             over = 1;
             if (mNowlist.size() != 0) {
                 mAdapter.setMlist(mNowlist, over);
@@ -211,11 +214,15 @@ public class CarPoolingActivity extends AppCompatActivity implements View.OnClic
                 mHttptools.getCarPoolingList(mHandler, UserInfo.userToken, over, start, limit);//社区平车首页
             }
 
-            mCar_Now_ll.setBackgroundResource(R.color.bg_rect);
-            mCar_now_tv.setTextColor(ContextCompat.getColor(this, R.color.white));
-            mCar_End_ll.setBackgroundResource(R.color.white);
-            mCar_end_tv.setTextColor(ContextCompat.getColor(this, R.color.title_color));
-        } else if (id == mCar_End_ll.getId()) {//已完成背景，文字
+          //  mCar_Now_ll.setBackgroundResource(R.color.bg_rect);
+            mCar_now_tv.setTextColor(ContextCompat.getColor(this, R.color.eac6));
+            mCar_now_line.setBackgroundResource(R.color.c2a5);
+           // mCar_End_ll.setBackgroundResource(R.color.white);
+            mCar_end_tv.setTextColor(ContextCompat.getColor(this, R.color.white));
+            mCar_end_line.setBackgroundResource(R.color.circle_bg);
+        } else if (id == mCar_End_ll.getId()) {//已完成
+            mBar.setVisibility(View.INVISIBLE);
+            mMore_rl.setVisibility(View.GONE);
             over = 2;
             if (mEndlist.size() != 0) {
                 mAdapter.setMlist(mEndlist, over);
@@ -235,11 +242,13 @@ public class CarPoolingActivity extends AppCompatActivity implements View.OnClic
                 mrefresh.setRefreshing(true);
                 mHttptools.getCarPoolingList(mHandler, UserInfo.userToken, over, start, limit);//社区平车首页
             }
-
-            mCar_Now_ll.setBackgroundResource(R.color.white);
-            mCar_now_tv.setTextColor(ContextCompat.getColor(this, R.color.title_color));
-            mCar_End_ll.setBackgroundResource(R.color.bg_rect);
-            mCar_end_tv.setTextColor(ContextCompat.getColor(this, R.color.white));
+            //背景，文字
+          //  mCar_Now_ll.setBackgroundResource(R.color.white);
+            mCar_now_tv.setTextColor(ContextCompat.getColor(this, R.color.white));
+            mCar_now_line.setBackgroundResource(R.color.circle_bg);
+           // mCar_End_ll.setBackgroundResource(R.color.bg_rect);
+            mCar_end_tv.setTextColor(ContextCompat.getColor(this, R.color.eac6));
+            mCar_end_line.setBackgroundResource(R.color.c2a5);
         } else if (id == mCar_post_img.getId()) {//拼车发帖
             Intent intent = new Intent(this, CarPoolingPostActivity.class);
             startActivity(intent);

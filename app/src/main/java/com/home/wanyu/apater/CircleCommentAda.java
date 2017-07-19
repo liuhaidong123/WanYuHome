@@ -12,6 +12,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +38,8 @@ public class CircleCommentAda extends BaseAdapter {
     private LayoutInflater mInflater;
     private List<Comment> mCommentList = new ArrayList<>();
     private EditText mEdit;
+    private TextView mComment_send_btn;
+    private LinearLayout mComment_ll;
     private TextView mCommentNum;
     private Myholder holder;
     private HttpTools mHttptools;
@@ -64,6 +67,7 @@ public class CircleCommentAda extends BaseAdapter {
                     com.home.wanyu.bean.getCircleCommendResult.Root root = (com.home.wanyu.bean.getCircleCommendResult.Root) o;
 
                     if (root.getCode().equals("0")) {
+                        mComment_ll.setVisibility(View.GONE);
                         mEdit.setClickable(false);
                         mCommentNum.setText(Integer.valueOf(mCommentNum.getText().toString()) + 1 + "");
                         mEdit.setText("");
@@ -79,10 +83,12 @@ public class CircleCommentAda extends BaseAdapter {
         }
     };
 
-    public CircleCommentAda(final Context mContext, List<Comment> mCommentList, final EditText mEdit, TextView mCommentNum, final long stateId) {
+    public CircleCommentAda(final Context mContext, List<Comment> mCommentList, final EditText mEdit, final TextView comment_send_btn, TextView mCommentNum, final long stateId, LinearLayout mComment_ll) {
         this.mContext = mContext;
         this.mCommentList = mCommentList;
         this.mEdit = mEdit;
+        this.mComment_send_btn = comment_send_btn;
+        this.mComment_ll = mComment_ll;
         this.mCommentNum = mCommentNum;
         this.stateId = stateId;
         this.mInflater = LayoutInflater.from(this.mContext);
@@ -113,6 +119,28 @@ public class CircleCommentAda extends BaseAdapter {
                 return false;
             }
 
+        });
+        //新增评论按钮
+        this.mComment_send_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (getEditContent().equals("")) {
+                    Toast.makeText(mContext, "请输入评论内容", Toast.LENGTH_SHORT).show();
+                } else {
+                    mEdit.setClickable(false);
+                    Log.e("coverPersonalId=", coverPersonalId + "");
+                    //提交评论接口
+                    //  mHttptools.circleComment(mHandler, UserInfo.userToken, stateId, coverPersonalId, getEditContent());
+                    AjaxParams ajaxParams = new AjaxParams();
+                    ajaxParams.put("stateId", String.valueOf(stateId));
+                    ajaxParams.put("coverPersonalId", String.valueOf(coverPersonalId));
+                    ajaxParams.put("content", getEditContent());
+                    ajaxParams.put("token", UserInfo.userToken);
+                    mHttptools.circleComment(mHandler, ajaxParams);
+                    //隐藏软键盘
+                    ((InputMethodManager) mContext.getSystemService(INPUT_METHOD_SERVICE)).toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+                }
+            }
         });
 
 
@@ -173,6 +201,7 @@ public class CircleCommentAda extends BaseAdapter {
         holder.name1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mComment_ll.setVisibility(View.VISIBLE);
                 if (mCommentList.get(position).getPersonalId() == UserInfo.personalId) {
                     coverPersonalId = 0;
                     ((InputMethodManager) mContext.getSystemService(INPUT_METHOD_SERVICE)).toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
@@ -188,6 +217,7 @@ public class CircleCommentAda extends BaseAdapter {
         holder.name2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mComment_ll.setVisibility(View.VISIBLE);
                 if (mCommentList.get(position).getCoverPersonalId() == UserInfo.personalId) {
                     coverPersonalId = 0;
                     ((InputMethodManager) mContext.getSystemService(INPUT_METHOD_SERVICE)).toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);

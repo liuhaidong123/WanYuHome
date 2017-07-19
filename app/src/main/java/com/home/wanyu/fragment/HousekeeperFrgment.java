@@ -33,6 +33,7 @@ import com.home.wanyu.activity.DecorationActivity;
 import com.home.wanyu.activity.ExpressActivity;
 import com.home.wanyu.activity.HomeServiceActivity;
 import com.home.wanyu.activity.HouseMsgActivity;
+import com.home.wanyu.activity.HouseMsgActivity2;
 import com.home.wanyu.activity.LifeMoneyActivity;
 import com.home.wanyu.activity.LifeMoneyActivity2;
 import com.home.wanyu.activity.OrderActivity;
@@ -222,7 +223,7 @@ public class HousekeeperFrgment extends Fragment implements  View.OnClickListene
         } else if (id == mHomeService_ll.getId()) {//家政服务
             startActivity(new Intent(getActivity(), HomeServiceActivity.class));
         } else if (id == mHouseMsg_ll.getId()) {//租房信息
-            startActivity(new Intent(getActivity(), HouseMsgActivity.class));
+            startActivity(new Intent(getActivity(), HouseMsgActivity2.class));
         }
 
     }

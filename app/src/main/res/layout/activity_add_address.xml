@@ -4,39 +4,52 @@
     android:id="@+id/activity_add_address"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/homefragmentFgbac"
+    android:background="@color/f5f5f5"
     tools:context="com.home.wanyu.activity.AddAddressActivity">
 
     <RelativeLayout
-        android:id="@+id/add_address_title"
+    android:id="@+id/add_address_title"
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
+    android:background="@color/white">
+
+    <ImageView
+        android:id="@+id/add_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:paddingLeft="10dp"
+        android:paddingRight="20dp"
+        android:src="@mipmap/property_back" />
+
+    <TextView
+        android:id="@+id/title_address"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:background="@color/white">
+        android:gravity="center"
+        android:text="@string/add_address"
+        android:textColor="@color/title_color"
+        android:textSize="17sp"
+        android:textStyle="bold" />
 
-        <ImageView
-            android:id="@+id/add_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:paddingLeft="10dp"
-            android:paddingRight="20dp"
-            android:src="@mipmap/property_back" />
-
-        <TextView
-            android:id="@+id/title_address"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:gravity="center"
-            android:text="@string/add_address"
-            android:textColor="@color/title_color"
-            android:textSize="17sp" />
-    </RelativeLayout>
+    <TextView
+        android:id="@+id/address_submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="@string/complete"
+        android:textColor="@color/eac6"
+        android:textSize="14sp" />
+</RelativeLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/add_address_title"
-        android:layout_marginTop="5dp">
+        android:layout_marginTop="10dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -45,7 +58,7 @@
             <RelativeLayout
                 android:id="@+id/city_rl"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="46dp"
                 android:background="@color/white"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
@@ -80,7 +93,7 @@
             <RelativeLayout
                 android:id="@+id/area_rl"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="46dp"
                 android:layout_below="@+id/city_rl"
                 android:layout_marginTop="1dp"
                 android:background="@color/white"
@@ -117,7 +130,7 @@
             <RelativeLayout
                 android:id="@+id/name_rl"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="46dp"
                 android:layout_below="@+id/area_rl"
                 android:layout_marginTop="1dp"
                 android:background="@color/white"
@@ -151,7 +164,7 @@
             <RelativeLayout
                 android:id="@+id/phone_rl"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="46dp"
                 android:layout_below="@+id/name_rl"
                 android:layout_marginTop="1dp"
                 android:background="@color/white"
@@ -185,7 +198,7 @@
             <RelativeLayout
                 android:id="@+id/lou_rl"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="46dp"
                 android:layout_below="@+id/phone_rl"
                 android:layout_marginTop="1dp"
                 android:background="@color/white"
@@ -227,7 +240,7 @@
             <RelativeLayout
                 android:id="@+id/ceng_rl"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="46dp"
                 android:layout_below="@+id/lou_rl"
                 android:layout_marginTop="1dp"
                 android:background="@color/white"
@@ -269,7 +282,7 @@
             <RelativeLayout
                 android:id="@+id/unit_rl"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="46dp"
                 android:layout_below="@+id/ceng_rl"
                 android:layout_marginTop="1dp"
                 android:background="@color/white"
@@ -311,7 +324,7 @@
             <RelativeLayout
                 android:id="@+id/hourse_rl"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="46dp"
                 android:layout_below="@+id/unit_rl"
                 android:layout_marginTop="1dp"
                 android:background="@color/white"
@@ -350,17 +363,6 @@
                     android:textSize="13sp" />
             </RelativeLayout>
 
-            <Button
-                android:id="@+id/add_submit"
-                android:layout_width="325dp"
-                android:layout_height="45dp"
-                android:layout_below="@+id/hourse_rl"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="40dp"
-                android:background="@drawable/repair_submit_bg"
-                android:text="@string/repair_submit"
-                android:textColor="@color/white"
-                android:textSize="15sp" />
 
         </RelativeLayout>
     </ScrollView>

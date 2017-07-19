@@ -14,10 +14,18 @@
     <string name="i_will">我要报修</string>
     <string name="i_record">报修记录</string>
     <string name="repair_all">全部类型</string>
-    <string name="repair_time">选择期望处理时间</string>
+    <string name="repair_status">全部状态</string>
+    <string name="repair_time">选择期望上门时间</string>
     <string name="repair_submit">提交</string>
     <string name="order_lookup">查询</string>
-
+    <string name="repair_water">水电燃气</string>
+    <string name="repair_house">房屋维修</string>
+    <string name="repair_tree">公共设施</string>
+    <string name="add">添加</string>
+    <string name="complete">完成</string>
+    <string name="select_city_title">城市选择</string>
+    <string name="location_tv">定位城市</string>
+    <string name="all_city">所有城市</string>
     <string name="order_message">您还没有小区信息</string>
     <string name="add_address">添加地址</string>
     <string name="order_edit_address">编辑</string>
@@ -61,17 +69,21 @@
 
 
     <string name="circle_msg_title">友邻圈</string>
-    <string name="circle_post_send">发送</string>
+    <string name="circle_post_send">发布</string>
     <string name="circle_post_type">选择类型</string>
     <string name="circle_post_area">选择小区</string>
     <string name="circle_post_hint">内容...</string>
     <string name="circle_post_other_area">其他小区可看</string>
     <string name="comment_hint">说点什么...</string>
+    <string name="comment_tv">评论...</string>
+    <string name="circle_tag">标签</string>
+    <string name="comment_send">发送</string>
 
     <string name="community_post_tv">发布</string>
     <string name="start_time">开始时间</string>
     <string name="end_time">结束时间</string>
     <string name="acti">创建活动</string>
+    <string name="acti_2">社区活动</string>
     <string name="prompt">活动发布后暂不支持修改,请认真填写哦</string>
     <string name="community_title">活动标题</string>
     <string name="community_address">活动地址</string>
@@ -111,7 +123,7 @@
     <string name="decoration_title">装修服务</string>
     <string name="decoration_ask">立即咨询</string>
 
-    <string name="input_hint">输入小区名,如:名流一品</string>
+    <string name="input_hint">请输入小区名</string>
     <string name="search_cancle">取消</string>
     <string name="city_hint">请输入城市名</string>
     <string name="area_hint">请输入小区名 如:名流一品</string>
@@ -133,18 +145,18 @@
     <string name="house_rent_type_all">整租</string>
     <string name="house_rent_type_other">合租</string>
 
-    <string name="house_rent_area"><font color="#00bfff">*</font>区&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;域</string>
-    <string name="house_rent_wo"><font color="#00bfff">*</font>卧&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;室</string>
-    <string name="house_rent_name"><font color="#00bfff">*</font>小区名称</string>
-    <string name="house_rent_huType"><font color="#00bfff">*</font>房屋户型</string>
-    <string name="house_rent_m"><font color="#00bfff">*</font>房屋面积</string>
-    <string name="house_rent_lou"><font color="#00bfff">*</font>楼&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;层</string>
-    <string name="house_rent_direction"><font color="#00bfff">*</font>朝&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;向</string>
-    <string name="house_rent_configure"><font color="#00bfff">*</font>房屋配置</string>
-    <string name="house_rent_money"><font color="#00bfff">*</font>租&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;金</string>
-    <string name="house_rent_add_img"><font color="#00bfff">*</font>添加照片</string>
-    <string name="house_rent_phone_person"><font color="#00bfff">*</font>联&#160;&#160;系&#160;&#160;人</string>
-    <string name="house_rent_phone_num"><font color="#00bfff">*</font>联系电话</string>
+    <string name="house_rent_area"><font color="#00eac6">*</font>区&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;域</string>
+    <string name="house_rent_wo"><font color="#00eac6">*</font>卧&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;室</string>
+    <string name="house_rent_name"><font color="#00eac6">*</font>小区名称</string>
+    <string name="house_rent_huType"><font color="#00eac6">*</font>房屋户型</string>
+    <string name="house_rent_m"><font color="#00eac6">*</font>房屋面积</string>
+    <string name="house_rent_lou"><font color="#00eac6">*</font>楼&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;层</string>
+    <string name="house_rent_direction"><font color="#00eac6">*</font>朝&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;向</string>
+    <string name="house_rent_configure"><font color="#00eac6">*</font>房屋配置</string>
+    <string name="house_rent_money"><font color="#00eac6">*</font>租&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;金</string>
+    <string name="house_rent_add_img"><font color="#00eac6">*</font>添加照片</string>
+    <string name="house_rent_phone_person"><font color="#00eac6">*</font>联&#160;&#160;系&#160;&#160;人</string>
+    <string name="house_rent_phone_num"><font color="#00eac6">*</font>联系电话</string>
     <string name="house_rent_submit">提交</string>
     <string name="house_rent_hint_small_area">小区名称</string>
     <string name="house_shi">室</string>
@@ -152,8 +164,8 @@
     <string name="house_wei">卫</string>
     <string name="house_m">㎡</string>
     <string name="network">没有网络了\n去检查一下网络吧！</string>
-    <string name="no_data">抱歉,没有数据哦!</string>
-    <string name="no_data_author">抱歉,作者已删除!</string>
+    <string name="no_data">没有帖子哦</string>
+    <string name="no_data_author">作者已删除!</string>
 
 
     <string-array name="homeSceneString">

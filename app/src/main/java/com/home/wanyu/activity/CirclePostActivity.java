@@ -83,6 +83,7 @@ public class CirclePostActivity extends AppCompatActivity implements View.OnClic
     private ListView mAreaListView;
     private List<Result> mCircleAreaList = new ArrayList<>();
     private List<com.home.wanyu.bean.getCircleTitleList.Result> mTitleList = new ArrayList<>();
+    private List<Boolean> mBooleanList = new ArrayList<>();
     private CirclePopListviewApa mPopTypeAdapter;
     private CirclePopAreaAda mAreaAdapter;
 
@@ -102,23 +103,33 @@ public class CirclePostActivity extends AppCompatActivity implements View.OnClic
                 //默认全部
                 if (o != null && o instanceof com.home.wanyu.bean.getCircleTitleList.Root) {
                     com.home.wanyu.bean.getCircleTitleList.Root root = (com.home.wanyu.bean.getCircleTitleList.Root) o;
-                    mTitleList = root.getResult();
-                    mTitleList.remove(0);
-                    mPopTypeAdapter = new CirclePopListviewApa(CirclePostActivity.this, mTitleList);
-                    mTypeListView.setAdapter(mPopTypeAdapter);
-                }
-            } else if (msg.what == 110) {//获取小区接口
-                Object o = msg.obj;
-                if (o != null && o instanceof Root) {
-                    Root root = (Root) o;
                     if (root.getResult() != null) {
-                        mCircleAreaList = root.getResult();
-                        mAreaAdapter = new CirclePopAreaAda(CirclePostActivity.this, mCircleAreaList);
-                        mAreaListView.setAdapter(mAreaAdapter);
+                        mTitleList = root.getResult();
+                        mTitleList.remove(0);
+
+                        for (int i = 0; i < mTitleList.size(); i++) {
+                            mBooleanList.add(false);
+                        }
+                        mPopTypeAdapter = new CirclePopListviewApa(CirclePostActivity.this, mTitleList, mBooleanList);
+                        // mTypeListView.setAdapter(mPopTypeAdapter);
+                        mTagGridview.setAdapter(mPopTypeAdapter);
                     }
 
                 }
-            } else if (msg.what == 114) {//发帖返回结果
+            }
+            //      else if (msg.what == 110) {//获取小区接口
+//                Object o = msg.obj;
+//                if (o != null && o instanceof Root) {
+//                    Root root = (Root) o;
+//                    if (root.getResult() != null) {
+//                        mCircleAreaList = root.getResult();
+//                        mAreaAdapter = new CirclePopAreaAda(CirclePostActivity.this, mCircleAreaList);
+//                        mAreaListView.setAdapter(mAreaAdapter);
+//                    }
+//
+//                }
+            //   }
+            else if (msg.what == 114) {//发帖返回结果
                 Object o = msg.obj;
                 if (o != null && o instanceof com.home.wanyu.bean.getCirclePostCardResult.Root) {
                     com.home.wanyu.bean.getCirclePostCardResult.Root root = (com.home.wanyu.bean.getCirclePostCardResult.Root) o;
@@ -135,6 +146,7 @@ public class CirclePostActivity extends AppCompatActivity implements View.OnClic
         }
     };
 
+    private GridView mTagGridview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,7 +155,7 @@ public class CirclePostActivity extends AppCompatActivity implements View.OnClic
         ajaxParams = new AjaxParams();
         mHttptools = HttpTools.getHttpToolsInstance();
         mHttptools.getCircleSmallType(mHandler);//获取小标题列表数据
-        mHttptools.getCircleArea(mHandler, UserInfo.userToken);//获取小区接口
+        //mHttptools.getCircleArea(mHandler, UserInfo.userToken);//获取小区接口
         initView();
     }
 
@@ -176,12 +188,12 @@ public class CirclePostActivity extends AppCompatActivity implements View.OnClic
                     //跳转相册或拍照
                     init();
                 } else {
-                    if (mImgList.size() == 4) {
+                    if (mImgList.size() == 3) {
                         if (position != mImgList.size()) {
                             mAlert.show();
                             mPosition = position;
                         } else {
-                            Toast.makeText(CirclePostActivity.this, "亲，最多选择4张图片哦", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(CirclePostActivity.this, "亲，最多选择3张图片哦", Toast.LENGTH_SHORT).show();
                         }
                     } else {
                         if (position == mImgList.size()) {
@@ -198,38 +210,66 @@ public class CirclePostActivity extends AppCompatActivity implements View.OnClic
 
 
         //选择类型和小区
-        mSelect_type_ll = (LinearLayout) findViewById(R.id.select_type_ll);
-        mSelect_area_ll = (LinearLayout) findViewById(R.id.select_area_ll);
-        mSelect_type_ll.setOnClickListener(this);
-        mSelect_area_ll.setOnClickListener(this);
-        mType_tv1 = (TextView) findViewById(R.id.circle_post_select_type);
-        mArea_tv = (TextView) findViewById(R.id.circle_post_select_area);
+//        mSelect_type_ll = (LinearLayout) findViewById(R.id.select_type_ll);
+//        mSelect_area_ll = (LinearLayout) findViewById(R.id.select_area_ll);
+//        mSelect_type_ll.setOnClickListener(this);
+//        mSelect_area_ll.setOnClickListener(this);
+//        mType_tv1 = (TextView) findViewById(R.id.circle_post_select_type);
+//        mArea_tv = (TextView) findViewById(R.id.circle_post_select_area);
+
+        mTagGridview = (GridView) findViewById(R.id.tag_gridview);
 
         //类型view
-        mViewTypePop = LayoutInflater.from(this).inflate(R.layout.circle_pop_item, null);
-        mTypeListView = (ListView) mViewTypePop.findViewById(R.id.pop_listview);
+        // mViewTypePop = LayoutInflater.from(this).inflate(R.layout.circle_pop_item, null);
+        // mTypeListView = (ListView) mViewTypePop.findViewById(R.id.pop_listview);
         //小区view
-        mViewAreaPop = LayoutInflater.from(this).inflate(R.layout.pop_area_view, null);
-        mAreaListView = (ListView) mViewAreaPop.findViewById(R.id.pop_area_listview);
+        // mViewAreaPop = LayoutInflater.from(this).inflate(R.layout.pop_area_view, null);
+        // mAreaListView = (ListView) mViewAreaPop.findViewById(R.id.pop_area_listview);
 
         //选择类型
-        mTypeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mTagGridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                mType_tv1.setText(mTitleList.get(position).getCname());
-                mTypePop.dismiss();
+                TextView textView = (TextView) view.findViewById(R.id.tag_item_tv);
+//                if (view.isSelected()){
+//                    view.setBackgroundResource(R.color.circle_bg);
+//                    textView.setTextColor(ContextCompat.getColor(CirclePostActivity.this,R.color.white));
+//                }else {
+//                    view.setBackgroundResource(R.drawable.circle_post_tag_bg);
+//                    textView.setTextColor(ContextCompat.getColor(CirclePostActivity.this,R.color.titlecolor3));
+//                }
+
+                for (int i = 0; i < mBooleanList.size(); i++) {
+                    if (i == position) {
+                        mBooleanList.set(i, true);
+                    } else {
+                        mBooleanList.set(i, false);
+                    }
+                }
+                mPopTypeAdapter.setBooleanList(mBooleanList);
+                mPopTypeAdapter.notifyDataSetChanged();
                 typeID = mTitleList.get(position).getId();
+                Log.e("typeID", typeID + "");
             }
         });
+
+//        mTypeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                mType_tv1.setText(mTitleList.get(position).getCname());
+//                mTypePop.dismiss();
+//                typeID = mTitleList.get(position).getId();
+//            }
+//        });
         //选择小区
-        mAreaListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                mArea_tv.setText(mCircleAreaList.get(position).getRname());
-                mAreaPop.dismiss();
-                areaID = mCircleAreaList.get(position).getId();
-            }
-        });
+//        mAreaListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                mArea_tv.setText(mCircleAreaList.get(position).getRname());
+//                mAreaPop.dismiss();
+//                areaID = mCircleAreaList.get(position).getId();
+//            }
+//        });
         //其他小区可看
         mLookBtn = (ImageView) findViewById(R.id.circle_look_btn);
         mLookBtn.setOnClickListener(this);
@@ -289,7 +329,7 @@ public class CirclePostActivity extends AppCompatActivity implements View.OnClic
     //跳转到选择图片的页面
     public void startSelectImgActivity() {
         Intent intent = new Intent(this, SelectImgActivity.class);
-        intent.putExtra("num", 4);
+        intent.putExtra("num", 3);
         startActivityForResult(intent, 100);
     }
 
@@ -299,10 +339,10 @@ public class CirclePostActivity extends AppCompatActivity implements View.OnClic
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 100 && resultCode == RESULT_OK) {
             ArrayList<String> list = data.getStringArrayListExtra("imgList");
-            if (mImgList.size() != 4) {
+            if (mImgList.size() != 3) {
                 for (int i = 0; i < list.size(); i++) {
                     mImgList.add(list.get(i));
-                    if (mImgList.size() == 4) {
+                    if (mImgList.size() == 3) {
                         break;
                     }
                 }
@@ -333,19 +373,18 @@ public class CirclePostActivity extends AppCompatActivity implements View.OnClic
                 mLookBtn.setImageResource(R.mipmap.circle_button_off);
             }
 
-        } else if (id == mSelect_type_ll.getId()) {//选择分类
-            showPopuWindowType();
-        } else if (id == mSelect_area_ll.getId()) {//选择分类
-            showPopuWindowArea();
-        } else if (id == mSend_card.getId()) {//发送
+        }
+//        else if (id == mSelect_type_ll.getId()) {//选择分类
+//            showPopuWindowType();
+//        } else if (id == mSelect_area_ll.getId()) {//选择分类
+//            showPopuWindowArea();
+//        }
+        else if (id == mSend_card.getId()) {//发送
 
             if (!getContent().equals("") && typeID != -1 && areaID != -1 && NetWorkMyUtils.isNetworkConnected(this)) {
-//                if (typeID != -1) {//类型
-//                    if (areaID != -1) {//小区
-//                        if (NetWorkMyUtils.isNetworkConnected(this)){
 
-                Map<String,String> map=new HashMap<>();
-                File[] files=new File[mImgList.size()];
+                Map<String, String> map = new HashMap<>();
+                File[] files = new File[mImgList.size()];
                 mSend_card.setClickable(false);
                 MyDialog.showDialog(this);
                 ajaxParams.put("RQid", String.valueOf(areaID));
@@ -364,29 +403,14 @@ public class CirclePostActivity extends AppCompatActivity implements View.OnClic
                 for (int i = 0; i < mImgList.size(); i++) {
                     try {
 
-                        files[i]=transImage(mImgList.get(i), ImgUitls.getWith(this), ImgUitls.getHeight(this), 90, "图片" + i);
+                        files[i] = transImage(mImgList.get(i), ImgUitls.getWith(this), ImgUitls.getHeight(this), 90, "图片" + i);
                         ajaxParams.put("图片" + i, transImage(mImgList.get(i), ImgUitls.getWith(this), ImgUitls.getHeight(this), 90, "图片" + i));
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
                 }
-                mHttptools.circlePostCard(mHandler, ajaxParams,map,files);
-            }
-//            else {
-//                            Toast.makeText(this, "请检查网络", Toast.LENGTH_SHORT).show();
-//                        }
-//
-//
-//                    } else {
-//                        Toast.makeText(this, "请选择小区", Toast.LENGTH_SHORT).show();
-//                    }
-//
-//                } else {
-//                    Toast.makeText(this, "请选择类型", Toast.LENGTH_SHORT).show();
-//                }
-//
-//            }
-            else {
+                mHttptools.circlePostCard(mHandler, ajaxParams, map, files);
+            } else {
                 Toast.makeText(this, "请补全内容,类型,小区", Toast.LENGTH_SHORT).show();
             }
 

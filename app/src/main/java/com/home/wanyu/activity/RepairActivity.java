@@ -50,6 +50,9 @@ import com.home.wanyu.apater.RepairAddImgAda;
 import com.home.wanyu.bean.Record.RecordBean;
 import com.home.wanyu.bean.repairType.Result;
 import com.home.wanyu.bean.repairType.Root;
+import com.home.wanyu.lzhView.wheelView.MyWheelAdapter50;
+import com.home.wanyu.lzhView.wheelView.OnWheelChangedListener;
+import com.home.wanyu.lzhView.wheelView.WheelView;
 import com.home.wanyu.myUtils.ImgUitls;
 import com.home.wanyu.myUtils.MyDialog;
 import com.home.wanyu.myUtils.NetWorkMyUtils;
@@ -77,19 +80,20 @@ public class RepairActivity extends AppCompatActivity implements View.OnClickLis
     private List<Result> mRepairList = new ArrayList<>();
     private RepairAda mAdapter;
     private TextView mRepair_Type_tv;
-
+    private TextView mRepair_hostory_btn;
 
     private LinearLayout mRepair_ll, mRecord_ll;//我要报修，报修记录
     private TextView mRepair_tv, mRecord_tv;
     private ImageView mRepair_img, mRecord_img;
 
-    private RelativeLayout mRepair_category_rl, mRepair_message_rl;//我要报修的全部类型，我要报修填写的信息
+    private LinearLayout mRepair_category_rl;
+    private RelativeLayout mRepair_message_rl;//我要报修的全部类型，我要报修填写的信息
 
     private GridView mImg_gridview;
     private RepairAddImgAda mImgAdapter;
     private ArrayList<String> mImgList = new ArrayList<>();
 
-    private RelativeLayout mImgViewPager_rl,m_all_rl;
+    private RelativeLayout mImgViewPager_rl, m_all_rl;
     private ViewPager mImgViewPager;
     private TextView mImg_Cancle_btn;
 
@@ -113,12 +117,20 @@ public class RepairActivity extends AppCompatActivity implements View.OnClickLis
     private TextView mSure_time, mCancle_time;
     private RelativeLayout mTime_rl;
     private TextView mTime_tv;
-    private DatePicker mDatePicker;
-    private TimePicker mTimePicker;
+    private int year;
+    private List<String> mDateList = new ArrayList<>();
+    private List<String> mCheckDateList = new ArrayList<>();
+    private List<String> mTimeList = new ArrayList<>();
+    private List<String> mCheckTimeList = new ArrayList<>();
+    private WheelView mDateWheelView, mTimeWheelView;
+    private MyWheelAdapter50 mDateWheelAda, mTimeWheelAda;
+    private int datePosition = 0, timePosition = 0;
+    private int sureDatePostion = 0, sureTimePosition = 0;
     private Calendar mCalendar;
     private PopupWindow mPopupwindow;
+    private LinearLayout mWater_ll,mHouse_ll,mTree_ll;
+    private ImageView mWater_img,mHouse_img,mTree_img;
     private View mView;
-
     private EditText mName, mPhone, mAddress, mDetails;
     private Button mSubmit_btn;
     private int mID = -1;
@@ -138,7 +150,7 @@ public class RepairActivity extends AppCompatActivity implements View.OnClickLis
                 Object o = msg.obj;
                 if (o != null && o instanceof Root) {
                     Root root = (Root) o;
-                    if (root.getResult()!=null){
+                    if (root.getResult() != null) {
                         mRepairList = root.getResult();
                         mAdapter.setList(mRepairList);
                         mAdapter.notifyDataSetChanged();
@@ -150,7 +162,7 @@ public class RepairActivity extends AppCompatActivity implements View.OnClickLis
                     com.home.wanyu.bean.RecordMsg.Root root = (com.home.wanyu.bean.RecordMsg.Root) o;
                     if (moreFlag == 2) {//加载跟多
                         List<com.home.wanyu.bean.RecordMsg.Result> list = new ArrayList<>();
-                        if (root.getResult()!=null){
+                        if (root.getResult() != null) {
                             list = root.getResult();
                             mRecordMsgList.addAll(list);
                             mRecordListviewAda.setList(mRecordMsgList);
@@ -158,14 +170,14 @@ public class RepairActivity extends AppCompatActivity implements View.OnClickLis
                         }
                     } else if (moreFlag == 1) {//下拉刷新
                         mRecord_refresh.setRefreshing(false);
-                        if (root.getResult()!=null){
+                        if (root.getResult() != null) {
                             mRecordMsgList = root.getResult();
-                            if (mRecordMsgList.size()==0){
+                            if (mRecordMsgList.size() == 0) {
                                 mRecord_Listview.setVisibility(View.GONE);
-                            //    mNoData_rl.setVisibility(View.VISIBLE);
-                                Toast.makeText(RepairActivity.this,"抱歉,没有数据哦",Toast.LENGTH_SHORT).show();
-                            }else {
-                            //    mNoData_rl.setVisibility(View.GONE);
+                                //    mNoData_rl.setVisibility(View.VISIBLE);
+                                Toast.makeText(RepairActivity.this, "抱歉,没有数据哦", Toast.LENGTH_SHORT).show();
+                            } else {
+                                //    mNoData_rl.setVisibility(View.GONE);
                                 mRecord_Listview.setVisibility(View.VISIBLE);
                                 mRecordListviewAda.setList(mRecordMsgList);
                                 mRecordListviewAda.notifyDataSetChanged();
@@ -174,14 +186,14 @@ public class RepairActivity extends AppCompatActivity implements View.OnClickLis
                         }
                     } else if (moreFlag == 3) {//点击报修记录类型
                         mRecord_refresh.setRefreshing(false);
-                        if (root.getResult()!=null){
+                        if (root.getResult() != null) {
                             mRecordMsgList = root.getResult();
-                            if (mRecordMsgList.size()==0){
+                            if (mRecordMsgList.size() == 0) {
                                 mRecord_Listview.setVisibility(View.GONE);
-                                Toast.makeText(RepairActivity.this,"抱歉,没有数据哦",Toast.LENGTH_SHORT).show();
-                              //  mNoData_rl.setVisibility(View.VISIBLE);
-                            }else {
-                              //  mNoData_rl.setVisibility(View.GONE);
+                                Toast.makeText(RepairActivity.this, "抱歉,没有数据哦", Toast.LENGTH_SHORT).show();
+                                //  mNoData_rl.setVisibility(View.VISIBLE);
+                            } else {
+                                //  mNoData_rl.setVisibility(View.GONE);
                                 mRecord_Listview.setVisibility(View.VISIBLE);
                                 mRecordListviewAda.setList(mRecordMsgList);
                                 mRecordListviewAda.notifyDataSetChanged();
@@ -264,7 +276,20 @@ public class RepairActivity extends AppCompatActivity implements View.OnClickLis
 
         mback = (ImageView) findViewById(R.id.repair_back);
         mback.setOnClickListener(this);
-
+        //报修记录
+        mRepair_hostory_btn = (TextView) findViewById(R.id.repair_hostory_btn);
+        mRepair_hostory_btn.setOnClickListener(this);
+        //报修类型LinearLayout
+        mWater_ll= (LinearLayout) findViewById(R.id.water_ll);
+        mHouse_ll= (LinearLayout) findViewById(R.id.house_ll);
+        mTree_ll= (LinearLayout) findViewById(R.id.tree_ll);
+        mWater_ll.setOnClickListener(this);
+        mHouse_ll.setOnClickListener(this);
+        mTree_ll.setOnClickListener(this);
+        //报修类型图片
+        mWater_img= (ImageView) findViewById(R.id.repair_water_img);
+        mHouse_img= (ImageView) findViewById(R.id.repair_house_img);
+        mTree_img= (ImageView) findViewById(R.id.repair_tree_img);
         //报修类型的gridview
         mGridview = (GridView) findViewById(R.id.repair_gridview);
         mAdapter = new RepairAda(this, mRepairList);
@@ -279,6 +304,7 @@ public class RepairActivity extends AppCompatActivity implements View.OnClickLis
                 mRepair_Type_tv.setText(mRepairList.get(position).getTypeName());
                 mID = mRepairList.get(position).getId();
                 Log.e("mID==", mID + "");
+
             }
         });
 
@@ -292,7 +318,7 @@ public class RepairActivity extends AppCompatActivity implements View.OnClickLis
         mRecord_tv = (TextView) findViewById(R.id.record_tv);
         mRecord_img = (ImageView) findViewById(R.id.record_img);
 
-        mRepair_category_rl = (RelativeLayout) findViewById(R.id.all_category);//显示的我要报修的全部类型
+        mRepair_category_rl = (LinearLayout) findViewById(R.id.all_category);//显示的我要报修的全部类型
         mRepair_message_rl = (RelativeLayout) findViewById(R.id.repair_message_rl);//显示的我要报修填写的信息
         //删除图片是的弹框
         builder = new AlertDialog.Builder(this);
@@ -389,32 +415,89 @@ public class RepairActivity extends AppCompatActivity implements View.OnClickLis
         mTime_rl.setOnClickListener(this);
         mTime_tv = (TextView) findViewById(R.id.repair_time_tv);
 
-        mView = LayoutInflater.from(this).inflate(R.layout.community_select_time_item, null);
+
         mCalendar = Calendar.getInstance();
-        int year = mCalendar.get(Calendar.YEAR);
-        int month = mCalendar.get(Calendar.MONTH);
+        year = mCalendar.get(Calendar.YEAR);
+        int month = mCalendar.get(Calendar.MONTH)+1;
         int day = mCalendar.get(Calendar.DAY_OF_MONTH);
         int hour = mCalendar.get(Calendar.HOUR_OF_DAY);
         int minute = mCalendar.get(Calendar.MINUTE);
+        int maxDay = mCalendar.getActualMaximum(Calendar.DAY_OF_MONTH);
 
-        mDatePicker = (DatePicker) mView.findViewById(R.id.community_date_picker);
-        mDatePicker.setMinDate(System.currentTimeMillis());
-        mDatePicker.init(year, month, day, new DatePicker.OnDateChangedListener() {
+        //显示时候日期
+        for (int i = day; i <= maxDay; i++) {
+            String str = new String();
+            if (month < 10) {
+                str = "0" + month + "月";
+                if (i < 10) {
+                    str = str + "0" + i + "日";
+                } else {
+                    str = str + i + "日";
+                }
+            } else {
+                str = month + "月";
+                if (i < 10) {
+                    str = str + "0" + i + "日";
+                } else {
+                    str = str + i + "日";
+                }
+            }
+            mDateList.add(str);
+            Log.e("日期：", str);
+        }
+        //提交时候判断日期
+        for (int i = day; i <= maxDay; i++) {
+            String str = new String();
+            if (month < 10) {
+                str = "-0" + month;
+                if (i < 10) {
+                    str = str + "-0" + i;
+                } else {
+                    str = str + "-" + i;
+                }
+            } else {
+                str = "-" + month;
+                if (i < 10) {
+                    str = str + "-0" + i;
+                } else {
+                    str = str + "-" + i;
+                }
+            }
+            mCheckDateList.add(year + str);
+            Log.e("判断日期：", year + str);
+
+        }
+
+        //显示时候的时间
+        mTimeList.add("09:00-13:00");
+        mTimeList.add("13:00-18:00");
+        mTimeList.add("18:00-22:00");
+
+        mCheckTimeList.add("13:00:00");
+        mCheckTimeList.add("18:00:00");
+        mCheckTimeList.add("22:00:00");
+        mView = LayoutInflater.from(this).inflate(R.layout.repair_popupwindow_select_time, null);
+        mDateWheelView = (WheelView) mView.findViewById(R.id.date_wheel);
+        mTimeWheelView = (WheelView) mView.findViewById(R.id.time_wheel);
+        mDateWheelAda = new MyWheelAdapter50(this, mDateList, "");
+        mTimeWheelAda = new MyWheelAdapter50(this, mTimeList, "");
+        mDateWheelView.setViewAdapter(mDateWheelAda);
+        mTimeWheelView.setViewAdapter(mTimeWheelAda);
+        //日期滚动
+        mDateWheelView.addChangingListener(new OnWheelChangedListener() {
             @Override
-            public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-
+            public void onChanged(WheelView wheel, int oldValue, int newValue) {
+                datePosition = newValue;
             }
         });
-        mTimePicker = (TimePicker) mView.findViewById(R.id.community_time_picker);
-        mTimePicker.setCurrentHour(hour);
-        mTimePicker.setCurrentMinute(minute);
-        mTimePicker.setIs24HourView(true);
-        mTimePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
+        //时间滚动
+        mTimeWheelView.addChangingListener(new OnWheelChangedListener() {
             @Override
-            public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
-
+            public void onChanged(WheelView wheel, int oldValue, int newValue) {
+                timePosition = newValue;
             }
         });
+
         //确定时间，取消时间
         mSure_time = (TextView) mView.findViewById(R.id.community_time_sure);
         mSure_time.setOnClickListener(this);
@@ -423,18 +506,18 @@ public class RepairActivity extends AppCompatActivity implements View.OnClickLis
 
 
         //报修记录没有数据时现实的布局
-      //  mNoData_rl= (RelativeLayout) findViewById(R.id.no_data_repair);
+        //  mNoData_rl= (RelativeLayout) findViewById(R.id.no_data_repair);
 
         //点击GridView中显示图片
-        m_all_rl= (RelativeLayout) findViewById(R.id.m_all_rl);
+        m_all_rl = (RelativeLayout) findViewById(R.id.m_all_rl);
         mImgViewPager_rl = (RelativeLayout) findViewById(R.id.img_viewpager_rl);
-        mImgViewPager= (ViewPager) findViewById(R.id.img_viewpager);
-        mImg_Cancle_btn= (TextView) findViewById(R.id.img_cancle);
+        mImgViewPager = (ViewPager) findViewById(R.id.img_viewpager);
+        mImg_Cancle_btn = (TextView) findViewById(R.id.img_cancle);
         mImg_Cancle_btn.setOnClickListener(this);
 
         //报修记录详情中的listview
         mRecord_Listview = (MyListView) findViewById(R.id.record_listview);
-        mRecordListviewAda = new RecordListviewAda(this, mRecordMsgList,mImgViewPager,  mImgViewPager_rl,m_all_rl,mMore_rl);
+        mRecordListviewAda = new RecordListviewAda(this, mRecordMsgList, mImgViewPager, mImgViewPager_rl, m_all_rl, mMore_rl);
         mRecord_Listview.setAdapter(mRecordListviewAda);
     }
 
@@ -443,7 +526,25 @@ public class RepairActivity extends AppCompatActivity implements View.OnClickLis
         int id = v.getId();
         if (id == mback.getId()) {
             finish();
-        } else if (id == mRepair_ll.getId()) {//我要报修
+        } else if (id == mRepair_hostory_btn.getId()) {//报修记录
+            startActivity(new Intent(RepairActivity.this, RepairHostoryActivity.class));
+        } else if (id==mWater_ll.getId()){//水电燃气
+            mWater_img.setImageResource(R.mipmap.repair_water);
+            mHouse_img.setImageResource(R.mipmap.repair_house_no);
+            mTree_img.setImageResource(R.mipmap.repair_tree_no);
+        }else if (id==mHouse_ll.getId()){//房屋维修
+            mWater_img.setImageResource(R.mipmap.repair_water_no);
+            mHouse_img.setImageResource(R.mipmap.repair_house);
+            mTree_img.setImageResource(R.mipmap.repair_tree_no);
+        }else if (id==mTree_ll.getId()){//公共设施
+            mWater_img.setImageResource(R.mipmap.repair_water_no);
+            mHouse_img.setImageResource(R.mipmap.repair_house_no);
+            mTree_img.setImageResource(R.mipmap.repair_tree);
+        }
+
+
+
+        else if (id == mRepair_ll.getId()) {//我要报修
             mRepair_ll.setBackgroundResource(R.color.repair_color);
             mRepair_tv.setTextColor(ContextCompat.getColor(this, R.color.white));
             mRepair_img.setImageResource(R.mipmap.bottom_back_white);
@@ -470,7 +571,7 @@ public class RepairActivity extends AppCompatActivity implements View.OnClickLis
             mRepair_message_rl.setVisibility(View.GONE);
             mRecord_refresh.setVisibility(View.GONE);
             mRecord_category_rl.setVisibility(View.VISIBLE);
-           // mNoData_rl.setVisibility(View.GONE);
+            // mNoData_rl.setVisibility(View.GONE);
 
         } else if (id == mSure.getId()) {//确定删除图片
             mImgList.remove(mPosition);
@@ -480,14 +581,19 @@ public class RepairActivity extends AppCompatActivity implements View.OnClickLis
         } else if (id == mCancle.getId()) {//取消删除图片
             mAlert.dismiss();
         } else if (id == mTime_rl.getId()) {//选择日期
+            mDateWheelView.setCurrentItem(sureDatePostion);//将日期设置到当初选择的日期
+            mTimeWheelView.setCurrentItem(sureTimePosition);//将时间设置到当初选择的时间
             showPopuWindow();
         } else if (id == mSure_time.getId()) {//确定选择日期
-            mTime_tv.setText(mDatePicker.getYear() + "-" + (mDatePicker.getMonth() + 1) + "-" + mDatePicker.getDayOfMonth() + " " + mTimePicker.getCurrentHour() + ":" + mTimePicker.getCurrentMinute() + ":" + "00");
+            // mTime_tv.setText(mDatePicker.getYear() + "-" + (mDatePicker.getMonth() + 1) + "-" + mDatePicker.getDayOfMonth() + " " + mTimePicker.getCurrentHour() + ":" + mTimePicker.getCurrentMinute() + ":" + "00");
+            mTime_tv.setText(year + "年" + mDateList.get(datePosition) + " " + mTimeList.get(timePosition));
+            sureDatePostion = datePosition;//点击确定时的日期下标
+            sureTimePosition = timePosition;//点击确定时的时间下标
             mPopupwindow.dismiss();
         } else if (id == mCancle_time.getId()) {//取消选择日期
             mPopupwindow.dismiss();
         } else if (id == mSubmit_btn.getId()) {//提交报修详情
-            if (checkStartEndTime(mTime_tv.getText().toString())) {
+            if (checkStartEndTime(mCheckDateList.get(sureDatePostion)+" "+mCheckTimeList.get(sureTimePosition))) {
                 if (!getName().equals("") && !getPhone().equals("") && !getAddresss().equals("") && !getDetails().equals("")) {
                     mSubmit_btn.setClickable(false);
                     MyDialog.showDialog(this);
@@ -517,7 +623,7 @@ public class RepairActivity extends AppCompatActivity implements View.OnClickLis
             moreFlag = 2;//代表加载更多
             mBar.setVisibility(View.VISIBLE);
             mhttptools.getRecordMsg(mHandler, UserInfo.userToken, mRecord_id, start, limit);
-        }else if (id==mImg_Cancle_btn.getId()){//隐藏viewpager
+        } else if (id == mImg_Cancle_btn.getId()) {//隐藏viewpager
             //m_all_rl.setVisibility(View.VISIBLE);
             mImgViewPager_rl.setVisibility(View.GONE);
         }
@@ -675,7 +781,7 @@ public class RepairActivity extends AppCompatActivity implements View.OnClickLis
         mPopupwindow.setOutsideTouchable(true);//设置内容外可以点击
 
         // 设置背景，否则点击内容外，关闭弹窗失效
-        mPopupwindow.setBackgroundDrawable(getResources().getDrawable(R.color.pop_bg));
+        // mPopupwindow.setBackgroundDrawable(getResources().getDrawable(R.color.pop_bg));
         mPopupwindow.setAnimationStyle(R.style.popup3_anim);
         //相对于父控件的位置
         mPopupwindow.showAtLocation(container, Gravity.BOTTOM, 0, 0);

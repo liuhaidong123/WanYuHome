@@ -7,9 +7,6 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
         android:background="@color/white">
 
@@ -20,8 +17,9 @@
 
             <com.home.wanyu.myview.RoundImageView
                 android:id="@+id/circle_head_img"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="41dp"
+                android:layout_height="41dp"
+                android:layout_marginLeft="10dp"
                 android:scaleType="centerCrop"
                 />
 
@@ -44,34 +42,35 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:layout_marginTop="25dp"
                 android:ellipsize="end"
                 android:maxLength="20"
                 android:maxLines="1"
                 android:text=""
                 android:textColor="@color/name_color"
-                android:textSize="10sp" />
+                android:textSize="12sp" />
         </RelativeLayout>
 
         <TextView
             android:id="@+id/circle_type_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/circle_title1"
-            android:layout_marginLeft="50dp"
+            android:layout_below="@id/circle_title1"
+            android:layout_marginLeft="61dp"
             android:text=""
             android:textColor="@color/title_color"
-            android:textSize="14sp" />
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/circle_commend_msg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/circle_type_tv"
-            android:layout_marginLeft="50dp"
-            android:layout_marginTop="7dp"
+            android:layout_marginLeft="61dp"
+            android:layout_marginTop="15dp"
             android:ellipsize="end"
-            android:maxLines="20"
+            android:maxLines="10"
             android:text="" />
 
         <com.home.wanyu.myview.MyGridView
@@ -79,21 +78,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/circle_commend_msg"
-            android:layout_marginLeft="50dp"
-            android:layout_marginTop="10dp"
-            android:horizontalSpacing="14dp"
+            android:layout_marginLeft="61dp"
+            android:layout_marginTop="15dp"
+            android:horizontalSpacing="10.5dp"
             android:verticalSpacing="7dp"
-            android:numColumns="4"
+            android:numColumns="3"
             android:scrollbars="none">
 
         </com.home.wanyu.myview.MyGridView>
 
         <RelativeLayout
+            android:id="@+id/ll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/circle_gridview_friend"
-            android:layout_marginLeft="50dp"
-            android:layout_marginTop="19dp">
+            android:layout_marginLeft="61dp"
+            android:layout_marginTop="18dp">
 
             <TextView
                 android:id="@+id/circle_time_tv"
@@ -102,7 +102,7 @@
                 android:layout_centerVertical="true"
                 android:text=""
                 android:textColor="@color/color9"
-                android:textSize="10sp" />
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/circle_commend_num"
@@ -110,6 +110,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
                 android:text=""
                 android:textColor="@color/color9"
                 android:textSize="14sp" />
@@ -118,7 +119,7 @@
                 android:id="@+id/circle_commend_img"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
+                android:layout_marginRight="3.5dp"
                 android:layout_toLeftOf="@id/circle_commend_num"
                 android:src="@mipmap/circle_white_msg" />
 
@@ -128,7 +129,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="15dp"
+                android:layout_marginRight="22dp"
                 android:layout_toLeftOf="@id/circle_commend_img"
                 android:text=""
                 android:textColor="@color/color9"
@@ -141,9 +142,17 @@
                 android:layout_height="wrap_content"
                 android:layout_toLeftOf="@id/circle_like_num"
                 android:paddingLeft="5dp"
-                android:paddingRight="5dp"
+                android:paddingRight="3.5dp"
                 android:src="@mipmap/circle_like_no" />
         </RelativeLayout>
+
+        <View
+            android:layout_marginTop="20dp"
+            android:layout_below="@id/ll"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/e5e5e5"
+            />
 
     </RelativeLayout>
 

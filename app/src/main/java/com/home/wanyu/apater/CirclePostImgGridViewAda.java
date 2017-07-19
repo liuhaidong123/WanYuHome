@@ -56,6 +56,7 @@ public class CirclePostImgGridViewAda extends BaseAdapter {
             holder = new PostHolder();
             convertView = mInflater.inflate(R.layout.circle_post_gridview_img_item, null);
             holder.imageView = (ImageView) convertView.findViewById(R.id.post_add_img);
+            holder.cancle_img=(ImageView) convertView.findViewById(R.id.post_cancle_img);
             convertView.setTag(holder);
         } else {
             holder = (PostHolder) convertView.getTag();
@@ -70,6 +71,7 @@ public class CirclePostImgGridViewAda extends BaseAdapter {
             } else {
                 it.sephiroth.android.library.picasso.Picasso.with(mContext).load(mList.get(position)).centerCrop().resize(ImgUitls.getWith(mContext) / 7,
                         ImgUitls.getWith(mContext) / 7).error(R.mipmap.error_small).into(holder.imageView);
+                holder.cancle_img.setImageResource(R.mipmap.circle_post_cancel);
 
             }
 
@@ -79,5 +81,6 @@ public class CirclePostImgGridViewAda extends BaseAdapter {
 
     class PostHolder {
         ImageView imageView;
+        ImageView cancle_img;
     }
 }

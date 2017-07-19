@@ -40,7 +40,10 @@ import com.home.wanyu.bean.haveAddress.Result;
 import com.home.wanyu.bean.haveAddress.Root;
 import com.home.wanyu.bean.waterEleRan.ItemsYear;
 import com.home.wanyu.myUtils.MyDialog;
+import com.home.wanyu.myUtils.NetWorkMyUtils;
 import com.home.wanyu.myview.MyListView;
+
+import net.tsz.afinal.http.AjaxParams;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -146,17 +149,34 @@ public class OrderMessageActivity extends AppCompatActivity implements View.OnCl
             }
         }
     };
+    private ImageView mNetWorkBack;
+    private TextView mNetWorkTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_order_message);
-        mHttptools = HttpTools.getHttpToolsInstance();
-        mHttptools.haveUserAddress(mHandler, UserInfo.userToken);//获取地址接口
-        //mGson = new Gson();
-        //okHttpManager = OkHttpManager.getInstance();
-        //okHttpManager.getMethod(UrlTools.BASE + UrlTools.HAVE_USER_ADDRESS + "token=" + UserInfo.userToken, "获取物业账单地址", mHandler, 100);
-        initView();
+
+        if (NetWorkMyUtils.isNetworkConnected(this)) {
+            setContentView(R.layout.activity_order_message);
+            mHttptools = HttpTools.getHttpToolsInstance();
+            mHttptools.haveUserAddress(mHandler, UserInfo.userToken);//获取地址接口
+            //mGson = new Gson();
+            //okHttpManager = OkHttpManager.getInstance();
+            //okHttpManager.getMethod(UrlTools.BASE + UrlTools.HAVE_USER_ADDRESS + "token=" + UserInfo.userToken, "获取物业账单地址", mHandler, 100);
+            initView();
+        } else {
+            setContentView(R.layout.no_network);
+            mNetWorkBack = (ImageView) findViewById(R.id.network_back);
+            mNetWorkBack.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
+            mNetWorkTitle = (TextView) findViewById(R.id.network_title_msg);
+            mNetWorkTitle.setText(R.string.property_order);
+        }
+
     }
 
     private void initView() {
@@ -202,7 +222,6 @@ public class OrderMessageActivity extends AppCompatActivity implements View.OnCl
         }
         mYearAda = new OrderYearAda(this, mYearList);
         mYearListview.setAdapter(mYearAda);
-
 
 
         //月份
@@ -286,7 +305,7 @@ public class OrderMessageActivity extends AppCompatActivity implements View.OnCl
         } else if (id == mOrder_address_rl.getId()) {//跳转到地址列表页面
             if (mAddressList.size() != 0) {
                 Intent intent = new Intent(this, OrderAddressActivity.class);
-                intent.putExtra("addressId",ID);
+                intent.putExtra("addressId", ID);
                 startActivityForResult(intent, 123);
             } else {
                 Toast.makeText(this, "抱歉，无法获取地址", Toast.LENGTH_SHORT).show();

@@ -29,12 +29,14 @@ import com.home.wanyu.apater.OrderAddressAda;
 import com.home.wanyu.bean.haveAddress.Result;
 import com.home.wanyu.bean.haveAddress.Root;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class OrderAddressActivity extends AppCompatActivity implements View.OnClickListener {
     private ImageView mback;
-    private Button mAddAddress_btn;
+    private TextView mAddAddress_btn;
     private ListView mListView;
     private AddressAda mAdapter;
     private List<Result> mList = new ArrayList<>();
@@ -96,7 +98,7 @@ public class OrderAddressActivity extends AppCompatActivity implements View.OnCl
         mback = (ImageView) findViewById(R.id.order_msg_back);
         mback.setOnClickListener(this);
         //添加地址
-        mAddAddress_btn = (Button) findViewById(R.id.add_address_submit);
+        mAddAddress_btn = (TextView) findViewById(R.id.order_add_address);
         mAddAddress_btn.setOnClickListener(this);
 
         mListView = (ListView) findViewById(R.id.order_address_listview);
@@ -112,31 +114,6 @@ public class OrderAddressActivity extends AppCompatActivity implements View.OnCl
         mUpdate.setOnClickListener(this);
         mDelete.setOnClickListener(this);
         mAlert.setView(mView);
-
-        //选择地址
-//        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                if (mList.size() != 0) {
-//                    Intent intent = getIntent();
-//                    intent.putExtra("result", mList.get(position));
-//                    setResult(RESULT_OK, intent);
-//                    finish();
-//                }
-//
-//            }
-//        });
-
-//        mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-//            @Override
-//            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-//                addressId = mList.get(position).getId();
-//                mPosition = position;
-//                mAlert.show();
-//                setAlertWidth(mAlert, 1.5f);
-//                return true;
-//            }
-//        });
 
     }
 

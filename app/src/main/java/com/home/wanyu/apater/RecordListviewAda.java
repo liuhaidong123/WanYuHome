@@ -133,15 +133,14 @@ public class RecordListviewAda extends BaseAdapter {
         }
 
         if (list.get(position).getRepairType() == 1) {//水电燃气
-
-            Picasso.with(mContext).load(R.mipmap.repair_water).into(holder.imageView);
+            Picasso.with(mContext).load(R.mipmap.repair_hostory_water).into(holder.imageView);
             holder.tv_category.setText("水电燃气报修");
 
         } else if (list.get(position).getRepairType() == 2) {//房屋报修
-            Picasso.with(mContext).load(R.mipmap.repair_house).into(holder.imageView);
+            Picasso.with(mContext).load(R.mipmap.repair_hostory_house).into(holder.imageView);
             holder.tv_category.setText("房屋报修");
         } else if (list.get(position).getRepairType() == 3) {//公共设施
-            Picasso.with(mContext).load(R.mipmap.repair_tree).into(holder.imageView);
+            Picasso.with(mContext).load(R.mipmap.repair_hostory_tree).into(holder.imageView);
             holder.tv_category.setText("公共设施报修");
         }
 

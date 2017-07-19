@@ -5,8 +5,8 @@
 
     <ImageView
         android:id="@+id/record_listview_gridview_img"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
+        android:layout_width="93.5dp"
+        android:layout_height="93.5dp"
         android:layout_centerInParent="true"
         android:scaleType="centerCrop"
        />

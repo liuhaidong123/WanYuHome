@@ -1,6 +1,7 @@
 package com.home.wanyu.apater;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.home.wanyu.R;
+import com.home.wanyu.activity.CirclePostActivity;
 import com.home.wanyu.bean.getCircleTitleList.Result;
 
 import java.util.ArrayList;
@@ -19,13 +21,19 @@ import java.util.List;
 
 public class CirclePopListviewApa extends BaseAdapter {
     private List<Result> list = new ArrayList<>();
+    private List<Boolean> booleanList = new ArrayList<>();
     private Context mContext;
     private LayoutInflater mInflater;
 
-    public CirclePopListviewApa(Context mContext, List<Result> list) {
+    public CirclePopListviewApa(Context mContext, List<Result> list, List<Boolean> booleanList) {
         this.mContext = mContext;
         this.list = list;
+        this.booleanList = booleanList;
         this.mInflater = LayoutInflater.from(this.mContext);
+    }
+
+    public void setBooleanList(List<Boolean> booleanList) {
+        this.booleanList = booleanList;
     }
 
     @Override
@@ -48,13 +56,21 @@ public class CirclePopListviewApa extends BaseAdapter {
         PopHolder holder = null;
         if (convertView == null) {
             holder = new PopHolder();
-            convertView = mInflater.inflate(R.layout.circle_pop_item2, null);
-            holder.textView = (TextView) convertView.findViewById(R.id.pop_tv);
+            convertView = mInflater.inflate(R.layout.circle_post_tag_item, null);
+            holder.textView = (TextView) convertView.findViewById(R.id.tag_item_tv);
             convertView.setTag(holder);
         } else {
             holder = (PopHolder) convertView.getTag();
         }
         holder.textView.setText(list.get(position).getCname());
+
+        if (booleanList.get(position) == true) {
+            holder.textView.setBackgroundResource(R.color.circle_bg);
+            holder.textView.setTextColor(ContextCompat.getColor(mContext, R.color.white));
+        } else {
+            holder.textView.setBackgroundResource(R.drawable.circle_post_tag_bg);
+            holder.textView.setTextColor(ContextCompat.getColor(mContext, R.color.titlecolor3));
+        }
         return convertView;
     }
 

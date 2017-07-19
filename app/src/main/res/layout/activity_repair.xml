@@ -4,47 +4,379 @@
     android:id="@+id/activity_repair"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_color"
+    android:background="@color/f5f5f5"
     tools:context="com.home.wanyu.activity.RepairActivity">
 
-
     <RelativeLayout
-        android:id="@+id/m_all_rl"
-        android:background="@color/bg_color"
+        android:id="@+id/property_manager_title"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <RelativeLayout
-            android:id="@+id/property_manager_title"
+        android:layout_height="45dp"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/repair_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingLeft="10dp"
+            android:paddingRight="20dp"
+            android:src="@mipmap/property_back" />
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="45dp"
+            android:gravity="center"
+            android:text="@string/property_repair"
+            android:textColor="@color/title_color"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/repair_hostory_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:text="@string/i_record"
+            android:textColor="@color/title_color"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+    <!--我要报修的全部类型-->
+
+    <LinearLayout
+        android:id="@+id/all_category"
+        android:layout_width="match_parent"
+        android:layout_height="89dp"
+        android:layout_below="@id/property_manager_title"
+        android:background="@mipmap/repair_bg"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/all_tv"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:gravity="center"
+            android:text="@string/repair_all"
+            android:textColor="@color/title_color"
+            android:textSize="15sp"
+            android:visibility="gone" />
+
+        <View
+            android:id="@+id/line_repair"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/all_tv"
+            android:background="@color/repair_line"
+            android:visibility="gone" />
+
+        <GridView
+            android:id="@+id/repair_gridview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/line_repair"
+            android:numColumns="3"
+            android:scrollbars="none"
+            android:visibility="gone">
+
+
+        </GridView>
+
+
+        <LinearLayout
+            android:id="@+id/water_ll"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/repair_water_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/repair_water" />
+
+            <TextView
+                android:id="@+id/water_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/repair_water"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/house_ll"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/repair_house_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/repair_house_no" />
+
+            <TextView
+                android:id="@+id/house_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/repair_house"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/tree_ll"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/repair_tree_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/repair_tree_no" />
+
+            <TextView
+                android:id="@+id/tree_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/repair_tree"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!--填写报修的类型的详细信息-->
+
+    <RelativeLayout
+        android:id="@+id/repair_message_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/all_category"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/repair_rl_bg">
+
+        <RelativeLayout
+            android:id="@+id/name_rl"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
             android:background="@color/white">
 
             <ImageView
-                android:id="@+id/repair_back"
+                android:id="@+id/name_img"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:paddingLeft="10dp"
-                android:paddingRight="20dp"
-                android:src="@mipmap/property_back" />
+                android:layout_marginLeft="10dp"
+                android:src="@mipmap/name" />
 
-            <TextView
+            <EditText
+                android:id="@+id/repair_name"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/name_img"
+                android:background="@null"
+                android:hint="姓名"
+                android:maxLength="6"
+                android:maxLines="1"
+                android:textColor="@color/name_color"
+                android:textSize="13sp" />
+
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/name_line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/name_rl"
+            android:background="@color/e5e5e5" />
+
+        <RelativeLayout
+            android:id="@+id/phone_rl"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@id/name_line"
+            android:layout_marginTop="1dp"
+            android:background="@color/white">
+
+            <ImageView
+                android:id="@+id/phone_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:src="@mipmap/phone" />
+
+            <EditText
+                android:id="@+id/repair_phone"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/phone_img"
+                android:background="@null"
+                android:hint="电话"
+                android:inputType="number"
+                android:maxLength="11"
+                android:maxLines="1"
+                android:textColor="@color/name_color"
+                android:textSize="13sp" />
+
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/phone_line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/phone_rl"
+            android:background="@color/e5e5e5" />
+
+        <RelativeLayout
+            android:id="@+id/address_rl"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_below="@id/phone_rl"
+            android:layout_marginTop="1dp"
+            android:background="@color/white"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/address_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:src="@mipmap/address1" />
+
+            <EditText
+                android:id="@+id/repair_address"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:gravity="center"
-                android:text="@string/property_repair"
-                android:textColor="@color/title_color"
-                android:textSize="17sp" />
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@id/address_img"
+                android:background="@null"
+                android:hint="地址"
+                android:inputType="text"
+                android:maxLines="2"
+                android:textColor="@color/name_color"
+                android:textSize="13sp" />
+
         </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/gridview_rl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/phone_line"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/white">
+
+            <EditText
+                android:id="@+id/repair_message_edit"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@null"
+                android:hint="请描述您要修报的详情......"
+                android:maxLength="200"
+                android:textColor="@color/name_color"
+                android:textSize="14sp" />
+
+            <GridView
+                android:id="@+id/add_img_gridview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/repair_message_edit"
+                android:numColumns="5"
+                android:scrollbars="none">
+
+            </GridView>
+
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/img_line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/gridview_rl"
+            android:background="@color/e5e5e5" />
+
+        <TextView
+            android:id="@+id/tv_message"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_below="@id/gridview_rl"
+            android:layout_marginTop="1dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:text="房屋维修"
+            android:textColor="@color/title_color"
+            android:textSize="13sp"
+            android:visibility="gone" />
+
+        <RelativeLayout
+            android:id="@+id/time_rl"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_below="@id/tv_message"
+            android:layout_marginTop="1dp"
+            android:background="@color/white">
+
+            <TextView
+                android:id="@+id/repair_time_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:text="@string/repair_time"
+                android:textColor="@color/title_color"
+                android:textSize="13sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:src="@mipmap/circle_small_back" />
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/m_all_rl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bg_color"
+        android:visibility="gone">
 
 
         <LinearLayout
             android:id="@+id/two_ll"
             android:layout_width="match_parent"
             android:layout_height="44dp"
-            android:layout_below="@+id/property_manager_title"
             android:layout_marginTop="1dp"
-            android:background="@color/white">
+            android:background="@color/white"
+            android:visibility="gone">
 
             <LinearLayout
                 android:id="@+id/repair_ll"
@@ -97,238 +429,6 @@
 
         </LinearLayout>
 
-
-        <!--我要报修的全部类型-->
-
-        <RelativeLayout
-            android:id="@+id/all_category"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/two_ll"
-            android:layout_marginBottom="24dp"
-            android:layout_marginLeft="24dp"
-            android:layout_marginRight="24dp"
-            android:layout_marginTop="42dp"
-            android:background="@color/white"
-            android:visibility="gone">
-
-            <TextView
-                android:id="@+id/all_tv"
-                android:layout_width="match_parent"
-                android:layout_height="32dp"
-                android:gravity="center"
-                android:text="@string/repair_all"
-                android:textColor="@color/title_color"
-                android:textSize="15sp" />
-
-            <View
-                android:id="@+id/line_repair"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_below="@id/all_tv"
-                android:background="@color/repair_line" />
-
-            <GridView
-
-                android:id="@+id/repair_gridview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/line_repair"
-                android:numColumns="3"
-                android:scrollbars="none">
-
-
-            </GridView>
-        </RelativeLayout>
-
-        <!--填写报修的类型的详细信息-->
-
-        <RelativeLayout
-            android:id="@+id/repair_message_rl"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/two_ll"
-            android:layout_marginTop="5dp"
-            android:visibility="gone">
-
-            <RelativeLayout
-                android:id="@+id/name_rl"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:background="@color/white">
-
-                <ImageView
-                    android:id="@+id/name_img"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:src="@mipmap/name" />
-
-                <EditText
-                    android:id="@+id/repair_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@id/name_img"
-                    android:background="@null"
-                    android:hint="姓名"
-                    android:maxLength="6"
-                    android:maxLines="1"
-                    android:textColor="@color/name_color"
-                    android:textSize="13sp" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/phone_rl"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_below="@id/name_rl"
-                android:layout_marginTop="1dp"
-                android:background="@color/white">
-
-                <ImageView
-                    android:id="@+id/phone_img"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:src="@mipmap/phone" />
-
-                <EditText
-                    android:id="@+id/repair_phone"
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@id/phone_img"
-                    android:background="@null"
-                    android:hint="电话"
-                    android:inputType="number"
-                    android:maxLength="11"
-                    android:maxLines="1"
-                    android:textColor="@color/name_color"
-                    android:textSize="13sp" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/address_rl"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_below="@id/phone_rl"
-                android:layout_marginTop="1dp"
-                android:background="@color/white">
-
-                <ImageView
-                    android:id="@+id/address_img"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:src="@mipmap/address1" />
-
-                <EditText
-                    android:id="@+id/repair_address"
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_toRightOf="@id/address_img"
-                    android:background="@null"
-                    android:hint="地址"
-                    android:inputType="text"
-                    android:maxLines="2"
-                    android:textColor="@color/name_color"
-                    android:textSize="13sp" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/gridview_rl"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/address_rl"
-                android:layout_marginTop="5dp"
-                android:background="@color/white">
-
-                <EditText
-                    android:id="@+id/repair_message_edit"
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:background="@null"
-                    android:hint="请描述您要修报的详情......"
-                    android:inputType="text"
-                    android:maxLines="3"
-                    android:textColor="@color/name_color"
-                    android:textSize="13sp" />
-
-                <GridView
-                    android:id="@+id/add_img_gridview"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/repair_message_edit"
-                    android:numColumns="5"
-                    android:scrollbars="none">
-
-                </GridView>
-
-            </RelativeLayout>
-
-            <TextView
-                android:id="@+id/tv_message"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_below="@id/gridview_rl"
-                android:layout_marginTop="1dp"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:paddingLeft="10dp"
-                android:text="房屋维修"
-                android:textColor="@color/title_color"
-                android:textSize="13sp" />
-
-            <RelativeLayout
-                android:id="@+id/time_rl"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_below="@id/tv_message"
-                android:layout_marginTop="1dp"
-                android:background="@color/white">
-
-                <TextView
-                    android:id="@+id/repair_time_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:text="@string/repair_time"
-                    android:textColor="@color/title_color"
-                    android:textSize="13sp" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="10dp"
-                    android:src="@mipmap/circle_small_back" />
-            </RelativeLayout>
-
-            <Button
-                android:id="@+id/repair_submit"
-                android:layout_width="324dp"
-                android:layout_height="45dp"
-                android:layout_below="@+id/time_rl"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="67dp"
-                android:background="@drawable/repair_submit_bg"
-                android:text="@string/repair_submit"
-                android:textColor="@color/white" />
-
-        </RelativeLayout>
 
         <!--报修记录的全部类型-->
 
@@ -508,5 +608,16 @@
             android:textSize="18sp" />
     </RelativeLayout>
 
+    <Button
+        android:id="@+id/repair_submit"
+        android:layout_width="335dp"
+        android:layout_height="42dp"
+        android:layout_below="@id/repair_message_rl"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/order_select_btn"
+        android:text="@string/repair_submit"
+        android:textColor="@color/eac6"
+        android:textSize="15sp" />
 
 </RelativeLayout>

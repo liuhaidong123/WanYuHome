@@ -7,6 +7,7 @@
     android:background="@color/bg_color"
     tools:context="com.home.wanyu.activity.HouseMsgActivity">
 
+
     <RelativeLayout
         android:id="@+id/add_address_title"
         android:layout_width="match_parent"
@@ -82,8 +83,8 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@id/search_img"
-                android:textColor="@color/color9"
-                android:text="@string/input_hint" />
+                android:text="@string/input_hint"
+                android:textColor="@color/color9" />
         </RelativeLayout>
 
 
@@ -116,13 +117,12 @@
                 </com.home.wanyu.myview.MyListView>
 
                 <RelativeLayout
-                    android:visibility="gone"
                     android:id="@+id/house_location_area_more_rl"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:layout_below="@id/house_location_area_refresh_listview"
                     android:background="@color/white"
-                    >
+                    android:visibility="gone">
 
                     <View
                         android:layout_width="match_parent"
@@ -139,7 +139,6 @@
                         android:textSize="13sp" />
 
                     <ProgressBar
-                        android:visibility="invisible"
                         android:id="@+id/circle_pbLocate"
                         style="?android:attr/progressBarStyleSmall"
                         android:layout_width="wrap_content"
@@ -147,8 +146,9 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="5dp"
                         android:layout_toEndOf="@+id/footer_tv"
-                        />
+                        android:visibility="invisible" />
                 </RelativeLayout>
+
             </RelativeLayout>
         </ScrollView>
 
@@ -158,10 +158,11 @@
         android:id="@+id/house_post_card"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@mipmap/circle_post"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_marginBottom="67.5dp"
         android:layout_marginRight="11dp"
-        />
+        android:src="@mipmap/circle_post" />
+
+
 </RelativeLayout>

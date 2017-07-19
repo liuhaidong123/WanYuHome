@@ -6,7 +6,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:background="@drawable/repair_submit_bg">
+        android:background="@drawable/repair_griview_item_bg">
 
         <TextView
             android:id="@+id/tv_prompt"
@@ -15,7 +15,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
             android:text="您确定要删除这张图片吗?"
-            android:textColor="@color/white"
+            android:textColor="@color/titlecolor3"
             android:textSize="16sp" />
 
         <RelativeLayout
@@ -30,7 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="取消"
-                android:textColor="@color/white"
+                android:textColor="@color/titlecolor3"
                 android:textSize="16sp" />
 
             <TextView
@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:text="确定"
-                android:textColor="@color/white"
+                android:textColor="@color/eac6"
                 android:textSize="16sp" />
 
         </RelativeLayout>

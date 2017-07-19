@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/bg_color"
     tools:context="com.home.wanyu.activity.HouseLookMessageActivity">
+
     <RelativeLayout
         android:id="@+id/add_address_title"
         android:layout_width="match_parent"
@@ -27,9 +28,9 @@
             android:gravity="center"
             android:text="@string/look_msg"
             android:textColor="@color/title_color"
-            android:textSize="17sp" />
+            android:textSize="17sp"
+            android:textStyle="bold" />
     </RelativeLayout>
-
 
     <ScrollView
         android:id="@+id/look_scroll"
@@ -99,7 +100,6 @@
 
             </RelativeLayout>
 
-
             <LinearLayout
                 android:id="@+id/look_three_ll"
                 android:layout_width="match_parent"
@@ -129,10 +129,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:text=""
                         android:ellipsize="end"
                         android:maxLines="1"
-                        android:textColor="@color/bg_rect"
+                        android:text=""
+                        android:textColor="@color/eac6"
                         android:textSize="15sp" />
 
                 </LinearLayout>
@@ -162,10 +162,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:text=""
                         android:ellipsize="end"
                         android:maxLines="1"
-                        android:textColor="@color/bg_rect"
+                        android:text=""
+                        android:textColor="@color/eac6"
                         android:textSize="15sp" />
 
                 </LinearLayout>
@@ -195,10 +195,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:text=""
                         android:ellipsize="end"
                         android:maxLines="1"
-                        android:textColor="@color/bg_rect"
+                        android:text=""
+                        android:textColor="@color/eac6"
                         android:textSize="15sp" />
                 </LinearLayout>
             </LinearLayout>
@@ -292,7 +292,7 @@
     <Button
         android:id="@id/look_house_btn"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="47dp"
         android:layout_alignParentBottom="true"
         android:background="@drawable/repair_submit_bg"
         android:text="@string/look_house_btn"

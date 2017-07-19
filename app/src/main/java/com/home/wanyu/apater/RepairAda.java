@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.home.wanyu.R;
@@ -12,7 +13,6 @@ import com.home.wanyu.bean.repairType.Result;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.Inflater;
 
 /**
  * Created by liuhaidong on 2017/5/3.
@@ -56,9 +56,27 @@ public class RepairAda extends BaseAdapter {
             holder = new RepairHolder();
             convertView = mInfalter.inflate(R.layout.repair_gridview_item, null);
             holder.textView = (TextView) convertView.findViewById(R.id.repair_content);
+            holder.imageView = (ImageView) convertView.findViewById(R.id.repair_img);
             convertView.setTag(holder);
         } else {
             holder = (RepairHolder) convertView.getTag();
+        }
+
+        switch (position) {
+            case 0:
+                holder.imageView.setImageResource(R.mipmap.repair_water);
+                break;
+
+            case 1:
+                holder.imageView.setImageResource(R.mipmap.repair_house_no);
+                break;
+
+            case 2:
+                holder.imageView.setImageResource(R.mipmap.repair_tree);
+                break;
+
+            default:
+                break;
         }
 
         holder.textView.setText(list.get(position).getTypeName());
@@ -67,5 +85,6 @@ public class RepairAda extends BaseAdapter {
 
     class RepairHolder {
         TextView textView;
+        ImageView imageView;
     }
 }

@@ -4,7 +4,7 @@
     android:id="@+id/activity_community_message"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_color"
+    android:background="@color/f5f5f5"
     tools:context="com.home.wanyu.activity.CommunityMessageActivity">
 
     <RelativeLayout
@@ -27,21 +27,30 @@
             android:layout_height="45dp"
             android:gravity="center"
             android:text="社区活动"
+            android:textStyle="bold"
             android:textColor="@color/title_color"
             android:textSize="17sp" />
 
-        <FrameLayout
+        <ImageView
+            android:id="@+id/community_post_activity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="10dp">
+            android:paddingRight="10dp"
+            android:src="@mipmap/circle_post" />
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:layout_toLeftOf="@id/community_post_activity">
 
             <ImageView
                 android:id="@+id/community_news_img"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingBottom="10dp"
                 android:paddingLeft="10dp"
                 android:src="@mipmap/circle_news" />
 
@@ -53,51 +62,63 @@
                 android:src="@mipmap/circle_small_red"
                 android:visibility="gone" />
         </FrameLayout>
+
+
     </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/two_ll"
         android:layout_width="match_parent"
-        android:layout_height="44dp"
-        android:layout_below="@+id/order_msg_title"
-        android:layout_marginTop="1dp"
-        android:background="@color/white">
+        android:layout_height="55dp"
+        android:layout_below="@id/order_msg_title"
+        android:background="@mipmap/community_bg_img">
 
         <LinearLayout
             android:id="@+id/community_now_ll"
             android:layout_width="0dp"
-            android:layout_height="44dp"
+            android:layout_height="55dp"
             android:layout_weight="1"
-            android:background="@color/bg_rect"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/order_year_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="53dp"
+                android:gravity="center"
                 android:text="正在进行"
-                android:textColor="@color/white"
-                android:textSize="14sp" />
+                android:textColor="@color/eac6"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/community_line_now"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/c2a5" />
 
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/community_ago_ll"
             android:layout_width="0dp"
-            android:layout_height="44dp"
+            android:layout_height="55dp"
             android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/order_month_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="53dp"
+                android:gravity="center"
                 android:text="活动结束"
-                android:textColor="@color/title_color"
-                android:textSize="14sp" />
+                android:textColor="@color/white"
+                android:textSize="15sp" />
 
+            <TextView
+                android:id="@+id/community_line_end"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/circle_bg"
+                />
         </LinearLayout>
 
 
@@ -124,8 +145,8 @@
                     android:id="@+id/community_listview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:divider="@color/bg_color"
-                    android:dividerHeight="13.5dp"
+                    android:divider="@color/f5f5f5"
+                    android:dividerHeight="10dp"
                     android:scrollbars="none">
 
                 </com.home.wanyu.myview.MyListView>
@@ -192,13 +213,13 @@
             android:textColor="@color/bg_rect" />
     </RelativeLayout>
 
-    <ImageView
-        android:id="@+id/community_post_activity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="54dp"
-        android:layout_marginRight="20dp"
-        android:src="@mipmap/circle_post" />
+    <!--<ImageView-->
+    <!--android:id="@+id/community_post_activity"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignParentBottom="true"-->
+    <!--android:layout_alignParentRight="true"-->
+    <!--android:layout_marginBottom="54dp"-->
+    <!--android:layout_marginRight="20dp"-->
+    <!--android:src="@mipmap/circle_post" />-->
 </RelativeLayout>

@@ -57,12 +57,12 @@ public class CircleFriendListviewAda extends BaseAdapter {
                 if (o != null && o instanceof Root) {
                     Root root = (Root) o;
                     if (root.getCode().equals("0")) {
-                        Toast.makeText(mContext, "点赞成功", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(mContext, "点赞成功", Toast.LENGTH_SHORT).show();
                         list.get(mPosition).setIslike(true);
                         list.get(mPosition).setLikeNum(list.get(mPosition).getLikeNum() + 1);
                         notifyDataSetChanged();
                     } else {
-                        Toast.makeText(mContext, "撤销点赞", Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(mContext, "撤销点赞", Toast.LENGTH_SHORT).show();
                         list.get(mPosition).setIslike(false);
                         list.get(mPosition).setLikeNum(list.get(mPosition).getLikeNum() - 1);
                         notifyDataSetChanged();

@@ -4,7 +4,7 @@
     android:id="@+id/activity_car_pooling_post"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_color"
+    android:background="@color/e5e5e5"
     tools:context="com.home.wanyu.activity.CarPoolingPostActivity">
 
     <RelativeLayout
@@ -16,7 +16,7 @@
         <ImageView
             android:id="@+id/car_post_back"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_centerVertical="true"
             android:paddingLeft="10dp"
             android:paddingRight="20dp"
@@ -28,14 +28,15 @@
             android:gravity="center"
             android:text="@string/car_pin"
             android:textColor="@color/title_color"
-            android:textSize="17sp" />
+            android:textSize="17sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/car_post_btn"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
+            android:gravity="center"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:text="@string/community_post_tv"
@@ -46,9 +47,9 @@
     <TextView
         android:id="@+id/car_post_prompt"
         android:layout_width="match_parent"
-        android:layout_height="42dp"
+        android:layout_height="56dp"
         android:layout_below="@id/order_msg_title"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="0.5dp"
         android:background="@color/white"
         android:gravity="center_vertical"
         android:paddingLeft="10dp"
@@ -57,9 +58,9 @@
     <RelativeLayout
         android:id="@+id/car_post_msg_rl"
         android:layout_width="match_parent"
-        android:layout_height="50.5dp"
+        android:layout_height="56dp"
         android:layout_below="@id/car_post_prompt"
-        android:layout_marginTop="1dp"
+        android:layout_marginTop="0.5dp"
         android:background="@color/white">
 
         <TextView
@@ -116,9 +117,9 @@
     <RelativeLayout
         android:id="@+id/car_post_time_rl"
         android:layout_width="match_parent"
-        android:layout_height="50.5dp"
+        android:layout_height="56dp"
         android:layout_below="@id/car_post_msg_rl"
-        android:layout_marginTop="1dp"
+        android:layout_marginTop="0.5dp"
         android:background="@color/white">
 
         <TextView
@@ -140,7 +141,7 @@
             android:layout_toRightOf="@id/car_post_time"
             android:background="@drawable/car_post_time_bg"
             android:gravity="center"
-            android:padding="5dp"
+            android:padding="10dp"
             android:text="选择时间"
             android:textColor="@color/titlecolor3"
             android:textSize="14sp" />
@@ -149,9 +150,9 @@
     <RelativeLayout
         android:id="@+id/car_post_start_address_rl"
         android:layout_width="match_parent"
-        android:layout_height="50.5dp"
+        android:layout_height="56dp"
         android:layout_below="@id/car_post_time_rl"
-        android:layout_marginTop="1dp"
+        android:layout_marginTop="0.5dp"
         android:background="@color/white">
 
         <TextView
@@ -182,9 +183,9 @@
     <RelativeLayout
         android:id="@+id/car_post_end_address_rl"
         android:layout_width="match_parent"
-        android:layout_height="50.5dp"
+        android:layout_height="56dp"
         android:layout_below="@id/car_post_start_address_rl"
-        android:layout_marginTop="1dp"
+        android:layout_marginTop="0.5dp"
         android:background="@color/white">
 
         <TextView
@@ -215,9 +216,9 @@
     <RelativeLayout
         android:id="@+id/car_post_phone_rl"
         android:layout_width="match_parent"
-        android:layout_height="50.5dp"
+        android:layout_height="56dp"
         android:layout_below="@id/car_post_end_address_rl"
-        android:layout_marginTop="1dp"
+        android:layout_marginTop="0.5dp"
         android:background="@color/white">
 
         <TextView
@@ -249,9 +250,9 @@
     <RelativeLayout
         android:id="@+id/car_post_person_rl"
         android:layout_width="match_parent"
-        android:layout_height="50.5dp"
+        android:layout_height="56dp"
         android:layout_below="@id/car_post_phone_rl"
-        android:layout_marginTop="1dp"
+        android:layout_marginTop="0.5dp"
         android:background="@color/white">
 
         <TextView
@@ -284,10 +285,9 @@
         android:id="@+id/car_post_other_area_rl"
         android:layout_width="match_parent"
         android:layout_height="37dp"
-        android:layout_below="@id/car_post_phone_rl"
-        android:layout_marginTop="1dp"
-        android:background="@color/white"
-        android:visibility="gone">
+        android:layout_below="@id/car_post_person_rl"
+        android:layout_marginTop="0.5dp"
+        android:background="@color/white">
 
         <ImageView
             android:id="@+id/car_post_select_img_btn"
@@ -312,9 +312,10 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/car_post_person_rl"
-        android:layout_marginTop="1dp"
-        android:background="@color/white">
+        android:layout_below="@id/car_post_other_area_rl"
+        android:layout_marginTop="0.5dp"
+        android:background="@color/f5f5f5">
 
     </RelativeLayout>
+
 </RelativeLayout>

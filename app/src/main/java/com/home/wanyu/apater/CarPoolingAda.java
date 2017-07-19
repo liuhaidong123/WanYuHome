@@ -202,7 +202,7 @@ public class CarPoolingAda extends BaseAdapter {
         holder.join_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finalConvertView.setFocusable(false);
+                //finalConvertView.setFocusable(false);
                 mPosition = position;
                 if (over == 2) {
                     Toast.makeText(mContext, "亲，此拼车活动已结束了哦", Toast.LENGTH_SHORT).show();
@@ -226,7 +226,7 @@ public class CarPoolingAda extends BaseAdapter {
         holder.dan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finalConvertView.setFocusable(false);
+               // finalConvertView.setFocusable(false);
 
                 mPosition = position;
                 if (over == 2) {

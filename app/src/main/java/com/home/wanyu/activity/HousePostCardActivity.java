@@ -119,54 +119,57 @@ public class HousePostCardActivity extends AppCompatActivity implements View.OnC
     private TextView mCity_sure_btn, mCity_cancle_btn;
     private int mBigCityPosition = 0;
     private int mSmallCityPosition = 0;
+    private int mSureBigCityPosition = 0;
+    private int mSureSmallCityPosition = 0;
 
     private Button mSubmit_btn;
 
     private int postNum;
     private HttpTools mhttptools;
-    private Handler handler=new Handler(){
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            if (msg.what==149){
-                Object o=msg.obj;
-                if (o!=null&&o instanceof  com.home.wanyu.bean.getAreaActivityLike.Root){
-                    com.home.wanyu.bean.getAreaActivityLike.Root root= (Root) o;
+            if (msg.what == 149) {
+                Object o = msg.obj;
+                if (o != null && o instanceof com.home.wanyu.bean.getAreaActivityLike.Root) {
+                    com.home.wanyu.bean.getAreaActivityLike.Root root = (Root) o;
                     MyDialog.stopDia();
-                    if (root.getCode().equals("0")){
+                    if (root.getCode().equals("0")) {
                         Toast.makeText(HousePostCardActivity.this, "发布成功", Toast.LENGTH_SHORT).show();
                         finish();
-                    }else {
+                    } else {
                         Toast.makeText(HousePostCardActivity.this, "发布失败", Toast.LENGTH_SHORT).show();
                     }
                 }
-            }else if (msg.what==150){//获取总数
-                Object o=msg.obj;
-                if (o!=null&&o instanceof  com.home.wanyu.bean.HousePostNumber.PostNum){
-                    com.home.wanyu.bean.HousePostNumber.PostNum  root= (com.home.wanyu.bean.HousePostNumber.PostNum ) o;
-                    if (root.getCode().equals("0")){
-                        postNum=root.getNumber();
-                        if (postNum==8){
+            } else if (msg.what == 150) {//获取总数
+                Object o = msg.obj;
+                if (o != null && o instanceof com.home.wanyu.bean.HousePostNumber.PostNum) {
+                    com.home.wanyu.bean.HousePostNumber.PostNum root = (com.home.wanyu.bean.HousePostNumber.PostNum) o;
+                    if (root.getCode().equals("0")) {
+                        postNum = root.getNumber();
+                        if (postNum == 8) {
                             mPostNum.setText("抱歉,您本月发布的的房源已经达到上限，请下个月发布");
-                        }else {
-                            mPostNum.setText("您本月可以发帖"+8+"条,"+"本月还可以免费发帖"+(8-postNum)+"条");
+                        } else {
+                            mPostNum.setText("您本月可以发帖" + 8 + "条," + "本月还可以免费发帖" + (8 - postNum) + "条");
                         }
 
-                    }else {
+                    } else {
                         mPostNum.setText("无法获取您本月发布房屋的数量");
-                        postNum=-1;
+                        postNum = -1;
                     }
                 }
             }
         }
     };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
 
         setContentView(R.layout.activity_house_post_card);
-        mhttptools=HttpTools.getHttpToolsInstance();
+        mhttptools = HttpTools.getHttpToolsInstance();
         mhttptools.housePostNumber(handler, UserInfo.userToken);//获取发布房源的总数
         pullXml();
         initView();
@@ -176,7 +179,7 @@ public class HousePostCardActivity extends AppCompatActivity implements View.OnC
         mback = (ImageView) findViewById(R.id.house_post_back);
         mback.setOnClickListener(this);
 
-        mPostNum=(TextView) findViewById(R.id.house_prompt_num);
+        mPostNum = (TextView) findViewById(R.id.house_prompt_num);
 
         mAreaName = (EditText) findViewById(R.id.area_name);
         mShi = (EditText) findViewById(R.id.house_shi_edit);
@@ -307,7 +310,36 @@ public class HousePostCardActivity extends AppCompatActivity implements View.OnC
         mSelect_city_rl = (RelativeLayout) findViewById(R.id.select_city_rl);
         mSelect_city_rl.setOnClickListener(this);
         mCity_name = (TextView) findViewById(R.id.house_city_name);
+        cityView = LayoutInflater.from(this).inflate(R.layout.house_city, null);
+        mCity_sure_btn = (TextView) cityView.findViewById(R.id.sure_city_btn);
+        mCity_cancle_btn = (TextView) cityView.findViewById(R.id.cancle_city_btn);
+        mCity_sure_btn.setOnClickListener(this);
+        mCity_cancle_btn.setOnClickListener(this);
 
+        bigCityWheelView = (WheelView) cityView.findViewById(R.id.big_city);
+        smallCityWheelView = (WheelView) cityView.findViewById(R.id.small_city);
+
+        bigCityAda = new MyWheelAdapter50(this, listCitys, "");
+        bigCityWheelView.setViewAdapter(bigCityAda);
+
+        smallCityAda = new MyWheelAdapter50(HousePostCardActivity.this, mapAreas.get(listCitys.get(mBigCityPosition)), "");
+        smallCityWheelView.setViewAdapter(smallCityAda);
+
+        bigCityWheelView.addChangingListener(new OnWheelChangedListener() {
+            @Override
+            public void onChanged(WheelView wheel, int oldValue, int newValue) {
+                mBigCityPosition = newValue;
+                smallCityAda = new MyWheelAdapter50(HousePostCardActivity.this, mapAreas.get(listCitys.get(mBigCityPosition)), "");
+                smallCityWheelView.setViewAdapter(smallCityAda);
+            }
+        });
+
+        smallCityWheelView.addChangingListener(new OnWheelChangedListener() {
+            @Override
+            public void onChanged(WheelView wheel, int oldValue, int newValue) {
+                mSmallCityPosition = newValue;
+            }
+        });
 
     }
 
@@ -436,99 +468,101 @@ public class HousePostCardActivity extends AppCompatActivity implements View.OnC
             }
             mDirectionPop.dismiss();
         } else if (id == mSelect_city_rl.getId()) {//城市弹框
+            bigCityWheelView.setCurrentItem(mSureBigCityPosition);
+            smallCityWheelView.setCurrentItem(mSureSmallCityPosition);
             showCityPop();
         } else if (id == R.id.sure_city_btn) {//确定城市
             mCity_name.setText(mapAreas.get(listCitys.get(mBigCityPosition)).get(mSmallCityPosition));
             mCityPop.dismiss();
-
+            mSureBigCityPosition = mBigCityPosition;
+            mSureSmallCityPosition = mSmallCityPosition;
         } else if (id == R.id.cancle_city_btn) {//取消城市
             mCityPop.dismiss();
-            mBigCityPosition = 0;
-            mSmallCityPosition = 0;
-        } else if (id == mSubmit_btn.getId()) {//提交
-            if (postNum!=-1){
 
-                if (postNum==8){
-                    Toast.makeText(this,"抱歉,您本月发布的的房源已经达到上限，请下个月发布",Toast.LENGTH_SHORT).show();
-                }else {
-                    if (mZuFlag==1){
-                        if (mImgList.size()==0||mPay_money_tv.getText().toString().trim().equals("")||mSelectConfigureList.size()==0||mDirection_tv.getText().toString().trim().equals("")||mCity_name.getText().toString().trim().equals("") ||getAreaname().equals("")||getShi().equals("")||getWei().equals("")||getTing().equals("")||getMsize().equals("")||getceng().equals("")||getAllceng().equals("")||getMoney().equals("")||getMName().equals("")||getMPhone().equals("")){
-                            Toast.makeText(this,"请补全信息",Toast.LENGTH_SHORT).show();
-                        }else {
+        } else if (id == mSubmit_btn.getId()) {//提交
+            if (postNum != -1) {
+
+                if (postNum == 8) {
+                    Toast.makeText(this, "抱歉,您本月发布的的房源已经达到上限，请下个月发布", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (mZuFlag == 1) {
+                        if (mImgList.size() == 0 || mPay_money_tv.getText().toString().trim().equals("") || mSelectConfigureList.size() == 0 || mDirection_tv.getText().toString().trim().equals("") || mCity_name.getText().toString().trim().equals("") || getAreaname().equals("") || getShi().equals("") || getWei().equals("") || getTing().equals("") || getMsize().equals("") || getceng().equals("") || getAllceng().equals("") || getMoney().equals("") || getMName().equals("") || getMPhone().equals("")) {
+                            Toast.makeText(this, "请补全信息", Toast.LENGTH_SHORT).show();
+                        } else {
                             MyDialog.showDialog(this);
-                            StringBuilder stringBuilder=new StringBuilder();
-                            for (int i=0;i<mSelectConfigureList.size();i++){
-                                stringBuilder.append(mSelectConfigureList.get(i).getName()+"；");
+                            StringBuilder stringBuilder = new StringBuilder();
+                            for (int i = 0; i < mSelectConfigureList.size(); i++) {
+                                stringBuilder.append(mSelectConfigureList.get(i).getName() + "；");
                             }
 
-                            AjaxParams ajaxParams=new AjaxParams();
-                            ajaxParams.put("rentalTyoe",1+"");
-                            ajaxParams.put("cyty",mCity_name.getText().toString().trim());
-                            Log.e("cyty",mCity_name.getText().toString().trim());
-                            ajaxParams.put("residentialQuarters",getAreaname());
-                            ajaxParams.put("apartmentLayout",getShi()+"室"+getTing()+"厅"+getWei()+"卫");
-                            ajaxParams.put("housingArea",getMsize());
-                            ajaxParams.put("floor",getceng());
-                            ajaxParams.put("floord",getAllceng());
-                            ajaxParams.put("direction",mDirection_tv.getText().toString());
-                            ajaxParams.put("houseAllocation",stringBuilder.toString());
-                            ajaxParams.put("rent",getMoney());
-                            ajaxParams.put("paymentMethod",mPay_money_tv.getText().toString().trim());
-                            ajaxParams.put("contacts",getMName());
-                            ajaxParams.put("telephone",getMPhone());
+                            AjaxParams ajaxParams = new AjaxParams();
+                            ajaxParams.put("rentalTyoe", 1 + "");
+                            ajaxParams.put("cyty", mCity_name.getText().toString().trim());
+                            Log.e("cyty", mCity_name.getText().toString().trim());
+                            ajaxParams.put("residentialQuarters", getAreaname());
+                            ajaxParams.put("apartmentLayout", getShi() + "室" + getTing() + "厅" + getWei() + "卫");
+                            ajaxParams.put("housingArea", getMsize());
+                            ajaxParams.put("floor", getceng());
+                            ajaxParams.put("floord", getAllceng());
+                            ajaxParams.put("direction", mDirection_tv.getText().toString());
+                            ajaxParams.put("houseAllocation", stringBuilder.toString());
+                            ajaxParams.put("rent", getMoney());
+                            ajaxParams.put("paymentMethod", mPay_money_tv.getText().toString().trim());
+                            ajaxParams.put("contacts", getMName());
+                            ajaxParams.put("telephone", getMPhone());
 
-                            for (int i=0;i<mImgList.size();i++){
-                                File file=   transImage(mImgList.get(i), ImgUitls.getWith(this),ImgUitls.getHeight(this),90,"图片"+i);
+                            for (int i = 0; i < mImgList.size(); i++) {
+                                File file = transImage(mImgList.get(i), ImgUitls.getWith(this), ImgUitls.getHeight(this), 90, "图片" + i);
                                 try {
-                                    ajaxParams.put("图片"+i,file);
+                                    ajaxParams.put("图片" + i, file);
                                 } catch (FileNotFoundException e) {
                                     e.printStackTrace();
                                 }
                             }
-                            mhttptools.housePostCard(handler,ajaxParams);
+                            mhttptools.housePostCard(handler, ajaxParams);
 
                         }
 
-                    }else if (mZuFlag==2){
-                        if (mWo_name.getText().toString().toString().trim().equals("")||mImgList.size()==0||mPay_money_tv.getText().toString().trim().equals("")||mSelectConfigureList.size()==0||mDirection_tv.getText().toString().trim().equals("")||mCity_name.getText().toString().trim().equals("") ||getAreaname().equals("")||getMsize().equals("")||getceng().equals("")||getAllceng().equals("")||getMoney().equals("")||getMName().equals("")||getMPhone().equals("")){
-                            Toast.makeText(this,"请补全信息",Toast.LENGTH_SHORT).show();
-                        }else {
+                    } else if (mZuFlag == 2) {
+                        if (mWo_name.getText().toString().toString().trim().equals("") || mImgList.size() == 0 || mPay_money_tv.getText().toString().trim().equals("") || mSelectConfigureList.size() == 0 || mDirection_tv.getText().toString().trim().equals("") || mCity_name.getText().toString().trim().equals("") || getAreaname().equals("") || getMsize().equals("") || getceng().equals("") || getAllceng().equals("") || getMoney().equals("") || getMName().equals("") || getMPhone().equals("")) {
+                            Toast.makeText(this, "请补全信息", Toast.LENGTH_SHORT).show();
+                        } else {
                             MyDialog.showDialog(this);
-                            StringBuilder stringBuilder=new StringBuilder();
-                            for (int i=0;i<mSelectConfigureList.size();i++){
-                                stringBuilder.append(mSelectConfigureList.get(i).getName()+"；");
+                            StringBuilder stringBuilder = new StringBuilder();
+                            for (int i = 0; i < mSelectConfigureList.size(); i++) {
+                                stringBuilder.append(mSelectConfigureList.get(i).getName() + "；");
                             }
 
-                            AjaxParams ajaxParams=new AjaxParams();
-                            ajaxParams.put("rentalTyoe",2+"");
-                            ajaxParams.put("cyty",mCity_name.getText().toString().trim());
-                            ajaxParams.put("residentialQuarters",getAreaname());
-                            ajaxParams.put("apartmentLayout",mWo_name.getText().toString().toString());
-                            ajaxParams.put("housingArea",getMsize());
-                            ajaxParams.put("floor",getceng());
-                            ajaxParams.put("floord",getAllceng());
-                            ajaxParams.put("direction",mDirection_tv.getText().toString());
-                            ajaxParams.put("houseAllocation",stringBuilder.toString());
-                            ajaxParams.put("rent",getMoney());
-                            ajaxParams.put("paymentMethod",mPay_money_tv.getText().toString().trim());
-                            ajaxParams.put("contacts",getMName());
-                            ajaxParams.put("telephone",getMPhone());
-                            for (int i=0;i<mImgList.size();i++){
-                                File file=   transImage(mImgList.get(i), ImgUitls.getWith(this),ImgUitls.getHeight(this),90,"图片"+i);
+                            AjaxParams ajaxParams = new AjaxParams();
+                            ajaxParams.put("rentalTyoe", 2 + "");
+                            ajaxParams.put("cyty", mCity_name.getText().toString().trim());
+                            ajaxParams.put("residentialQuarters", getAreaname());
+                            ajaxParams.put("apartmentLayout", mWo_name.getText().toString().toString());
+                            ajaxParams.put("housingArea", getMsize());
+                            ajaxParams.put("floor", getceng());
+                            ajaxParams.put("floord", getAllceng());
+                            ajaxParams.put("direction", mDirection_tv.getText().toString());
+                            ajaxParams.put("houseAllocation", stringBuilder.toString());
+                            ajaxParams.put("rent", getMoney());
+                            ajaxParams.put("paymentMethod", mPay_money_tv.getText().toString().trim());
+                            ajaxParams.put("contacts", getMName());
+                            ajaxParams.put("telephone", getMPhone());
+                            for (int i = 0; i < mImgList.size(); i++) {
+                                File file = transImage(mImgList.get(i), ImgUitls.getWith(this), ImgUitls.getHeight(this), 90, "图片" + i);
                                 try {
-                                    ajaxParams.put("图片"+i,file);
+                                    ajaxParams.put("图片" + i, file);
                                 } catch (FileNotFoundException e) {
                                     e.printStackTrace();
                                 }
                             }
-                            mhttptools.housePostCard(handler,ajaxParams);
+                            mhttptools.housePostCard(handler, ajaxParams);
 
                         }
 
                     }
                 }
-            }else {
-                Toast.makeText(this,"抱歉,无法获取您本月发布房屋的数量",Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "抱歉,无法获取您本月发布房屋的数量", Toast.LENGTH_SHORT).show();
             }
 
 
@@ -653,37 +687,6 @@ public class HousePostCardActivity extends AppCompatActivity implements View.OnC
         params.alpha = 0.9f;
         getWindow().setAttributes(params);
 
-        cityView = LayoutInflater.from(this).inflate(R.layout.house_city, null);
-        mCity_sure_btn = (TextView) cityView.findViewById(R.id.sure_city_btn);
-        mCity_cancle_btn = (TextView) cityView.findViewById(R.id.cancle_city_btn);
-        mCity_sure_btn.setOnClickListener(this);
-        mCity_cancle_btn.setOnClickListener(this);
-
-        bigCityWheelView = (WheelView) cityView.findViewById(R.id.big_city);
-        smallCityWheelView = (WheelView) cityView.findViewById(R.id.small_city);
-
-        bigCityAda = new MyWheelAdapter50(this, listCitys, "");
-        bigCityWheelView.setViewAdapter(bigCityAda);
-
-        smallCityAda = new MyWheelAdapter50(HousePostCardActivity.this, mapAreas.get(listCitys.get(mBigCityPosition)), "");
-        smallCityWheelView.setViewAdapter(smallCityAda);
-
-        bigCityWheelView.addChangingListener(new OnWheelChangedListener() {
-            @Override
-            public void onChanged(WheelView wheel, int oldValue, int newValue) {
-                mBigCityPosition = newValue;
-                smallCityAda = new MyWheelAdapter50(HousePostCardActivity.this, mapAreas.get(listCitys.get(mBigCityPosition)), "");
-                smallCityWheelView.setViewAdapter(smallCityAda);
-            }
-        });
-
-        smallCityWheelView.addChangingListener(new OnWheelChangedListener() {
-            @Override
-            public void onChanged(WheelView wheel, int oldValue, int newValue) {
-                mSmallCityPosition = newValue;
-            }
-        });
-
         mCityPop = new PopupWindow();
         mCityPop.setContentView(cityView);
         //设置弹框的款，高
@@ -711,12 +714,12 @@ public class HousePostCardActivity extends AppCompatActivity implements View.OnC
 
     }
 
-    private List<String> listCitys;//所有市级
-    private List<String> listAreas; //某一个市下的所有县区集合
-    private String currentCity;//当前解析到的市的名字
+    private List<String> listCitys;//所有城市集合
+    private List<String> listAreas; //某个城市下的所有县区集合
+    private String currentCity;//当前城市的名称：如北京，为了获取当前城市下的所有县区,如北京市下的东城区，西城区，朝阳区，丰台区，房山区，通州区，海定区等
     private Map<String, List<String>> mapAreas;//所有市对应的各个县区集合
 
-    // 解析数据
+    // 解析城市数据
     public boolean pullXml() {
         try {
             InputStream is = getResources().getAssets().open("city.xml");
@@ -823,6 +826,7 @@ public class HousePostCardActivity extends AppCompatActivity implements View.OnC
         }
         return mShi.getText().toString().trim();
     }
+
     public String getTing() {
         if (mTing.getText().toString().trim().equals("")) {
             return "";

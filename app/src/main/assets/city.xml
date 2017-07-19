@@ -22,6 +22,7 @@
         <area name="延庆县" postcode="110229" />
     </city>
   </province>
+
   <province name="天津" postcode="120000" >
     <city name="天津市" postcode="120100" >
         <area name="和平区" postcode="120101" />

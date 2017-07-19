@@ -4,6 +4,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,9 @@ import android.widget.Toast;
 import com.home.wanyu.HttpUtils.HttpTools;
 import com.home.wanyu.R;
 import com.home.wanyu.bean.getAreaActivityLike.Root;
+import com.home.wanyu.lzhView.wheelView.MyWheelAdapter50;
+import com.home.wanyu.lzhView.wheelView.OnWheelChangedListener;
+import com.home.wanyu.lzhView.wheelView.WheelView;
 import com.home.wanyu.myUtils.MyDialog;
 import com.home.wanyu.myUtils.NetWorkMyUtils;
 
@@ -27,8 +31,10 @@ import net.tsz.afinal.http.AjaxParams;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -41,9 +47,19 @@ public class CarPoolingPostActivity extends AppCompatActivity implements View.On
     private int mFlag = -1;
     private PopupWindow mPopupwindow;
     private View mView;
+    private TextView tv;
     private DatePicker mDatePicker;
     private TimePicker mTimePicker;
     private Calendar mCalendar;
+    private WheelView mDateWheelView, mHourWheelView, mMinuteWheelView;
+    private MyWheelAdapter50 mDateWheelAda, mHourWheelAda, mMinuiteWheelAda;
+    private int datePosition = 0, hourPosition = 0, minutePosition = 0;
+    private int dateSureStartPosition = 0, hourSureStartPosition = 0, minuteSureStartPosition = 0;
+    private int year;
+    private List<String> mDateList = new ArrayList<>();
+    private List<String> mHourList = new ArrayList<>();
+    private List<String> mMinuteList = new ArrayList<>();
+    private List<String> mCheckDateList = new ArrayList<>();
     private TextView mSure_time, mCancle_time;
     private TextView mShowTime_btn;
     private EditText mStart_tv, mEnd_tv, mPhone,mPerson_edit;
@@ -96,40 +112,140 @@ public class CarPoolingPostActivity extends AppCompatActivity implements View.On
         //选择时间
         mShowTime_btn = (TextView) findViewById(R.id.car_post_time_msg);
         mShowTime_btn.setOnClickListener(this);
-        mView = LayoutInflater.from(this).inflate(R.layout.community_select_time_item, null);
+        mView = LayoutInflater.from(this).inflate(R.layout.community_post_time, null);
+        tv = (TextView) mView.findViewById(R.id.tv);
+        tv.setText("出发时间");
+        //日期滚动
+        mDateWheelView = (WheelView) mView.findViewById(R.id.date_wheel_c);
+        mDateWheelView.addChangingListener(new OnWheelChangedListener() {
+            @Override
+            public void onChanged(WheelView wheel, int oldValue, int newValue) {
+                datePosition = newValue;
+            }
+        });
+        //小时滚动
+        mHourWheelView = (WheelView) mView.findViewById(R.id.hour_wheel_c);
+        mHourWheelView.addChangingListener(new OnWheelChangedListener() {
+            @Override
+            public void onChanged(WheelView wheel, int oldValue, int newValue) {
+                hourPosition = newValue;
+            }
+        });
+        //分钟滚动
+        mMinuteWheelView = (WheelView) mView.findViewById(R.id.minute_wheel_c);
+        mMinuteWheelView.addChangingListener(new OnWheelChangedListener() {
+            @Override
+            public void onChanged(WheelView wheel, int oldValue, int newValue) {
+                minutePosition = newValue;
+            }
+        });
+
+
         mCalendar = Calendar.getInstance();
 
-        int year = mCalendar.get(Calendar.YEAR);
-        int month = mCalendar.get(Calendar.MONTH);
+        year = mCalendar.get(Calendar.YEAR);
+        int month = mCalendar.get(Calendar.MONTH)+1;
         int day = mCalendar.get(Calendar.DAY_OF_MONTH);
         int hour = mCalendar.get(Calendar.HOUR_OF_DAY);
         int minute = mCalendar.get(Calendar.MINUTE);
-
-        mDatePicker = (DatePicker) mView.findViewById(R.id.community_date_picker);
-        mDatePicker.setMinDate(System.currentTimeMillis());
-        mDatePicker.init(year, month, day, new DatePicker.OnDateChangedListener() {
-            @Override
-            public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-
+        int maxDay = mCalendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+        //显示时候日期
+        for (int i = day; i <= maxDay; i++) {
+            String str = new String();
+            if (month < 10) {
+                str = "0" + month + "月";
+                if (i < 10) {
+                    str = str + "0" + i + "日";
+                } else {
+                    str = str + i + "日";
+                }
+            } else {
+                str = month + "月";
+                if (i < 10) {
+                    str = str + "0" + i + "日";
+                } else {
+                    str = str + i + "日";
+                }
             }
-        });
-        mTimePicker = (TimePicker) mView.findViewById(R.id.community_time_picker);
-        mTimePicker.setCurrentHour(hour);
-        mTimePicker.setCurrentMinute(minute);
-        mTimePicker.setIs24HourView(true);
-        mTimePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
-            @Override
-            public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
-
+            mDateList.add(str);
+            Log.e("日期：", str);
+        }
+        //提交时候判断日期
+        for (int i = day; i <= maxDay; i++) {
+            String str = new String();
+            if (month < 10) {
+                str = "0" + month;
+                if (i < 10) {
+                    str = str + "-0" + i;
+                } else {
+                    str = str + "-" + i;
+                }
+            } else {
+                str = "" + month;
+                if (i < 10) {
+                    str = str + "-0" + i;
+                } else {
+                    str = str + "-" + i;
+                }
             }
-        });
+            mCheckDateList.add(str);
+            Log.e("判断日期：", year + "-" + str);
+
+        }
+        //显示小时
+        for (int i = 0; i < 24; i++) {
+            String str = new String();
+            if (i < 10) {
+                str = "0" + i;
+            } else {
+                str = i + "";
+            }
+            mHourList.add(str);
+            Log.e("小时:", str);
+        }
+
+        //显示分钟
+        for (int i = 0; i < 60; i++) {
+            String str = new String();
+            if (i < 10) {
+                str = "0" + i;
+            } else {
+                str = i + "";
+            }
+            mMinuteList.add(str);
+            Log.e("分钟:", str);
+        }
+        mDateWheelAda = new MyWheelAdapter50(this, mDateList, "");
+        mHourWheelAda = new MyWheelAdapter50(this, mHourList, "");
+        mMinuiteWheelAda = new MyWheelAdapter50(this, mMinuteList, "");
+        mDateWheelView.setViewAdapter(mDateWheelAda);
+        mHourWheelView.setViewAdapter(mHourWheelAda);
+        mMinuteWheelView.setViewAdapter(mMinuiteWheelAda);
+//        mDatePicker = (DatePicker) mView.findViewById(R.id.community_date_picker);
+//        mDatePicker.setMinDate(System.currentTimeMillis());
+//        mDatePicker.init(year, month, day, new DatePicker.OnDateChangedListener() {
+//            @Override
+//            public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+//
+//            }
+//        });
+//        mTimePicker = (TimePicker) mView.findViewById(R.id.community_time_picker);
+//        mTimePicker.setCurrentHour(hour);
+//        mTimePicker.setCurrentMinute(minute);
+//        mTimePicker.setIs24HourView(true);
+//        mTimePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
+//            @Override
+//            public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
+//
+//            }
+//        });
         //确定时间，取消时间
         mSure_time = (TextView) mView.findViewById(R.id.community_time_sure);
         mSure_time.setOnClickListener(this);
         mCancle_time = (TextView) mView.findViewById(R.id.community_time_cancle);
         mCancle_time.setOnClickListener(this);
-        //显示时间
-        mSelect_time = (TextView) findViewById(R.id.car_post_time_msg);
+//        //显示时间
+//        mSelect_time = (TextView) findViewById(R.id.car_post_time_msg);
 
         //出发地，目的地
         mStart_tv = (EditText) findViewById(R.id.car_post_start_address_msg);
@@ -150,7 +266,7 @@ public class CarPoolingPostActivity extends AppCompatActivity implements View.On
         if (id == mback.getId()) {
             finish();
         } else if (id == mPost_btn.getId()) {//发布
-            if (checkStartEndTime(mStartYear+"-"+mSelect_time.getText().toString()+":"+"00")){
+            if (checkStartEndTime(year + "-" + mCheckDateList.get(dateSureStartPosition) + " " + mHourList.get(hourSureStartPosition) + ":" + mMinuteList.get(minuteSureStartPosition) + ":" + "00")){
                 if (!(getShen().equals("")||getStartAddresss().equals("")||getEndAddresss().equals("")||getPhone().equals(""))){
                    // Toast.makeText(this,"内容正确",Toast.LENGTH_SHORT).show();
                     if (NetWorkMyUtils.isNetworkConnected(this)){
@@ -158,7 +274,8 @@ public class CarPoolingPostActivity extends AppCompatActivity implements View.On
                         MyDialog.showDialog(this);
                         AjaxParams ajaxParams=new AjaxParams();
                         ajaxParams.put("ctype",mFlag+"");
-                        ajaxParams.put("startTime",mSelect_time.getText().toString());
+                      //  ajaxParams.put("startTime",mSelect_time.getText().toString());
+                        ajaxParams.put("startTime",mCheckDateList.get(dateSureStartPosition) + " " + mHourList.get(hourSureStartPosition) + ":" + mMinuteList.get(minuteSureStartPosition));
                         ajaxParams.put("departurePlace",getStartAddresss());
                         ajaxParams.put("end",getEndAddresss());
                         ajaxParams.put("cnumber",getPersonNum());
@@ -198,36 +315,39 @@ public class CarPoolingPostActivity extends AppCompatActivity implements View.On
             }
         } else if (id == mSure_time.getId()) {//确认时间
             mPopupwindow.dismiss();
-            String month="";
-            String day="";
-            String hour="";
-            String minute="";
-            mStartYear=mDatePicker.getYear();
-            if (mDatePicker.getMonth() + 1<10){
-                month="0"+(mDatePicker.getMonth() + 1);
-            }else {
-                month=mDatePicker.getMonth() + 1+"";
-            }
+            dateSureStartPosition = datePosition;
+            hourSureStartPosition = hourPosition;
+            minuteSureStartPosition = minutePosition;
+//            String month="";
+//            String day="";
+//            String hour="";
+//            String minute="";
+//            mStartYear=mDatePicker.getYear();
+//            if (mDatePicker.getMonth() + 1<10){
+//                month="0"+(mDatePicker.getMonth() + 1);
+//            }else {
+//                month=mDatePicker.getMonth() + 1+"";
+//            }
+//
+//            if ( mDatePicker.getDayOfMonth()<10){
+//                day="0"+mDatePicker.getDayOfMonth();
+//            }else {
+//                day=mDatePicker.getDayOfMonth()+"";
+//            }
+//
+//            if (mTimePicker.getCurrentHour()<10){
+//                hour="0"+mTimePicker.getCurrentHour();
+//            }else {
+//                hour=""+mTimePicker.getCurrentHour();
+//            }
+//
+//            if (mTimePicker.getCurrentMinute()<10){
+//                minute="0"+mTimePicker.getCurrentMinute();
+//            }else {
+//                minute=""+mTimePicker.getCurrentMinute();
+//            }
 
-            if ( mDatePicker.getDayOfMonth()<10){
-                day="0"+mDatePicker.getDayOfMonth();
-            }else {
-                day=mDatePicker.getDayOfMonth()+"";
-            }
-
-            if (mTimePicker.getCurrentHour()<10){
-                hour="0"+mTimePicker.getCurrentHour();
-            }else {
-                hour=""+mTimePicker.getCurrentHour();
-            }
-
-            if (mTimePicker.getCurrentMinute()<10){
-                minute="0"+mTimePicker.getCurrentMinute();
-            }else {
-                minute=""+mTimePicker.getCurrentMinute();
-            }
-
-            mSelect_time.setText(month + "-" + day + " " + hour + ":" + minute);
+            mShowTime_btn.setText(mDateList.get(dateSureStartPosition) + " " + mHourList.get(hourSureStartPosition) + ":" + mMinuteList.get(minuteSureStartPosition));
         } else if (id == mCancle_time.getId()) {//取消时间
             mPopupwindow.dismiss();
         }

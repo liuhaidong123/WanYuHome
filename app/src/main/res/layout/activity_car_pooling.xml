@@ -4,100 +4,122 @@
     android:id="@+id/activity_car_pooling"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_color"
+    android:background="@color/f5f5f5"
     tools:context="com.home.wanyu.activity.CarPoolingActivity">
 
     <RelativeLayout
-    android:id="@+id/order_msg_title"
-    android:layout_width="match_parent"
-    android:layout_height="45dp"
-    android:background="@color/white">
-
-    <ImageView
-        android:id="@+id/car_msg_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:paddingLeft="10dp"
-        android:paddingRight="20dp"
-        android:src="@mipmap/property_back" />
-
-    <TextView
+        android:id="@+id/order_msg_title"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:gravity="center"
-        android:text="@string/car_pin"
-        android:textColor="@color/title_color"
-        android:textSize="17sp" />
-
-    <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="10dp">
+        android:background="@color/white">
 
         <ImageView
-            android:id="@+id/car_news_img"
+
+            android:id="@+id/car_msg_back"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingBottom="10dp"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
             android:paddingLeft="10dp"
-            android:src="@mipmap/circle_news" />
+            android:paddingRight="20dp"
+            android:src="@mipmap/property_back" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:gravity="center"
+            android:text="@string/car_pin"
+            android:textColor="@color/title_color"
+            android:textSize="17sp"
+            android:textStyle="bold" />
 
         <ImageView
-            android:visibility="gone"
-            android:id="@+id/car_red_img"
+            android:id="@+id/car_post_activity"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:src="@mipmap/circle_post" />
+
+        <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:src="@mipmap/circle_small_red" />
-    </FrameLayout>
-</RelativeLayout>
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@id/car_post_activity">
+
+            <ImageView
+                android:id="@+id/car_news_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:src="@mipmap/circle_news" />
+
+            <ImageView
+                android:id="@+id/car_red_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:src="@mipmap/circle_small_red"
+                android:visibility="gone" />
+        </FrameLayout>
+
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/two_ll"
         android:layout_width="match_parent"
-        android:layout_height="44dp"
-        android:layout_below="@+id/order_msg_title"
+        android:layout_height="55dp"
+        android:layout_below="@id/order_msg_title"
         android:layout_marginTop="1dp"
-        android:background="@color/white">
+        android:background="@mipmap/carpooling_bg_img">
 
         <LinearLayout
             android:id="@+id/car_now_ll"
             android:layout_width="0dp"
-            android:layout_height="44dp"
+            android:layout_height="55dp"
             android:layout_weight="1"
-            android:background="@color/bg_rect"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/car_jin_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="53dp"
+                android:gravity="center"
                 android:text="@string/car_jin"
-                android:textColor="@color/white"
-                android:textSize="14sp" />
+                android:textColor="@color/eac6"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/carpooling_line_now"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/c2a5" />
 
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/car_end_ll"
             android:layout_width="0dp"
-            android:layout_height="44dp"
+            android:layout_height="55dp"
             android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/car_end_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="53dp"
+                android:gravity="center"
                 android:text="@string/car_end"
-                android:textColor="@color/title_color"
-                android:textSize="14sp" />
+                android:textColor="@color/white"
+                android:textSize="15sp" />
 
+            <TextView
+                android:id="@+id/carpooling_line_end"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/circle_bg" />
         </LinearLayout>
 
 
@@ -132,13 +154,13 @@
 
 
                 <RelativeLayout
-                    android:visibility="gone"
                     android:id="@+id/many_relative"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/car_listview"
                     android:layout_marginTop="1dp"
-                    android:background="@color/white">
+                    android:background="@color/white"
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/footer_tv"
@@ -154,13 +176,13 @@
                         android:textSize="13sp" />
 
                     <ProgressBar
-                        android:visibility="invisible"
                         android:id="@+id/pbLocate"
                         style="?android:attr/progressBarStyleSmall"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_toEndOf="@+id/footer_tv" />
+                        android:layout_toEndOf="@+id/footer_tv"
+                        android:visibility="invisible" />
 
                 </RelativeLayout>
 
@@ -170,13 +192,13 @@
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
-    <ImageView
-        android:id="@+id/car_post_activity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="67dp"
-        android:layout_marginRight="11dp"
-        android:src="@mipmap/circle_post" />
+    <!--<ImageView-->
+    <!--android:id="@+id/car_post_activity"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignParentBottom="true"-->
+    <!--android:layout_alignParentRight="true"-->
+    <!--android:layout_marginBottom="67dp"-->
+    <!--android:layout_marginRight="11dp"-->
+    <!--android:src="@mipmap/circle_post" />-->
 </RelativeLayout>
