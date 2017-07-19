@@ -14,9 +14,9 @@ public class icon {
 //    4=窗帘
 //    5=空调
 //    6=门锁
-    public static int[]mIconRes={R.mipmap.line,R.mipmap.socket,R.mipmap.light,R.mipmap.tv1,R.mipmap.square,R.mipmap.sun,R.mipmap.door};
-    public static int[]mIconId={0,1,2,3,4,5,6};
-    public static String[]mDeviceName={"未识别的设备","开关","灯","电视","窗帘","空调","门锁"};
+    public static int[]mIconRes={R.mipmap.line,R.mipmap.socketq,R.mipmap.lightq,R.mipmap.tvq,R.mipmap.curtainq,R.mipmap.airconditionq,R.mipmap.soundq,R.mipmap.door};
+    public static int[]mIconId={0,1,2,3,4,5,6,7};
+    public static String[]mDeviceName={"未识别的设备","开关","灯","电视","窗帘","空调","音响","门锁"};
     public static String getDeviceName(int dev){
         Device device=Device.getDevice(dev);
         switch (device){
@@ -32,11 +32,12 @@ public class icon {
                 return mDeviceName[4];
             case AC:
                 return mDeviceName[5];
-            case LOCK:
+            case SOUND:
                 return mDeviceName[6];
+            case LOCK:
+                return mDeviceName[7];
             default:
                 return mDeviceName[0];
         }
     }
-
 }

@@ -85,8 +85,6 @@ public class HomeSenceSettingActivity extends MyActivity{
     @BindView(R.id.home_sence_scene_rela_condition_textv_name)TextView home_sence_scene_rela_condition_textv_name;//显示启动方式
     private PopupWindow pop;
     private List<Bean_getSceneData.EquipmentListBean> list;
-    private String[]title={"客厅灯","电视","客厅插座"};
-    private int[]url={R.mipmap.light,R.mipmap.tv,R.mipmap.socket};
     private HomeSceneSettingListAdapter adapter;
     @BindArray(R.array.mode) String[]mode;
     private int SelectPositon=0;//当前选中的启动方式对应mode中的下标
@@ -360,7 +358,6 @@ public class HomeSenceSettingActivity extends MyActivity{
     //初始化网络请求
     @Override
     public void getSerVerData() {
-
 //        SenceId="1";//测试用，需删除（7-3号）
         if (!"".equals(SenceId)&&!TextUtils.isEmpty(SenceId)){
             HashMap<String,String>map=new HashMap<>();

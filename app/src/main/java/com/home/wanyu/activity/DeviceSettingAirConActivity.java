@@ -415,11 +415,7 @@ public class DeviceSettingAirConActivity extends MyActivity implements View.OnCl
                 break;
         }
     }
-
-
-
-
-    private void setDevice() {
+private void setDevice() {
         if (isChange){
             mToast.Toast(con,"正在操作，请稍后");
             return;

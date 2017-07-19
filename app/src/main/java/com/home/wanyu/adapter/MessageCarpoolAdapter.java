@@ -24,7 +24,7 @@ public class MessageCarpoolAdapter extends BaseAdapter{
     }
     @Override
     public int getCount() {
-        return 5;
+        return 9;
     }
 
     @Override

@@ -334,8 +334,6 @@ public class HomeDeviceSettingActivity extends MyActivity {
                     intent.putExtra("aspectY", 1);
                     intent.putExtra("outputX", 800);//宽度
                     intent.putExtra("outputY", 800);//高度
-//                    intent.putExtra("return-data", true);
-//                    intent.putExtra("noFaceDetection", true);
                     intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(outputImage));
                     startActivityForResult(intent, 12);
                     break;

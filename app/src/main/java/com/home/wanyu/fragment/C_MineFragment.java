@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.home.wanyu.Ip.Ip;
@@ -21,6 +22,8 @@ import com.home.wanyu.Ip.okhttpTools;
 import com.home.wanyu.OkhttpUtils.okhttp;
 import com.home.wanyu.R;
 import com.home.wanyu.User.UserInfo;
+import com.home.wanyu.activity.C_MyHomeActivity;
+import com.home.wanyu.activity.C_MyMessageActivity;
 import com.home.wanyu.activity.CircleGiveYouCommentActivity;
 import com.home.wanyu.activity.MyAboutUsActivity;
 import com.home.wanyu.activity.MyCircleContactActivity;
@@ -55,6 +58,7 @@ public class C_MineFragment extends Fragment{
     @BindView(R.id.fragment_mine_image_userphoto)RoundImageView fragment_mine_image_userphoto;//头像
     @BindView(R.id.fragment_mine_image_userName)TextView fragment_mine_image_userName;//姓名
     @BindView(R.id.fragment_mine_layout_myMessage_info)MyImageView fragment_mine_layout_myMessage_info;//小圆点
+    @BindView(R.id.fragment_mine_image_sex)ImageView fragment_mine_image_sex;//性别的图片（select属性false女，true男）
     private okhttpTools tools;
     private String resStr;
     Bean_UserInfo.PersonalBean personal;
@@ -75,9 +79,9 @@ public class C_MineFragment extends Fragment{
                                 fragment_mine_image_userName.setText(personal.getUserName() == null ? "未填写" : personal.getUserName());
                                 int gender = personal.getGender();
                                 if (gender == 1) {//男
-//                                    fragment_mine_image_usersex.setSelected(true);
+                                    fragment_mine_image_sex.setSelected(true);
                                 } else if (gender == 2) {//女
-//                                    fragment_mine_image_usersex.setSelected(false);
+                                    fragment_mine_image_sex.setSelected(false);
                                 }
                                 Picasso.with(getActivity()).load(Ip.imagePath+personal.getAvatar()).error(R.mipmap.loadinge).placeholder(R.mipmap.loadinge).into(fragment_mine_image_userphoto);
                             }
@@ -133,7 +137,8 @@ public class C_MineFragment extends Fragment{
                 startActivityForResult(intent,110);
                 break;
             case R.id.fragment_mine_layout_myhome://我的家
-                startActivity(new Intent(getActivity(), MyHouseActivity.class));
+//                startActivity(new Intent(getActivity(), MyHouseActivity.class));
+                startActivity(new Intent(getActivity(), C_MyHomeActivity.class));
                 break;
             case R.id.fragment_mine_layout_mycircle://我的圈子
                 startActivity(new Intent(getActivity(), MyCircleContactActivity.class));//徐改动
@@ -142,7 +147,7 @@ public class C_MineFragment extends Fragment{
                 startActivity(new Intent(getActivity(), MyCircleContactActivity.class));//徐改动
                 break;
             case R.id.fragment_mine_layout_myMessage://我的消息
-                startActivity(new Intent(getActivity(), CircleGiveYouCommentActivity.class));
+                startActivity(new Intent(getActivity(), C_MyMessageActivity.class));
                 break;
             case R.id.fragment_mine_layout_setting://设置
                 startActivity(new Intent(getActivity(), MySettingActivity.class));

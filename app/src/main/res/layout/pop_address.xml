@@ -30,7 +30,7 @@
             android:layout_marginRight="10dp"
             android:clickable="true"
             android:id="@+id/my_address_pop_submit_2"
-            android:textColor="@color/select"/>
+            android:textColor="@color/themColor"/>
     </RelativeLayout>
     <com.home.wanyu.lzhView.wheelView.WheelView
         android:id="@+id/my_address_wheel"

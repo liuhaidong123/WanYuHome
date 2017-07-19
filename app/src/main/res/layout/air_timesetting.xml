@@ -4,57 +4,79 @@
     android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <TextView
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_width="wrap_content"
-        android:layout_height="32dp"
-        android:textColor="@color/titlecolor3"
-        android:text="定时关闭"
-        android:gravity="center_vertical"
-        android:textSize="@dimen/textSize12"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/homefragmentFgbac"/>
     <LinearLayout
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <com.home.wanyu.lzhView.wheelView.WheelView
-        android:layout_width="0dp"
-            android:id="@+id/air_timesetting_wheelHour"
-        android:layout_weight="1"
-        android:layout_height="match_parent" />
-        <com.home.wanyu.lzhView.wheelView.WheelView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:id="@+id/air_timesetting_wheelMini"
-            android:layout_height="match_parent" />
-    </LinearLayout>
-    <TextView
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:textColor="@color/titlecolor3"
+                android:text="定时任务"
+                android:gravity="center_vertical"
+                android:textSize="@dimen/textSize12"/>
+            <TextView
+                android:textColor="@color/color9"
+                android:textSize="@dimen/textSize12"
+                android:text="取消"
+                android:layout_alignParentRight="true"
+                android:paddingRight="20dp"
+                android:paddingLeft="10dp"
+                android:layout_centerVertical="true"
+                android:id="@+id/air_setting_windtime_cancle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+        <TextView
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="0.5dp"
         android:background="@color/homefragmentFgbac"/>
-    <TextView
-        android:id="@+id/air_timesetting_textv"
-        android:textColor="@color/color9"
-        android:textSize="11sp"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:layout_marginTop="50dp"
-        android:layout_marginBottom="30dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:id="@+id/air_timesetting_submit"
-        android:clickable="true"
-        android:textSize="17sp"
-        android:text="确定"
-        android:layout_gravity="bottom"
-        android:background="@drawable/btnbottom"
-        android:textColor="@color/white"
-        android:layout_width="match_parent"
-        android:gravity="center"
-        android:layout_height="44dp"/>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.home.wanyu.lzhView.wheelView.WheelView
+                android:layout_width="0dp"
+                android:id="@+id/air_timesetting_wheelHour"
+                android:layout_weight="1"
+                android:layout_height="match_parent" />
+            <com.home.wanyu.lzhView.wheelView.WheelView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:id="@+id/air_timesetting_wheelMini"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/homefragmentFgbac"/>
+        <TextView
+            android:id="@+id/air_timesetting_textv"
+            android:textColor="@color/color9"
+            android:textSize="11sp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/air_timesetting_submit"
+            android:clickable="true"
+            android:textSize="17sp"
+            android:text="确定"
+            android:layout_gravity="bottom"
+            android:background="@drawable/btnbottom"
+            android:textColor="@color/white"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_height="44dp"/>
+    </LinearLayout>
+
 </LinearLayout>

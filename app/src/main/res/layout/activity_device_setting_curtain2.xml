@@ -9,37 +9,36 @@
     <LinearLayout
         android:id="@+id/deviceSetting_curtain_linearLayout"
         android:orientation="vertical"
-        android:paddingTop="20dp"
-        android:paddingBottom="20dp"
-        android:background="@color/white"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:layout_centerHorizontal="true"
+        android:layout_width="260dp"
+        android:layout_height="260dp"
         android:layout_marginTop="1dp">
         <ImageView
             android:id="@+id/deviceSetting_curtain_image"
             android:layout_centerInParent="true"
-            android:src="@mipmap/curtain_big"
+            android:src="@mipmap/curtain_biga"
             android:layout_gravity="center_horizontal|center_vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_width="170dp"
+            android:layout_height="170dp" />
         <com.home.wanyu.lzhView.SwitchButton
             android:checked="true"
-            android:layout_marginTop="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            android:layout_gravity="bottom|center_horizontal"
             android:layout_centerHorizontal="true"
             android:id="@+id/deviceSetting_curtain_switch"/>
     </LinearLayout>
     <RelativeLayout
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:paddingBottom="20dp"
         android:paddingTop="20dp"
         android:paddingLeft="25dp"
         android:paddingRight="25dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@color/white"
+        android:background="@drawable/c_homescene_griditem"
         android:layout_below="@+id/deviceSetting_curtain_linearLayout">
         <TextView
             android:id="@+id/deviceSetting_curtain_textv"
@@ -68,7 +67,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/open"/>
+                    android:src="@mipmap/openaz"/>
                 <TextView
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="5dp"
@@ -96,7 +95,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/close"/>
+                    android:src="@mipmap/closeaz"/>
             </LinearLayout>
         </RelativeLayout>
     </RelativeLayout>

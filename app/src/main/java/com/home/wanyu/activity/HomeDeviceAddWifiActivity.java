@@ -59,9 +59,9 @@ public class HomeDeviceAddWifiActivity extends MyActivity {
                }
                 break;
             case R.id.activity_homedeviceaddwifi_rela_contactWifi_success_submit://连接成功时的设置按钮
-                mToast.DebugToast(con,"去设置");
+//                mToast.DebugToast(con,"去设置");
                 //测试用，点击后进入连接失败页面
-                Intent intent=new Intent(con,HomeDeviceAddWifiSettingActivity.class);
+                Intent intent=new Intent(con,C_DeviceSettingActivity.class);
                 startActivity(intent);
 //                activity_homedeviceaddwifi_rela_contactWifi_success.setVisibility(View.GONE);
 //                activity_homedeviceaddwifi_rela_contactWifi_error.setVisibility(View.VISIBLE);

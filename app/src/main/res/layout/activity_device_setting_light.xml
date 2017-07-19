@@ -11,17 +11,16 @@
         android:orientation="vertical"
         android:paddingTop="20dp"
         android:paddingBottom="20dp"
-        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="1dp">
         <ImageView
             android:id="@+id/deviceSetting_light_image"
             android:layout_centerInParent="true"
-            android:src="@mipmap/light_big"
+            android:src="@mipmap/lightbigz"
             android:layout_gravity="center_horizontal|center_vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_width="170dp"
+            android:layout_height="170dp" />
         <com.home.wanyu.lzhView.SwitchButton
             android:checked="true"
             android:layout_marginTop="20dp"
@@ -36,10 +35,12 @@
         android:paddingTop="20dp"
         android:paddingLeft="25dp"
         android:paddingRight="25dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:background="@color/white"
+        android:background="@drawable/c_homescene_griditem"
         android:layout_below="@+id/deviceSetting_light_linearLayout">
         <TextView
             android:id="@+id/deviceSetting_light_textv"
@@ -64,11 +65,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 >
+
                 <ImageView
                     android:layout_gravity="center_vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/dark"/>
+                    android:src="@mipmap/darkz"
+                    android:id="@+id/imageView2" />
+
                 <TextView
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="5dp"
@@ -96,7 +100,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/bright"/>
+                    android:src="@mipmap/brightz"/>
             </LinearLayout>
         </RelativeLayout>
     </RelativeLayout>

@@ -382,6 +382,25 @@
         <activity android:name=".activity.RepairHostoryActivity" />
         <activity android:name=".activity.HouseMsgActivity2" />
         <activity android:name=".activity.HouseSearchAddessAndAreaActivity2"></activity>
+        <activity android:name=".activity.MessageCarpoolActivity" />
+
+        <!-- 更改 -->
+        <activity android:name=".activity.C_HomeSceneSettingActivity" />
+        <!-- 更改 -->
+
+        <activity android:name=".activity.C_HomeRoomSettingActivity" />
+        <activity android:name=".activity.C_DeviceSettingActivity" />
+        <activity android:name=".activity.C_HomeSceneAddActivity" />
+        <activity android:name=".activity.DeviceSettingC_AirConActivity" />
+        <activity android:name=".activity.DeviceSettingC_TVActivity" />
+        <activity android:name=".activity.C_MyMessageActivity" />
+        <activity android:name=".activity.C_MyHomeActivity" />
+        <activity android:name=".activity.C_MyHomeDeviceManagerActivity" />
+        <activity android:name=".activity.C_MyHomeDeviceDeleteActivity" />
+        <activity android:name=".activity.C_MyHomeRoomManagerActivity" />
+        <activity android:name=".activity.C_MyHomeRoomDeleteActivity" />
+        <activity android:name=".activity.C_MyHomeSceneManagerActivity" />
+        <activity android:name=".activity.C_MyHomeSceneDeleteActivity"></activity>
     </application>
 
 </manifest>

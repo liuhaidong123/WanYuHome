@@ -145,17 +145,7 @@ public class HomeDeviceAddWifiSettingActivity extends MyActivity {
             Log.e("-------",device.getRoomId()+"---------");
 
         }
-//        list=new ArrayList<>();
-//        int size=ResId.length;
-//        for (int i=0;i<size;i++){
-//            HashMap<String,String>mp=new HashMap<>();
-//            mp.put("select","0");
-//            mp.put("image",ResId[i]+"");
-//            list.add(mp);
-//        }
-//        list.get(0).put("select","1");
         adapter=new HomeDeviceAddWifiSettingGridViewAdapter(list,con);
-//        home_deviceWifi_setting_gridview.setAdapter(adapter);
     }
 
 

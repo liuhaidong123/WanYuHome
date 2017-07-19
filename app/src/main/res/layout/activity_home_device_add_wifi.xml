@@ -27,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:src="@mipmap/wifi"/>
+            android:src="@mipmap/wifiq"/>
         <TextView
             android:text="TP-LINK-LIM"
             android:layout_centerHorizontal="true"
@@ -85,12 +85,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             >
-        <ImageView
-            android:id="@+id/activity_homedeviceaddwifi_rela_contactWifi_success_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:src="@mipmap/finish"/>
+
             <TextView
                 android:text="连接成功"
                 android:layout_centerHorizontal="true"
@@ -113,6 +108,14 @@
                 android:background="@drawable/activity_homescene_setting_submit"
                 android:layout_width="190dp"
                 android:layout_height="44dp"/>
+
+            <ImageView
+                android:id="@+id/activity_homedeviceaddwifi_rela_contactWifi_success_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/finishq"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
         </RelativeLayout>
     </RelativeLayout>
 
@@ -134,7 +137,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:src="@mipmap/lose"/>
+                android:src="@mipmap/loseq"/>
             <TextView
                 android:text="连接失败"
                 android:layout_centerHorizontal="true"

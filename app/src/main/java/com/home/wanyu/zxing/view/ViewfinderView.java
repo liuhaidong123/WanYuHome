@@ -163,7 +163,7 @@ public final class ViewfinderView extends View {
         if(slideTop >= frame.bottom){
             slideTop = frame.top;
         }
-        paint.setColor(getResources().getColor(R.color.bg_rect));
+        paint.setColor(getResources().getColor(R.color.themColor));
         paint.setAlpha(50);
         canvas.drawRect(frame.left,frame.top, frame.right+1,slideTop, paint);
 
@@ -175,7 +175,7 @@ public final class ViewfinderView extends View {
             canvas.drawBitmap(resultBitmap, frame.left, frame.top, paint);
         } else {
             //画扫描框边上的角，总共8个部分
-            paint.setColor(getResources().getColor(R.color.bg_rect));
+            paint.setColor(getResources().getColor(R.color.themColor));
             canvas.drawRect(frame.left, frame.top, frame.left + ScreenRate,
                     frame.top + CORNER_WIDTH, paint);
             canvas.drawRect(frame.left, frame.top, frame.left + CORNER_WIDTH, frame.top
@@ -199,7 +199,7 @@ public final class ViewfinderView extends View {
             paint.setColor(getResources().getColor(R.color.white));
             paint.setTextSize(getResources().getDimension(R.dimen.textSize15));
             paint.setTypeface(Typeface.create("System", Typeface.BOLD));
-            String text="扫描设备二维码";
+            String text="扫描二维码";
             float textWidth = paint.measureText(text);
             canvas.drawText(
                     text,
