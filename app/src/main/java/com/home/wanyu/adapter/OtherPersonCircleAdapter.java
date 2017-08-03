@@ -43,12 +43,12 @@ public class OtherPersonCircleAdapter extends BaseAdapter{
     }
     @Override
     public int getCount() {
-        return listCircle==null?0:listCircle.size();
+        return 15;
     }
 
     @Override
     public Object getItem(int position) {
-        return listCircle.get(position);
+        return null;
     }
 
     @Override
@@ -67,8 +67,8 @@ public class OtherPersonCircleAdapter extends BaseAdapter{
         else {
             hodler= (ViewHodler) convertView.getTag();
         }
-        Picasso.with(context).load(Ip.imagePath+listCircle.get(position).getAvatar()).error(R.mipmap.errorphoto).into(hodler.circle_head_img);
-        hodler.circle_name_tv.setText(listCircle.get(position).getUserName());
+//        Picasso.with(context).load(Ip.imagePath+listCircle.get(position).getAvatar()).error(R.mipmap.errorphoto).into(hodler.circle_head_img);
+//        hodler.circle_name_tv.setText(listCircle.get(position).getUserName());
 //
 //        |State          |Object   |发状态实体类
 //        发状态实体类字段说明
@@ -83,38 +83,38 @@ public class OtherPersonCircleAdapter extends BaseAdapter{
 //                |createTime     |java.sql.Timestamp|Y    |发布时间
 //                |categoryId     |Long      |Y    |分类编号
 
-
-        hodler.circle_type_tv.setVisibility(View.GONE);//圈子没有标题
-
-        hodler.circle_commend_msg.setText(listCircle.get(position).getContent());
-        String time=listCircle.get(position).getCreateTimeString();//内容
+//
+//        hodler.circle_type_tv.setVisibility(View.GONE);//圈子没有标题
+//
+//        hodler.circle_commend_msg.setText(listCircle.get(position).getContent());
+//        String time=listCircle.get(position).getCreateTimeString();//内容
 //        2017-05-17 16:10:54
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        long mils;
-        try {
-            mils=sdf.parse(listCircle.get(position).getCreateTimeString()).getTime();//毫秒
-        } catch (ParseException e) {
-            mils=0;
-            e.printStackTrace();
-        }
-        String data= DataUtils.getData(mils);
-        hodler.circle_time_tv.setText(data);
-
-        hodler.circle_like_num.setText(listCircle.get(position).getLikeNum()+"");
-        hodler.circle_commend_num.setText(listCircle.get(position).getCommentNum()+"");
-        hodler.circle_like_img.setSelected(listCircle.get(position).isIslike());//是否已经点赞
-        String picture=listCircle.get(position).getPicture();
-        if (!"".equals(picture)&&!TextUtils.isEmpty(picture)){
-            String[] pic = picture.split(",");
-            if (pic!=null&&pic.length>0){
-                List<String>li=new ArrayList<>();
-                for (int i=0;i<pic.length;i++){
-                    li.add(pic[i]);
-                }
-                MyCircleContactAdapterGridAdapter adapter=new MyCircleContactAdapterGridAdapter(li,context);
-                hodler.circle_gridview_friend.setAdapter(adapter);
-            }
-        }
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        long mils;
+//        try {
+//            mils=sdf.parse(listCircle.get(position).getCreateTimeString()).getTime();//毫秒
+//        } catch (ParseException e) {
+//            mils=0;
+//            e.printStackTrace();
+//        }
+//        String data= DataUtils.getData(mils);
+//        hodler.circle_time_tv.setText(data);
+//
+//        hodler.circle_like_num.setText(listCircle.get(position).getLikeNum()+"");
+//        hodler.circle_commend_num.setText(listCircle.get(position).getCommentNum()+"");
+//        hodler.circle_like_img.setSelected(listCircle.get(position).isIslike());//是否已经点赞
+//        String picture=listCircle.get(position).getPicture();
+//        if (!"".equals(picture)&&!TextUtils.isEmpty(picture)){
+//            String[] pic = picture.split(",");
+//            if (pic!=null&&pic.length>0){
+//                List<String>li=new ArrayList<>();
+//                for (int i=0;i<pic.length;i++){
+//                    li.add(pic[i]);
+//                }
+//                MyCircleContactAdapterGridAdapter adapter=new MyCircleContactAdapterGridAdapter(li,context);
+//                hodler.circle_gridview_friend.setAdapter(adapter);
+//            }
+//        }
         return convertView;
     }
     class ViewHodler{

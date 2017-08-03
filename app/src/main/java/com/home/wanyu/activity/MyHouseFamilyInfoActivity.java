@@ -286,10 +286,6 @@ public class MyHouseFamilyInfoActivity extends MyActivity {
         }
         isSave=true;
         Map<String,String>mp=new HashMap<>();
-//        @BindView(R.id.activity_my_house_family_se_shebei)ImageView activity_my_house_family_se_shebei;//控制我的设备的权限
-//        @BindView(R.id.activity_my_house_family_se_mensuo)ImageView activity_my_house_family_se_mensuo;//控制我的门锁
-//        @BindView(R.id.activity_my_house_family_se_tianjia)ImageView activity_my_house_family_se_tianjia;//添加设备到我的家
-//        @BindView(R.id.activity_my_house_family_se_shanchu)ImageView activity_my_house_family_se_shanchu;//从我的家删除设备
         mp.put("pmsnCtrlDevice",getState(activity_my_house_family_se_shebei));
         mp.put("pmsnCtrlDoor",getState(activity_my_house_family_se_mensuo));
         mp.put("pmsnCtrlAdd",getState(activity_my_house_family_se_tianjia));

@@ -41,7 +41,9 @@ public class Ip {
     public static final String interface_HomeScene_getAllDevice="equipment/findList.do?";
 
     //添加／修改设备http://192.168.1.55:8080/smarthome/mobileapi/equipment/save.do?token=9DB2FD6FDD2F116CD47CE6C48B3047EE
-    public static final String interface_DeviceAdd_Change="equipment/save.do?";
+    public static final String interface_DeviceAdd_Change="/equipment/delete.do?";//参数ids：String类型，删除多个时用逗号分割
+    //删除设备接口参数token，ids
+    public static final String interface_DeviceDelete="/equipment/delete.do?";
 
     //获取家人列表http://192.168.1.55:8080/smarthome/mobileapi/homeUser/findList.do?token=9DB2FD6FDD2F116CD47CE6C48B3047EE
     public static final String interface_getFamilyUsers="homeUser/findList.do?";

@@ -4,9 +4,9 @@
     android:layout_height="match_parent">
 
     <ImageView
+        android:layout_gravity="center"
         android:layout_width="65dp"
         android:layout_height="65dp"
         android:id="@+id/house_post_img"
-        android:scaleType="centerCrop"
         />
 </LinearLayout>

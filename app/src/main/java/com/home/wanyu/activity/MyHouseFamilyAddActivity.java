@@ -188,9 +188,9 @@ public class MyHouseFamilyAddActivity extends MyActivity {
         switch (Vi.getId()){
             case R.id.activity_my_house_family_add_getSmSCode://获取验证码
                 if (isClick){
-                    Random ran=new Random();
-                    int te=ran.nextInt(6);
-                    activity_my_house_family_add_edit.setText(tel[te]);//测试用
+//                    Random ran=new Random();
+//                    int te=ran.nextInt(6);
+//                    activity_my_house_family_add_edit.setText(tel[te]);//测试用
                     String phone=activity_my_house_family_add_edit.getText().toString();
                     if (isPhoneNum(phone)){
                         setClickable(false);
@@ -254,7 +254,6 @@ public class MyHouseFamilyAddActivity extends MyActivity {
 //                        Log.i("键--"+s,"值--"+headers.get(s));
 //                    }
                 cooki=response.headers().get("Set-Cookie");
-                Log.i("cooki--",cooki);
                 Log.i("添加家人获取验证码-",resStr);
                 hand.sendEmptyMessage(1);
             }

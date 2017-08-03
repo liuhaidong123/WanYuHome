@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+<item android:state_pressed="false">
+    <shape >
+        <corners android:radius="3dp"></corners>
+        <solid android:color="@color/homefragmentFgColor"></solid>
+        <stroke android:width="0.1dp"
+            android:color="#555c6a"></stroke>
+    </shape>
+</item>
+    <item android:state_pressed="true">
+        <shape >
+            <corners android:radius="3dp"></corners>
+            <stroke android:width="0.1dp"
+                android:color="#555c6a"></stroke>
+            <solid android:color="@color/homefragmentFgColordink"></solid>
+        </shape>
+    </item>
+</selector>

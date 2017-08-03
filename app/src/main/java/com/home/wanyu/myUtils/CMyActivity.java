@@ -27,6 +27,7 @@ import butterknife.Unbinder;
  titleButton= (TextView) findViewById(R.id.titleButton);
  titleTextView= (TextView) findViewById(R.id.titleTextView);
  initTitle("房间管理","--",true);
+ unbinder= ButterKnife.bind(this);
  *
  */
 

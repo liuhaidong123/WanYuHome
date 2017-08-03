@@ -1,13 +1,21 @@
 package com.home.wanyu.lzhUtils;
 
+import android.content.Context;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.Log;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by wanyu on 2017/7/5.
@@ -71,4 +79,28 @@ public class BitmapUtils {
         }
         return true;
     }
+
+    public static List<Map<String,String>> getCursor(Context context){
+        List<Map<String,String>>listPth=new ArrayList<>();
+        Cursor cursor = context.getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                new String[]{MediaStore.Images.Media.DATA}, MediaStore.Images.Media.MIME_TYPE + "=? or "
+                        + MediaStore.Images.Media.MIME_TYPE + "=? or " + MediaStore.Images.Media.MIME_TYPE + "=?",
+                new String[]{"image/jpg", "image/jpeg", "image/png"},
+                MediaStore.Images.Media.DATE_MODIFIED);
+        if (cursor!=null&&cursor.getCount()>0){
+            while (cursor.moveToNext()){
+                if (!"".equals(cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA)))
+                        &&!TextUtils.isEmpty(cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA)))){
+                    Map<String,String>mp=new HashMap<>();
+                    // 获取图片的路径
+                    String path=cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
+                    mp.put("url",path);
+                    listPth.add(mp);
+                }
+            }
+        }
+        cursor.close();
+        return listPth;
+    }
+
 }

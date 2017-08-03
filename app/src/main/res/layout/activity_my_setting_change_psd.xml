@@ -32,7 +32,9 @@
             <EditText
                 android:inputType="textPassword"
                 android:digits="@string/inputType"
-                android:maxLength="11"
+                android:maxLength="12"
+                android:textSize="@dimen/textSize12"
+                android:textColor="@color/titlecolor3"
                 android:layout_marginLeft="10dp"
                 android:background="@drawable/edit_white_dinkwhite"
                 android:layout_width="match_parent"
@@ -55,13 +57,15 @@
                 android:text="填写新密码"
                 android:textColor="#666666"/>
             <EditText
-                android:maxLength="15"
+                android:maxLength="12"
                 android:inputType="textPassword"
                 android:digits="@string/inputType"
                 android:layout_marginLeft="10dp"
                 android:background="@drawable/edit_white_dinkwhite"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
+                android:textSize="@dimen/textSize12"
+                android:textColor="@color/titlecolor3"
                 android:id="@+id/activity_my_setting_change_Edit_psd_1"/>
         </LinearLayout>
 
@@ -81,12 +85,15 @@
                 android:text="重复新密码"
                 android:textColor="#666666"/>
             <EditText
-                android:maxLength="15"
+                android:hint="输入6到12位密码"
+                android:maxLength="12"
                 android:inputType="textPassword"
                 android:digits="@string/inputType"
                 android:layout_marginLeft="10dp"
                 android:background="@drawable/edit_white_dinkwhite"
                 android:layout_width="match_parent"
+                android:textSize="@dimen/textSize12"
+                android:textColor="@color/titlecolor3"
                 android:layout_height="30dp"
                 android:id="@+id/activity_my_setting_change_Edit_psd_more_1"/>
         </LinearLayout>

@@ -237,7 +237,7 @@ public class MyHouseActivity extends MyActivity {
     }
     //获取存在的家的名字http://192.168.1.55:8080/smarthome/mobileapi/family/findMyRelativeHome.do?token=9DB2FD6FDD2F116CD47CE6C48B3047EE
     public void getFamilyData() {
-       Map<String,String> mp=new HashMap<>();
+        Map<String,String> mp=new HashMap<>();
         mp.put("token", UserInfo.userToken);
         okhttp.getCall(Ip.serverPath+Ip.interface_getAllFamily,mp,okhttp.OK_GET).enqueue(new Callback() {
             @Override

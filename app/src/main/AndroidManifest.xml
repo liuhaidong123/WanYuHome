@@ -381,7 +381,7 @@
         <activity android:name=".activity.MessageCarpoolActivity" />
         <activity android:name=".activity.RepairHostoryActivity" />
         <activity android:name=".activity.HouseMsgActivity2" />
-        <activity android:name=".activity.HouseSearchAddessAndAreaActivity2"></activity>
+        <activity android:name=".activity.HouseSearchAddessAndAreaActivity2" />
         <activity android:name=".activity.MessageCarpoolActivity" />
 
         <!-- 更改 -->
@@ -400,7 +400,14 @@
         <activity android:name=".activity.C_MyHomeRoomManagerActivity" />
         <activity android:name=".activity.C_MyHomeRoomDeleteActivity" />
         <activity android:name=".activity.C_MyHomeSceneManagerActivity" />
-        <activity android:name=".activity.C_MyHomeSceneDeleteActivity"></activity>
+        <activity android:name=".activity.C_MyHomeSceneDeleteActivity" />
+        <activity android:name=".activity.DeviceSettingC_LockActivity" />
+        <activity android:name=".activity.DeviceSettingC_LockShareActivity" />
+        <activity android:name=".activity.DeviceSettingC_LockSettingActivity" />
+        <activity android:name=".activity.DeviceSettingC_LockManagerActivity" />
+        <activity android:name=".activity.DeviceSettingC_LockRecordActivity" />
+        <activity android:name=".activity.RoomPictureSelectActivity" />
+        <activity android:name=".activity.ScenePictureSelectActivity"></activity>
     </application>
 
 </manifest>

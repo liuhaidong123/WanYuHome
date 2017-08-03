@@ -461,7 +461,7 @@ public class DeviceSettingLockActivity extends MyActivity implements LockShareLi
             TextView pop_submit= (TextView) air_timesetting.findViewById(R.id.pop_submit);//提交选择的时限
             WheelView pop_wheelView= (WheelView) air_timesetting.findViewById(R.id.pop_wheelView);
             pop_wheelView.setTitle("分钟");
-            pop_wheelView.setViewAdapter(new MyWheelAdapter50(con,listTime,"af"));
+            pop_wheelView.setViewAdapter(new MyWheelAdapter50(con,listTime,""));
             pop_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

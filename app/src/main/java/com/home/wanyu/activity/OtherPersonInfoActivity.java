@@ -2,6 +2,7 @@ package com.home.wanyu.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -177,8 +179,10 @@ public class OtherPersonInfoActivity extends Activity {
             getPersonInfo();//获取他人信息
             getCircleData(start,limit);
         }
-    }
-    private void initData() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            // 设置状态栏透明
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        }
     }
     @OnClick({R.id.other_person_layout_circle,R.id.other_person_layout_acti,R.id.other_loading_layout})
     public void click(View vi){

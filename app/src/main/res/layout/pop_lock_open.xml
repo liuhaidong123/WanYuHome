@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:background="#3b414d"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <TextView
+            android:hint="输入密码"
+            android:textColorHint="#555c6a"
+            android:textColorHighlight="#ffeeaa"
+            android:gravity="center"
+            android:maxLines="6"
+            android:textColor="@color/white"
+            android:textSize="21sp"
+            android:text="******"
+            android:id="@+id/pop_lock_open_password"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            />
+        <TextView
+            android:background="#555c6a"
+            android:layout_width="match_parent"
+            android:layout_height="1dp" />
+        <GridView
+            android:verticalSpacing="1dp"
+            android:horizontalSpacing="1dp"
+            android:background="#555c6a"
+            android:id="@+id/pop_lock_open_gridView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:numColumns="3">
+        </GridView>
+    </LinearLayout>
+</LinearLayout>

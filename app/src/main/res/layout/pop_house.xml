@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <ListView
+        android:background="#f4f6f7"
         android:dividerHeight="1dp"
         android:divider="@color/homefragmentFgColor"
         android:id="@+id/pop_family_list_1"

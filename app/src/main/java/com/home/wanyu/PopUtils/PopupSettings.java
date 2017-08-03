@@ -113,4 +113,35 @@ public class PopupSettings {
             }
         });
     }
+
+    public   void windowActivityCenter2(PopupWindow popX, View parentView, final Activity activity, View contentView){
+        activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        WindowManager.LayoutParams params =  activity.getWindow().getAttributes();
+        params.alpha = 0.6f;
+        activity.getWindow().setAttributes(params);
+
+        popX.setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
+        popX.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
+
+        popX.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        popX.setContentView(contentView);
+//        popX.setBackgroundDrawable(new ColorDrawable(Color.argb(000, 255, 255, 255)));
+        popX.setTouchable(true);
+        popX.setFocusable(true);
+        popX.setOutsideTouchable(true);
+        popX.setClippingEnabled(false);
+
+        popX.setAnimationStyle(R.style.popup2_anim);
+        popX.showAtLocation(parentView, Gravity.CENTER,0,0);
+        popX.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+                WindowManager.LayoutParams params =  activity.getWindow().getAttributes();
+                params.alpha = 1f;
+                activity.getWindow().setAttributes(params);
+            }
+        });
+    }
+
 }

@@ -109,7 +109,6 @@ public class C_HomeRoomSettingView implements AdapterView.OnItemClickListener{
     //更换背景图片
     public void setImageBack(Bitmap bitmap){
         if (bitmap!=null&&bitmap.getHeight()*bitmap.getRowBytes()>0){
-
             c_home_device_image.setImageBitmap(bitmap);
         }
     }

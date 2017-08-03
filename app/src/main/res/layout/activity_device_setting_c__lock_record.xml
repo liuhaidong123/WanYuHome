@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_device_setting_c__lock_record"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/homefragmentFgColor"
+    tools:context="com.home.wanyu.activity.DeviceSettingC_LockRecordActivity">
+    <include
+        android:id="@+id/lockmanager_record_layout"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        layout="@layout/activity_titleinclude_btn">
+    </include>
+    <ListView
+        android:scrollbars="none"
+        android:layout_margin="10dp"
+        android:background="@drawable/lockshare_btn_select"
+        android:layout_below="@+id/lockmanager_record_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/lockmanager_record_listview">
+
+    </ListView>
+</RelativeLayout>

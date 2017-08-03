@@ -5,9 +5,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
+import com.home.wanyu.Icons.icon;
 import com.home.wanyu.R;
+import com.home.wanyu.bean.Bean_AllDevice;
+import com.home.wanyu.myview.RoundImageView;
 
+import java.util.List;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -16,22 +23,24 @@ import butterknife.ButterKnife;
 
 public class C_MyHomeDeviceManagerAdapter extends BaseAdapter{
     Context context;
-    public C_MyHomeDeviceManagerAdapter(Context context){
+    List<Bean_AllDevice.EquipmentListBean> li;
+    public C_MyHomeDeviceManagerAdapter(Context context,List<Bean_AllDevice.EquipmentListBean>li){
         this.context=context;
+        this.li=li;
     }
     @Override
     public int getCount() {
-        return 7;
+        return li==null?0:li.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return li.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
@@ -45,9 +54,13 @@ public class C_MyHomeDeviceManagerAdapter extends BaseAdapter{
         else {
             viewHodler= (ViewHodler) convertView.getTag();
         }
+        viewHodler.c_home_device_text.setText(li.get(position).getName());
+        viewHodler.c_home_device_image.setImageResource(icon.getDeviceIcon(li.get(position).getIconId()));
         return convertView;
     }
     class ViewHodler{
+        @BindView(R.id.c_home_device_image)RoundImageView c_home_device_image;//图标
+        @BindView(R.id.c_home_device_text)TextView c_home_device_text;//名字
         public ViewHodler(View vi){
             ButterKnife.bind(this,vi);
         }

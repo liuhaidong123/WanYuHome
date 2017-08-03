@@ -121,7 +121,6 @@ public class C_MineFragment extends Fragment{
         View vi=inflater.inflate(R.layout.fragment_mine,null);
         unbinder= ButterKnife.bind(this,vi);
         tools=new okhttpTools();
-        getUserMsg();
         return vi;
     }
     @OnClick({R.id.fragment_mine_layout_myhome,R.id.fragment_mine_layout_mycircle,R.id.fragment_mine_layout_myActivity,R.id.fragment_mine_layout_myMessage
@@ -134,7 +133,7 @@ public class C_MineFragment extends Fragment{
                 Bundle bundle=new Bundle();
                 bundle.putSerializable("data",personal);
                 intent.putExtra("data",bundle);
-                startActivityForResult(intent,110);
+                startActivity(intent);
                 break;
             case R.id.fragment_mine_layout_myhome://我的家
 //                startActivity(new Intent(getActivity(), MyHouseActivity.class));
@@ -164,7 +163,6 @@ public class C_MineFragment extends Fragment{
     public void onStart() {
         super.onStart();
         fragment_mine_layout_myMessage_info.setRead(false);
-        getUnReadMsg();//获取有无未读消息
     }
     //http://192.168.1.55:8080/smarthome/mobileapi/personal/get.do?id=1&token=9DB2FD6FDD2F116CD47CE6C48B3047EE获取用户个人信息
     public void getUserMsg(){
@@ -172,6 +170,7 @@ public class C_MineFragment extends Fragment{
         mp.put("token", UserInfo.userToken);
         tools.getServerData(handler,1,Ip.serverPath+Ip.interface_getUserInfo,mp, "获取个人信息---");
     }
+
     public void getUnReadMsg() {
         Map<String,String> mp=new HashMap<>();
         mp.put("token",UserInfo.userToken);
@@ -190,17 +189,27 @@ public class C_MineFragment extends Fragment{
         });
     }
 
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (requestCode==110){
+//            if (resultCode==200){
+//                if (data!=null){
+//                    if ("0".equals(data.getStringExtra("fresh"))){
+//                        getUserMsg();
+//                    }
+//                }
+//            }
+//        }
+//    }
+
+
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode==110){
-            if (resultCode==200){
-                if (data!=null){
-                    if ("0".equals(data.getStringExtra("fresh"))){
-                        getUserMsg();
-                    }
-                }
-            }
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden){//显示的时候
+            getUserMsg();
+            getUnReadMsg();
         }
     }
 

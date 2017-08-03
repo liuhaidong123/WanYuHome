@@ -62,20 +62,28 @@
     android:layout_width="match_parent"
     android:layout_height="60dp"
     android:orientation="horizontal">
-    <TextView
-        android:text="删除设备"
-        android:textSize="18sp"
-        android:gravity="center"
-        android:textColor="@color/white"
-        android:background="@drawable/c_home_delete"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/leftlayout"
+        android:orientation="horizontal"
         android:layout_weight="1"
-        android:id="@+id/c_home_device_delete"
-        android:layout_height="match_parent" />
-    <TextView
-        android:layout_width="1dp"
-        android:layout_height="match_parent"
-        android:background="@color/white"/>
+        android:layout_width="0dp"
+        android:layout_height="match_parent">
+        <TextView
+            android:text="删除设备"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:background="@drawable/c_home_delete"
+            android:layout_width="match_parent"
+            android:id="@+id/c_home_device_delete"
+            android:layout_height="match_parent" />
+        <TextView
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/white"/>
+    </LinearLayout>
+
     <TextView
         android:text="添加设备"
         android:textSize="18sp"

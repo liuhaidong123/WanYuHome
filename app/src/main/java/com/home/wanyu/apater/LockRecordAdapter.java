@@ -24,19 +24,17 @@ import butterknife.ButterKnife;
 
 public class LockRecordAdapter extends BaseAdapter{
     private Context context;
-    List<Bean_lockRecord.RowsBean> li;
-    public LockRecordAdapter(Context context,List<Bean_lockRecord.RowsBean>li){
+    public LockRecordAdapter(Context context){
         this.context=context;
-        this.li=li;
     }
     @Override
     public int getCount() {
-        return li==null?0:li.size();
+        return 10;
     }
 
     @Override
     public Object getItem(int position) {
-        return li.get(position);
+        return position;
     }
 
     @Override
@@ -55,10 +53,10 @@ public class LockRecordAdapter extends BaseAdapter{
         else {
             hodler= (ViewHodler) convertView.getTag();
         }
-        Picasso.with(context).load(Ip.imagePath+li.get(position).getAvatar()).error(R.mipmap.errorphoto).into(hodler.record_item_userImage);
-        hodler.record_item_userName.setText(li.get(position).getUserName());
-        hodler.record_item_userNickName.setText(li.get(position).getUserType()+"");
-        hodler.record_item_recoreTime.setText(li.get(position).getCreateTimeString());
+//        Picasso.with(context).load(Ip.imagePath+li.get(position).getAvatar()).error(R.mipmap.errorphoto).into(hodler.record_item_userImage);
+//        hodler.record_item_userName.setText(li.get(position).getUserName());
+//        hodler.record_item_userNickName.setText(li.get(position).getUserType()+"");
+//        hodler.record_item_recoreTime.setText(li.get(position).getCreateTimeString());
         return convertView;
     }
 

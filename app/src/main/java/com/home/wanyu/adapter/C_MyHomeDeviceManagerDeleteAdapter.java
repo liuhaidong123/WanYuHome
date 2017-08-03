@@ -8,9 +8,12 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.home.wanyu.Icons.icon;
 import com.home.wanyu.R;
+import com.home.wanyu.bean.Bean_AllDevice;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,26 +24,26 @@ import butterknife.ButterKnife;
 
 public class C_MyHomeDeviceManagerDeleteAdapter extends BaseAdapter{
     Select isAllSelect;
-    ArrayList<Integer> list;
+    List<Bean_AllDevice.EquipmentListBean>list;
     Context context;
-    public C_MyHomeDeviceManagerDeleteAdapter(Context context,ArrayList<Integer>li,Select isAllSelect){
+    public C_MyHomeDeviceManagerDeleteAdapter(Context context,List<Bean_AllDevice.EquipmentListBean>list,Select isAllSelect){
         this.context=context;
-        this.list=li;
+        this.list=list;
         this.isAllSelect=isAllSelect;
     }
     @Override
     public int getCount() {
-        return list.size();
+        return list==null?0:list.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return list.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
@@ -54,28 +57,31 @@ public class C_MyHomeDeviceManagerDeleteAdapter extends BaseAdapter{
         else {
             viewHodler= (ViewHodler) convertView.getTag();
         }
-        if (list.get(position)==0){
+        if (list.get(position).isFlag()==false){
             viewHodler.c_home_device_image_select.setSelected(false);
         }
         else {
             viewHodler.c_home_device_image_select.setSelected(true);
             }
+
         viewHodler.c_home_device_image_select.setTag(position);
         viewHodler.c_home_device_image_select.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int pos= (int) v.getTag();
                 if (v.isSelected()){
-                    list.set(pos,0);
+                    list.get(pos).setFlag(false);
                     v.setSelected(false);
                 }
                 else {
-                    list.set(pos,1);
+                    list.get(pos).setFlag(true);
                     v.setSelected(true);
                 }
                     isAllSelect.isAllSelect(isAllSelect());
             }
         });
+        viewHodler.c_home_device_image_delete.setImageResource(icon.getDeviceIcon(list.get(position).getIconId()));
+        viewHodler.c_home_device_delete_deviceName.setText(list.get(position).getName());
         return convertView;
     }
     class ViewHodler{
@@ -93,7 +99,7 @@ public class C_MyHomeDeviceManagerDeleteAdapter extends BaseAdapter{
     public boolean isAllSelect(){
         boolean flag=true;
         for (int i=0;i<list.size();i++){
-            if (list.get(i)==0){
+            if (list.get(i).isFlag()==false){
                 flag=false;
             }
         }

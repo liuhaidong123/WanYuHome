@@ -10,13 +10,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.home.wanyu.C_View.CHomeFragmentUtils;
+import com.home.wanyu.Ip.ServerCode;
 import com.home.wanyu.Ip.mToast;
 import com.home.wanyu.R;
 import com.home.wanyu.ViewSettingUtils.TextViewSetting;
 import com.home.wanyu.activity.C_HomeRoomSettingActivity;
 import com.home.wanyu.activity.C_HomeSceneAddActivity;
 import com.home.wanyu.activity.DeviceSettingC_AirConActivity;
+import com.home.wanyu.activity.DeviceSettingC_LockActivity;
 import com.home.wanyu.activity.DeviceSettingC_TVActivity;
+import com.home.wanyu.activity.OtherPersonInfoActivity;
+import com.home.wanyu.activity.RoomPictureSelectActivity;
 import com.home.wanyu.mEmeu.HomeSelect;
 
 import butterknife.BindView;
@@ -90,12 +94,14 @@ public class C_HomeFragment extends Fragment implements CHomeFragmentUtils.iCHom
                         chomeUtils.ShowSceneSettingWindow();
                         break;
                     case DEVICE://设备编辑
-                    getActivity().startActivity(new Intent(getActivity(), C_HomeRoomSettingActivity.class));
+                        startActivity(new Intent(getActivity(),C_HomeRoomSettingActivity.class));//进入房间设置页面
                         break;
                 }
                 break;
             case R.id.textv_test:
-                startActivity(new Intent(getActivity(), DeviceSettingC_TVActivity.class));
+//                ServerCode.showResponseMsg(getActivity(),"10000");
+                startActivity(new Intent(getActivity(), OtherPersonInfoActivity.class));
+//                startActivity(new Intent(getActivity(), DeviceSettingC_LockActivity.class));
                 break;
         }
     }

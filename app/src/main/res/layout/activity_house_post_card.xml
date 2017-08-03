@@ -606,13 +606,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_alignTop="@id/house_configure_tv"
-                    android:layout_marginBottom="15dp"
+                    android:paddingBottom="15dp"
                     android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@id/house_configure_tv"
-                    android:horizontalSpacing="6.5dp"
                     android:numColumns="4"
                     android:verticalSpacing="10dp">
-
                 </com.home.wanyu.myview.MyGridView>
             </RelativeLayout>
 
@@ -733,7 +731,6 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="15dp"
-                    android:horizontalSpacing="30dp"
                     android:numColumns="4"
                     android:verticalSpacing="10dp">
 

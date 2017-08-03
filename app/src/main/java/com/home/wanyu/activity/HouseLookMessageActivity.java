@@ -104,16 +104,12 @@ public class HouseLookMessageActivity extends AppCompatActivity implements View.
                             } else {
                                 Toast.makeText(HouseLookMessageActivity.this, "获取房屋配置信息错误", Toast.LENGTH_SHORT).show();
                             }
-
                         }
-
-
                     } else {
                         Toast.makeText(HouseLookMessageActivity.this, "获取房屋信息失败", Toast.LENGTH_SHORT).show();
                     }
                 }
             }else if (msg.what==148){//打电话
-
                 Object o=msg.obj;
                 if (o!=null && o instanceof  com.home.wanyu.bean.getAreaActivityLike.Root){
                     com.home.wanyu.bean.getAreaActivityLike.Root root = (com.home.wanyu.bean.getAreaActivityLike.Root) o;

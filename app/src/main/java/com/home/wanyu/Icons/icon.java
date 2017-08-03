@@ -40,4 +40,27 @@ public class icon {
                 return mDeviceName[0];
         }
     }
+    public static int getDeviceIcon(int iconId){
+        Device device=Device.getDevice(iconId);
+        switch (device){
+            case NONE:
+                return mIconRes[0];
+            case SWITCH:
+                return mIconRes[1];
+            case LIGHT:
+                return mIconRes[2];
+            case TV:
+                return mIconRes[3];
+            case CURTAIN:
+                return mIconRes[4];
+            case AC:
+                return mIconRes[5];
+            case SOUND:
+                return mIconRes[6];
+            case LOCK:
+                return mIconRes[7];
+            default:
+                return mIconRes[0];
+        }
+    }
 }

@@ -17,6 +17,16 @@ public class Bean_AllDevice {
 
     private String result;
     private String code;
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    private String message;
     private List<EquipmentListBean> equipmentList;
 
     public String getResult() {
@@ -44,6 +54,14 @@ public class Bean_AllDevice {
     }
 
     public static class EquipmentListBean implements Serializable{
+        public boolean isFlag() {
+            return flag;
+        }
+
+        public void setFlag(boolean flag) {
+            this.flag = flag;
+        }
+
         /**
          * iconId : 7
          * createTimeString :
@@ -60,7 +78,7 @@ public class Bean_AllDevice {
          * id : 7
          * state : 0
          */
-
+        private boolean flag;
         private int iconId;
         private String createTimeString;
         private String serialNumber;

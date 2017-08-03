@@ -108,7 +108,7 @@ public class DeviceSettingLockRecordActivity extends MyActivity {
         DeviceId=getIntent().getStringExtra("id");
         lock_record_loadingLayout.setVisibility(View.GONE);
         li=new ArrayList<>();
-        adapter=new LockRecordAdapter(con,li);
+//        adapter=new LockRecordAdapter(con,li);
         lock_record_listview.setAdapter(adapter);
         getSerVerData();
 

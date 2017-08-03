@@ -14,7 +14,7 @@ public enum Device {
 //    6=音响
     //7门锁
     NONE,SWITCH,LIGHT,TV,CURTAIN,AC,SOUND,LOCK;
-
+//    public static String[]mDeviceName={"未识别的设备","开关","灯","电视","窗帘","空调","音响","门锁"};
     public static Device getDevice(int device){
         switch (device){
             case 0:
